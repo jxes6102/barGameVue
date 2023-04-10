@@ -8,24 +8,18 @@
       <div class="countdown-text">開獎倒數計時!!</div>
       <div class="countdown-timer" id="countdown-timer">10</div>
     </div>
-    <div class="results r-1">
-      <div v-for="(item,index) in 10" :key="item+index" class="result">
-        <div v-for="(items) in 100" :key="items*2" class="result-txt" :id="'result-'+(items-1)">
-            <div class="result-item" v-if="items === 1">?</div>
-            <div class="result-item" v-else>{{items - 1}}</div>
+    <div class="wrap">
+      <div class="results">
+        <div v-for="(item,index) in 20" :key="item+index" class="result">
+          <div v-for="(items) in 100" :key="items*2" class="result-txt " :id="'result-'+(items-1)">
+              <div class="result-item" v-if="items === 1">?</div>
+              <div class="result-item" v-else>{{items - 1}}</div>
+          </div>
         </div>
       </div>
     </div>
-    <div class="results r-2">
-      <div v-for="(item,index) in 10" :key="item+index" class="result">
-        <div v-for="(items) in 100" :key="items*2" class="result-txt" :id="'result-'+(items-1)">
-          <div class="result-item" v-if="items === 1">?</div>
-          <div class="result-item" v-else>{{items - 1}}</div>
-        </div>
-      </div>
-    </div> 
-     <!--拉桿-->
-    <div class="relative h-[400px] w-[40px] bg-[#666] top-[50px] left-[calc(100vw_-_90px)] cursor-pointer" @click="down">
+    <!--拉桿-->
+    <div class="fixed h-[400px] w-[40px] bg-[#666] top-[50px] left-[calc(100vw_-_90px)] cursor-pointer" @click="down">
       <div
         ref="holdbar" 
         v-show="!downStatus" 
@@ -72,25 +66,25 @@ export default {
     const holdbar = ref(null)
     const hold = ref(null)
     // //開獎動畫
-    // const startAnimation = () => {
-    //   //輪盤轉動
-    //   for (var j = 0; j <20; j++){
-    //       document.getElementById(`result-${j}`).classList.add('is-play');
-    //       document.getElementById(`result-${j}`).style.transform = 'none';
-    //   }
-    //   //停止動畫
-    //   for (let i = 0; i < 20; i++) {
-    //     setTimeout((i) => {
-    //       document.getElementById(`result-${i}`).classList.remove('is-play');
-    //       document.getElementById(`result-${i}`).style.transform = `translateY(${num[i]*-1}%)`;
-    //     }, i*1000, i);
-    //   }
-    // }
+    const startAnimation = () => {
+      // //輪盤轉動
+      // for (var j = 0; j <20; j++){
+      //     document.getElementById(`result-${j}`).classList.add('is-play');
+      //     document.getElementById(`result-${j}`).style.transform = 'none';
+      // }
+      // //停止動畫
+      // for (let i = 0; i < 20; i++) {
+      //   setTimeout((i) => {
+      //     document.getElementById(`result-${i}`).classList.remove('is-play');
+      //     document.getElementById(`result-${i}`).style.transform = `translateY(${num[i]*-1}%)`;
+      //   }, i*1000, i);
+      // }
+    }
 
     //拉手把動畫
     const downStatus = ref(false)
     const down = () => {
-      // startAnimation()
+      startAnimation()
       if(downStatus.value) return false
       downStatus.value = true
       setTimeout(()=>{
@@ -131,44 +125,6 @@ export default {
         }
       };
       //api 連接--end
-
-
-      // //畫面初始化
-      // //抓到最外層的div
-      // var results = document.querySelector(".r-1");
-      // //產生20個第2層div
-      // for (let i = 0; i < 20; i++) {
-      //   if (i>9){
-      //     results=document.querySelector(".r-2");
-      //     // console.log('results',results)
-      //   }
-      //   const newDiv = document.createElement("div");
-      //   newDiv.classList.add("result");
-      //   //產生1個第3層div
-      //   const newindrDiv = document.createElement("div");
-      //   newindrDiv.classList.add("result-txt");
-      //   newindrDiv.id="result-"+i
-      //   //產生10個第四層div
-      //   for (let k = 0; k < 100; k++) {
-      //     const newSubDiv = document.createElement("div");
-      //     newSubDiv.classList.add("result-item");
-      //     //第一個放問號
-      //     if (k==0){
-      //       newSubDiv.textContent = "?";
-      //       newindrDiv.appendChild(newSubDiv);
-      //     }
-      //     //之後放數字，放到9
-      //     else{
-      //       newSubDiv.textContent = `${k}`;
-      //       newindrDiv.appendChild(newSubDiv);
-      //     }
-      //   }
-      //   newDiv.appendChild(newindrDiv);
-      //   // console.log('results',results)
-      //   // console.log('newDiv',newDiv)
-      //   results.appendChild(newDiv);
-      // }
-
     })
 
     return {
@@ -187,27 +143,23 @@ export default {
   height: 100vh;
   overscroll-behavior-x: none;
 }
-.results {
+.wrap{
+  height: auto;
+  width: 100vw;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+}
+.results {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  height: 500px;
+  width: 900px;
   color: #fff;
 }
-/*強行換位置--start*/
-.r-1{
-  position: absolute;
-  top: 25%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-.r-2{
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-/*強行換位置--end*/
 
 .result {
   width: 70px;
@@ -217,10 +169,11 @@ export default {
   border-radius: 4px;
   border: 2px solid gray;
   overflow: hidden;
-}
-.result-txt {
   background: linear-gradient(LightCoral, Gold, LightSkyBlue, LightCoral);
 }
+/* .result-txt {
+  background: linear-gradient(LightCoral, Gold, LightSkyBlue, LightCoral);
+} */
 
 .result-item {
   font-size: 48px;
@@ -271,12 +224,12 @@ export default {
 
 /*輪盤轉動動畫---start*/
 .is-play.result-txt {
-  animation: resultPlay 1s infinite linear;
+  animation: resultPlay 2s infinite linear;
 }
 
 @keyframes resultPlay {
   100% {
-    transform: translateY(-90%)
+    transform: translateY(-9000%)
   }
 }
 /*輪盤轉動動畫---end*/
