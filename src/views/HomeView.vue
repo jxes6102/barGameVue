@@ -11,15 +11,18 @@
     <div class="wrap">
       <div class="results">
         <div v-for="(item,index) in 20" :key="item+index" class="result">
-          <div v-for="(items) in 100" :key="items*2" class="result-txt " :id="'result-'+(items-1)">
-              <div class="result-item" v-if="items === 1">?</div>
+          <div v-for="(items) in 100" :key="items*2" 
+            class="result-txt"
+            :class="animationStatus ? 'is-play' : ''"
+            :id="'result-'+(items-1)">
+              <div class="result-item" :ref="setItemRef" v-if="items === 1">?</div>
               <div class="result-item" v-else>{{items - 1}}</div>
           </div>
         </div>
       </div>
     </div>
     <!--拉桿-->
-    <div class="fixed h-[400px] w-[40px] bg-[#666] top-[50px] left-[calc(100vw_-_90px)] cursor-pointer" @click="down">
+    <div class="fixed h-[400px] w-[40px] bg-[#666] top-[50px] left-[90vw] cursor-pointer" @click="down">
       <div
         ref="holdbar" 
         v-show="!downStatus" 
@@ -65,17 +68,30 @@ export default {
     let countdown;
     const holdbar = ref(null)
     const hold = ref(null)
+    const refArr = ref([])
+    const animationStatus = ref(false)
+    const ansStatus = ref(false)
+    const setItemRef = el => {
+        if (el) {
+          refArr.value.push(el)
+        }
+    }
     // //開獎動畫
     const startAnimation = () => {
+      if(animationStatus.value) return false
+      animationStatus.value = true
+      setTimeout(() => {
+        animationStatus.value = false
+      }, 2000);
       // //輪盤轉動
       // for (var j = 0; j <20; j++){
-      //     document.getElementById(`result-${j}`).classList.add('is-play');
+      //     document.getElementById('result-'+j).classList.add('is-play');
       //     document.getElementById(`result-${j}`).style.transform = 'none';
       // }
       // //停止動畫
       // for (let i = 0; i < 20; i++) {
       //   setTimeout((i) => {
-      //     document.getElementById(`result-${i}`).classList.remove('is-play');
+      //     document.getElementById('result-'+i).classList.remove('is-play');
       //     document.getElementById(`result-${i}`).style.transform = `translateY(${num[i]*-1}%)`;
       //   }, i*1000, i);
       // }
@@ -125,13 +141,23 @@ export default {
         }
       };
       //api 連接--end
+      //列出ref
+      // refArr.value.forEach((item)=> {
+      //   console.log('item',item)
+      // })
+      console.log('refArr',refArr.value)
+      refArr.value[4].innerText = 'sad'
     })
 
     return {
       holdbar,
       hold,
       downStatus,
-      down
+      down,
+      setItemRef,
+      refArr,
+      animationStatus,
+      ansStatus
     }
 
   }
@@ -169,11 +195,11 @@ export default {
   border-radius: 4px;
   border: 2px solid gray;
   overflow: hidden;
-  background: linear-gradient(LightCoral, Gold, LightSkyBlue, LightCoral);
+  background: LightCoral;
 }
-/* .result-txt {
-  background: linear-gradient(LightCoral, Gold, LightSkyBlue, LightCoral);
-} */
+.result-txt {
+  /* background: linear-gradient(LightCoral, Gold, LightSkyBlue, LightCoral); */
+}
 
 .result-item {
   font-size: 48px;
