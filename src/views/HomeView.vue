@@ -11,11 +11,11 @@
     <div class="wrap">
       <div class="results">
         <div v-for="(item,index) in 20" :key="item+index" class="result">
-          <div v-for="(items) in 100" :key="items*2" 
+          <div v-for="(items) in 100" :key="items*2"
             class="result-txt"
             :class="animationStatus ? 'is-play' : ''"
             :id="'result-'+(items-1)">
-              <div class="result-item" :ref="setItemRef" v-if="items === 1">{{ drawResult[index] }}</div>
+              <div class="result-item" :ref="setItemRef" v-if="items === 1">{{ drawResult ? drawResult[index] : '?' }}</div>
               <div class="result-item" v-else>{{items - 1}}</div>
           </div>
         </div>
