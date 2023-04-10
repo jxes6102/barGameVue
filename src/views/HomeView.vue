@@ -15,12 +15,13 @@
             class="result-txt"
             :class="animationStatus ? 'is-play' : ''"
             :id="'result-'+(items-1)">
-              <div class="result-item" :ref="setItemRef" v-if="items === 1">?</div>
+              <div class="result-item" :ref="setItemRef" v-if="items === 1">{{ drawResult[index] }}</div>
               <div class="result-item" v-else>{{items - 1}}</div>
           </div>
         </div>
       </div>
     </div>
+    <div>{{ drawResult }}</div>
     <!--拉桿-->
     <div class="fixed h-[400px] w-[40px] bg-[#666] top-[50px] left-[90vw] cursor-pointer" @click="down">
       <div
@@ -52,7 +53,6 @@
 </template>
 <script>
 // @ is an alias to /src
-// import {testa,getNum} from '../api/getNum'
 import { ref,onMounted } from 'vue'
 export default {
   name: 'HomeView',
@@ -60,17 +60,38 @@ export default {
     // HelloWorld
   },
   setup() {
-    // console.log('dd')
-    // console.log('testa',testa())
-    // console.log('getNum',getNum())
     let num=[];
     let drawTime;
     let countdown;
     const holdbar = ref(null)
     const hold = ref(null)
-    const refArr = ref([])
+    let refArr = ref([])
     const animationStatus = ref(false)
     const ansStatus = ref(false)
+    const drawResult = ref(null)
+    // console.log('dd')
+
+    const getNum = async() => {
+      await fetch('https://globalcaipiaokong.com/api/trial/draw-result?code=twklb&rows=1', {
+        headers: {
+          'content-type': 'application/json' // 這一欄一定要設定！
+        },
+        method: 'GET',
+      })
+      .then(response => response.json()) // 輸出成 json
+      .then(res => {
+        if(res.msg === '成功') {
+          console.log('in fetch',res.data[0])
+          drawResult.value = res.data[0].drawResult.split(',')
+          console.log('drawResult',drawResult.value)
+        }
+      }).catch((error) => {
+        console.error("Error:", error)
+      })
+    }
+
+    getNum()
+
     const setItemRef = el => {
         if (el) {
           refArr.value.push(el)
@@ -79,6 +100,7 @@ export default {
     // //開獎動畫
     const startAnimation = () => {
       if(animationStatus.value) return false
+      getNum()
       animationStatus.value = true
       setTimeout(() => {
         animationStatus.value = false
@@ -146,7 +168,7 @@ export default {
       //   console.log('item',item)
       // })
       console.log('refArr',refArr.value)
-      refArr.value[4].innerText = 'sad'
+      // refArr.value[4].innerText = 'sad'
     })
 
     return {
@@ -157,7 +179,8 @@ export default {
       setItemRef,
       refArr,
       animationStatus,
-      ansStatus
+      ansStatus,
+      drawResult
     }
 
   }
