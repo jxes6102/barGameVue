@@ -8,10 +8,22 @@
       <div class="countdown-text">開獎倒數計時!!</div>
       <div class="countdown-timer" id="countdown-timer">10</div>
     </div>
-    <!-- <div class="results r-1"></div>
-    <div class="results r-2"></div>  -->
-    <div v-show="false" class="results r-1"></div>
-    <div v-show="false" class="results r-2"></div> 
+    <div class="results r-1">
+      <div v-for="(item,index) in 10" :key="item+index" class="result">
+        <div v-for="(items) in 100" :key="items*2" class="result-txt" :id="'result-'+(items-1)">
+            <div class="result-item" v-if="items === 1">?</div>
+            <div class="result-item" v-else>{{items - 1}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="results r-2">
+      <div v-for="(item,index) in 10" :key="item+index" class="result">
+        <div v-for="(items) in 100" :key="items*2" class="result-txt" :id="'result-'+(items-1)">
+          <div class="result-item" v-if="items === 1">?</div>
+          <div class="result-item" v-else>{{items - 1}}</div>
+        </div>
+      </div>
+    </div> 
      <!--拉桿-->
     <div class="relative h-[400px] w-[40px] bg-[#666] top-[50px] left-[calc(100vw_-_90px)] cursor-pointer" @click="down">
       <div
@@ -121,41 +133,41 @@ export default {
       //api 連接--end
 
 
-      //畫面初始化
-      //抓到最外層的div
-      var results = document.querySelector(".r-1");
-      //產生20個第2層div
-      for (let i = 0; i < 20; i++) {
-        if (i>9){
-          results=document.querySelector(".r-2");
-          // console.log('results',results)
-        }
-        const newDiv = document.createElement("div");
-        newDiv.classList.add("result");
-        //產生1個第3層div
-        const newindrDiv = document.createElement("div");
-        newindrDiv.classList.add("result-txt");
-        newindrDiv.id="result-"+i
-        //產生10個第四層div
-        for (let k = 0; k < 100; k++) {
-          const newSubDiv = document.createElement("div");
-          newSubDiv.classList.add("result-item");
-          //第一個放問號
-          if (k==0){
-            newSubDiv.textContent = "?";
-            newindrDiv.appendChild(newSubDiv);
-          }
-          //之後放數字，放到9
-          else{
-            newSubDiv.textContent = `${k}`;
-            newindrDiv.appendChild(newSubDiv);
-          }
-        }
-        newDiv.appendChild(newindrDiv);
-        // console.log('results',results)
-        // console.log('newDiv',newDiv)
-        results.appendChild(newDiv);
-      }
+      // //畫面初始化
+      // //抓到最外層的div
+      // var results = document.querySelector(".r-1");
+      // //產生20個第2層div
+      // for (let i = 0; i < 20; i++) {
+      //   if (i>9){
+      //     results=document.querySelector(".r-2");
+      //     // console.log('results',results)
+      //   }
+      //   const newDiv = document.createElement("div");
+      //   newDiv.classList.add("result");
+      //   //產生1個第3層div
+      //   const newindrDiv = document.createElement("div");
+      //   newindrDiv.classList.add("result-txt");
+      //   newindrDiv.id="result-"+i
+      //   //產生10個第四層div
+      //   for (let k = 0; k < 100; k++) {
+      //     const newSubDiv = document.createElement("div");
+      //     newSubDiv.classList.add("result-item");
+      //     //第一個放問號
+      //     if (k==0){
+      //       newSubDiv.textContent = "?";
+      //       newindrDiv.appendChild(newSubDiv);
+      //     }
+      //     //之後放數字，放到9
+      //     else{
+      //       newSubDiv.textContent = `${k}`;
+      //       newindrDiv.appendChild(newSubDiv);
+      //     }
+      //   }
+      //   newDiv.appendChild(newindrDiv);
+      //   // console.log('results',results)
+      //   // console.log('newDiv',newDiv)
+      //   results.appendChild(newDiv);
+      // }
 
     })
 
@@ -185,13 +197,13 @@ export default {
 /*強行換位置--start*/
 .r-1{
   position: absolute;
-  top: 50%;
+  top: 25%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 .r-2{
   position: absolute;
-  top: 75%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
