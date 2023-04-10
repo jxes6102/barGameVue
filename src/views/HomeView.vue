@@ -1,26 +1,44 @@
 <template>
   <div class="home">
-    <div class="showTime" id="showTimeA"> 
+    <div v-show="false" class="showTime" id="showTimeA"> 
       <div class="showTime-text">開獎時間:</div>
       <div class="showTime-timer" id="showTime-timer"></div>
     </div>
-    <div class="countdown" style="visibility: hidden;" id="countdownA"> 
+    <div v-show="false" class="countdown" style="visibility: hidden;" id="countdownA"> 
       <div class="countdown-text">開獎倒數計時!!</div>
       <div class="countdown-timer" id="countdown-timer">10</div>
     </div>
-    <div class="results r-1"></div>
-    <div class="results r-2"></div> 
+    <!-- <div class="results r-1"></div>
+    <div class="results r-2"></div>  -->
+    <div v-show="false" class="results r-1"></div>
+    <div v-show="false" class="results r-2"></div> 
      <!--拉桿-->
-    <div class="barView" @click="down">
-      <div ref="holdbar" v-show="!downStatus" class="holdbarStyle"></div>
-      <div ref="hold" v-show="!downStatus" class="holdStyle"></div>
+    <div class="relative h-[400px] w-[40px] bg-[#666] top-[50px] left-[calc(100vw_-_90px)] cursor-pointer" @click="down">
+      <div
+        ref="holdbar" 
+        v-show="!downStatus" 
+        class="absolute block w-[20px] h-[200px] bg-[#ccc] bottom-1/2 left-0 right-0 rounded-[10px] my-0 mx-auto">
+      </div>
+      <div 
+        ref="hold" 
+        v-show="!downStatus" 
+        class="absolute w-[80px] h-[80px] bg-[#faa] rounded-[50%] left-[-50%] top-[-10%] shadow-[0_10px_10px_0_#333] cursor-pointer">
+      </div> 
       <Transition name="bar">
-        <div ref="holdbar" v-show="downStatus" class="holdbarStyle"></div>
+        <div 
+          ref="holdbar"
+          v-show="downStatus" 
+          class="absolute block w-[20px] h-[200px] bg-[#ccc] bottom-1/2 left-0 right-0 rounded-[10px] my-0 mx-auto">
+        </div>
       </Transition>
       <Transition name="barCircle">
-        <div ref="hold" v-show="downStatus" class="holdStyle"></div>
+        <div 
+          ref="hold" 
+          v-show="downStatus" 
+          class="absolute w-[80px] h-[80px] bg-[#faa] rounded-[50%] left-[-50%] top-[-10%] shadow-[0_10px_10px_0_#333] cursor-pointer">
+        </div>
       </Transition>
-    </div>   
+    </div>
   </div>
 </template>
 <script>
@@ -155,8 +173,7 @@ export default {
 .home{
   width: 100vw;
   height: 100vh;
-  overflow-x: hidden;
-  /* overflow: hidden; */
+  overscroll-behavior-x: none;
 }
 .results {
   display: flex;
@@ -236,51 +253,6 @@ export default {
 .barCircle-enter-from,.bar-leave-to {
   display: none;
   opacity: 0;
-}
-
-
-.barView {
-  position: relative;
-  height: 400px;
-  width: 40px;
-  background-color: #666;
-  right: calc(90px - 100%);
-  cursor: pointer;
-}
-/* .barView {
-  height: 400px;
-  width: 40px;
-  right: 80px;
-  top:100px;
-  background-color: #666;
-  cursor: pointer;
-} */
-
-.holdbarStyle {
-  content: '';
-  display: block;
-  width: 20px;
-  height: 200px;
-  background-color: #ccc;
-  position: absolute;
-  bottom: 50%;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  border-radius: 10px;
-}
-
-.holdStyle {
-  width: 80px;
-  height: 80px;
-  background-color: #faa;
-  border-radius: 50%;
-  position: absolute;
-  left: -50%;
-  top: -10%;
-  box-shadow: 0 10px 10px 0 #333;
-  cursor: pointer;
-
 }
 /*手把外觀與動畫--end*/
 
