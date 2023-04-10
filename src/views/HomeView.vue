@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="w-[100vw] h-[100vh] overscroll-x-none">
     <div v-show="false" class="showTime" id="showTimeA"> 
       <div class="showTime-text">開獎時間:</div>
       <div class="showTime-timer" id="showTime-timer"></div>
@@ -8,22 +8,23 @@
       <div class="countdown-text">開獎倒數計時!!</div>
       <div class="countdown-timer" id="countdown-timer">10</div>
     </div>
-    <div class="wrap">
+    <!-- 主畫面 -->
+    <div class="h-auto w-[100vw] flex flex-wrap justify-center items-center">
       <div class="results">
         <div v-for="(item,index) in 20" :key="item+index" class="result">
           <div v-for="(items) in 100" :key="items*2"
             class="result-txt"
             :class="animationStatus ? 'is-play' : ''"
             :id="'result-'+(items-1)">
-              <div class="result-item" :ref="setItemRef" v-if="items === 1">{{ drawResult ? drawResult[index] : '?' }}</div>
-              <div class="result-item" v-else>{{items - 1}}</div>
+              <div class="flex justify-center text-[48px]" :ref="setItemRef" v-if="items === 1">{{ drawResult ? drawResult[index] : '?' }}</div>
+              <div class="flex justify-center text-[48px]" v-else>{{items - 1}}</div>
           </div>
         </div>
       </div>
     </div>
     <div>{{ drawResult }}</div>
     <!--拉桿-->
-    <div class="fixed h-[400px] w-[40px] bg-[#666] top-[50px] left-[90vw] cursor-pointer" @click="down">
+    <div class="scale-50 md:scale-100 fixed h-[400px] w-[40px] bg-[#666] top-[50px] left-[85vw] md:left-[90vw] cursor-pointer" @click="down">
       <div
         ref="holdbar" 
         v-show="!downStatus" 
@@ -187,19 +188,6 @@ export default {
 }
 </script>
 <style scoped>
-.home{
-  width: 100vw;
-  height: 100vh;
-  overscroll-behavior-x: none;
-}
-.wrap{
-  height: auto;
-  width: 100vw;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-}
 .results {
   display: flex;
   flex-wrap: wrap;
@@ -219,16 +207,6 @@ export default {
   border: 2px solid gray;
   overflow: hidden;
   background: LightCoral;
-}
-.result-txt {
-  /* background: linear-gradient(LightCoral, Gold, LightSkyBlue, LightCoral); */
-}
-
-.result-item {
-  font-size: 48px;
-  display: flex;
-  justify-content: center;
-  line-height: 70px;
 }
 
 /*手把 外觀與動畫--start*/
