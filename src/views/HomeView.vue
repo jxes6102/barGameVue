@@ -9,18 +9,17 @@
       <div class="countdown-timer" id="countdown-timer">10</div>
     </div>
     <div class="results r-1"></div>
-    <div class="results r-2">
-    <!--拉桿-->
-      <div class="bar" @click="down">
-        <div ref="holdbar" v-show="!downStatus" class="holdbarStyle"></div>
-        <div ref="hold" v-show="!downStatus" class="holdStyle"></div>
-        <Transition name="bar">
-          <div ref="holdbar" v-show="downStatus" class="holdbarStyle"></div>
-        </Transition>
-        <Transition name="barCircle">
-          <div ref="hold" v-show="downStatus" class="holdStyle"></div>
-        </Transition>
-      </div> 
+    <div class="results r-2"></div> 
+     <!--拉桿-->
+    <div class="barView" @click="down">
+      <div ref="holdbar" v-show="!downStatus" class="holdbarStyle"></div>
+      <div ref="hold" v-show="!downStatus" class="holdStyle"></div>
+      <Transition name="bar">
+        <div ref="holdbar" v-show="downStatus" class="holdbarStyle"></div>
+      </Transition>
+      <Transition name="barCircle">
+        <div ref="hold" v-show="downStatus" class="holdStyle"></div>
+      </Transition>
     </div>   
   </div>
 </template>
@@ -153,6 +152,12 @@ export default {
 }
 </script>
 <style scoped>
+.home{
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
+  /* overflow: hidden; */
+}
 .results {
   display: flex;
   justify-content: center;
@@ -234,14 +239,22 @@ export default {
 }
 
 
-.bar {
-  position: absolute;
+.barView {
+  position: relative;
   height: 400px;
   width: 40px;
   background-color: #666;
-  right: -80px;
+  right: calc(90px - 100%);
   cursor: pointer;
 }
+/* .barView {
+  height: 400px;
+  width: 40px;
+  right: 80px;
+  top:100px;
+  background-color: #666;
+  cursor: pointer;
+} */
 
 .holdbarStyle {
   content: '';
