@@ -72,6 +72,22 @@ export default {
     const drawResult = ref(null)
     // console.log('dd')
 
+    //py test
+    const pyTest = () => {
+      fetch('http://127.0.0.1:5000/gethistory', {
+        headers: {
+          'content-type': 'application/json' // 這一欄一定要設定！
+        },
+        method: 'GET',
+      })
+      .then(response => response.json()) // 輸出成 json
+      .then(res => {
+        console.log('gethistory',res)
+      }).catch((error) => {
+        console.error("Error:", error)
+      })
+    }
+
     const getNum = async() => {
       await fetch('https://globalcaipiaokong.com/api/trial/draw-result?code=twklb&rows=1', {
         headers: {
@@ -82,9 +98,9 @@ export default {
       .then(response => response.json()) // 輸出成 json
       .then(res => {
         if(res.msg === '成功') {
-          console.log('in fetch',res.data[0])
+          // console.log('in fetch',res.data[0])
           drawResult.value = res.data[0].drawResult.split(',')
-          console.log('drawResult',drawResult.value)
+          // console.log('drawResult',drawResult.value)
         }
       }).catch((error) => {
         console.error("Error:", error)
@@ -168,8 +184,9 @@ export default {
       // refArr.value.forEach((item)=> {
       //   console.log('item',item)
       // })
-      console.log('refArr',refArr.value)
+      // console.log('refArr',refArr.value)
       // refArr.value[4].innerText = 'sad'
+      pyTest()
     })
 
     return {
