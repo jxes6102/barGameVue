@@ -10,21 +10,21 @@
     </div>
     <!-- 主畫面 -->
     <div class="h-auto w-[100vw] flex flex-wrap justify-center items-center">
-      <div class="results">
-        <div v-for="(item,index) in 20" :key="item+index" class="result">
+      <div class="flex flex-wrap justify-center items-center h-[300px] w-[250px] md:h-[500px] md:w-[800px] text-white">
+        <div v-for="(item,index) in 20" :key="item+index" class="result w-[40px] h-[40px] md:w-[70px] md:h-[70px] mr-[10px] md:mr-[10px] border-[gray] border-solid bg-[gray] border-[2px] rounded-[4px]">
           <div v-for="(items) in 100" :key="items*2"
             class="result-txt"
             :class="animationStatus ? 'is-play' : ''"
             :id="'result-'+(items-1)">
-              <div class="flex justify-center text-[48px]" v-if="items === 1">{{ drawResult ? drawResult[index] : '?' }}</div>
-              <div class="flex justify-center text-[48px]" v-else>{{items - 1}}</div>
+              <div class="flex justify-center text-[30px] md:text-[48px]" v-if="items === 1">{{ drawResult ? drawResult[index] : '?' }}</div>
+              <div class="flex justify-center text-[30px] md:text-[48px]" v-else>{{items - 1}}</div>
           </div>
         </div>
       </div>
     </div>
     <div>{{ drawResult }}</div>
     <!--拉桿-->
-    <div class="scale-50 md:scale-100 fixed h-[400px] w-[40px] bg-[#666] top-[50px] left-[85vw] md:left-[90vw] cursor-pointer" @click="down">
+    <div class="scale-[0.5] md:scale-100 fixed h-[400px] w-[40px] bg-[#666] top-[50px] left-[85vw] md:left-[90vw] cursor-pointer" @click="down">
       <div
         ref="holdbar" 
         v-show="!downStatus" 
@@ -64,6 +64,7 @@ export default {
     // let num=[];
     // let drawTime;
     // let countdown;
+    /** */
     const holdbar = ref(null)
     const hold = ref(null)
     const animationStatus = ref(false)
@@ -99,7 +100,7 @@ export default {
     // console.log('dd')
     
 
-    //pyapi
+    //pyapi拿獎項資料
     const pyCatchNum = () => {
       fetch('http://127.0.0.1:5000/gethistory', {
         headers: {
@@ -119,7 +120,6 @@ export default {
     // //開獎動畫
     const startAnimation = () => {
       if(animationStatus.value) return false
-      // getNum()
       animationStatus.value = true
       setTimeout(() => {
         animationStatus.value = false
@@ -146,9 +146,9 @@ export default {
       downStatus.value = true
       setTimeout(()=>{
         downStatus.value = false
-      },1500)
+      },1000)
     }
-
+    //初始動作
     const init = () => {
       pyCatchNum()
     }
@@ -204,23 +204,7 @@ export default {
 }
 </script>
 <style scoped>
-.results {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  height: 500px;
-  width: 800px;
-  color: #fff;
-}
-
 .result {
-  width: 70px;
-  height: 70px;
-  background-color: gray;
-  margin-right: 10px;
-  border-radius: 4px;
-  border: 2px solid gray;
   overflow: hidden;
   background: LightCoral;
 }
