@@ -127,7 +127,7 @@ export default {
     // 監聽api改變後拉桿
     watch(newData, (newVal,oldVal)=>{
       if(oldVal){
-        console.log(parseInt(newVal.no),parseInt(oldVal.no))
+        // console.log(parseInt(newVal.no),parseInt(oldVal.no))
         if(parseInt(newVal.no) > parseInt(oldVal.no)) {
           down()
         }
@@ -216,18 +216,22 @@ export default {
   0% {
       transform: translateY(0px) scale(1);
   }
-
-  100% {
+  50% {
       transform: translateY(250px) scale(1.5);
+  }
+  100% {
+    transform: translateY(0px) scale(1);
   }
 }
 @keyframes down2{
   0% {
       height: 200px;
   }
-
-  100% {
+  50% {
       height: 20px;
+  }
+  100% {
+      height: 200px;
   }
 }
 
