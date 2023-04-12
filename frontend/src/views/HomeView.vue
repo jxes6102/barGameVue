@@ -6,12 +6,12 @@
       <div class="flex flex-wrap justify-center items-center h-[300px] w-[250px] md:h-[400px] md:w-[800px] text-white">
         <div
           v-for="(item,index) in 20" :key="item+index"
-          :class="(specialPosition === index) && !animationStatus ? 'bg-rose-800' :'bg-[LightCoral]'"
+          :class="(specialPosition === index) && !animationStatusArr[index] ? 'bg-rose-800' :'bg-[LightCoral]'"
           class="w-[40px] h-[40px] md:w-[70px] md:h-[70px] mr-[10px] md:mr-[10px] border-[gray] border-solid  border-[2px] rounded-[4px] overflow-hidden"
           >
           <div v-for="(items) in 100" :key="items*2"
             class="result-txt"
-            :class="animationStatus ? 'is-play' : ''"
+            :class="animationStatusArr[index] ? 'is-play' : ''"
             :id="'result-'+(items-1)">
               <div class="flex justify-center text-[30px] md:text-[48px]" v-if="items === 1">{{ drawResult ? drawResult[index] : '?' }}</div>
               <div class="flex justify-center text-[30px] md:text-[48px]" v-else>{{items - 1}}</div>
@@ -80,8 +80,8 @@ export default {
     /**
      * historyItem 歷史紀錄區塊ref
      * timer1 設定timer 1/10s
-     * animationStatus 數字動畫
-     * downStatus 拉桿動畫
+     * animationStatusArr 數字動畫狀態
+     * downStatus 拉桿動畫狀態
      * drawData 原始api資料
      * historyData api資料整理
      * newData 最新一筆
@@ -89,9 +89,9 @@ export default {
      * termResult 最新一筆編號
      * specialPosition 最新一筆特別號位置
      */
+    const animationStatusArr = ref([])
     const historyItem = ref(null)
     const timer1 = ref(null)
-    const animationStatus = ref(false)
     const drawData = ref(null)
     const downStatus = ref(false)
     const historyData = computed(() => {
@@ -149,26 +149,19 @@ export default {
         console.error("Error:", error)
       })
     }
-    // //開獎動畫
+    //開獎動畫
     const startAnimation = () => {
-      if(animationStatus.value) return false
-      animationStatus.value = true
-      setTimeout(() => {
-        animationStatus.value = false
-        historyItem.value.scrollTop = 9999
-      }, 2000);
-      // //輪盤轉動
-      // for (var j = 0; j <20; j++){
-      //     document.getElementById('result-'+j).classList.add('is-play');
-      //     document.getElementById(`result-${j}`).style.transform = 'none';
-      // }
-      // //停止動畫
-      // for (let i = 0; i < 20; i++) {
-      //   setTimeout((i) => {
-      //     document.getElementById('result-'+i).classList.remove('is-play');
-      //     document.getElementById(`result-${i}`).style.transform = `translateY(${num[i]*-1}%)`;
-      //   }, i*1000, i);
-      // }
+      for(let i = 0;i<20;i++){
+        animationStatusArr.value[i] = true
+      }
+      for(let i = 0;i<20;i++){
+        setTimeout((i) => {
+          animationStatusArr.value[i] = false
+          if(i==19){
+            historyItem.value.scrollTop = 9999
+          }
+        }, i*500, i)
+      }
     }
     //拉手把動畫
     const down = () => {
@@ -186,6 +179,9 @@ export default {
     //初始動作
     const init = () => {
       pyCatchNum()
+      for(let i = 0;i<20;i++){
+        animationStatusArr.value.push(false)
+      }
     }
     init()
 
@@ -202,11 +198,11 @@ export default {
     return {
       historyItem,
       downStatus,
-      animationStatus,
       drawResult,
       termResult,
       historyData,
       specialPosition,
+      animationStatusArr,
       toStr,
     }
 
