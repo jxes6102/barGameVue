@@ -54,26 +54,53 @@
 </template>
 <script>
 // @ is an alias to /src
-import { ref,onMounted } from 'vue'
+import { ref,computed,onMounted } from 'vue'
 export default {
   name: 'HomeView',
   components: {
     // HelloWorld
   },
   setup() {
-    let num=[];
-    let drawTime;
-    let countdown;
+    // let num=[];
+    // let drawTime;
+    // let countdown;
     const holdbar = ref(null)
     const hold = ref(null)
     let refArr = ref([])
     const animationStatus = ref(false)
     const ansStatus = ref(false)
-    const drawResult = ref(null)
+    const drawData = ref(null)
+    const historyData = computed(() => {
+      let target = []
+      if(!drawData.value) return target
+      for(let key in drawData.value){
+        target.push({
+          no:key,
+          reward:drawData.value[key][0].split(' ').filter((item) => item),
+          special:drawData.value[key][1],
+          sizeDecision:drawData.value[key][2],
+          singleDecision:drawData.value[key][3]
+        })
+      }
+      return target
+    })
+    const newData = computed(() => {
+      if(!historyData.value) return {}
+      return historyData.value[historyData.value.length - 1]
+    })
+    const drawResult = computed(() => {
+      if(!newData.value) return []
+      return newData.value.reward
+    })
+    console.log('historyData',historyData)
+    setTimeout(()=>{
+      console.log('newData',newData.value)
+    },1000)
     // console.log('dd')
+    
 
     //py test
-    const pyTest = () => {
+    const pyCatchNum = () => {
       fetch('http://127.0.0.1:5000/gethistory', {
         headers: {
           'content-type': 'application/json' // 這一欄一定要設定！
@@ -82,32 +109,13 @@ export default {
       })
       .then(response => response.json()) // 輸出成 json
       .then(res => {
+        drawData.value = res 
         console.log('gethistory',res)
       }).catch((error) => {
         console.error("Error:", error)
       })
     }
-
-    const getNum = async() => {
-      await fetch('https://globalcaipiaokong.com/api/trial/draw-result?code=twklb&rows=1', {
-        headers: {
-          'content-type': 'application/json' // 這一欄一定要設定！
-        },
-        method: 'GET',
-      })
-      .then(response => response.json()) // 輸出成 json
-      .then(res => {
-        if(res.msg === '成功') {
-          // console.log('in fetch',res.data[0])
-          drawResult.value = res.data[0].drawResult.split(',')
-          // console.log('drawResult',drawResult.value)
-        }
-      }).catch((error) => {
-        console.error("Error:", error)
-      })
-    }
-
-    getNum()
+    pyCatchNum()
 
     const setItemRef = el => {
         if (el) {
@@ -117,7 +125,7 @@ export default {
     // //開獎動畫
     const startAnimation = () => {
       if(animationStatus.value) return false
-      getNum()
+      // getNum()
       animationStatus.value = true
       setTimeout(() => {
         animationStatus.value = false
@@ -139,46 +147,47 @@ export default {
     //拉手把動畫
     const downStatus = ref(false)
     const down = () => {
+      pyCatchNum()
       startAnimation()
       if(downStatus.value) return false
       downStatus.value = true
       setTimeout(()=>{
         downStatus.value = false
-      },1000)
+      },1500)
     }
 
     onMounted(() => {
       //api 連接--start
-      const xhr = new XMLHttpRequest();
-      xhr.open('GET', 'https://globalcaipiaokong.com/api/trial/draw-result?code=twklb&rows=1');
-      xhr.send();
+      // const xhr = new XMLHttpRequest();
+      // xhr.open('GET', 'https://globalcaipiaokong.com/api/trial/draw-result?code=twklb&rows=1');
+      // xhr.send();
 
-      xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-          const response = JSON.parse(xhr.responseText);
-          //拿取開獎號碼
-          num=response.data[0].drawResult.split(',').map(Number);
-          console.log(num)
-          //拿取開獎時間
-          drawTime = response.data[0].endTime;
+      // xhr.onreadystatechange = function() {
+      //   if (xhr.readyState === 4 && xhr.status === 200) {
+      //     const response = JSON.parse(xhr.responseText);
+      //     //拿取開獎號碼
+      //     num=response.data[0].drawResult.split(',').map(Number);
+      //     console.log(num)
+      //     //拿取開獎時間
+      //     drawTime = response.data[0].endTime;
           
-          drawTime = new Date(drawTime);
+      //     drawTime = new Date(drawTime);
 
-          countdown=new Date(drawTime.getTime() + 7 * 60 * 1000+3*1000);
-          console.log("倒數動畫播放時間:",countdown);
-          var hours = countdown.getHours();
-          var minutes = countdown.getMinutes();
-          var timeString = hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0');
+      //     countdown=new Date(drawTime.getTime() + 7 * 60 * 1000+3*1000);
+      //     console.log("倒數動畫播放時間:",countdown);
+      //     var hours = countdown.getHours();
+      //     var minutes = countdown.getMinutes();
+      //     var timeString = hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0');
 
-          // 獲取要更新的 DOM 元素，並將時間字符串設置為其內容
-          var timeElement = document.getElementById('showTime-timer');
-          timeElement.innerHTML = timeString;//印在網頁上
+      //     // 獲取要更新的 DOM 元素，並將時間字符串設置為其內容
+      //     var timeElement = document.getElementById('showTime-timer');
+      //     timeElement.innerHTML = timeString;//印在網頁上
 
-          console.log("預計開獎時間:",timeString)
-          drawTime=new Date(drawTime.getTime() + 7 * 60 * 1000+15*1000);
-          console.log("實際開獎時間:",drawTime);
-        }
-      };
+      //     console.log("預計開獎時間:",timeString)
+      //     drawTime=new Date(drawTime.getTime() + 7 * 60 * 1000+15*1000);
+      //     console.log("實際開獎時間:",drawTime);
+      //   }
+      // };
       //api 連接--end
       //列出ref
       // refArr.value.forEach((item)=> {
@@ -186,7 +195,7 @@ export default {
       // })
       // console.log('refArr',refArr.value)
       // refArr.value[4].innerText = 'sad'
-      pyTest()
+      
     })
 
     return {
@@ -211,7 +220,7 @@ export default {
   justify-content: center;
   align-items: center;
   height: 500px;
-  width: 900px;
+  width: 800px;
   color: #fff;
 }
 
@@ -219,7 +228,7 @@ export default {
   width: 70px;
   height: 70px;
   background-color: gray;
-  margin-right: 20px;
+  margin-right: 10px;
   border-radius: 4px;
   border: 2px solid gray;
   overflow: hidden;
