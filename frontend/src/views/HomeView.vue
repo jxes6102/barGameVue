@@ -1,13 +1,5 @@
 <template>
   <div class="w-[100vw] h-[100vh] overscroll-x-none">
-    <div v-show="false" class="showTime" id="showTimeA"> 
-      <div class="showTime-text">開獎時間:</div>
-      <div class="showTime-timer" id="showTime-timer"></div>
-    </div>
-    <div v-show="false" class="countdown" style="visibility: hidden;" id="countdownA"> 
-      <div class="countdown-text">開獎倒數計時!!</div>
-      <div class="countdown-timer" id="countdown-timer">10</div>
-    </div>
     <!-- 主畫面 -->
     <div class="h-auto w-[100vw] flex flex-wrap justify-center items-center">
       <div class="flex flex-wrap justify-center items-center h-[300px] w-[250px] md:h-[500px] md:w-[800px] text-white">
@@ -24,7 +16,7 @@
     </div>
     <div>{{ drawResult }}</div>
     <!--拉桿-->
-    <div class="scale-[0.5] md:scale-100 fixed h-[400px] w-[40px] bg-[#666] top-[50px] left-[85vw] md:left-[90vw] cursor-pointer" @click="down">
+    <div class="scale-[0.5] md:scale-100 fixed h-[400px] w-[40px] bg-[#666] top-[50px] left-[85vw] md:left-[90vw] cursor-pointer">
       <div
         ref="holdbar" 
         v-show="!downStatus" 
@@ -54,17 +46,15 @@
 </template>
 <script>
 // @ is an alias to /src
-import { ref,computed,onMounted } from 'vue'
+import { ref,computed,onMounted,onBeforeUnmount,watch } from 'vue'
 export default {
   name: 'HomeView',
   components: {
     // HelloWorld
   },
   setup() {
-    // let num=[];
-    // let drawTime;
-    // let countdown;
     /** */
+    const timer1 = ref(null)
     const holdbar = ref(null)
     const hold = ref(null)
     const animationStatus = ref(false)
@@ -93,13 +83,14 @@ export default {
       if(!newData.value) return []
       return newData.value.reward
     })
-    // console.log('historyData',historyData)
-    // setTimeout(()=>{
-    //   console.log('newData',newData.value)
-    // },1000)
-    // console.log('dd')
-    
-
+    watch(newData, (newVal,oldVal)=>{
+      if(oldVal){
+        console.log('new:',parseInt(newVal.no),'old:',parseInt(oldVal.no))
+        if(parseInt(newVal.no) > parseInt(oldVal.no)) {
+          down()
+        }
+      }
+    })
     //pyapi拿獎項資料
     const pyCatchNum = () => {
       fetch('http://127.0.0.1:5000/gethistory', {
@@ -116,7 +107,6 @@ export default {
         console.error("Error:", error)
       })
     }
-    
     // //開獎動畫
     const startAnimation = () => {
       if(animationStatus.value) return false
@@ -137,7 +127,6 @@ export default {
       //   }, i*1000, i);
       // }
     }
-
     //拉手把動畫
     const down = () => {
       pyCatchNum()
@@ -155,39 +144,14 @@ export default {
     init()
 
     onMounted(() => {
-      //api 連接--start
-      // const xhr = new XMLHttpRequest();
-      // xhr.open('GET', 'https://globalcaipiaokong.com/api/trial/draw-result?code=twklb&rows=1');
-      // xhr.send();
+      timer1.value = window.setInterval((async() => {
+        console.log('===========')
+        await pyCatchNum()
+      } ), 10000)
+    })
 
-      // xhr.onreadystatechange = function() {
-      //   if (xhr.readyState === 4 && xhr.status === 200) {
-      //     const response = JSON.parse(xhr.responseText);
-      //     //拿取開獎號碼
-      //     num=response.data[0].drawResult.split(',').map(Number);
-      //     console.log(num)
-      //     //拿取開獎時間
-      //     drawTime = response.data[0].endTime;
-          
-      //     drawTime = new Date(drawTime);
-
-      //     countdown=new Date(drawTime.getTime() + 7 * 60 * 1000+3*1000);
-      //     console.log("倒數動畫播放時間:",countdown);
-      //     var hours = countdown.getHours();
-      //     var minutes = countdown.getMinutes();
-      //     var timeString = hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0');
-
-      //     // 獲取要更新的 DOM 元素，並將時間字符串設置為其內容
-      //     var timeElement = document.getElementById('showTime-timer');
-      //     timeElement.innerHTML = timeString;//印在網頁上
-
-      //     console.log("預計開獎時間:",timeString)
-      //     drawTime=new Date(drawTime.getTime() + 7 * 60 * 1000+15*1000);
-      //     console.log("實際開獎時間:",drawTime);
-      //   }
-      // };
-      //api 連接--end
-      
+    onBeforeUnmount(() => {
+      clearInterval(timer1.value)
     })
 
     return {
@@ -197,7 +161,6 @@ export default {
       animationStatus,
       ansStatus,
       drawResult,
-      down,
     }
 
   }
