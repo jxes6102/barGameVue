@@ -4,7 +4,11 @@
     <!-- 主畫面 -->
     <div class="h-auto w-[100vw] flex flex-wrap justify-center items-center">
       <div class="flex flex-wrap justify-center items-center h-[300px] w-[250px] md:h-[400px] md:w-[800px] text-white">
-        <div v-for="(item,index) in 20" :key="item+index" class="w-[40px] h-[40px] md:w-[70px] md:h-[70px] mr-[10px] md:mr-[10px] border-[gray] border-solid bg-[LightCoral] border-[2px] rounded-[4px] overflow-hidden">
+        <div
+          v-for="(item,index) in 20" :key="item+index"
+          :class="(specialPosition === index) && !animationStatus ? 'bg-rose-800' :'bg-[LightCoral]'"
+          class="w-[40px] h-[40px] md:w-[70px] md:h-[70px] mr-[10px] md:mr-[10px] border-[gray] border-solid  border-[2px] rounded-[4px] overflow-hidden"
+          >
           <div v-for="(items) in 100" :key="items*2"
             class="result-txt"
             :class="animationStatus ? 'is-play' : ''"
@@ -24,9 +28,9 @@
         <!-- <div class="w-[20%] md:w-[10%] h-auto">大小</div>
         <div class="w-[20%] md:w-[10%] h-auto">單雙</div> -->
       </div>
-      <div class="w-[70vw] h-[40vh] flex flex-wrap overflow-x-hidden overflow-y-auto">
+      <div ref="historyItem" class="w-[70vw] h-[40vh] flex flex-wrap overflow-x-hidden overflow-y-auto">
         <div class="flex flex-wrap justify-center items-center">
-          <div 
+          <div
             v-for="(item,index) in historyData" :key="index"
             class="w-[100%] flex flex-wrap justify-center items-center border-t-2 border-solid border-black"
           >
@@ -74,6 +78,7 @@ export default {
   },
   setup() {
     /**
+     * historyItem 歷史紀錄區塊ref
      * timer1 設定timer 1/10s
      * animationStatus 數字動畫
      * downStatus 拉桿動畫
@@ -81,7 +86,10 @@ export default {
      * historyData api資料整理
      * newData 最新一筆
      * drawResult 最新一筆號碼
+     * termResult 最新一筆編號
+     * specialPosition 最新一筆特別號位置
      */
+    const historyItem = ref(null)
     const timer1 = ref(null)
     const animationStatus = ref(false)
     const drawData = ref(null)
@@ -111,6 +119,10 @@ export default {
     const termResult = computed(() => {
       if(!newData.value) return []
       return newData.value.no
+    })
+    const specialPosition = computed(() => {
+      if(!newData.value) return -1
+      return newData.value.reward.indexOf(newData.value.special)
     })
     // 監聽api改變後拉桿
     watch(newData, (newVal,oldVal)=>{
@@ -143,6 +155,7 @@ export default {
       animationStatus.value = true
       setTimeout(() => {
         animationStatus.value = false
+        historyItem.value.scrollTop = 9999
       }, 2000);
       // //輪盤轉動
       // for (var j = 0; j <20; j++){
@@ -187,11 +200,13 @@ export default {
     })
 
     return {
+      historyItem,
       downStatus,
       animationStatus,
       drawResult,
       termResult,
       historyData,
+      specialPosition,
       toStr,
     }
 
