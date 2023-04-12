@@ -1,5 +1,6 @@
 <template>
-  <div class="w-[100vw] h-[100vh] overscroll-x-none">
+  <div class="w-[100vw] h-[100vh] overscroll-x-none flex flex-wrap justify-center items-start">
+    <div class="w-auto h-auto my-2 text-lg font-bold">{{ '編號: ' + termResult }}</div>
     <!-- 主畫面 -->
     <div class="h-auto w-[100vw] flex flex-wrap justify-center items-center">
       <div class="flex flex-wrap justify-center items-center h-[300px] w-[250px] md:h-[500px] md:w-[800px] text-white">
@@ -14,29 +15,25 @@
         </div>
       </div>
     </div>
-    <div>{{ drawResult }}</div>
+    <!-- <div>{{ drawResult }}</div> -->
     <!--拉桿-->
-    <div class="scale-[0.5] md:scale-100 fixed h-[400px] w-[40px] bg-[#666] top-[50px] left-[85vw] md:left-[90vw] cursor-pointer">
+    <div class="scale-[0.5] md:scale-100 fixed h-[400px] w-[40px] bg-[#666] top-[20vh] md:top-[25vh] left-[85vw] md:left-[90vw] cursor-pointer">
       <div
-        ref="holdbar" 
         v-show="!downStatus" 
         class="absolute block w-[20px] h-[200px] bg-[#ccc] bottom-1/2 left-0 right-0 rounded-[10px] my-0 mx-auto">
       </div>
       <div 
-        ref="hold" 
         v-show="!downStatus" 
         class="absolute w-[80px] h-[80px] bg-[#faa] rounded-[50%] left-[-50%] top-[-10%] shadow-[0_10px_10px_0_#333] cursor-pointer">
       </div> 
       <Transition name="bar">
-        <div 
-          ref="holdbar"
+        <div
           v-show="downStatus" 
           class="absolute block w-[20px] h-[200px] bg-[#ccc] bottom-1/2 left-0 right-0 rounded-[10px] my-0 mx-auto">
         </div>
       </Transition>
       <Transition name="barCircle">
         <div 
-          ref="hold" 
           v-show="downStatus" 
           class="absolute w-[80px] h-[80px] bg-[#faa] rounded-[50%] left-[-50%] top-[-10%] shadow-[0_10px_10px_0_#333] cursor-pointer">
         </div>
@@ -53,12 +50,17 @@ export default {
     // HelloWorld
   },
   setup() {
-    /** */
+    /**
+     * timer1 設定timer 1/10s
+     * animationStatus 數字動畫
+     * downStatus 拉桿動畫
+     * drawData 原始api資料
+     * historyData api資料整理
+     * newData 最新一筆
+     * drawResult 最新一筆號碼
+     */
     const timer1 = ref(null)
-    const holdbar = ref(null)
-    const hold = ref(null)
     const animationStatus = ref(false)
-    const ansStatus = ref(false)
     const drawData = ref(null)
     const downStatus = ref(false)
     const historyData = computed(() => {
@@ -83,9 +85,14 @@ export default {
       if(!newData.value) return []
       return newData.value.reward
     })
+    const termResult = computed(() => {
+      if(!newData.value) return []
+      return newData.value.no
+    })
+    // 監聽api改變後拉桿
     watch(newData, (newVal,oldVal)=>{
       if(oldVal){
-        console.log('new:',parseInt(newVal.no),'old:',parseInt(oldVal.no))
+        console.log(parseInt(newVal.no),parseInt(oldVal.no))
         if(parseInt(newVal.no) > parseInt(oldVal.no)) {
           down()
         }
@@ -129,7 +136,6 @@ export default {
     }
     //拉手把動畫
     const down = () => {
-      pyCatchNum()
       startAnimation()
       if(downStatus.value) return false
       downStatus.value = true
@@ -145,7 +151,6 @@ export default {
 
     onMounted(() => {
       timer1.value = window.setInterval((async() => {
-        console.log('===========')
         await pyCatchNum()
       } ), 10000)
     })
@@ -155,12 +160,10 @@ export default {
     })
 
     return {
-      holdbar,
-      hold,
       downStatus,
       animationStatus,
-      ansStatus,
       drawResult,
+      termResult,
     }
 
   }
@@ -223,49 +226,4 @@ export default {
   }
 }
 /*輪盤轉動動畫---end*/
-
-/*倒數--start*/
-.countdown {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 10px;
-}
-
-.countdown-text {
-  font-size: 24px;
-  margin-bottom: 10px;
-}
-
-.countdown-timer {
-  font-size: 64px;
-  font-weight: bold;
-  color: red;
-  animation-name: countdown-animation;
-  animation-duration: 1s ;
-  animation-timing-function: linear;
-  animation-iteration-count: 11;
-}
-
-@keyframes countdown-animation {
-  from {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(0);
-  }
-}
-/*倒數--end*/
-
-/*開獎時間的位置*/
-.showTime {
-  display: flex;
-  justify-content: center; /* 將容器內元素水平置中 */
-  align-items: center; /* 將容器內元素垂直置中 */
-  height: 20vh; /* 設定容器高度，讓元素在頁面中央 */
-  visibility: visible;
-}
-
-/*開獎時間的位置--end*/
 </style>
