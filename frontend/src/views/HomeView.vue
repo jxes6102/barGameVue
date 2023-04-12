@@ -1,9 +1,9 @@
 <template>
-  <div class="w-[100vw] h-[100vh] overscroll-x-none flex flex-wrap justify-center items-start">
+  <div class="w-[100vw] h-[100vh] overflow-hidden flex flex-wrap justify-center items-start">
     <div class="w-auto h-auto my-2 text-lg font-bold">{{ '編號: ' + termResult }}</div>
     <!-- 主畫面 -->
     <div class="h-auto w-[100vw] flex flex-wrap justify-center items-center">
-      <div class="flex flex-wrap justify-center items-center h-[300px] w-[250px] md:h-[500px] md:w-[800px] text-white">
+      <div class="flex flex-wrap justify-center items-center h-[300px] w-[250px] md:h-[400px] md:w-[800px] text-white">
         <div v-for="(item,index) in 20" :key="item+index" class="w-[40px] h-[40px] md:w-[70px] md:h-[70px] mr-[10px] md:mr-[10px] border-[gray] border-solid bg-[LightCoral] border-[2px] rounded-[4px] overflow-hidden">
           <div v-for="(items) in 100" :key="items*2"
             class="result-txt"
@@ -15,7 +15,30 @@
         </div>
       </div>
     </div>
-    <!-- <div >test</div> -->
+    <!-- 歷史紀錄 -->
+    <div class="w-[100%] h-auto flex flex-wrap justify-center items-center">
+      <div class="w-[70vw] h-auto flex flex-wrap border-b-2 border-solid border-black">
+        <div class="w-[20%] md:w-[15%] h-auto">編號</div>
+        <div class="w-[60%] md:w-[70%] h-auto">號碼</div>
+        <div class="w-[20%] md:w-[15%] h-auto">特別號</div>
+        <!-- <div class="w-[20%] md:w-[10%] h-auto">大小</div>
+        <div class="w-[20%] md:w-[10%] h-auto">單雙</div> -->
+      </div>
+      <div class="w-[70vw] h-[40vh] flex flex-wrap overflow-x-hidden overflow-y-auto">
+        <div class="flex flex-wrap justify-center items-center">
+          <div 
+            v-for="(item,index) in historyData" :key="index"
+            class="w-[100%] flex flex-wrap justify-center items-center border-t-2 border-solid border-black"
+          >
+            <div class="w-[20%] md:w-[15%] h-auto break-all">{{ item.no }}</div>
+            <div class="w-[60%] md:w-[70%] h-auto break-all border-x-2 border-solid border-black">{{ toStr(item.reward) }}</div>
+            <div class="w-[20%] md:w-[15%] h-auto break-all">{{ item.special }}</div>
+            <!-- <div class="w-[10%] h-auto">{{ item.sizeDecision }}</div>
+            <div class="w-[10%] h-auto">{{ item.singleDecision }}</div> -->
+          </div>
+        </div>
+      </div>
+    </div>
     <!--拉桿-->
     <div class="scale-[0.5] md:scale-100 fixed h-[400px] w-[40px] bg-[#666] top-[20vh] md:top-[25vh] left-[85vw] md:left-[90vw] cursor-pointer">
       <div
@@ -143,6 +166,10 @@ export default {
         downStatus.value = false
       },1000)
     }
+    //轉換格式
+    const toStr = (val) => {
+      return val.join(' ')
+    }
     //初始動作
     const init = () => {
       pyCatchNum()
@@ -164,6 +191,8 @@ export default {
       animationStatus,
       drawResult,
       termResult,
+      historyData,
+      toStr,
     }
 
   }
