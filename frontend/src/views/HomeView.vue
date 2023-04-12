@@ -4,7 +4,7 @@
     <!-- 主畫面 -->
     <div class="h-auto w-[100vw] flex flex-wrap justify-center items-center">
       <div class="flex flex-wrap justify-center items-center h-[300px] w-[250px] md:h-[500px] md:w-[800px] text-white">
-        <div v-for="(item,index) in 20" :key="item+index" class="result w-[40px] h-[40px] md:w-[70px] md:h-[70px] mr-[10px] md:mr-[10px] border-[gray] border-solid bg-[gray] border-[2px] rounded-[4px]">
+        <div v-for="(item,index) in 20" :key="item+index" class="w-[40px] h-[40px] md:w-[70px] md:h-[70px] mr-[10px] md:mr-[10px] border-[gray] border-solid bg-[LightCoral] border-[2px] rounded-[4px] overflow-hidden">
           <div v-for="(items) in 100" :key="items*2"
             class="result-txt"
             :class="animationStatus ? 'is-play' : ''"
@@ -15,7 +15,7 @@
         </div>
       </div>
     </div>
-    <!-- <div>{{ drawResult }}</div> -->
+    <!-- <div >test</div> -->
     <!--拉桿-->
     <div class="scale-[0.5] md:scale-100 fixed h-[400px] w-[40px] bg-[#666] top-[20vh] md:top-[25vh] left-[85vw] md:left-[90vw] cursor-pointer">
       <div
@@ -170,11 +170,6 @@ export default {
 }
 </script>
 <style scoped>
-.result {
-  overflow: hidden;
-  background: LightCoral;
-}
-
 /*手把 外觀與動畫--start*/
 
 @keyframes down {
