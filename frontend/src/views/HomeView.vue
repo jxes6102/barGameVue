@@ -16,7 +16,7 @@
             class="result-txt"
             :class="animationStatus ? 'is-play' : ''"
             :id="'result-'+(items-1)">
-              <div class="flex justify-center text-[48px]" :ref="setItemRef" v-if="items === 1">{{ drawResult ? drawResult[index] : '?' }}</div>
+              <div class="flex justify-center text-[48px]" v-if="items === 1">{{ drawResult ? drawResult[index] : '?' }}</div>
               <div class="flex justify-center text-[48px]" v-else>{{items - 1}}</div>
           </div>
         </div>
@@ -66,10 +66,10 @@ export default {
     // let countdown;
     const holdbar = ref(null)
     const hold = ref(null)
-    let refArr = ref([])
     const animationStatus = ref(false)
     const ansStatus = ref(false)
     const drawData = ref(null)
+    const downStatus = ref(false)
     const historyData = computed(() => {
       let target = []
       if(!drawData.value) return target
@@ -92,14 +92,14 @@ export default {
       if(!newData.value) return []
       return newData.value.reward
     })
-    console.log('historyData',historyData)
-    setTimeout(()=>{
-      console.log('newData',newData.value)
-    },1000)
+    // console.log('historyData',historyData)
+    // setTimeout(()=>{
+    //   console.log('newData',newData.value)
+    // },1000)
     // console.log('dd')
     
 
-    //py test
+    //pyapi
     const pyCatchNum = () => {
       fetch('http://127.0.0.1:5000/gethistory', {
         headers: {
@@ -110,18 +110,12 @@ export default {
       .then(response => response.json()) // 輸出成 json
       .then(res => {
         drawData.value = res 
-        console.log('gethistory',res)
+        // console.log('gethistory',res)
       }).catch((error) => {
         console.error("Error:", error)
       })
     }
-    pyCatchNum()
-
-    const setItemRef = el => {
-        if (el) {
-          refArr.value.push(el)
-        }
-    }
+    
     // //開獎動畫
     const startAnimation = () => {
       if(animationStatus.value) return false
@@ -145,7 +139,6 @@ export default {
     }
 
     //拉手把動畫
-    const downStatus = ref(false)
     const down = () => {
       pyCatchNum()
       startAnimation()
@@ -155,6 +148,11 @@ export default {
         downStatus.value = false
       },1500)
     }
+
+    const init = () => {
+      pyCatchNum()
+    }
+    init()
 
     onMounted(() => {
       //api 連接--start
@@ -189,12 +187,6 @@ export default {
       //   }
       // };
       //api 連接--end
-      //列出ref
-      // refArr.value.forEach((item)=> {
-      //   console.log('item',item)
-      // })
-      // console.log('refArr',refArr.value)
-      // refArr.value[4].innerText = 'sad'
       
     })
 
@@ -202,12 +194,10 @@ export default {
       holdbar,
       hold,
       downStatus,
-      down,
-      setItemRef,
-      refArr,
       animationStatus,
       ansStatus,
-      drawResult
+      drawResult,
+      down,
     }
 
   }
