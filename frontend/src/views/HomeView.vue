@@ -31,7 +31,7 @@
       <div ref="historyItem" class="w-[70vw] h-[40vh] flex flex-wrap overflow-x-hidden overflow-y-auto">
         <div class="flex flex-wrap justify-center items-center">
           <div
-            v-for="(item,index) in historyData" :key="index"
+            v-for="(item,index) in sortData" :key="index"
             class="w-[100%] flex flex-wrap justify-center items-center border-t-2 border-solid border-black"
           >
             <div class="w-[20%] md:w-[15%] h-auto break-all">{{ item.no }}</div>
@@ -89,6 +89,7 @@ export default {
      * drawResult 最新一筆號碼
      * termResult 最新一筆編號
      * specialPosition 最新一筆特別號位置
+     * sortData 排序後資料
      */
     const animationStatusArr = ref([])
     const historyItem = ref(null)
@@ -124,6 +125,10 @@ export default {
     const specialPosition = computed(() => {
       if(!newData.value) return -1
       return newData.value.reward.indexOf(newData.value.special)
+    })
+    const sortData = computed(() => {
+      if(!historyData.value) return []
+      return JSON.parse(JSON.stringify(historyData.value)).reverse()
     })
     // 監聽api改變後拉桿
     watch(newData, (newVal,oldVal)=>{
@@ -173,9 +178,9 @@ export default {
       for(let i = 0;i<20;i++){
         setTimeout((i) => {
           animationStatusArr.value[i] = false
-          if(i==19){
-            historyItem.value.scrollTop = 9999
-          }
+          // if(i==19){
+          //   historyItem.value.scrollTop = 0
+          // }
         }, i*500, i)
       }
     }
@@ -204,7 +209,7 @@ export default {
     onMounted(() => {
       timer1.value = window.setInterval((async() => {
         await pyCatchNum()
-      } ), 10000)
+      } ), 5500)
     })
 
     onBeforeUnmount(() => {
@@ -219,6 +224,7 @@ export default {
       historyData,
       specialPosition,
       animationStatusArr,
+      sortData,
       toStr,
     }
 
