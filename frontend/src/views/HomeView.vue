@@ -71,6 +71,7 @@
 <script>
 // @ is an alias to /src
 import { ref,computed,onMounted,onBeforeUnmount,watch } from 'vue'
+import axios from 'axios';
 export default {
   name: 'HomeView',
   components: {
@@ -135,19 +136,34 @@ export default {
     })
     //pyapi拿獎項資料
     const pyCatchNum = () => {
-      fetch('http://127.0.0.1:5000/gethistory', {
-        headers: {
-          'content-type': 'application/json' // 這一欄一定要設定！
-        },
-        method: 'GET',
+      // fetch('http://127.0.0.1:5000/gethistory', {
+      //   headers: {
+      //     'content-type': 'application/json' // 這一欄一定要設定！
+      //   },
+      //   method: 'GET',
+      // })
+      // .then(response => response.json()) // 輸出成 json
+      // .then(res => {
+      //   drawData.value = res 
+      //   // console.log('gethistory',res)
+      // }).catch((error) => {
+      //   console.error("Error:", error)
+      // })
+
+      axios.get('https://921d-114-46-207-39.jp.ngrok.io/gethistory')
+      .then((response) => {
+        // handle success
+        drawData.value = response.data 
       })
-      .then(response => response.json()) // 輸出成 json
-      .then(res => {
-        drawData.value = res 
-        // console.log('gethistory',res)
-      }).catch((error) => {
-        console.error("Error:", error)
+      .catch((error) => {
+        // handle error
+        console.log(error);
       })
+      .finally(()=> {
+        // always executed
+        // console.log('always executed')
+      });
+
     }
     //開獎動畫
     const startAnimation = () => {

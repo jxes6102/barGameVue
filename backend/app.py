@@ -1,4 +1,4 @@
-from flask import Flask,request,jsonify
+from flask import Flask,request,jsonify,make_response
 from flask_cors import CORS
 import numpy as np
 import requests
@@ -91,7 +91,13 @@ def getHistory():
     obj = {}
     for item in matrix:
         obj[item[0]] = [item[1],item[2],item[3],item[4]]
-
+    
+    # response = make_response(obj,200)
+    # response.headers["ngrok-skip-browser-warning"] = "any"
+    # response.headers["Access-Control-Allow-Origin"] = "*"
+    # response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+    
+    # return response
     return obj
 
 if __name__ == "__main__":
