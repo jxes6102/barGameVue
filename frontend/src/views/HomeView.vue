@@ -150,7 +150,7 @@ export default {
       //   console.error("Error:", error)
       // })
 
-      axios.get('https://921d-114-46-207-39.jp.ngrok.io/gethistory')
+      axios.get('https://fd2b-114-46-207-39.ngrok-free.app/gethistory')
       .then((response) => {
         // handle success
         drawData.value = response.data 
