@@ -1,10 +1,9 @@
 <template>
-    <div class="">
-        <div class="niu_danji">
+    <div class="w-[100vw] h-[100vh] bg-yellow-400 flex flex-wrap justify-center items-center">
+        <div class="niu_danji absolute w-[100vh] md:w-[640px] h-[100vh] bg-[url('/src/assets/images/background.png')] m-[0_auto] overflow-hidden">
             <!--机器-->
-            <div class="game_qu">
+            <div class="game_qu absolute bg-[url('/src/assets/images/game_ndj.png')] bg-no-repeat w-[553px] h-[767px] left-[47px] top-[74px] z-[3]">
                 <div class="game_go"></div>
-                <div class="wdjifen"></div>
             </div>
             <!--球-->
             <div class="dan_gund">

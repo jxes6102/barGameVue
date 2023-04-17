@@ -23,11 +23,6 @@ a{
 
 
 /*扭蛋机*/
-.niu_danji{ 
-	width:640px; height:100vh; background:#1b1009; margin:0px auto; overflow:hidden; position:relative
-}
-
-.niu_danji .game_qu{background:url(../images/game_ndj.png) no-repeat; width:553px; height:767px;  left:47px; top:74px; position:absolute; z-index:3}
 .niu_danji .game_go{ 
 	width:134px; 
 	height:134px; 
@@ -40,20 +35,20 @@ a{
 	text-align:center; 
 }
 
-.niu_danji .wdjifen{ font-size:20px; color:#e00b37;width:128px; height:35px;  line-height:35px;position:absolute; left:206px;  bottom:120px; text-align:center}
+.wdjifen{ font-size:20px; color:#e00b37;width:128px; height:35px;  line-height:35px;position:absolute; left:206px;  bottom:120px; text-align:center}
 
 
-.niu_danji .an_jfgr{ width:100%; text-align:center; padding-top:23px; position:absolute; left:0px; bottom:60px;}
-.niu_danji .an_jfgr img{ margin:0px 7px;}
+.an_jfgr{ width:100%; text-align:center; padding-top:23px; position:absolute; left:0px; bottom:60px;}
+.an_jfgr img{ margin:0px 7px;}
 
 
 
-.niu_danji .dan_gund{ width:500px; height:447px; position:absolute; left:68px; top:80px;  z-index:1;
+.dan_gund{ width:500px; height:447px; position:absolute; left:68px; top:80px;  z-index:1;
 -webkit-border-radius:240px 240px 0px 0px;
     -moz-border-radius:240px 240px 0px 0px;
     border-radius:240px 240px 0px 0px; overflow:hidden}
 
-.niu_danji .dan_gund span{ width:40px; height:40px;}
+.dan_gund span{ width:40px; height:40px;}
 /*大小*/
 
 /*中奖*/
