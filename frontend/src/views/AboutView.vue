@@ -6,15 +6,15 @@
                 <div class="absolute w-[70px] h-[70px] md:w-[124px] md:h-[124px] top-[53%] left-[105px] md:left-[290px] bg-[url('/src/assets/images/an_go.png')] bg-contain bg-center bg-no-repeat z-[4]"></div>
                 <!--球-->
                 <div class="absolute w-[260px] h-[230px] md:w-[450px] md:h-[405px] top-[0px] left-[10px]  md:left-[120px] overflow-hidden rounded-[240px_240px_0px_0px] bg-[#7767ef]">
-                    <span 
+                    <span
                         v-for="(item,index) in 80" :key="index"
                         class="z-[2] w-[40px] h-[40px]"
                         :class="'qiu_' + item + ' diaol_' + item + (runBallStatus ? ' wieyi_'+item : '')"
                     ></span>
                 </div>
+                <!--出口-->
+                <div class="absolute w-[80px] h-[80px] left-[100px] top-[325px] md:w-[136px] md:h-[138px] md:left-[285px] md:top-[580px] z-[1]"><img src="@/assets/images/mendong.png"></div>
             </div>
-            
-
         </div>
     </div>
 </template>
