@@ -1,5 +1,5 @@
 <template>
-    <div class="w-[100vw] h-[100vh] bg-yellow-400 flex flex-wrap justify-center items-center">
+    <div class="w-[100vw] h-[100vh] bg-[#fdfdd6] flex flex-wrap justify-center items-center">
         <div class="absolute flex flex-wrap justify-center items-center w-[100vw] h-[75vh] md:w-[700px] md:h-[100vh] bg-no-repeat bg-contain bg-center bg-[url('/src/assets/images/background.png')]">
             <!-- 機器 -->
             <div class="absolute bg-[url('/src/assets/images/game_ndj.png')] bg-contain bg-center bg-no-repeat w-[280px] h-[400px] md:w-[700px] md:h-[700px] z-[3]">
@@ -7,7 +7,7 @@
                 <!--球-->
                 <div class="absolute w-[260px] h-[230px] md:w-[450px] md:h-[405px] top-[0px] left-[10px]  md:left-[120px] overflow-hidden rounded-[240px_240px_0px_0px] ">
                     <span
-                        v-for="(item,index) in 35" :key="index"
+                        v-for="(item,index) in 46" :key="index"
                         class="z-[2] w-[20px] h-[20px] md:w-[35px] md:h-[35px]"
                         :class="'qiu_' + item + ' diaol_' + item + (runBallStatus ? ' wieyi_'+item : '')"
                     ></span>
