@@ -26,22 +26,22 @@
                     <h2 id="message" v-html="messageText"></h2>
                 </div>
             </div> -->
-            <div class="absolute w-[500px] h-[500px] left-[calc(50%-250px)] top-[calc(50%-250px)] z-[4]" id="jianpin_one" v-show="true">
-                <div class="jpzs aiqiyi tc_anima">
-                    <em><img src="@/assets//images/close.png" @click="close"></em>
-                    <h2 id="message" v-html="'ggg'"></h2>
+            <div 
+                class="bg-[#6f8fea] absolute w-[270px] h-[270px] md:w-[500px] md:h-[500px] left-[calc(50%-135px)] top-[calc(50%-135px)] md:left-[calc(50%-250px)] md:top-[calc(50%-250px)] z-[4] flex flex-wrap justify-center items-center" 
+                id="jianpin_one" v-show="true"
+            >
+                <div class="tc_anima absolute w-[250px] h-[175px] md:w-[450px] md:h-[286px] rounded-[10px] bg-[#fff] ">
+                    <em class="absolute h-[95px] right-0 top-[-40px] md:top-[-50px]">
+                        <img src="@/assets/images/close.png" @click="close">
+                    </em>
+                    <h2 
+                        class="text-[36px] text-[#ff1a4b] text-center leading-[40px] flex flex-wrap justify-center items-center break-all"
+                        id="message" 
+                        v-html="'gggkdsf'"
+                    >
+                    </h2>
                 </div>
             </div>
-            <!-- .zonj_zezc{ 
-	width:640px; 
-	min-height:100vh; 
-	position:absolute; 
-	left:50%; 
-	top:0px; 
-	z-index:4;
-	/* background:rgba(0,0,0,0.85);  */
-	margin-left:-320px;
-} -->
         </div>
     </div>
 </template>
