@@ -144,17 +144,17 @@ export default {
     init()
 
     onMounted(() => {
-        // setTimeout(function (){
-        //     controlMessage(true,drawResult.value,cycleNo)
-        // },1500)
+        setTimeout(function (){
+            controlMessage(true,drawResult.value,cycleNo)
+        },1500)
 
-        // timeout8.value = window.setInterval((async() => {
-        //     await getNum()
-        //     if(openStatus) {
-        //         controlRunBall(true)
-        //         play()
-        //     }
-        // } ), 10000)
+        timeout8.value = window.setInterval((async() => {
+            await getNum()
+            if(openStatus) {
+                controlRunBall(true)
+                play()
+            }
+        } ), 10000)
 
         // setTimeout(function (){
         //    play()
