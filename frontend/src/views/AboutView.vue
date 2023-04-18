@@ -7,15 +7,15 @@
                 <!--球-->
                 <div class="absolute w-[260px] h-[230px] md:w-[450px] md:h-[405px] top-[0px] left-[10px]  md:left-[120px] overflow-hidden rounded-[240px_240px_0px_0px] bg-[#7767ef]">
                     <span
-                        v-for="(item,index) in 80" :key="index"
-                        class="z-[2] w-[40px] h-[40px]"
+                        v-for="(item,index) in 10" :key="index"
+                        class="z-[2] w-[35px] h-[35px]"
                         :class="'qiu_' + item + ' diaol_' + item + (runBallStatus ? ' wieyi_'+item : '')"
                     ></span>
                 </div>
                 <!--出口-->
                 <div class="absolute w-[80px] h-[80px] left-[100px] top-[325px] md:w-[136px] md:h-[138px] md:left-[285px] md:top-[580px] z-[1]"><img src="@/assets/images/mendong.png"></div>
                 <!--掉落物-->
-                <div class="absolute w-[130px] h-[110px] left-[290px] top-[600px] z-[2] flex flex-wrap justify-center items-center" :class="fallStatus ? 'dila_Y' : ''">
+                <div class="absolute w-[130px] h-[110px] left-[85px] top-[340px] md:left-[300px] md:top-[610px] z-[2] flex flex-wrap justify-center items-center" :class="fallStatus ? 'dila_Y' : ''">
                     <span :data-content="fallNum" :class="fallStatus ? 'diaL_one' : ''"></span>
                 </div>
             </div>
@@ -29,7 +29,7 @@
                         <img src="@/assets/images/close.png" @click="close">
                     </em>
                     <h2 
-                        class="text-[36px] text-[#ff1a4b] text-center leading-[40px] flex flex-wrap justify-center items-center break-all"
+                        class="text-[22px] md:text-[38px] text-[#ff1a4b] text-center leading-[40px] md:leading-[60px] flex flex-wrap justify-center items-center break-all"
                         id="message" 
                         v-html="messageText"
                     >
@@ -43,9 +43,9 @@
 <script>
 /*eslint-disable*/
 // @ is an alias to /src
-import '@/assets/css/ball.css'
+import '@/assets/css/balltest.css'
 import '@/assets/css/run.css'
-import '@/assets/css/style.css'
+import '@/assets/css/styletest.css'
 import { ref,onMounted,onBeforeUnmount } from 'vue'
 
 // import axios from 'axios';
@@ -144,9 +144,9 @@ export default {
     init()
 
     onMounted(() => {
-        setTimeout(function (){
-            controlMessage(true,drawResult.value,cycleNo)
-        },1500)
+        // setTimeout(function (){
+        //     controlMessage(true,drawResult.value,cycleNo)
+        // },1500)
 
         // timeout8.value = window.setInterval((async() => {
         //     await getNum()
@@ -159,6 +159,10 @@ export default {
         // setTimeout(function (){
         //    play()
         // },2500)
+        // setTimeout(function (){
+        //     controlRunBall(true)
+        // },3500)
+        
     })
 
     onBeforeUnmount(() => {
