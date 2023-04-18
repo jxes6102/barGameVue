@@ -1,30 +1,40 @@
 <template>
-    <div class="w-[100vw] h-[100vh] bg-yellow-400 flex flex-wrap justify-center items-center">
-        <div class="niu_danji absolute w-[100vh] md:w-[640px] h-[100vh] bg-[url('/src/assets/images/background.png')] m-[0_auto] overflow-hidden">
-            <!--机器-->
-            <div class="game_qu absolute bg-[url('/src/assets/images/game_ndj.png')] bg-no-repeat w-[553px] h-[767px] left-[47px] top-[74px] z-[3]">
-                <div class="game_go"></div>
+    <div class="w-[100vw] h-[100vh] bg-[#fcfce5] flex flex-wrap justify-center items-center">
+        <div class="absolute flex flex-wrap justify-center items-center w-[100vw] h-[75vh] md:w-[700px] md:h-[100vh] bg-no-repeat bg-contain bg-center bg-[url('/src/assets/images/background.png')]">
+            <!-- 機器 -->
+            <div class="absolute bg-[url('/src/assets/images/game_ndj.png')] bg-contain bg-center bg-no-repeat w-[280px] h-[400px] md:w-[700px] md:h-[700px] z-[3]">
+                <div class="absolute w-[70px] h-[70px] md:w-[124px] md:h-[124px] top-[53%] left-[105px] md:left-[290px] bg-[url('/src/assets/images/an_go.png')] bg-contain bg-center bg-no-repeat z-[4]"></div>
+                <!--球-->
+                <div class="absolute w-[260px] h-[230px] md:w-[450px] md:h-[405px] top-[0px] left-[10px]  md:left-[120px] overflow-hidden rounded-[240px_240px_0px_0px] ">
+                    <span
+                        v-for="(item,index) in 80" :key="index"
+                        class="z-[2] w-[20px] h-[20px] md:w-[35px] md:h-[35px]"
+                        :class="'qiu_' + item + ' diaol_' + item + (runBallStatus ? ' wieyi_'+item : '')"
+                    ></span>
+                </div>
+                <!--出口-->
+                <div class="absolute w-[80px] h-[80px] left-[100px] top-[325px] md:w-[136px] md:h-[138px] md:left-[285px] md:top-[580px] z-[1]"><img src="@/assets/images/mendong.png"></div>
+                <!--掉落物-->
+                <div class="absolute w-[130px] h-[110px]  left-[85px] top-[325px] md:left-[290px] md:top-[610px] z-[2] flex flex-wrap justify-center items-center" :class="fallStatus ? 'dila_Y' : ''">
+                    <span :data-content="fallNum" :class="fallStatus ? 'diaL_one' : ''"></span>
+                </div>
             </div>
-            <!--球-->
-            <div class="dan_gund">
-                <span 
-                    v-for="(item,index) in 80" :key="index"
-                    :class="'qiu_' + item + ' diaol_' + item + (runBallStatus ? ' wieyi_'+item : '')"
-                ></span>
-            </div>
-
-            <!--中奖掉落-->
-            <div class="medon"><img src="@/assets/images/mendong.png"></div>
-            <div class="zjdl " :class="fallStatus ? 'dila_Y' : ''">
-                <span :data-content="fallNum" :class="fallStatus ? 'diaL_one' : ''"></span>
-            </div>
-            
-        </div>
-
-        <div class="zonj_zezc" id="jianpin_one" v-show="messageStatus">
-            <div class="jpzs aiqiyi tc_anima">
-                <em><img src="@/assets//images/close.png" @click="close"></em>
-                <h2 id="message" v-html="messageText"></h2>
+            <!--號碼訊息-->
+            <div
+                class="absolute w-[270px] h-[270px] md:w-[500px] md:h-[500px] left-[calc(50%-135px)] top-[calc(50%-135px)] md:left-[calc(50%-250px)] md:top-[calc(50%-250px)] z-[4] flex flex-wrap justify-center items-center" 
+                id="jianpin_one" v-show="messageStatus"
+            >
+                <div class="tc_anima absolute w-[250px] h-[175px] md:w-[450px] md:h-[286px] rounded-[10px] bg-[#fff] py-2">
+                    <em class="absolute h-[95px] right-0 top-[-40px] md:top-[-50px]">
+                        <img src="@/assets/images/close.png" @click="close">
+                    </em>
+                    <h2 
+                        class="text-[22px] md:text-[38px] text-[#ff1a4b] text-center leading-[40px] md:leading-[60px] flex flex-wrap justify-center items-center break-all"
+                        id="message" 
+                        v-html="messageText"
+                    >
+                    </h2>
+                </div>
             </div>
         </div>
     </div>
@@ -38,7 +48,7 @@ import '@/assets/css/style.css'
 import { ref,onMounted,onBeforeUnmount } from 'vue'
 // import axios from 'axios';
 export default {
-  name: 'HomeView',
+  name: 'capsule',
   components: {
   },
   setup() {

@@ -43,9 +43,9 @@
 <script>
 /*eslint-disable*/
 // @ is an alias to /src
-import '@/assets/css/balltest.css'
+import '@/assets/css/ball.css'
 import '@/assets/css/run.css'
-import '@/assets/css/styletest.css'
+import '@/assets/css/style.css'
 import { ref,onMounted,onBeforeUnmount } from 'vue'
 
 // import axios from 'axios';
