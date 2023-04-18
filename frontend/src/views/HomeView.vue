@@ -155,7 +155,7 @@ export default {
       //   console.error("Error:", error)
       // })
 
-      axios.get('https://e9af-114-46-175-180.ngrok-free.app/gethistory')
+      axios.get('https://3de6-114-46-175-180.ngrok-free.app/gethistory')
       .then((response) => {
         // handle success
         drawData.value = response.data 

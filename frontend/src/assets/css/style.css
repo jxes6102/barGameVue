@@ -43,10 +43,18 @@ a{
 
 
 
-.dan_gund{ width:500px; height:447px; position:absolute; left:68px; top:80px;  z-index:1;
--webkit-border-radius:240px 240px 0px 0px;
+.dan_gund{ 
+	width:500px; 
+	height:447px; 
+	position:absolute; 
+	left:68px; 
+	top:80px;  
+	z-index:1;
+	-webkit-border-radius:240px 240px 0px 0px;
     -moz-border-radius:240px 240px 0px 0px;
-    border-radius:240px 240px 0px 0px; overflow:hidden}
+    border-radius:240px 240px 0px 0px; 
+	overflow:hidden
+}
 
 .dan_gund span{ width:40px; height:40px;}
 /*大小*/
