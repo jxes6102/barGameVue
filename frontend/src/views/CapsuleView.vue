@@ -25,7 +25,6 @@
             <div class="jpzs aiqiyi tc_anima">
                 <em><img src="@/assets//images/close.png" @click="close"></em>
                 <h2 id="message" v-html="messageText"></h2>
-                <!-- <div id="message"></div> -->
             </div>
         </div>
     </div>

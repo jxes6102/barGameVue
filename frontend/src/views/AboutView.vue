@@ -14,7 +14,34 @@
                 </div>
                 <!--出口-->
                 <div class="absolute w-[80px] h-[80px] left-[100px] top-[325px] md:w-[136px] md:h-[138px] md:left-[285px] md:top-[580px] z-[1]"><img src="@/assets/images/mendong.png"></div>
+                <!--掉落物-->
+                <!-- <div class="zjdl " :class="fallStatus ? 'dila_Y' : ''">
+                    <span :data-content="fallNum" :class="fallStatus ? 'diaL_one' : ''"></span>
+                </div> -->
             </div>
+            <!--號碼訊息-->
+            <!-- <div class="zonj_zezc" id="jianpin_one" v-show="messageStatus">
+                <div class="jpzs aiqiyi tc_anima">
+                    <em><img src="@/assets//images/close.png" @click="close"></em>
+                    <h2 id="message" v-html="messageText"></h2>
+                </div>
+            </div> -->
+            <div class="absolute w-[500px] h-[500px] left-[calc(50%-250px)] top-[calc(50%-250px)] z-[4]" id="jianpin_one" v-show="true">
+                <div class="jpzs aiqiyi tc_anima">
+                    <em><img src="@/assets//images/close.png" @click="close"></em>
+                    <h2 id="message" v-html="'ggg'"></h2>
+                </div>
+            </div>
+            <!-- .zonj_zezc{ 
+	width:640px; 
+	min-height:100vh; 
+	position:absolute; 
+	left:50%; 
+	top:0px; 
+	z-index:4;
+	/* background:rgba(0,0,0,0.85);  */
+	margin-left:-320px;
+} -->
         </div>
     </div>
 </template>
