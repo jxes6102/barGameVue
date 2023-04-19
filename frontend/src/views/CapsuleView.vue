@@ -12,6 +12,11 @@
                         :class="'qiu_' + item + ' diaol_' + item + (runBallStatus ? ' wieyi_'+item : '')"
                     ></span>
                 </div>
+                <!-- 滾輪 -->
+                <div 
+                    :class="runBallStatus ? 'rotateStyle' : ''" 
+                    class="absolute w-[100px] h-[100px] md:w-[180px] md:h-[180px] top-[25%] left-[calc(50%-50px)] md:left-[calc(50%-90px)] bg-[url('/src/assets/images/rotate.png')] bg-contain bg-center bg-no-repeat z-[4]"
+                ></div>
                 <!--出口-->
                 <div class="absolute w-[80px] h-[80px] left-[100px] top-[325px] md:w-[136px] md:h-[138px] md:left-[285px] md:top-[580px] z-[1]"><img src="@/assets/images/mendong.png"></div>
                 <!--掉落物-->
@@ -171,3 +176,16 @@ export default {
   }
 }
 </script>
+<style scoped>
+@keyframes rotates{
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.rotateStyle{
+    animation: rotates 1s linear infinite;
+}
+</style>
