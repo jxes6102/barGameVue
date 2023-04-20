@@ -1,7 +1,7 @@
 <template>
   <div class="w-[100vw] h-[100vh] bg-[#fcfce5] flex flex-wrap justify-center items-center gap-[20px]">
-     <el-button type="primary" size='large' style="font-size: 22px; width:100px;" @click="toLinkBar">bar</el-button>
-     <el-button type="primary" size='large' style="font-size: 22px; width:100px;" @click="toLinkCapsule">capsule</el-button>
+      <div class="w-[100px] text-2xl bg-[#8ac6d1] px-2 py-1 rounded-[5px] cursor-pointer hover:opacity-80" @click="toLinkBar">bar</div>
+      <div class="w-[100px] text-2xl bg-[#8ac6d1] px-2 py-1 rounded-[5px] cursor-pointer hover:opacity-80" @click="toLinkCapsule">capsule</div>
   </div>
 </template>
 <script>
