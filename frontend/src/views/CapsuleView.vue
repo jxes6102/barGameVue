@@ -47,6 +47,8 @@
                 </div>
             </div>
         </div>
+        <!-- 回上頁 -->
+        <Back></Back>
     </div>
 </template>
 <script>
@@ -56,10 +58,12 @@ import '@/assets/css/ball.css'
 import '@/assets/css/run.css'
 import '@/assets/css/style.css'
 import { ref,computed,onMounted,onBeforeUnmount } from 'vue'
+import Back from '@/components/Back.vue'
 // import axios from 'axios';
 export default {
   name: 'capsule',
   components: {
+    Back
   },
   setup() {
     let drawResult = ref('')

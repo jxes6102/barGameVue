@@ -66,16 +66,19 @@
         </div>
       </Transition>
     </div>
+    <!-- 回上頁 -->
+    <Back></Back>
   </div>
 </template>
 <script>
 // @ is an alias to /src
 import { ref,computed,onMounted,onBeforeUnmount,watch } from 'vue'
-import axios from 'axios';
+import axios from 'axios'
+import Back from '@/components/Back.vue'
 export default {
   name: 'HomeView',
   components: {
-    // HelloWorld
+    Back
   },
   setup() {
     /**
@@ -155,7 +158,7 @@ export default {
       //   console.error("Error:", error)
       // })
 
-      axios.get('https://8913-114-46-175-180.ngrok-free.app/gethistory')
+      axios.get('http://127.0.0.1:5000/gethistory')
       .then((response) => {
         // handle success
         drawData.value = response.data 
