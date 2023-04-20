@@ -8,7 +8,7 @@
                     {{ displayTitle }}
                 </div>
                 <div class="absolute py-[5px] md:px-[60px] top-[-65px] md:top-[-120px] md:left-[5%] w-[280px] md:w-[90%] h-auto bg-[#f3f1b0] rounded-lg shadow-2xl flex flex-wrap justify-center items-center font-bold text-[12px] md:text-2xl break-all text-red-500">
-                    下期開獎時間: 00:00
+                    {{ displayTime }}
                 </div>
                 <div class="absolute px-[10px] md:px-[60px] top-[-30px] md:top-[-60px] md:left-[5%] w-[280px] md:w-[90%] h-16 md:h-24 bg-[#f3f1b0] rounded-lg shadow-2xl flex flex-wrap justify-center items-center font-bold text-[12px] md:text-2xl break-all text-red-500">
                     {{ messageText }}
@@ -45,7 +45,7 @@
 import '@/assets/css/ball.css'
 import '@/assets/css/run.css'
 import '@/assets/css/style.css'
-import { ref,computed,onMounted,watch } from 'vue'
+import { ref,computed,onMounted,watch,onBeforeUnmount } from 'vue'
 // import axios from 'axios';
 export default {
   name: 'capsuleComponent',
@@ -63,8 +63,13 @@ export default {
     let messageText = ref('')
     let fallNum = ref('')
     let fallStatus = ref(false)
+    let nowSeconds = ref(0)
+    let timer1 = ref(null)
     const displayTitle = computed(() => {
         return '台灣賓果 期號: ' + drawData.value.no
+    })
+    const displayTime = computed(() => {
+        return '下期開獎時間: ' + Math.floor(nowSeconds.value/60)+":"+nowSeconds.value%60
     })
     const drawData = computed(() => {
         return props.allData
@@ -74,16 +79,23 @@ export default {
             if(parseInt(newVal.no) > parseInt(oldVal.no)) {
                 console.log('change',newVal)
                 play()
+                getTime()
             }else{
                 controlMessage(drawData.value.reward.join(' , '))
             }
+        }
+    })
+    watch(nowSeconds, (newVal,oldVal)=>{
+        if(newVal === 0){
+            getTime()
+            controlRunBall(true)
         }
     })
 
     //掉球動作
     const fallBall = () => {
         if(fallTimes<20){
-            controlRunBall(true)
+            // controlRunBall(true)
             setTimeout(function (){
                 // 掉球
                 let text = drawData.value.reward.slice(0,fallTimes+1).join(' , ')
@@ -116,16 +128,30 @@ export default {
         // 掉球和結果動畫
         fallBall()
     }
-    // //初始動作
-    // const init = async() => {
-    // }
-    // init()
+    const getTime = () => {
+        const time = new Date();
+        let getMinutes = time.getMinutes();
+        let getSeconds = time.getSeconds();
+        nowSeconds.value = (4-getMinutes%5)*60+(60-getSeconds)
+    }
+    //初始動作
+    const init = async() => {
+        getTime()
+
+        timer1.value = window.setInterval((async() => {
+            nowSeconds.value--
+        } ), 1000)
+    }
+    init()
 
     onMounted(() => {
         setTimeout(function (){
             // play()
             // controlRunBall(true)
         },2500)
+    })
+    onBeforeUnmount(() => {
+      clearInterval(timer1.value)
     })
 
     return {
@@ -135,6 +161,7 @@ export default {
         fallStatus,
         displayTitle,
         drawData,
+        displayTime,
     }
 
   }
