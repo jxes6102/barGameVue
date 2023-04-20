@@ -1,7 +1,8 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import Capsule from '../views/CapsuleView.vue'
+// import Capsule from '../views/CapsuleView.vue'
 import Bar from '../views/BarView.vue'
+import Newcapsule from '../views/NewCapsule.vue'
 
 const routes = [
   {
@@ -12,7 +13,7 @@ const routes = [
   {
     path: '/capsule',
     name: 'capsule',
-    component:Capsule
+    component:Newcapsule
   },
   {
     path: '/bar',
