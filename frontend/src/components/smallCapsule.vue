@@ -45,7 +45,7 @@
 import '@/assets/css/ball.css'
 import '@/assets/css/run.css'
 import '@/assets/css/style.css'
-import { ref,computed,onMounted,onBeforeUnmount,watch } from 'vue'
+import { ref,computed,onMounted,watch } from 'vue'
 // import axios from 'axios';
 export default {
   name: 'capsuleComponent',
@@ -128,9 +128,6 @@ export default {
         },2500)
     })
 
-    onBeforeUnmount(() => {
-    })
-
     return {
         runBallStatus,
         messageText,
@@ -138,7 +135,6 @@ export default {
         fallStatus,
         displayTitle,
         drawData,
-        close
     }
 
   }
