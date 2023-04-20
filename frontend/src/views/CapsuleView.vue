@@ -3,6 +3,11 @@
         <div class="absolute flex flex-wrap justify-center items-center w-[100vw] h-[75vh] md:w-[700px] md:h-[100vh] bg-no-repeat bg-contain bg-center bg-[url('/src/assets/images/background.png')]">
             <!-- 機器 -->
             <div class="absolute bg-[url('/src/assets/images/game_ndj.png')] bg-contain bg-center bg-no-repeat w-[280px] h-[400px] md:w-[700px] md:h-[700px] z-[3]">
+                <!-- 訊息 -->
+                <div class="absolute top-[-30px] md:left-[5%] md:top-[-50px] w-[280px] md:w-[90%] h-8 md:h-12 bg-[#f3f1b0] rounded-lg shadow-2xl flex flex-wrap justify-center items-center font-extrabold text-base md:text-2xl text-red-500">
+                    {{ displayTitle }}
+                </div>
+                <!-- go標誌 -->
                 <div class="absolute w-[70px] h-[70px] md:w-[124px] md:h-[124px] top-[53%] left-[105px] md:left-[290px] bg-[url('/src/assets/images/an_go.png')] bg-contain bg-center bg-no-repeat z-[4]"></div>
                 <!--球-->
                 <div class="absolute w-[260px] h-[230px] md:w-[450px] md:h-[405px] top-[0px] left-[10px]  md:left-[120px] overflow-hidden rounded-[240px_240px_0px_0px] ">
@@ -50,7 +55,7 @@
 import '@/assets/css/ball.css'
 import '@/assets/css/run.css'
 import '@/assets/css/style.css'
-import { ref,onMounted,onBeforeUnmount } from 'vue'
+import { ref,computed,onMounted,onBeforeUnmount } from 'vue'
 // import axios from 'axios';
 export default {
   name: 'capsule',
@@ -68,6 +73,10 @@ export default {
     let messageText = ref('')
     let fallNum = ref('')
     let fallStatus = ref(false)
+    let term = ref('')
+    const displayTitle = computed(() => {
+      return '台灣賓果 期號: ' + term.value
+    })
 
     // 拿開獎數字
     const getNum = async() => {
@@ -79,12 +88,13 @@ export default {
         })
         .then(response => response.json()) // 輸出成 json
         .then(res => {
-
+            console.log('res',res)
             if(res.msg === '成功') {
                 if(cycleNo === res.data[0].cycleNo) {
                     openStatus = false
                 }else{
                     cycleNo = res.data[0].cycleNo
+                    term.value = res.data[0].issue
                     openStatus = true
                 }
                 
@@ -170,6 +180,7 @@ export default {
         messageText,
         fallNum,
         fallStatus,
+        displayTitle,
         close
     }
 
