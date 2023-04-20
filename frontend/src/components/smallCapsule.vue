@@ -58,6 +58,17 @@ export default {
     }
   },
   setup(props) {
+    /**
+     * fallTimes 掉球次數
+     * runBallStatus 滾球動畫狀態
+     * messageText 號碼訊息
+     * fallNum  掉落數字
+     * fallStatus 掉落動畫狀態
+     * nowSeconds 剩餘秒數
+     * timer1 扣時timer
+     * displayTitle 期數
+     * drawData 開獎資料
+     */
     let fallTimes = 0
     let runBallStatus = ref(false)
     let messageText = ref('')
@@ -65,11 +76,18 @@ export default {
     let fallStatus = ref(false)
     let nowSeconds = ref(0)
     let timer1 = ref(null)
+    let initTimeStatus = ref(false)
     const displayTitle = computed(() => {
         return '台灣賓果 期號: ' + drawData.value.no
     })
     const displayTime = computed(() => {
-        return '下期開獎時間: ' + Math.floor(nowSeconds.value/60)+":"+nowSeconds.value%60
+        if(nowSeconds.value > 10 && !initTimeStatus.value){
+            return '就快到了'
+        } else if(nowSeconds.value <= 10 && !initTimeStatus.value){
+            return '下期開獎時間: 0:' + nowSeconds.value
+        } else{
+            return '下期開獎時間: ' + Math.floor(nowSeconds.value/60)+":"+nowSeconds.value%60
+        }
     })
     const drawData = computed(() => {
         return props.allData
@@ -77,9 +95,10 @@ export default {
     watch(drawData, (newVal,oldVal)=>{
         if(oldVal && (JSON.stringify(oldVal) !== '{}')){
             if(parseInt(newVal.no) > parseInt(oldVal.no)) {
-                console.log('change',newVal)
+                // console.log('change',newVal)
                 play()
                 getTime()
+                initTimeStatus.value = true
             }else{
                 controlMessage(drawData.value.reward.join(' , '))
             }
@@ -88,6 +107,7 @@ export default {
     watch(nowSeconds, (newVal,oldVal)=>{
         if(newVal === 0){
             getTime()
+            initTimeStatus.value = true
             controlRunBall(true)
         }
     })
@@ -95,7 +115,7 @@ export default {
     //掉球動作
     const fallBall = () => {
         if(fallTimes<20){
-            // controlRunBall(true)
+            controlRunBall(true)
             setTimeout(function (){
                 // 掉球
                 let text = drawData.value.reward.slice(0,fallTimes+1).join(' , ')
@@ -128,6 +148,7 @@ export default {
         // 掉球和結果動畫
         fallBall()
     }
+    // 計算時間
     const getTime = () => {
         const time = new Date();
         let getMinutes = time.getMinutes();
@@ -145,10 +166,10 @@ export default {
     init()
 
     onMounted(() => {
-        setTimeout(function (){
-            // play()
-            // controlRunBall(true)
-        },2500)
+        // setTimeout(function (){
+        //     // play()
+        //     // controlRunBall(true)
+        // },2500)
     })
     onBeforeUnmount(() => {
       clearInterval(timer1.value)
