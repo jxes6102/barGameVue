@@ -88,7 +88,6 @@ export default {
         })
         .then(response => response.json()) // 輸出成 json
         .then(res => {
-            console.log('res',res)
             if(res.msg === '成功') {
                 if(cycleNo === res.data[0].cycleNo) {
                     openStatus = false
