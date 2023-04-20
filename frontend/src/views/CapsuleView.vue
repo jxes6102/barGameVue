@@ -1,11 +1,17 @@
 <template>
     <div class="w-[100vw] h-[100vh] bg-[#fcfce5] flex flex-wrap justify-center items-center">
-        <div class="absolute flex flex-wrap justify-center items-center w-[100vw] h-[75vh] md:w-[700px] md:h-[100vh] bg-no-repeat bg-contain bg-center bg-[url('/src/assets/images/background.png')]">
+        <div class="absolute flex flex-wrap justify-center items-center w-[100vw] h-[100vh] md:w-[700px] md:h-[100vh] bg-no-repeat bg-cover bg-center bg-[url('/src/assets/images/background.png')]">
             <!-- 機器 -->
-            <div class="absolute bg-[url('/src/assets/images/game_ndj.png')] bg-contain bg-center bg-no-repeat w-[280px] h-[400px] md:w-[700px] md:h-[700px] z-[3]">
+            <div class="md:scale-[0.65] absolute bg-[url('/src/assets/images/game_ndj.png')] bg-contain bg-center bg-no-repeat w-[280px] h-[400px] md:w-[700px] md:h-[700px] z-[3]">
                 <!-- 訊息 -->
-                <div class="absolute top-[-30px] md:left-[5%] md:top-[-50px] w-[280px] md:w-[90%] h-8 md:h-12 bg-[#f3f1b0] rounded-lg shadow-2xl flex flex-wrap justify-center items-center font-extrabold text-base md:text-2xl text-red-500">
+                <div class="absolute top-[-100px] md:top-[-200px] md:left-[5%] w-[280px] md:w-[90%] h-8 md:h-16 bg-[#f3f1b0] rounded-lg shadow-2xl flex flex-wrap justify-center items-center font-extrabold text-base md:text-4xl text-red-500">
                     {{ displayTitle }}
+                </div>
+                <div class="absolute py-[5px] md:px-[60px] top-[-65px] md:top-[-120px] md:left-[5%] w-[280px] md:w-[90%] h-auto bg-[#f3f1b0] rounded-lg shadow-2xl flex flex-wrap justify-center items-center font-bold text-[12px] md:text-2xl break-all text-red-500">
+                    下期開獎時間: 00:00
+                </div>
+                <div class="absolute px-[10px] md:px-[60px] top-[-30px] md:top-[-60px] md:left-[5%] w-[280px] md:w-[90%] h-16 md:h-24 bg-[#f3f1b0] rounded-lg shadow-2xl flex flex-wrap justify-center items-center font-bold text-[12px] md:text-2xl break-all text-red-500">
+                    {{ messageText }}
                 </div>
                 <!-- go標誌 -->
                 <div class="absolute w-[70px] h-[70px] md:w-[124px] md:h-[124px] top-[53%] left-[105px] md:left-[290px] bg-[url('/src/assets/images/an_go.png')] bg-contain bg-center bg-no-repeat z-[4]"></div>
@@ -30,9 +36,9 @@
                 </div>
             </div>
             <!--號碼訊息-->
-            <div
+            <!-- <div
                 class="absolute w-[270px] h-[270px] md:w-[500px] md:h-[500px] left-[calc(50%-135px)] top-[calc(50%-135px)] md:left-[calc(50%-250px)] md:top-[calc(50%-250px)] z-[4] flex flex-wrap justify-center items-center" 
-                id="jianpin_one" v-show="messageStatus"
+                id="jianpin_one" v-show="false"
             >
                 <div class="tc_anima absolute w-[250px] h-[175px] md:w-[450px] md:h-[286px] rounded-[10px] bg-[#fff] py-2">
                     <em class="absolute h-[95px] right-0 top-[-40px] md:top-[-50px]">
@@ -45,7 +51,7 @@
                     >
                     </h2>
                 </div>
-            </div>
+            </div> -->
         </div>
         <!-- 回上頁 -->
         <Back></Back>
@@ -114,7 +120,7 @@ export default {
         if(fallTimes<20){
             setTimeout(function (){
                 // 掉球
-                let text = messageArr.value.slice(0,fallTimes+1).join(',')
+                let text = messageArr.value.slice(0,fallTimes+1).join(' , ')
                 controlMessage(true,text,cycleNo)
 
                 fallNum.value = drawResult.value.split(',')[fallTimes]
@@ -134,7 +140,7 @@ export default {
     const controlMessage = (status = false,text = '',title = '') => {
         messageStatus.value = status
         if(title) {
-            messageText.value = '編號'+title+":"+"<br>"+text
+            messageText.value = text
         } else {
             messageText.value = text
         }
@@ -161,8 +167,8 @@ export default {
 
     onMounted(() => {
         setTimeout(function (){
-            controlMessage(true,drawResult.value,cycleNo)
-        },1500)
+            controlMessage(true,drawResult.value.split(',').join(' , '),cycleNo)
+        },2000)
 
         timeout8.value = window.setInterval((async() => {
             await getNum()
@@ -171,6 +177,12 @@ export default {
                 play()
             }
         } ), 10000)
+
+
+        setTimeout(function (){
+            // play()
+            // controlRunBall(true)
+        },2500)
     })
 
     onBeforeUnmount(() => {
