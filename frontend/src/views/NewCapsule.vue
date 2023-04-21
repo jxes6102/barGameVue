@@ -3,7 +3,7 @@
     <!-- 主畫面 -->
     <SmallCapsule :allData="newData"></SmallCapsule>
     <!-- 歷史紀錄 -->
-    <div class="w-[100%] h-auto flex flex-wrap justify-center items-center">
+    <div v-show="false" class="w-[100%] h-auto flex flex-wrap justify-center items-center">
       <div class="w-[70vw] h-auto flex flex-wrap border-b-2 border-solid border-black">
         <div class="w-[20%] md:w-[15%] h-auto">編號</div>
         <div class="w-[60%] md:w-[70%] h-auto">號碼</div>
@@ -25,6 +25,31 @@
           </div>
         </div>
       </div>
+    </div>
+    <!-- 新歷史紀錄 -->
+    <div class="w-[800px] h-[40vh] flex flex-wrap justify-center items-center overflow-y-scroll">
+      <el-table v-if="isMobile" :data="sortData" style="width:300px;font-size:10px;">
+        <el-table-column prop="no" label="期號" width="60"/>
+        <el-table-column prop="reward" label="開獎號碼" />
+        <!-- <el-table-column prop="special" label="特別號" width="90"/> -->
+        <el-table-column prop="singleDecision" label="結果" width="60"/>
+      </el-table>
+      <el-table v-else :data="sortData" style="width:800px;">
+        <el-table-column prop="no" label="期號" width="100"/>
+        <el-table-column width="600" prop="reward" label="開獎號碼">
+          <template #default="scope">
+            <div class="flex flex-wrap justify-start items-center gap-x-0.5">
+              <div 
+                v-for="(item,index) in scope.row.reward" :key="index"
+                :class="item === scope.row.special ? 'hidden' : ''"
+                class="w-[25px] h-[25px] bg-[white] rounded-[50%] flex justify-center items-center border-solid border-2 border-[#1687a7] font-bold"
+              >{{ item }}</div>
+              <div class="w-[25px] h-[25px] bg-[white] rounded-[50%] flex justify-center items-center border-solid border-2 border-[#dd0a35] font-bold">{{ scope.row.special }}</div>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column prop="singleDecision" label="結果"/>
+      </el-table>
     </div>
     <!-- 回上頁 -->
     <Back></Back>
@@ -56,6 +81,7 @@ export default {
     const historyItem = ref(null)
     const timer1 = ref(null)
     const drawData = ref(null)
+    const windowWidth = ref(0)
     const historyData = computed(() => {
       let target = []
       if(!drawData.value) return target
@@ -90,14 +116,9 @@ export default {
       if(!historyData.value) return []
       return JSON.parse(JSON.stringify(historyData.value)).reverse()
     })
-    // 監聽api改變後拉桿
-    // watch(newData, (newVal,oldVal)=>{
-    //   if(oldVal){
-    //     // console.log(parseInt(newVal.no),parseInt(oldVal.no))
-    //     if(parseInt(newVal.no) > parseInt(oldVal.no)) {
-    //     }
-    //   }
-    // })
+    const isMobile = computed(() => {
+      return windowWidth.value <= 768 ? true : false
+    })
     //pyapi拿獎項資料
     const pyCatchNum = () => {
       // fetch('http://127.0.0.1:5000/gethistory', {
@@ -143,6 +164,10 @@ export default {
       timer1.value = window.setInterval((async() => {
         await pyCatchNum()
       } ), 5500)
+      windowWidth.value = window.innerWidth
+      window.addEventListener('resize', () => {
+        windowWidth.value = window.innerWidth
+      }, false);
     })
 
     onBeforeUnmount(() => {
@@ -157,6 +182,7 @@ export default {
       specialPosition,
       sortData,
       newData,
+      isMobile,
       toStr,
     }
 
