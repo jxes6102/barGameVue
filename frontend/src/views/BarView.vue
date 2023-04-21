@@ -1,8 +1,12 @@
 <template>
-  <div class="w-[100vw] h-[100vh] overflow-hidden flex flex-wrap justify-center items-start">
-    <div class="w-auto h-auto my-2 text-lg font-bold">{{ '編號: ' + termResult }}</div>
+  <div class="w-[100vw] h-[100vh] overflow-hidden flex flex-wrap justify-center items-center">
+    <!-- 訊息 -->
+    <div class="w-full h-[25vh] flex flex-wrap justify-end items-end">
+      <div class="w-full h-[90%] text-lg font-bold flex flex-wrap justify-center items-end">{{ '編號: ' + termResult }}</div>
+      <div class="w-full h-auto text-lg font-bold">{{ displayTime }}</div>
+    </div>
     <!-- 主畫面 -->
-    <div class="h-auto w-[100vw] flex flex-wrap justify-center items-center">
+    <div class="relative h-[50vh] w-[100vw] flex flex-wrap justify-center items-center">
       <div class="flex flex-wrap justify-center items-center h-[300px] w-[250px] md:h-[400px] md:w-[800px] text-white">
         <div
           v-for="(item,index) in 20" :key="item+index"
@@ -18,39 +22,40 @@
           </div>
         </div>
       </div>
+      <!--拉桿-->
+      <div class="absolute scale-[0.5] md:scale-100 h-[400px] w-[40px] bg-[#666] top-[0px] right-[5px] md:right-[5%] cursor-pointer">
+        <div
+          v-show="!downStatus" 
+          class="absolute block w-[20px] h-[200px] bg-[#ccc] bottom-1/2 left-0 right-0 rounded-[10px] my-0 mx-auto">
+        </div>
+        <div 
+          v-show="!downStatus" 
+          class="absolute w-[80px] h-[80px] bg-[#faa] rounded-[50%] left-[-50%] top-[-10%] shadow-[0_10px_10px_0_#333] cursor-pointer">
+        </div> 
+        <Transition name="bar">
+          <div
+            v-show="downStatus" 
+            class="absolute block w-[20px] h-[200px] bg-[#ccc] bottom-1/2 left-0 right-0 rounded-[10px] my-0 mx-auto">
+          </div>
+        </Transition>
+        <Transition name="barCircle">
+          <div 
+            v-show="downStatus" 
+            class="absolute w-[80px] h-[80px] bg-[#faa] rounded-[50%] left-[-50%] top-[-10%] shadow-[0_10px_10px_0_#333] cursor-pointer">
+          </div>
+        </Transition>
+      </div>
     </div>
     <!-- 新歷史紀錄 -->
     <div class="w-[800px] h-[25vh] flex flex-wrap justify-center items-center">
       <SmallHistory :isMobile="isMobile" :tableData="sortData"></SmallHistory>
-    </div>
-    <!--拉桿-->
-    <div class="scale-[0.5] md:scale-100 fixed h-[400px] w-[40px] bg-[#666] top-[40px] md:top-[25vh] left-[85vw] md:left-[90vw] cursor-pointer">
-      <div
-        v-show="!downStatus" 
-        class="absolute block w-[20px] h-[200px] bg-[#ccc] bottom-1/2 left-0 right-0 rounded-[10px] my-0 mx-auto">
-      </div>
-      <div 
-        v-show="!downStatus" 
-        class="absolute w-[80px] h-[80px] bg-[#faa] rounded-[50%] left-[-50%] top-[-10%] shadow-[0_10px_10px_0_#333] cursor-pointer">
-      </div> 
-      <Transition name="bar">
-        <div
-          v-show="downStatus" 
-          class="absolute block w-[20px] h-[200px] bg-[#ccc] bottom-1/2 left-0 right-0 rounded-[10px] my-0 mx-auto">
-        </div>
-      </Transition>
-      <Transition name="barCircle">
-        <div 
-          v-show="downStatus" 
-          class="absolute w-[80px] h-[80px] bg-[#faa] rounded-[50%] left-[-50%] top-[-10%] shadow-[0_10px_10px_0_#333] cursor-pointer">
-        </div>
-      </Transition>
     </div>
     <!-- 回上頁 -->
     <Back></Back>
   </div>
 </template>
 <script>
+/*eslint-disable*/
 // @ is an alias to /src
 import { ref,computed,onMounted,onBeforeUnmount,watch } from 'vue'
 import axios from 'axios'
@@ -75,11 +80,20 @@ export default {
      * termResult 最新一筆編號
      * specialPosition 最新一筆特別號位置
      * sortData 排序後資料
+     * displayTime 顯示時間訊息
+     * isMobile 判斷裝置
+     * initTimeStatus 控制顯示時間狀態
+     * timer2 扣時timer
+     * nowSeconds 剩餘秒數
+     * windowWidth 螢幕寬度
      */
+    let nowSeconds = ref(0)
     const windowWidth = ref(0)
     const animationStatusArr = ref([])
     const historyItem = ref(null)
     const timer1 = ref(null)
+    const timer2 = ref(null)
+    let initTimeStatus = ref(false)
     const drawData = ref(null)
     const downStatus = ref(false)
     const historyData = computed(() => {
@@ -119,15 +133,39 @@ export default {
     const isMobile = computed(() => {
       return windowWidth.value <= 768 ? true : false
     })
+    const displayTime = computed(() => {
+        if(nowSeconds.value > 10 && !initTimeStatus.value){
+            return '就快到了'
+        } else if(nowSeconds.value <= 10 && !initTimeStatus.value){
+            return '下期開獎時間: 0:' + nowSeconds.value
+        } else{
+            return '下期開獎時間: ' + Math.floor(nowSeconds.value/60)+":"+nowSeconds.value%60
+        }
+    })
     // 監聽api改變後拉桿
     watch(newData, (newVal,oldVal)=>{
       if(oldVal){
         // console.log(parseInt(newVal.no),parseInt(oldVal.no))
         if(parseInt(newVal.no) > parseInt(oldVal.no)) {
           down()
+          initTimeStatus.value = true
         }
       }
     })
+    // 監聽剩餘秒數
+    watch(nowSeconds, (newVal,oldVal)=>{
+        if(newVal === 0){
+            getTime()
+            initTimeStatus.value = true
+        }
+    })
+    // 計算時間
+    const getTime = () => {
+        const time = new Date();
+        let getMinutes = time.getMinutes();
+        let getSeconds = time.getSeconds();
+        nowSeconds.value = (4-getMinutes%5)*60+(60-getSeconds)
+    }
     //pyapi拿獎項資料
     const pyCatchNum = () => {
       // fetch('http://127.0.0.1:5000/gethistory', {
@@ -189,10 +227,18 @@ export default {
     //初始動作
     const init = () => {
       pyCatchNum()
+
       for(let i = 0;i<20;i++){
         animationStatusArr.value.push(false)
       }
+
+      getTime()
+
+      timer2.value = window.setInterval((async() => {
+          nowSeconds.value--
+      } ), 1000)
     }
+
     init()
 
     onMounted(() => {
@@ -207,6 +253,7 @@ export default {
 
     onBeforeUnmount(() => {
       clearInterval(timer1.value)
+      clearInterval(timer2.value)
     })
 
     return {
@@ -219,6 +266,7 @@ export default {
       animationStatusArr,
       sortData,
       isMobile,
+      displayTime,
       toStr,
     }
 

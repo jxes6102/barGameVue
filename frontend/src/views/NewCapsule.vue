@@ -34,6 +34,8 @@ export default {
      * termResult 最新一筆編號
      * specialPosition 最新一筆特別號位置
      * sortData 排序後資料
+     * windowWidth 螢幕寬度
+     * isMobile 判斷裝置
      */
     const historyItem = ref(null)
     const timer1 = ref(null)

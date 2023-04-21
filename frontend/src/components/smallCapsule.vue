@@ -64,6 +64,9 @@ export default {
      * timer1 扣時timer
      * displayTitle 期數
      * drawData 開獎資料
+     * displayTitle 顯示期數訊息
+     * initTimeStatus 控制顯示時間狀態
+     * displayTime 顯示時間訊息
      */
     let fallTimes = 0
     let runBallStatus = ref(false)
