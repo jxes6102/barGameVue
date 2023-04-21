@@ -100,7 +100,7 @@ export default {
                 getTime()
                 initTimeStatus.value = true
             }else{
-                controlMessage(drawData.value.reward.join(' , '))
+                messageText.value = newVal.reward.join(' , ')
             }
         }
     })
@@ -118,9 +118,7 @@ export default {
             controlRunBall(true)
             setTimeout(function (){
                 // 掉球
-                let text = drawData.value.reward.slice(0,fallTimes+1).join(' , ')
-                controlMessage(text)
-
+                messageText.value = drawData.value.reward.slice(0,fallTimes+1).join(' , ')
                 fallNum.value = drawData.value.reward[fallTimes]
                 fallStatus.value = true
                 setTimeout(function (){
@@ -133,10 +131,6 @@ export default {
         }else {
             controlRunBall(false)
         }
-    }
-    //控制開獎訊息
-    const controlMessage = (text = '') => {
-        messageText.value = text
     }
     // 控制滾球動畫
     let controlRunBall = (status = false) => {
