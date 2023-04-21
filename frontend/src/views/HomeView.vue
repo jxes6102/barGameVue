@@ -10,7 +10,6 @@ import { useRouter } from "vue-router";
 export default {
   name: 'HomeView',
   components: {
-    // HelloWorld
   },
   setup() {
     const router = useRouter();

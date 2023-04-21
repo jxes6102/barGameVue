@@ -134,13 +134,7 @@ export default {
       return windowWidth.value <= 768 ? true : false
     })
     const displayTime = computed(() => {
-        if(nowSeconds.value > 10 && !initTimeStatus.value){
-            return '就快到了'
-        } else if(nowSeconds.value <= 10 && !initTimeStatus.value){
-            return '下期開獎時間: 0:' + nowSeconds.value
-        } else{
-            return '下期開獎時間: ' + Math.floor(nowSeconds.value/60)+":"+nowSeconds.value%60
-        }
+      return '下期開獎時間: ' + Math.floor(nowSeconds.value/60)+":"+nowSeconds.value%60
     })
     // 監聽api改變後拉桿
     watch(newData, (newVal,oldVal)=>{

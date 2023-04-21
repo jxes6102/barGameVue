@@ -80,13 +80,7 @@ export default {
         return '台灣賓果 期號: ' + drawData.value.no
     })
     const displayTime = computed(() => {
-        if(nowSeconds.value > 10 && !initTimeStatus.value){
-            return '就快到了'
-        } else if(nowSeconds.value <= 10 && !initTimeStatus.value){
-            return '下期開獎時間: 0:' + nowSeconds.value
-        } else{
-            return '下期開獎時間: ' + Math.floor(nowSeconds.value/60)+":"+nowSeconds.value%60
-        }
+        return '下期開獎時間: ' + Math.floor(nowSeconds.value/60)+":"+nowSeconds.value%60
     })
     const drawData = computed(() => {
         return props.allData
