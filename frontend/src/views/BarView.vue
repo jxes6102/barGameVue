@@ -21,38 +21,7 @@
     </div>
     <!-- 新歷史紀錄 -->
     <div class="w-[800px] h-[40vh] flex flex-wrap justify-center items-center overflow-y-scroll">
-      <el-table v-if="isMobile" :data="sortData" style="width:300px;font-size:10px;">
-        <el-table-column sortable prop="no" label="期號" width="90"/>
-        <el-table-column prop="reward" label="開獎號碼">
-          <template #default="scope">
-            <div class="flex flex-wrap justify-start items-center gap-x-0.5">
-              <div 
-                v-for="(item,index) in scope.row.reward" :key="index"
-                :class="item === scope.row.special ? 'hidden' : ''"
-                class="w-[22px] h-[22px] bg-[white] rounded-[50%] flex justify-center items-center border-solid border-2 border-[#1687a7] font-bold"
-              >{{ item }}</div>
-              <div class="w-[22px] h-[22px] bg-[white] rounded-[50%] flex justify-center items-center border-solid border-2 border-[#dd0a35] font-bold">{{ scope.row.special }}</div>
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column prop="singleDecision" label="結果" width="60"/>
-      </el-table>
-      <el-table v-else :data="sortData" style="width:800px;">
-        <el-table-column sortable prop="no" label="期號" width="100"/>
-        <el-table-column width="600" prop="reward" label="開獎號碼">
-          <template #default="scope">
-            <div class="flex flex-wrap justify-start items-center gap-x-0.5">
-              <div 
-                v-for="(item,index) in scope.row.reward" :key="index"
-                :class="item === scope.row.special ? 'hidden' : ''"
-                class="w-[25px] h-[25px] bg-[white] rounded-[50%] flex justify-center items-center border-solid border-2 border-[#1687a7] font-bold"
-              >{{ item }}</div>
-              <div class="w-[25px] h-[25px] bg-[white] rounded-[50%] flex justify-center items-center border-solid border-2 border-[#dd0a35] font-bold">{{ scope.row.special }}</div>
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column prop="singleDecision" label="結果"/>
-      </el-table>
+      <SmallHistory :isMobile="isMobile" :tableData="sortData"></SmallHistory>
     </div>
     <!--拉桿-->
     <div class="scale-[0.5] md:scale-100 fixed h-[400px] w-[40px] bg-[#666] top-[40px] md:top-[25vh] left-[85vw] md:left-[90vw] cursor-pointer">
@@ -86,10 +55,12 @@
 import { ref,computed,onMounted,onBeforeUnmount,watch } from 'vue'
 import axios from 'axios'
 import Back from '@/components/Back.vue'
+import SmallHistory from '@/components/smallHistory.vue'
 export default {
   name: 'HomeView',
   components: {
-    Back
+    Back,
+    SmallHistory
   },
   setup() {
     /**
@@ -173,7 +144,7 @@ export default {
       //   console.error("Error:", error)
       // })
 
-      axios.get('http://127.0.0.1:5000/gethistory')
+      axios.get('https://3b8e-114-46-126-129.ngrok-free.app/gethistory')
       .then((response) => {
         // handle success
         drawData.value = response.data 
