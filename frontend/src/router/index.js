@@ -1,6 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-// import Capsule from '../views/CapsuleView.vue'
 import Bar from '../views/BarView.vue'
 import Newcapsule from '../views/NewCapsule.vue'
 

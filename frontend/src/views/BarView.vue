@@ -157,6 +157,9 @@ export default {
         if(newVal === 0){
             getTime()
             initTimeStatus.value = true
+            for(let i = 0;i<20;i++){
+              animationStatusArr.value[i] = true
+            }
         }
     })
     // 計算時間
