@@ -19,32 +19,43 @@
         </div>
       </div>
     </div>
-    <!-- 歷史紀錄 -->
-    <div class="w-[100%] h-auto flex flex-wrap justify-center items-center">
-      <div class="w-[70vw] h-auto flex flex-wrap border-b-2 border-solid border-black">
-        <div class="w-[20%] md:w-[15%] h-auto">編號</div>
-        <div class="w-[60%] md:w-[70%] h-auto">號碼</div>
-        <div class="w-[20%] md:w-[15%] h-auto">特別號</div>
-        <!-- <div class="w-[20%] md:w-[10%] h-auto">大小</div>
-        <div class="w-[20%] md:w-[10%] h-auto">單雙</div> -->
-      </div>
-      <div ref="historyItem" class="w-[70vw] h-[40vh] flex flex-wrap overflow-x-hidden overflow-y-auto">
-        <div class="flex flex-wrap justify-center items-center">
-          <div
-            v-for="(item,index) in sortData" :key="index"
-            class="w-[100%] flex flex-wrap justify-center items-center border-t-2 border-solid border-black"
-          >
-            <div class="w-[20%] md:w-[15%] h-auto break-all">{{ item.no }}</div>
-            <div class="w-[60%] md:w-[70%] h-auto break-all border-x-2 border-solid border-black">{{ toStr(item.reward) }}</div>
-            <div class="w-[20%] md:w-[15%] h-auto break-all">{{ item.special }}</div>
-            <!-- <div class="w-[10%] h-auto">{{ item.sizeDecision }}</div>
-            <div class="w-[10%] h-auto">{{ item.singleDecision }}</div> -->
-          </div>
-        </div>
-      </div>
+    <!-- 新歷史紀錄 -->
+    <div class="w-[800px] h-[40vh] flex flex-wrap justify-center items-center overflow-y-scroll">
+      <el-table v-if="isMobile" :data="sortData" style="width:300px;font-size:10px;">
+        <el-table-column sortable prop="no" label="期號" width="90"/>
+        <el-table-column prop="reward" label="開獎號碼">
+          <template #default="scope">
+            <div class="flex flex-wrap justify-start items-center gap-x-0.5">
+              <div 
+                v-for="(item,index) in scope.row.reward" :key="index"
+                :class="item === scope.row.special ? 'hidden' : ''"
+                class="w-[22px] h-[22px] bg-[white] rounded-[50%] flex justify-center items-center border-solid border-2 border-[#1687a7] font-bold"
+              >{{ item }}</div>
+              <div class="w-[22px] h-[22px] bg-[white] rounded-[50%] flex justify-center items-center border-solid border-2 border-[#dd0a35] font-bold">{{ scope.row.special }}</div>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column prop="singleDecision" label="結果" width="60"/>
+      </el-table>
+      <el-table v-else :data="sortData" style="width:800px;">
+        <el-table-column sortable prop="no" label="期號" width="100"/>
+        <el-table-column width="600" prop="reward" label="開獎號碼">
+          <template #default="scope">
+            <div class="flex flex-wrap justify-start items-center gap-x-0.5">
+              <div 
+                v-for="(item,index) in scope.row.reward" :key="index"
+                :class="item === scope.row.special ? 'hidden' : ''"
+                class="w-[25px] h-[25px] bg-[white] rounded-[50%] flex justify-center items-center border-solid border-2 border-[#1687a7] font-bold"
+              >{{ item }}</div>
+              <div class="w-[25px] h-[25px] bg-[white] rounded-[50%] flex justify-center items-center border-solid border-2 border-[#dd0a35] font-bold">{{ scope.row.special }}</div>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column prop="singleDecision" label="結果"/>
+      </el-table>
     </div>
     <!--拉桿-->
-    <div class="scale-[0.5] md:scale-100 fixed h-[400px] w-[40px] bg-[#666] top-[20vh] md:top-[25vh] left-[85vw] md:left-[90vw] cursor-pointer">
+    <div class="scale-[0.5] md:scale-100 fixed h-[400px] w-[40px] bg-[#666] top-[40px] md:top-[25vh] left-[85vw] md:left-[90vw] cursor-pointer">
       <div
         v-show="!downStatus" 
         class="absolute block w-[20px] h-[200px] bg-[#ccc] bottom-1/2 left-0 right-0 rounded-[10px] my-0 mx-auto">
@@ -94,6 +105,7 @@ export default {
      * specialPosition 最新一筆特別號位置
      * sortData 排序後資料
      */
+    const windowWidth = ref(0)
     const animationStatusArr = ref([])
     const historyItem = ref(null)
     const timer1 = ref(null)
@@ -132,6 +144,9 @@ export default {
     const sortData = computed(() => {
       if(!historyData.value) return []
       return JSON.parse(JSON.stringify(historyData.value)).reverse()
+    })
+    const isMobile = computed(() => {
+      return windowWidth.value <= 768 ? true : false
     })
     // 監聽api改變後拉桿
     watch(newData, (newVal,oldVal)=>{
@@ -213,6 +228,10 @@ export default {
       timer1.value = window.setInterval((async() => {
         await pyCatchNum()
       } ), 5500)
+      windowWidth.value = window.innerWidth
+      window.addEventListener('resize', () => {
+        windowWidth.value = window.innerWidth
+      }, false);
     })
 
     onBeforeUnmount(() => {
@@ -228,6 +247,7 @@ export default {
       specialPosition,
       animationStatusArr,
       sortData,
+      isMobile,
       toStr,
     }
 
