@@ -4,14 +4,10 @@
             <!-- 機器 -->
             <div class="md:scale-[0.65] absolute bg-[url('/src/assets/images/game_ndj.png')] bg-contain bg-center bg-no-repeat w-[280px] h-[400px] md:w-[700px] md:h-[700px] z-[3]">
                 <!-- 訊息 -->
-                <div class="absolute top-[-100px] md:top-[-200px] md:left-[5%] w-[280px] md:w-[90%] h-8 md:h-16 bg-[#f3f1b0] rounded-lg shadow-2xl flex flex-wrap justify-center items-center font-extrabold text-base md:text-4xl text-red-500">
-                    {{ displayTitle }}
-                </div>
-                <div class="absolute py-[5px] md:px-[60px] top-[-65px] md:top-[-120px] md:left-[5%] w-[280px] md:w-[90%] h-auto bg-[#f3f1b0] rounded-lg shadow-2xl flex flex-wrap justify-center items-center font-bold text-[12px] md:text-2xl break-all text-red-500">
-                    {{ displayTime }}
-                </div>
-                <div class="absolute px-[10px] md:px-[60px] top-[-30px] md:top-[-60px] md:left-[5%] w-[280px] md:w-[90%] h-16 md:h-24 bg-[#f3f1b0] rounded-lg shadow-2xl flex flex-wrap justify-center items-center font-bold text-[12px] md:text-2xl break-all text-red-500">
-                    {{ messageText }}
+                <div class="absolute top-[-50px] md:top-[-150px] md:left-[5%] w-[280px] md:w-[90%] h-[100px] md:h-[200px] bg-[#f3f1b0] rounded-lg shadow-2xl flex flex-wrap justify-center items-center z-[11]">
+                    <div class="w-[100%] h-1/4 font-extrabold text-base md:text-4xl text-red-500 flex flex-wrap justify-center items-center">{{ displayTitle }}</div>
+                    <div class="w-[100%] h-1/4 font-extrabold text-xs md:text-2xl text-red-500 flex flex-wrap justify-center items-center">{{ displayTime }}</div>
+                    <div class="w-[100%] h-1/2 px-[10px] md:px-[60px] font-extrabold text-xs md:text-2xl text-red-500 break-all flex flex-wrap justify-center items-center">{{ messageText }}</div>
                 </div>
                 <!-- go標誌 -->
                 <div class="absolute w-[70px] h-[70px] md:w-[124px] md:h-[124px] top-[53%] left-[105px] md:left-[290px] bg-[url('/src/assets/images/an_go.png')] bg-contain bg-center bg-no-repeat z-[4]"></div>
