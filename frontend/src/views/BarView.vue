@@ -154,6 +154,10 @@ export default {
             for(let i = 0;i<20;i++){
               animationStatusArr.value[i] = true
             }
+            downStatus.value = true
+            setTimeout(()=>{
+              downStatus.value = false
+            },1000)
         }
     })
     // 計算時間
@@ -179,7 +183,7 @@ export default {
       //   console.error("Error:", error)
       // })
 
-      axios.get('https://3b8e-114-46-126-129.ngrok-free.app/gethistory')
+      axios.get('http://127.0.0.1:5000/gethistory')
       .then((response) => {
         // handle success
         drawData.value = response.data 
