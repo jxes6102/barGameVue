@@ -183,7 +183,7 @@ export default {
       //   console.error("Error:", error)
       // })
 
-      axios.get('http://127.0.0.1:5000/gethistory')
+      axios.get('https://591d-114-47-82-149.ngrok-free.app/gethistory')
       .then((response) => {
         // handle success
         drawData.value = response.data 
