@@ -52,6 +52,7 @@
     </div>
     <!-- 回上頁 -->
     <Back></Back>
+    <load v-show="!sortData.length"></load>
   </div>
 </template>
 <script>
@@ -60,12 +61,14 @@
 import { ref,computed,onMounted,onBeforeUnmount,watch } from 'vue'
 import Back from '@/components/Back.vue'
 import SmallHistory from '@/components/smallHistory.vue'
+import load from '@/components/load.vue'
 import { useStore } from "vuex";
 export default {
   name: 'HomeView',
   components: {
     Back,
-    SmallHistory
+    SmallHistory,
+    load
   },
   setup() {
     /**
@@ -202,8 +205,9 @@ export default {
     }
     //初始動作
     const init = () => {
+      
       pyCatchNum()
-
+      
       for(let i = 0;i<20;i++){
         animationStatusArr.value.push(false)
       }

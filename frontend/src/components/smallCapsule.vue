@@ -33,6 +33,7 @@
             </div>
         </div>
     </div>
+    <load v-show="!messageText.length"></load>
 </template>
 
 <script>
@@ -42,10 +43,11 @@ import '@/assets/css/ball.css'
 import '@/assets/css/run.css'
 import '@/assets/css/style.css'
 import { ref,computed,onMounted,watch,onBeforeUnmount } from 'vue'
-// import axios from 'axios';
+import load from '@/components/load.vue'
 export default {
   name: 'capsuleComponent',
   components: {
+    load
   },
   props: {
     allData: {

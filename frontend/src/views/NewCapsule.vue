@@ -22,7 +22,7 @@ export default {
   components: {
     Back,
     SmallCapsule,
-    SmallHistory
+    SmallHistory,
   },
   setup() {
     /**
