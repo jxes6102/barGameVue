@@ -7,6 +7,7 @@ export default createStore({
     // pyURL:'https://591d-114-47-82-149.ngrok-free.app/gethistory',
     // origin:'http://127.0.0.1:5000/gethistory',
     todayrecord:{},
+    allrecord:[],
     loadingObj:null
   },
   getters: {
@@ -14,6 +15,9 @@ export default createStore({
   mutations: {
     setTodayrecord(state,value){
       state.todayrecord = value
+    },
+    setAllrecord(state,value){
+      state.allrecord = value
     },
     changeLoading (state,status) {
       if(status){
@@ -30,7 +34,7 @@ export default createStore({
   },
   actions: {
     async pyGet(content,payload) {
-      axios.get('https://591d-114-47-82-149.ngrok-free.app/gethistory')
+      await axios.get('https://591d-114-47-82-149.ngrok-free.app/gethistory')
       .then((response) => {
         // handle success
         content.commit('setTodayrecord',response.data)
@@ -45,10 +49,16 @@ export default createStore({
       });
     },
     async getHistory(content,payload) {
-      axios.get('https://591d-114-47-82-149.ngrok-free.app/gethistory')
+      // console.log('payload',payload)
+      let url = 'https://globalcaipiaokong.com/api/trial/draw-result-by-datetime'
+      url+='?code=twklb&rows=100'
+      url+='&start_time='+payload.startTime+'&end_time='+payload.endTime+'&page='+payload.page
+
+      await axios.get(url)
       .then((response) => {
         // handle success
-        content.commit('setTodayrecord',response.data)
+        // console.log('getHistory',response)
+        content.commit('setAllrecord',response.data.data)
       })
       .catch((error) => {
         // handle error
