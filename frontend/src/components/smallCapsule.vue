@@ -90,13 +90,12 @@ export default {
     watch(drawData, (newVal,oldVal)=>{
         if(oldVal && (JSON.stringify(oldVal) !== '{}')){
             if(parseInt(newVal.no) > parseInt(oldVal.no)) {
-                // console.log('change',newVal)
                 play()
                 getTime()
                 initTimeStatus.value = true
-            }else{
-                messageText.value = newVal.reward.join(' , ')
             }
+        }else if(JSON.stringify(oldVal) === '{}'){
+            messageText.value = newVal.reward.join(' , ')
         }
     })
     watch(nowSeconds, (newVal,oldVal)=>{
