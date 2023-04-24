@@ -44,6 +44,21 @@ export default createStore({
         // console.log('always executed')
       });
     },
+    async getHistory(content,payload) {
+      axios.get('https://591d-114-47-82-149.ngrok-free.app/gethistory')
+      .then((response) => {
+        // handle success
+        content.commit('setTodayrecord',response.data)
+      })
+      .catch((error) => {
+        // handle error
+        console.log(error);
+      })
+      .finally(()=> {
+        // always executed
+        // console.log('always executed')
+      });
+    },
   },
   modules: {
   }

@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import Bar from '../views/BarView.vue'
 import Newcapsule from '../views/NewCapsule.vue'
+import allhistory from '../views/allHistory.vue'
 
 const routes = [
   {
@@ -18,6 +19,11 @@ const routes = [
     path: '/bar',
     name: 'bar',
     component:Bar
+  },
+  {
+    path: '/allhistory',
+    name: 'allhistory',
+    component:allhistory
   },
   {
     path: '/about',
