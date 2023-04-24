@@ -13,10 +13,11 @@
 <script>
 // @ is an alias to /src
 import { ref,computed,onMounted,onBeforeUnmount } from 'vue'
-import axios from 'axios'
+// import axios from 'axios'
 import Back from '@/components/Back.vue'
 import SmallCapsule from '@/components/smallCapsule.vue'
 import SmallHistory from '@/components/smallHistory.vue'
+import { useStore } from "vuex";
 export default {
   components: {
     Back,
@@ -37,6 +38,7 @@ export default {
      * windowWidth 螢幕寬度
      * isMobile 判斷裝置
      */
+    const store = useStore();
     const historyItem = ref(null)
     const timer1 = ref(null)
     const drawData = ref(null)
@@ -79,35 +81,9 @@ export default {
       return windowWidth.value <= 768 ? true : false
     })
     //pyapi拿獎項資料
-    const pyCatchNum = () => {
-      // fetch('http://127.0.0.1:5000/gethistory', {
-      //   headers: {
-      //     'content-type': 'application/json' // 這一欄一定要設定！
-      //   },
-      //   method: 'GET',
-      // })
-      // .then(response => response.json()) // 輸出成 json
-      // .then(res => {
-      //   drawData.value = res 
-      //   // console.log('gethistory',res)
-      // }).catch((error) => {
-      //   console.error("Error:", error)
-      // })
-
-      axios.get('https://591d-114-47-82-149.ngrok-free.app/gethistory')
-      .then((response) => {
-        // handle success
-        drawData.value = response.data 
-      })
-      .catch((error) => {
-        // handle error
-        console.log(error);
-      })
-      .finally(()=> {
-        // always executed
-        // console.log('always executed')
-      });
-
+    const pyCatchNum = async() => {
+      await store.dispatch('pyGet')
+      drawData.value = store.state.todayrecord
     }
     //轉換格式
     const toStr = (val) => {

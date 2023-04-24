@@ -58,9 +58,9 @@
 /*eslint-disable*/
 // @ is an alias to /src
 import { ref,computed,onMounted,onBeforeUnmount,watch } from 'vue'
-import axios from 'axios'
 import Back from '@/components/Back.vue'
 import SmallHistory from '@/components/smallHistory.vue'
+import { useStore } from "vuex";
 export default {
   name: 'HomeView',
   components: {
@@ -87,6 +87,7 @@ export default {
      * nowSeconds 剩餘秒數
      * windowWidth 螢幕寬度
      */
+    const store = useStore();
     let nowSeconds = ref(0)
     const windowWidth = ref(0)
     const animationStatusArr = ref([])
@@ -168,35 +169,9 @@ export default {
         nowSeconds.value = (4-getMinutes%5)*60+(60-getSeconds)
     }
     //pyapi拿獎項資料
-    const pyCatchNum = () => {
-      // fetch('http://127.0.0.1:5000/gethistory', {
-      //   headers: {
-      //     'content-type': 'application/json' // 這一欄一定要設定！
-      //   },
-      //   method: 'GET',
-      // })
-      // .then(response => response.json()) // 輸出成 json
-      // .then(res => {
-      //   drawData.value = res 
-      //   // console.log('gethistory',res)
-      // }).catch((error) => {
-      //   console.error("Error:", error)
-      // })
-
-      axios.get('https://591d-114-47-82-149.ngrok-free.app/gethistory')
-      .then((response) => {
-        // handle success
-        drawData.value = response.data 
-      })
-      .catch((error) => {
-        // handle error
-        console.log(error);
-      })
-      .finally(()=> {
-        // always executed
-        // console.log('always executed')
-      });
-
+    const pyCatchNum = async() => {
+      await store.dispatch('pyGet')
+      drawData.value = store.state.todayrecord
     }
     //開獎動畫
     const startAnimation = () => {
