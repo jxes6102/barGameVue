@@ -26,7 +26,7 @@
                     <span
                         v-for="(item,index) in 80" :key="index"
                         class="z-[2] w-[15px] h-[15px] md:w-[40px] md:h-[40px] bg-contain bg-center bg-no-repeat flex flex-wrap justify-center items-center text-[12px] md:text-lg"
-                        :class="'ball-' + ((item%4)+1) + ' diaol_' + item + (runBallStatus && item >= 1 ? ' wieyi_'+item : '')"
+                        :class="'ball-' + ((item%4)+1) + ' diaol_' + item + (runBallStatus && item == 10 ? ' wieyi_'+item : '')"
                     >
                         {{ item }}
                     </span>
@@ -150,7 +150,7 @@ setup() {
 
         setTimeout(function (){
             runBallStatus.value = true
-        },3500)
+        },1500)
         
     })
 
