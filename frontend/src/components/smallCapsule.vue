@@ -39,9 +39,6 @@
 <script>
 /*eslint-disable*/
 // @ is an alias to /src
-import '@/assets/css/ball.css'
-import '@/assets/css/run.css'
-import '@/assets/css/style.css'
 import { ref,computed,onMounted,watch,onBeforeUnmount } from 'vue'
 import load from '@/components/load.vue'
 export default {
@@ -176,6 +173,9 @@ export default {
   }
 }
 </script>
+<style src="@/assets/css/ball.css" scoped></style>
+<style src="@/assets/css/run.css" scoped></style>
+<style src="@/assets/css/style.css" scoped></style>
 <style scoped>
 @keyframes rotates{
   0% {

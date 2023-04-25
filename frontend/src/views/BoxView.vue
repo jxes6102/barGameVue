@@ -12,12 +12,16 @@
                     class="bg-[url('/src/assets/images/guan.png')] bg-contain bg-center bg-no-repeat w-[30px] h-[30px] md:w-[80px] md:h-[80px] z-[4]">
                 </div>
             </div>
-            <div class="absolute w-[100%] h-[100%] bottom-[0px] ">
-                <span
-                    v-for="(item,index) in 20" :key="index"
-                    class="z-[2] w-[20px] h-[20px] md:w-[35px] md:h-[35px]"
-                    :class="'qiu_' + item + ' diaol_' + item + (runBallStatus ? ' wieyi_'+item : '')"
-                ></span>
+            <div class="absolute w-[100%] h-[100%] bottom-[0px] flex flex-wrap justify-center items-end">
+                <div class="w-[100%] h-auto flex flex-wrap justify-center items-end">
+                    <span
+                        v-for="(item,index) in 80" :key="index"
+                        class="z-[2] w-[15px] h-[15px] md:w-[40px] md:h-[40px] bg-contain bg-center bg-no-repeat flex flex-wrap justify-center items-center text-[12px] md:text-lg"
+                        :class="'bg-ball-' + (item%4+1) + ' diaol_' + item + (runBallStatus ? ' wieyi_'+item : '')"
+                    >
+                    {{ item }}
+                    </span>
+                </div>
             </div>
         </div>
       </div>
@@ -30,9 +34,6 @@
     </div>
 </template>
 <script>
-import '@/assets/css/ballBox.css'
-import '@/assets/css/runBox.css'
-
 // @ is an alias to /src
 import { ref,computed,onMounted,onBeforeUnmount } from 'vue'
 // import axios from 'axios'
@@ -126,6 +127,11 @@ setup() {
         window.addEventListener('resize', () => {
             windowWidth.value = window.innerWidth
         }, false);
+
+        // setTimeout(function (){
+        //     runBallStatus.value = true
+        // },2500)
+        
     })
 
     onBeforeUnmount(() => {
@@ -148,6 +154,5 @@ setup() {
     }
 }
 </script>
-<style scoped>
-</style>
-  
+<style src="@/assets/css/ballBox.css" scoped></style>
+<style src="@/assets/css/runBox.css" scoped></style>
