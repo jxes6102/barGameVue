@@ -1,7 +1,13 @@
 <template>
     <div class="w-[100vw] h-[100vh] overflow-hidden flex flex-wrap justify-center items-start">
       <!-- 主畫面 -->
-      <SmallCapsule :allData="newData"></SmallCapsule>
+      <!-- <SmallCapsule :allData="newData"></SmallCapsule> -->
+
+      <div class="w-[100vw] h-[75vh] bg-red-500 flex flex-wrap justify-center items-center">
+        <div class="relative w-[300px] h-[250px] md:w-[600px] md:h-[500px] bg-[#CDFFFF] rounded-xl">
+            <div class="absolute bottom-[0px] z-[2] w-[20px] h-[20px] md:w-[30px] md:h-[30px] bg-black"></div>
+        </div>
+      </div>
       <!-- 新歷史紀錄 -->
       <div class="w-[800px] h-[25vh] flex flex-wrap justify-center items-center">
         <SmallHistory :isMobile="isMobile" :tableData="sortData"></SmallHistory>
@@ -15,13 +21,13 @@
 import { ref,computed,onMounted,onBeforeUnmount } from 'vue'
 // import axios from 'axios'
 import Back from '@/components/Back.vue'
-import SmallCapsule from '@/components/smallCapsule.vue'
+// import SmallCapsule from '@/components/smallCapsule.vue'
 import SmallHistory from '@/components/smallHistory.vue'
 import { useStore } from "vuex";
 export default {
 components: {
     Back,
-    SmallCapsule,
+    // SmallCapsule,
     SmallHistory,
 },
 setup() {
