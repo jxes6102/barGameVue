@@ -4,8 +4,21 @@
       <!-- <SmallCapsule :allData="newData"></SmallCapsule> -->
 
       <div class="w-[100vw] h-[75vh] bg-red-500 flex flex-wrap justify-center items-center">
-        <div class="relative w-[300px] h-[250px] md:w-[600px] md:h-[500px] bg-[#CDFFFF] rounded-xl">
-            <div class="absolute bottom-[0px] z-[2] w-[20px] h-[20px] md:w-[30px] md:h-[30px] bg-black"></div>
+        <div class="relative w-[300px] h-[250px] md:w-[800px] md:h-[500px] bg-[#CDFFFF] rounded-md md:rounded-xl">
+            <div class="absolute w-auto h-auto flex flex-wrap justify-center items-center">
+                <div 
+                    v-for="(item,index) in 10" :key="index"
+                    :class="'left-['+item*10+'px]'"
+                    class="bg-[url('/src/assets/images/guan.png')] bg-contain bg-center bg-no-repeat w-[30px] h-[30px] md:w-[80px] md:h-[80px] z-[4]">
+                </div>
+            </div>
+            <div class="absolute w-[100%] h-[100%] bottom-[0px] ">
+                <span
+                    v-for="(item,index) in 20" :key="index"
+                    class="z-[2] w-[20px] h-[20px] md:w-[35px] md:h-[35px]"
+                    :class="'qiu_' + item + ' diaol_' + item + (runBallStatus ? ' wieyi_'+item : '')"
+                ></span>
+            </div>
         </div>
       </div>
       <!-- 新歷史紀錄 -->
@@ -17,6 +30,9 @@
     </div>
 </template>
 <script>
+import '@/assets/css/ballBox.css'
+import '@/assets/css/runBox.css'
+
 // @ is an alias to /src
 import { ref,computed,onMounted,onBeforeUnmount } from 'vue'
 // import axios from 'axios'
@@ -49,6 +65,7 @@ setup() {
     const timer1 = ref(null)
     const drawData = ref(null)
     const windowWidth = ref(0)
+    const runBallStatus = ref(false)
     const historyData = computed(() => {
         let target = []
         if(!drawData.value) return target
@@ -124,6 +141,7 @@ setup() {
         sortData,
         newData,
         isMobile,
+        runBallStatus,
         toStr,
         }
 
