@@ -3,13 +3,22 @@
       <!-- 主畫面 -->
       <!-- <SmallCapsule :allData="newData"></SmallCapsule> -->
 
-      <div class="w-[100vw] h-[75vh] bg-red-500 flex flex-wrap justify-center items-center">
+      <div class="w-[100vw] h-[75vh] bg-[#FCF4D9] flex flex-wrap justify-center items-center">
         <div class="relative w-[300px] h-[250px] md:w-[800px] md:h-[500px] bg-[#CDFFFF] rounded-md md:rounded-xl">
             <div class="absolute w-auto h-auto flex flex-wrap justify-center items-center">
                 <div 
                     v-for="(item,index) in 10" :key="index"
                     :class="'left-['+item*10+'px]'"
-                    class="bg-[url('/src/assets/images/guan.png')] bg-contain bg-center bg-no-repeat w-[30px] h-[30px] md:w-[80px] md:h-[80px] z-[4]">
+                    class="bg-[url('/src/assets/images/guan.png')] bg-contain bg-center bg-no-repeat w-[30px] h-[30px] md:w-[80px] md:h-[80px] z-[4] flex flex-wrap justify-center items-center">
+                    <!-- <div class="w-[100%] h-[100%] flex flex-col flex-wrap justify-center items-center">
+                        <span
+                            v-for="(item,index) in 2" :key="index"
+                            class="z-[5] w-[15px] h-[15px] md:w-[40px] md:h-[40px] bg-contain bg-center bg-no-repeat flex flex-wrap justify-center items-center text-[12px] md:text-lg"
+                            :class="'ball-' + ((item%4)+1) + ' diaol_' + item + (runBallStatus ? ' wieyi_'+item : '')"
+                        >
+                            {{ item*index }}
+                        </span>
+                    </div> -->
                 </div>
             </div>
             <div class="absolute w-[100%] h-[100%] bottom-[0px] flex flex-wrap justify-center items-end">
@@ -128,9 +137,9 @@ setup() {
             windowWidth.value = window.innerWidth
         }, false);
 
-        // setTimeout(function (){
-        //     runBallStatus.value = true
-        // },2500)
+        setTimeout(function (){
+            runBallStatus.value = true
+        },3500)
         
     })
 
