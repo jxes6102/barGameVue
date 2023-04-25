@@ -17,7 +17,7 @@
                     <span
                         v-for="(item,index) in 80" :key="index"
                         class="z-[2] w-[15px] h-[15px] md:w-[40px] md:h-[40px] bg-contain bg-center bg-no-repeat flex flex-wrap justify-center items-center text-[12px] md:text-lg"
-                        :class="'bg-ball-' + (item%4+1) + ' diaol_' + item + (runBallStatus ? ' wieyi_'+item : '')"
+                        :class="'ball-' + ((item%4)+1) + ' diaol_' + item + (runBallStatus ? ' wieyi_'+item : '')"
                     >
                     {{ item }}
                     </span>
@@ -156,3 +156,17 @@ setup() {
 </script>
 <style src="@/assets/css/ballBox.css" scoped></style>
 <style src="@/assets/css/runBox.css" scoped></style>
+<style scoped>
+    .ball-1{
+        background-image: url('/src/assets/images/canpin_1.png');
+    }
+    .ball-2{
+        background-image: url('/src/assets/images/canpin_2.png');
+    }
+    .ball-3{
+        background-image: url('/src/assets/images/canpin_3.png');
+    }
+    .ball-4{
+        background-image: url('/src/assets/images/canpin_4.png');
+    }
+</style>
