@@ -26,11 +26,22 @@
                     <span
                         v-for="(item,index) in 80" :key="index"
                         class="z-[2] w-[15px] h-[15px] md:w-[40px] md:h-[40px] bg-contain bg-center bg-no-repeat flex flex-wrap justify-center items-center text-[12px] md:text-lg"
-                        :class="'ball-' + ((item%4)+1) + ' diaol_' + item + (runBallStatus ? ' wieyi_'+item : '')"
+                        :class="'ball-' + ((item%4)+1) + ' diaol_' + item + (runBallStatus && item >= 1 ? ' wieyi_'+item : '')"
                     >
-                    {{ item }}
+                        {{ item }}
                     </span>
                 </div>
+            </div>
+            <!-- 滾輪 -->
+            <div class="absolute w-[100%] h-auto top-[25%] flex flex-wrap justify-center items-center gap-x-[10px] md:gap-x-[50px]">
+                <div 
+                    :class="runBallStatus ? 'rotateStyle' : ''" 
+                    class="w-[120px] h-[120px] md:w-[250px] md:h-[250px] bg-[url('/src/assets/images/rotate.png')] bg-contain bg-center bg-no-repeat z-[4]"
+                ></div>
+                <div 
+                    :class="runBallStatus ? 'rotateStyle' : ''" 
+                    class="w-[120px] h-[120px] md:w-[250px] md:h-[250px] bg-[url('/src/assets/images/rotate.png')] bg-contain bg-center bg-no-repeat z-[4]"
+                ></div>
             </div>
         </div>
       </div>
@@ -177,5 +188,16 @@ setup() {
     }
     .ball-4{
         background-image: url('/src/assets/images/canpin_4.png');
+    }
+    @keyframes rotates{
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+    .rotateStyle{
+        animation: rotates 1s linear infinite;
     }
 </style>

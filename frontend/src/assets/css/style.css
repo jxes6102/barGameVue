@@ -61,12 +61,6 @@ a{
 }
 }
 
-@-webkit-keyframes cujpin{
-0%{ -webkit-transform:translateY(-100px);}
-100% {  
--webkit-transform:translateY(0); 
-}
-}
 @keyframes cujpin{
 0%{ transform:translateY(-50px);}
 100% {  
@@ -80,20 +74,11 @@ transform:translateY(0);
 transform:scale(1);
 }
 }
-@-webkit-keyframes fanda{
-0%{ -webkit-transform:scale(0.7);}
-100% {  
--webkit-transform:scale(1);
-}
-}
+
 .tc_anima{ animation:title1 0.3s linear; -webkit-animation:title1 0.3s linear;}
 @keyframes title1{
 	from{ opacity:0; transform:scale(0,0);}
 	to{ opacity:1; transform:scale(1,1);}	
-}
-@-webkit-keyframes title1{
- from{ opacity:0; -webkit-transform:scale(0,0)}
- to{opacity:1; -webkit-transform:scale(1,1)}
 }
 
 .zuadon_dh{animation:around 2s linear backwards ;-webkit-animation:around 2s linear backwards ;}
