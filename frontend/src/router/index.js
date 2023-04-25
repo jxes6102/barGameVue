@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import Bar from '../views/BarView.vue'
 import Newcapsule from '../views/NewCapsule.vue'
 import allhistory from '../views/allHistory.vue'
+import boxView from '../views/BoxView.vue'
 
 const routes = [
   {
@@ -24,6 +25,11 @@ const routes = [
     path: '/allhistory',
     name: 'allhistory',
     component:allhistory
+  },
+  {
+    path: '/boxView',
+    name: 'boxView',
+    component:boxView
   },
   {
     path: '/about',

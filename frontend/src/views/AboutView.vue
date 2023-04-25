@@ -8,6 +8,7 @@
         As a directive
       </el-button>
       <el-button type="primary" @click="openFullScreen2"> As a service </el-button>
+      <div class="w-[10vw] h-[10vh] bg-[red] glass"></div>
     </div>
 </template>
 <script>
@@ -82,3 +83,12 @@ export default {
   }
 }
 </script>
+<style scoped>
+.glass{
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 14px );
+  -webkit-backdrop-filter: blur( 14px );
+  border-radius: 10px;
+  border: 1px solid rgba( 255, 255, 255, 0.18 );
+}
+</style>
