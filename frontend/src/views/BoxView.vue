@@ -26,7 +26,7 @@
                     <span
                         v-for="(item,index) in 80" :key="index"
                         class="z-[2] w-[15px] h-[15px] md:w-[40px] md:h-[40px] bg-contain bg-center bg-no-repeat flex flex-wrap justify-center items-center text-[12px] md:text-lg"
-                        :class="'ball-' + ((item%4)+1) + (runBallStatus && item == 3 ? ' wieyi_'+item : ' diaol_' + item )"
+                        :class="'ball-' + ((item%4)+1) + (runBallStatus && item == 8 ? ' wieyi_'+item : ' diaol_' + item )"
                     >
                         {{ item }}
                     </span>

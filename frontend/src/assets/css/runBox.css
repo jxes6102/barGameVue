@@ -955,4 +955,44 @@ opacity: 1;
         75%{transform:translate(50%,-600%) }
         100%{ transform:translate(0px,0px)  }
     }
+
+    @keyframes around4 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(-150%,-800%) }
+        50%{transform:translate(-250%,-1200%) }
+        75%{transform:translate(50%,-500%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+
+    @keyframes around5 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(-150%,-500%) }
+        50%{transform:translate(-350%,-1200%) }
+        75%{transform:translate(50%,-400%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+
+    @keyframes around6 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(-500%,-600%) }
+        50%{transform:translate(-450%,-1200%) }
+        75%{transform:translate(-50%,-700%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+
+    @keyframes around7 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(-500%,-500%) }
+        50%{transform:translate(-550%,-1200%) }
+        75%{transform:translate(-150%,-400%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+
+    @keyframes around8 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(-700%,-300%) }
+        50%{transform:translate(-650%,-1200%) }
+        75%{transform:translate(-250%,-500%) }
+        100%{ transform:translate(0px,0px)  }
+    }
 }
