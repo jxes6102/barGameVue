@@ -1251,4 +1251,290 @@ opacity: 1;
         75%{transform:translate(-1200%,-800%) }
         100%{ transform:translate(0px,0px)  }
     }
+
+    @keyframes around41 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(700%,-700%) }
+        50%{transform:translate(1050%,-1400%) }
+        75%{transform:translate(550%,-500%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+    @keyframes around42 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(400%,-400%) }
+        50%{transform:translate(950%,-1400%) }
+        75%{transform:translate(1100%,-700%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+    @keyframes around43 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(550%,-500%) }
+        50%{transform:translate(850%,-1400%) }
+        75%{transform:translate(950%,-400%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+    @keyframes around44 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(500%,-600%) }
+        50%{transform:translate(750%,-1400%) }
+        75%{transform:translate(800%,-500%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+    @keyframes around45 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(750%,-400%) }
+        50%{transform:translate(650%,-1400%) }
+        75%{transform:translate(350%,-300%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+    @keyframes around46 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(750%,-500%) }
+        50%{transform:translate(550%,-1400%) }
+        75%{transform:translate(250%,-700%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+    @keyframes around47 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(150%,-400%) }
+        50%{transform:translate(450%,-1400%) }
+        75%{transform:translate(500%,-700%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+    @keyframes around48 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(550%,-500%) }
+        50%{transform:translate(350%,-1400%) }
+        75%{transform:translate(150%,-400%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+
+    @keyframes around49 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(350%,-700%) }
+        50%{transform:translate(450%,-1400%) }
+        75%{transform:translate(700%,-500%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+    @keyframes around50 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(100%,-500%) }
+        50%{transform:translate(350%,-1400%) }
+        75%{transform:translate(500%,-400%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+    @keyframes around51 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(100%,-400%) }
+        50%{transform:translate(250%,-1400%) }
+        75%{transform:translate(400%,-600%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+    @keyframes around52 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(-50%,-400%) }
+        50%{transform:translate(150%,-1400%) }
+        75%{transform:translate(300%,-700%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+    @keyframes around53 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(200%,-600%) }
+        50%{transform:translate(50%,-1400%) }
+        75%{transform:translate(-100%,-400%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+    @keyframes around54 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(150%,-500%) }
+        50%{transform:translate(-50%,-1400%) }
+        75%{transform:translate(-100%,-700%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+    @keyframes around55 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(250%,-600%) }
+        50%{transform:translate(-150%,-1400%) }
+        75%{transform:translate(-200%,-300%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+    @keyframes around56 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(-350%,-600%) }
+        50%{transform:translate(-250%,-1400%) }
+        75%{transform:translate(100%,-700%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+
+    @keyframes around57 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(-300%,-700%) }
+        50%{transform:translate(-150%,-1400%) }
+        75%{transform:translate(100%,-400%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+    @keyframes around58 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(-400%,-500%) }
+        50%{transform:translate(-250%,-1400%) }
+        75%{transform:translate(200%,-300%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+    @keyframes around59 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(-400%,-500%) }
+        50%{transform:translate(-350%,-1400%) }
+        75%{transform:translate(-200%,-600%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+    @keyframes around60 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(-300%,-600%) }
+        50%{transform:translate(-450%,-1400%) }
+        75%{transform:translate(-600%,-500%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+    @keyframes around61 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(750%,-1000%) }
+        50%{transform:translate(1450%,-1500%) }
+        75%{transform:translate(1600%,-700%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+    @keyframes around62 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(350%,-800%) }
+        50%{transform:translate(1350%,-1500%) }
+        75%{transform:translate(1450%,-900%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+    @keyframes around63 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(900%,-600%) }
+        50%{transform:translate(1250%,-1500%) }
+        75%{transform:translate(1300%,-500%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+    @keyframes around64 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(1050%,-500%) }
+        50%{transform:translate(1150%,-1500%) }
+        75%{transform:translate(1250%,-400%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+
+    @keyframes around65 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(1000%,-500%) }
+        50%{transform:translate(1250%,-1500%) }
+        75%{transform:translate(750%,-600%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+    @keyframes around66 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(850%,-400%) }
+        50%{transform:translate(1150%,-1500%) }
+        75%{transform:translate(700%,-700%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+    @keyframes around67 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(750%,-600%) }
+        50%{transform:translate(1050%,-1500%) }
+        75%{transform:translate(550%,-400%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+    @keyframes around68 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(600%,-700%) }
+        50%{transform:translate(950%,-1500%) }
+        75%{transform:translate(1150%,-500%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+    @keyframes around69 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(650%,-400%) }
+        50%{transform:translate(850%,-1500%) }
+        75%{transform:translate(450%,-700%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+    @keyframes around70 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(350%,-600%) }
+        50%{transform:translate(750%,-1500%) }
+        75%{transform:translate(150%,-300%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+    @keyframes around71 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(150%,-400%) }
+        50%{transform:translate(650%,-1500%) }
+        75%{transform:translate(750%,-500%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+    @keyframes around72 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(350%,-400%) }
+        50%{transform:translate(550%,-1500%) }
+        75%{transform:translate(150%,-300%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+
+    @keyframes around73 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(300%,-400%) }
+        50%{transform:translate(650%,-1500%) }
+        75%{transform:translate(200%,-500%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+    @keyframes around74 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(150%,-600%) }
+        50%{transform:translate(550%,-1500%) }
+        75%{transform:translate(150%,-500%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+    @keyframes around75 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(250%,-500%) }
+        50%{transform:translate(450%,-1500%) }
+        75%{transform:translate(550%,-700%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+    @keyframes around76 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(150%,-400%) }
+        50%{transform:translate(350%,-1500%) }
+        75%{transform:translate(-100%,-700%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+    @keyframes around77 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(350%,-300%) }
+        50%{transform:translate(250%,-1500%) }
+        75%{transform:translate(-150%,-600%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+    @keyframes around78 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(200%,-600%) }
+        50%{transform:translate(150%,-1500%) }
+        75%{transform:translate(-150%,-500%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+    @keyframes around79 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(-200%,-600%) }
+        50%{transform:translate(50%,-1500%) }
+        75%{transform:translate(-150%,-500%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+    @keyframes around80 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(-150%,-600%) }
+        50%{transform:translate(-50%,-1500%) }
+        75%{transform:translate(-300%,-300%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+    
 }
