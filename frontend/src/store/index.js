@@ -4,7 +4,7 @@ import { ElLoading } from 'element-plus'
 /*eslint-disable*/
 export default createStore({
   state: {
-    // pyURL:'https://591d-114-47-82-149.ngrok-free.app/gethistory',
+    // pyURL:'https://0906-114-47-84-241.ngrok-free.app/gethistory',
     // origin:'http://127.0.0.1:5000/gethistory',
     todayrecord:{},
     allrecord:[],
@@ -34,7 +34,7 @@ export default createStore({
   },
   actions: {
     async pyGet(content,payload) {
-      await axios.get('http://127.0.0.1:5000/gethistory')
+      await axios.get('https://0906-114-47-84-241.ngrok-free.app/gethistory')
       .then((response) => {
         // handle success
         content.commit('setTodayrecord',response.data)
