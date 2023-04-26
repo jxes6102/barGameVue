@@ -2,8 +2,8 @@
 /*掉落动画*/
 .diaol_1{animation:dialuodn 1s linear 0.9s backwards;-webkit-animation:dialuodn 1s linear 0.9s backwards}
 .diaol_1:after{animation-delay:0.8s;-webkit-animation-delay:0.8s}
-.diaol_2{animation:dialuodn 1s linear 0.6s backwards;-webkit-animation:dialuodn 1s linear 0.6s backwards}
-.diaol_2:after{animation-delay:0.5s;-webkit-animation-delay:0.5s}
+.diaol_2{animation:dialuodn 1s linear 0.3s backwards;-webkit-animation:dialuodn 1s linear 0.3s backwards}
+.diaol_2:after{animation-delay:0.2s;-webkit-animation-delay:0.2s}
 .diaol_3{animation:dialuodn 1s linear  backwards;-webkit-animation:dialuodn 1s linear  backwards}
 .diaol_3:after{ animation-delay:0.9s;-webkit-animation-delay:0.9s;}
 .diaol_4{animation:dialuodn 1s linear 1.1s backwards;-webkit-animation:dialuodn 1s linear 1.1s backwards}
@@ -162,7 +162,7 @@
 .diaol_80:after{animation-delay:0.7s;-webkit-animation-delay:0.7s}
 
 
-.wieyi_1{animation:around1 1.5s linear  infinite;-webkit-animation:around1 1.5s linear  infinite}i
+.wieyi_1{animation:around1 1.5s linear  infinite;-webkit-animation:around1 1.5s linear  infinite;}
 .wieyi_2{animation:around2 1.5s linear  infinite;-webkit-animation:around2 1.5s linear  infinite;}
 .wieyi_3{animation:around3 1.5s linear  infinite;-webkit-animation:around3 1.5s linear  infinite;}
 .wieyi_4{animation:around4 1.5s linear  infinite;-webkit-animation:around4 1.5s linear  infinite;}
@@ -300,58 +300,58 @@ opacity: 1;
 }
 
 @keyframes around2 {  
-    0%{ transform:translate(0px,0px)  }
-	25%{transform:translate(100%,-150%) }
-	50%{transform:translate(450%,-350%) }
-	75%{transform:translate(200%,-150%) }
+	0%{ transform:translate(0px,0px)  }
+	25%{transform:translate(150%,-400%) }
+	50%{transform:translate(-50%,-800%) }
+	75%{transform:translate(-70%,-400%) }
 	100%{ transform:translate(0px,0px)  }
 }
 
 @keyframes around3 {  
     0%{ transform:translate(0px,0px)  }
-	25%{transform:translate(-100%,-150%) }
-	50%{transform:translate(50%,-350%) }
-	75%{transform:translate(150%,-200%) }
+	25%{transform:translate(-50%,-400%) }
+	50%{transform:translate(-150%,-800%) }
+	75%{transform:translate(100%,-200%) }
 	100%{ transform:translate(0px,0px)  }
 }
 
 @keyframes around4 {  
 	0%{ transform:translate(0px,0px)  }
-	25%{transform:translate(-200%,-150%) }
-	50%{transform:translate(100%,-450%) }
-	75%{transform:translate(0%,-200%) }
+	25%{transform:translate(-150%,-450%) }
+	50%{transform:translate(-250%,-800%) }
+	75%{transform:translate(-300%,-200%) }
 	100%{ transform:translate(0px,0px)  }
 }
 
 @keyframes around5 {  
 	0%{ transform:translate(0px,0px)  }
-	25%{transform:translate(-200%,-150%) }
-	50%{transform:translate(100%,-450%) }
-	75%{transform:translate(50%,-300%) }
+	25%{transform:translate(-200%,-300%) }
+	50%{transform:translate(-350%,-800%) }
+	75%{transform:translate(-400%,-450%) }
 	100%{ transform:translate(0px,0px)  }
 }
 
 @keyframes around6 {  
     0%{ transform:translate(0px,0px)  }
-	25%{transform:translate(-100%,-150%) }
-	50%{transform:translate(400%,-350%) }
-	75%{transform:translate(150%,-200%) }
+	25%{transform:translate(-240%,-250%) }
+	50%{transform:translate(-450%,-800%) }
+	75%{transform:translate(-500%,-400%) }
 	100%{ transform:translate(0px,0px)  }
 }
 
 @keyframes around7 {  
     0%{ transform:translate(0px,0px)  }
-	25%{transform:translate(-100%,-150%) }
-	50%{transform:translate(50%,-300%) }
-	75%{transform:translate(250%,-100%) }
+	25%{transform:translate(-250%,-300%) }
+	50%{transform:translate(-550%,-800%) }
+	75%{transform:translate(-600%,-400%) }
 	100%{ transform:translate(0px,0px)  }
 }
 
 @keyframes around8 {  
     0%{ transform:translate(0px,0px)  }
-	25%{transform:translate(-100%,-150%) }
-	50%{transform:translate(100%,-300%) }
-	75%{transform:translate(-50%,-100%) }
+	25%{transform:translate(-300%,-450%) }
+	50%{transform:translate(-650%,-800%) }
+	75%{transform:translate(-700%,-400%) }
 	100%{ transform:translate(0px,0px)  }
 }
 
