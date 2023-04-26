@@ -930,3 +930,29 @@ opacity: 1;
 	75%{transform:translate(-100%,-700%) }
 	100%{ transform:translate(0px,0px)  }
 }
+
+@media (max-width: 767px) {
+    @keyframes around1 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(10%,-600%) }
+        50%{transform:translate(50%,-1200%) }
+        75%{transform:translate(250%,-600%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+
+    @keyframes around2 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(-100%,-700%) }
+        50%{transform:translate(-50%,-1200%) }
+        75%{transform:translate(200%,-500%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+
+    @keyframes around3 {  
+        0%{ transform:translate(0px,0px)  }
+        25%{transform:translate(-50%,-700%) }
+        50%{transform:translate(-150%,-1200%) }
+        75%{transform:translate(50%,-600%) }
+        100%{ transform:translate(0px,0px)  }
+    }
+}
