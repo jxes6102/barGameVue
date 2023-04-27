@@ -98,7 +98,7 @@ setup() {
     const drawData = ref(null)
     const windowWidth = ref(0)
     const runBallStatus = ref(false)
-    const upStatus = ref(false)
+    const upStatus = ref(true)
     const historyData = computed(() => {
         let target = []
         if(!drawData.value) return target
@@ -161,18 +161,15 @@ setup() {
         // console.log('textDo',newData.value)
         // console.log('qq',drawResult.value)
         console.log('otherBall',otherBall.value)
-        // let other = []
-        // for(let item of drawResult.value){
-        //     console.log('item',item,parseInt(item))
-        // }
-        // let test = drawResult.value.map((item)=> parseInt(item))
-        // console.log('test',test)
-
-        // runBallStatus.value = !runBallStatus.value
-        // setTimeout(function (){
-        //     runBallStatus.value = !runBallStatus.value
-        //     upStatus.value = true
-        // },2500)
+ 
+        upStatus.value = false
+        runBallStatus.value = !runBallStatus.value
+        setTimeout(function (){
+            upStatus.value = true
+        },1500)
+        setTimeout(function (){
+            runBallStatus.value = !runBallStatus.value
+        },2500)
         
     }
     //初始動作
