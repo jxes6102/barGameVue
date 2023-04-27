@@ -63,7 +63,7 @@
       </div>
       <!-- 模擬開獎 -->
       <div class="w-[100%] h-auto flex flex-wrap justify-center items-center ">
-        <el-button type="success" @click="textDo">測試按鈕</el-button>
+        <el-button class="bg-[#67c23a]" type="success" @click="textDo">測試按鈕</el-button>
         <el-button @click="textDo">測試按鈕</el-button>
         <!-- <div class="w-[100px] md:w-[120px] text-base md:text-2xl bg-[#8ac6d1] px-2 py-1 rounded-[5px] cursor-pointer hover:opacity-80" @click="textDo">測試按鈕</div> -->
       </div>
