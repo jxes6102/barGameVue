@@ -42,7 +42,7 @@
                     <span
                         v-for="(item,index) in otherBall" :key="index"
                         class="z-[2] w-[15px] h-[15px] md:w-[40px] md:h-[40px] bg-contain bg-center bg-no-repeat flex flex-wrap justify-center items-center text-[12px] md:text-lg"
-                        :class="'ball-' + ((index%4)+1)+' diaol_' + item"
+                        :class="'ball-' + ((item%4)+1)+' diaol_' + item"
                     >
                         {{ item }}
                     </span>
@@ -72,6 +72,7 @@
       </div>
       <!-- 回上頁 -->
       <Back></Back>
+      <load v-show="!historyData.length"></load>
     </div>
 </template>
 <script>
@@ -80,11 +81,13 @@
 import { ref,computed,onMounted,onBeforeUnmount,watch } from 'vue'
 import Back from '@/components/Back.vue'
 import SmallHistory from '@/components/smallHistory.vue'
+import load from '@/components/load.vue'
 import { useStore } from "vuex";
 export default {
 components: {
     Back,
     SmallHistory,
+    load
 },
 setup() {
     /**
