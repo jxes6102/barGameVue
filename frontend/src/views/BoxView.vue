@@ -10,15 +10,15 @@
                     v-for="(item,index) in 10" :key="index"
                     :class="'left-['+item*10+'px]'"
                     class="bg-[url('/src/assets/images/guan.png')] bg-contain bg-center bg-no-repeat w-[30px] h-[30px] md:w-[80px] md:h-[80px] z-[4] flex flex-wrap justify-center items-center">
-                    <!-- <div class="w-[100%] h-[100%] flex flex-col flex-wrap justify-center items-center">
+                    <div v-if="upStatus" class="w-[100%] h-[100%] flex flex-col flex-wrap justify-center items-center">
                         <span
-                            v-for="(item,index) in 2" :key="index"
+                            v-for="(items,indexs) in 2" :key="indexs"
                             class="z-[5] w-[15px] h-[15px] md:w-[40px] md:h-[40px] bg-contain bg-center bg-no-repeat flex flex-wrap justify-center items-center text-[12px] md:text-lg"
-                            :class="'ball-' + ((item%4)+1)"
+                            :class="'ball-' + ((indexs)+2)+' getball_'+(index+(indexs)*10)"
                         >
-                            {{ item*index }}
+                            {{ drawResult[index+(indexs)*10] }}
                         </span>
-                    </div> -->
+                    </div>
                 </div>
             </div>
             <div class="absolute w-[100%] h-[100%] bottom-[0px] flex flex-wrap justify-center items-end">
@@ -26,7 +26,7 @@
                     <span
                         v-for="(item,index) in 80" :key="index"
                         class="z-[2] w-[15px] h-[15px] md:w-[40px] md:h-[40px] bg-contain bg-center bg-no-repeat flex flex-wrap justify-center items-center text-[12px] md:text-lg"
-                        :class="'ball-' + ((item%4)+1) + (runBallStatus ? ' wieyi_'+item : ' diaol_' + item )"
+                        :class="'ball-' + ((item%4)+1) + (runBallStatus && item <= 80 ? ' wieyi_'+item : ' diaol_' + item )"
                     >
                         {{ item }}
                     </span>
@@ -44,6 +44,10 @@
                 ></div>
             </div>
         </div>
+      </div>
+      <!-- 模擬開獎 -->
+      <div class="w-[800px] h-auto flex flex-wrap justify-center items-center ">
+        <el-button type="danger" @click="textDo">test</el-button>
       </div>
       <!-- 新歷史紀錄 -->
       <div class="w-[800px] h-[25vh] flex flex-wrap justify-center items-center">
@@ -134,6 +138,12 @@ setup() {
     const toStr = (val) => {
         return val.join(' ')
     }
+    const textDo = () => {
+        console.log('==============================')
+        console.log('textDo',newData.value)
+        console.log('qq',drawResult.value)
+        upStatus.value = !upStatus.value
+    }
     //初始動作
     const init = () => {
         pyCatchNum()
@@ -150,8 +160,8 @@ setup() {
         }, false);
 
         setTimeout(function (){
-            runBallStatus.value = true
-            upStatus.value = true
+            // runBallStatus.value = true
+            // upStatus.value = true
         },1500)
         
     })
@@ -171,6 +181,7 @@ setup() {
         isMobile,
         runBallStatus,
         upStatus,
+        textDo,
         toStr,
         }
 
