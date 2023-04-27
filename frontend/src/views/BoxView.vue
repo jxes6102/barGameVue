@@ -1,8 +1,6 @@
 <template>
     <div class="w-[100vw] h-[100vh] overflow-hidden flex flex-wrap justify-center items-start">
       <!-- 主畫面 -->
-      <!-- <SmallCapsule :allData="newData"></SmallCapsule> -->
-
       <div class="w-[100vw] h-[75vh] bg-[#FCF4D9] flex flex-wrap justify-center items-center">
         <div class="relative w-[300px] h-[250px] md:w-[800px] md:h-[500px] bg-[#CDFFFF] rounded-md md:rounded-xl">
             <div class="absolute w-auto h-auto flex flex-wrap justify-center items-center">
@@ -22,11 +20,20 @@
                 </div>
             </div>
             <div class="absolute w-[100%] h-[100%] bottom-[0px] flex flex-wrap justify-center items-end">
-                <div class="w-[100%] h-auto flex flex-wrap justify-center items-end">
+                <!-- <div class="w-[100%] h-auto flex flex-wrap justify-center items-end">
                     <span
                         v-for="(item,index) in 80" :key="index"
                         class="z-[2] w-[15px] h-[15px] md:w-[40px] md:h-[40px] bg-contain bg-center bg-no-repeat flex flex-wrap justify-center items-center text-[12px] md:text-lg"
                         :class="'ball-' + ((item%4)+1) + (runBallStatus && item <= 80 ? ' wieyi_'+item : ' diaol_' + item )"
+                    >
+                        {{ item }}
+                    </span>
+                </div> -->
+                <div class="w-[100%] h-auto flex flex-wrap justify-center items-end">
+                    <span
+                        v-for="(item,index) in otherBall" :key="index"
+                        class="z-[2] w-[15px] h-[15px] md:w-[40px] md:h-[40px] bg-contain bg-center bg-no-repeat flex flex-wrap justify-center items-center text-[12px] md:text-lg"
+                        :class="'ball-' + ((index%4)+1) + (runBallStatus ? ' wieyi_'+(index+1) : ' diaol_' + (index+1) )"
                     >
                         {{ item }}
                     </span>
@@ -129,6 +136,17 @@ setup() {
     const isMobile = computed(() => {
         return windowWidth.value <= 768 ? true : false
     })
+    const otherBall = computed(() => {
+        if(!drawResult.value.length) return []
+        let target = []
+        let nowArr = drawResult.value.map((item)=> parseInt(item))
+        for(let i = 1;i<=80;i++){
+            if(!nowArr.includes(i)){
+                target.push(i)
+            }
+        }
+        return target
+    })
     //pyapi拿獎項資料
     const pyCatchNum = async() => {
         await store.dispatch('pyGet')
@@ -140,9 +158,22 @@ setup() {
     }
     const textDo = () => {
         console.log('==============================')
-        console.log('textDo',newData.value)
-        console.log('qq',drawResult.value)
-        upStatus.value = !upStatus.value
+        // console.log('textDo',newData.value)
+        // console.log('qq',drawResult.value)
+        console.log('otherBall',otherBall.value)
+        // let other = []
+        // for(let item of drawResult.value){
+        //     console.log('item',item,parseInt(item))
+        // }
+        // let test = drawResult.value.map((item)=> parseInt(item))
+        // console.log('test',test)
+
+        // runBallStatus.value = !runBallStatus.value
+        // setTimeout(function (){
+        //     runBallStatus.value = !runBallStatus.value
+        //     upStatus.value = true
+        // },2500)
+        
     }
     //初始動作
     const init = () => {
@@ -161,7 +192,6 @@ setup() {
 
         setTimeout(function (){
             // runBallStatus.value = true
-            // upStatus.value = true
         },1500)
         
     })
@@ -181,6 +211,7 @@ setup() {
         isMobile,
         runBallStatus,
         upStatus,
+        otherBall,
         textDo,
         toStr,
         }
