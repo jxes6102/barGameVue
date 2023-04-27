@@ -8,7 +8,8 @@ export default createStore({
     // origin:'http://127.0.0.1:5000/gethistory',
     todayrecord:{},
     allrecord:[],
-    loadingObj:null
+    loadingObj:null,
+    isMobile:false
   },
   getters: {
   },
@@ -30,6 +31,9 @@ export default createStore({
         state.loadingObj.close()
         // console.log('loadingObj',state.loadingObj)
       }
+    },
+    setMobile (state,value){
+      state.isMobile = (value <= 768) ? true : false
     }
   },
   actions: {

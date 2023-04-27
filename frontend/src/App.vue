@@ -1,11 +1,34 @@
 <template>
-  <!-- <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav> -->
   <router-view/>
 </template>
 
+<script>
+import { ref,onMounted } from 'vue'
+import { useStore } from "vuex";
+export default {
+
+  components: {
+  },
+  setup() {
+    const store = useStore()
+    const windowWidth = ref(0)
+
+    const setWidth = () => {
+      store.commit('setMobile',windowWidth.value)
+    }
+    onMounted(() => {
+      windowWidth.value = window.innerWidth
+      setWidth()
+      window.addEventListener('resize', () => {
+        windowWidth.value = window.innerWidth
+        setWidth()
+      }, false);
+    })
+    return {
+    }
+  }
+}
+</script>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -14,18 +37,4 @@
   text-align: center;
   color: #2c3e50;
 }
-
-/* nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
-} */
-
 </style>

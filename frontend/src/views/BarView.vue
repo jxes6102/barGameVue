@@ -48,7 +48,7 @@
     </div>
     <!-- 新歷史紀錄 -->
     <div class="w-[800px] h-[25vh] flex flex-wrap justify-center items-center">
-      <SmallHistory :isMobile="isMobile" :tableData="sortData"></SmallHistory>
+      <SmallHistory :tableData="sortData"></SmallHistory>
     </div>
     <!-- 回上頁 -->
     <Back></Back>
@@ -84,14 +84,11 @@ export default {
      * specialPosition 最新一筆特別號位置
      * sortData 排序後資料
      * displayTime 顯示時間訊息
-     * isMobile 判斷裝置
      * timer2 扣時timer
      * nowSeconds 剩餘秒數
-     * windowWidth 螢幕寬度
      */
     const store = useStore();
     const nowSeconds = ref(0)
-    const windowWidth = ref(0)
     const animationStatusArr = ref([])
     const historyItem = ref(null)
     const timer1 = ref(null)
@@ -131,9 +128,6 @@ export default {
     const sortData = computed(() => {
       if(!historyData.value) return []
       return JSON.parse(JSON.stringify(historyData.value)).reverse()
-    })
-    const isMobile = computed(() => {
-      return windowWidth.value <= 768 ? true : false
     })
     const displayTime = computed(() => {
       return '下期開獎時間: ' + Math.floor(nowSeconds.value/60)+":"+nowSeconds.value%60
@@ -221,10 +215,6 @@ export default {
       timer1.value = window.setInterval((async() => {
         await pyCatchNum()
       } ), 5500)
-      windowWidth.value = window.innerWidth
-      window.addEventListener('resize', () => {
-        windowWidth.value = window.innerWidth
-      }, false);
     })
 
     onBeforeUnmount(() => {
@@ -241,7 +231,6 @@ export default {
       specialPosition,
       animationStatusArr,
       sortData,
-      isMobile,
       displayTime,
       toStr,
     }

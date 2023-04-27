@@ -1,5 +1,5 @@
 <template>
-    <el-table v-if="isMobile" :data="tableData" max-height="25vh" style="width:300px;font-size:10px;">
+    <el-table v-if="isMobiles" :data="tableData" max-height="25vh" style="width:300px;font-size:10px;">
         <el-table-column sortable prop="no" label="期號" width="90"/>
         <el-table-column prop="reward" label="開獎號碼">
           <template #default="scope">
@@ -34,16 +34,11 @@
 </template>
 <script>
 // @ is an alias to /src
+import { useStore } from "vuex";
 import { computed } from 'vue'
 export default {
-  components: {
-
-  },
+  components: {},
   props: {
-    isMobile: {
-        type: Boolean,
-        default: false
-    },
     tableData: {
         type: Array,
         default: () => {
@@ -52,8 +47,9 @@ export default {
     }
   },
   setup(props) {
+    const store = useStore()
     const isMobiles = computed(() => {
-        return props.isMobile
+        return store.state.isMobile
     });
     const tableDatas = computed(() => {
         return props.tableData

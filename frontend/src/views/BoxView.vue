@@ -60,7 +60,7 @@
                 ></div>
             </div>
             <!-- 開獎訊息 -->
-            <div class="absolute w-[100%] h-auto top-[-60px] flex flex-wrap justify-center items-center ">
+            <div class="absolute w-[100%] h-auto top-[-45px] md:top-[-60px] flex flex-wrap justify-center items-center ">
                 <div class="w-[100%] text-base md:text-2xl font-bold text-[red]">{{ displayTitle }}</div>
                 <div class="w-[100%] text-xs md:text-lg font-bold text-[red]">{{ displayTime }}</div>
             </div>
@@ -68,7 +68,7 @@
       </div>
       <!-- 新歷史紀錄 -->
       <div class="w-[800px] h-[25vh] flex flex-wrap justify-center items-center">
-        <SmallHistory :isMobile="isMobile" :tableData="sortData"></SmallHistory>
+        <SmallHistory :tableData="sortData"></SmallHistory>
       </div>
       <!-- 回上頁 -->
       <Back></Back>
@@ -101,8 +101,6 @@ setup() {
      * termResult 最新一筆編號
      * specialPosition 最新一筆特別號位置
      * sortData 排序後資料
-     * windowWidth 螢幕寬度
-     * isMobile 判斷裝置
      * nowSeconds 當前剩餘秒數
      * runBallStatus 滾球動畫狀態
      * upStatus 吸球動畫狀態
@@ -116,7 +114,6 @@ setup() {
     const timer1 = ref(null)
     const timer2 = ref(null)
     const drawData = ref(null)
-    const windowWidth = ref(0)
     const runBallStatus = ref(false)
     const upStatus = ref(false)
     const historyData = computed(() => {
@@ -152,9 +149,6 @@ setup() {
     const sortData = computed(() => {
         if(!historyData.value) return []
         return JSON.parse(JSON.stringify(historyData.value)).reverse()
-    })
-    const isMobile = computed(() => {
-        return windowWidth.value <= 768 ? true : false
     })
     const otherBall = computed(() => {
         if(!drawResult.value.length) return []
@@ -236,10 +230,6 @@ setup() {
         timer1.value = window.setInterval((async() => {
             await pyCatchNum()
         } ), 5500)
-        windowWidth.value = window.innerWidth
-        window.addEventListener('resize', () => {
-            windowWidth.value = window.innerWidth
-        }, false);
 
         // setTimeout(function (){
         //     runBallStatus.value = true
@@ -260,7 +250,6 @@ setup() {
         specialPosition,
         sortData,
         newData,
-        isMobile,
         runBallStatus,
         upStatus,
         otherBall,

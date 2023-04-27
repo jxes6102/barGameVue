@@ -4,7 +4,7 @@
     <SmallCapsule :allData="newData"></SmallCapsule>
     <!-- 新歷史紀錄 -->
     <div class="w-[800px] h-[25vh] flex flex-wrap justify-center items-center">
-      <SmallHistory :isMobile="isMobile" :tableData="sortData"></SmallHistory>
+      <SmallHistory :tableData="sortData"></SmallHistory>
     </div>
     <!-- 回上頁 -->
     <Back></Back>
@@ -35,14 +35,11 @@ export default {
      * termResult 最新一筆編號
      * specialPosition 最新一筆特別號位置
      * sortData 排序後資料
-     * windowWidth 螢幕寬度
-     * isMobile 判斷裝置
      */
     const store = useStore();
     const historyItem = ref(null)
     const timer1 = ref(null)
     const drawData = ref(null)
-    const windowWidth = ref(0)
     const historyData = computed(() => {
       let target = []
       if(!drawData.value) return target
@@ -77,9 +74,6 @@ export default {
       if(!historyData.value) return []
       return JSON.parse(JSON.stringify(historyData.value)).reverse()
     })
-    const isMobile = computed(() => {
-      return windowWidth.value <= 768 ? true : false
-    })
     //pyapi拿獎項資料
     const pyCatchNum = async() => {
       await store.dispatch('pyGet')
@@ -99,10 +93,6 @@ export default {
       timer1.value = window.setInterval((async() => {
         await pyCatchNum()
       } ), 5500)
-      windowWidth.value = window.innerWidth
-      window.addEventListener('resize', () => {
-        windowWidth.value = window.innerWidth
-      }, false);
     })
 
     onBeforeUnmount(() => {
@@ -117,7 +107,6 @@ export default {
       specialPosition,
       sortData,
       newData,
-      isMobile,
       toStr,
     }
 

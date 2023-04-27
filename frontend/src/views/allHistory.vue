@@ -10,7 +10,7 @@
             />
         </div>
         <div class="w-[100%] h-auto flex flex-wrap justify-center items-center">
-            <div v-if="isMobile" class="w-[300px] h-[60vh] flex flex-wrap justify-center items-center">
+            <div v-if="isMobiles" class="w-[300px] h-[60vh] flex flex-wrap justify-center items-center">
                 <el-table :data="tableData" max-height="60vh" style="width:300px;font-size:10px">
                     <el-table-column sortable prop="no" label="期號" width="90"/>
                     <el-table-column prop="reward" label="開獎號碼">
@@ -63,7 +63,7 @@
 <script>
 /*eslint-disable*/
 // @ is an alias to /src
-import { ref,watch,computed,onMounted } from 'vue'
+import { ref,watch,computed } from 'vue'
 import Back from '@/components/Back.vue'
 import { useStore } from "vuex";
 export default {
@@ -73,16 +73,16 @@ export default {
   },
   setup() {
     /**
-     * windowWidth 螢幕寬度
      * dayData 日期
      * historyData 歷史紀錄
      * apiLoading loading狀態
      * tableData 表格資料
-     * isMobile 使用裝置
-     * 
+     * isMobiles 使用裝置
      */
     const store = useStore()
-    const windowWidth = ref(0)
+    const isMobiles = computed(() => {
+        return store.state.isMobile
+    });
     const dayData = ref(null)
     const historyData = ref([])
     const apiLoading = ref(false)
@@ -97,9 +97,6 @@ export default {
         })
       }
       return target
-    })
-    const isMobile = computed(() => {
-      return windowWidth.value <= 768 ? true : false
     })
     //設定選擇日期範圍
     const disabledDate = (time) => {
@@ -124,19 +121,12 @@ export default {
         await getHistory(value)
     }
 
-    onMounted(() => {
-      windowWidth.value = window.innerWidth
-      window.addEventListener('resize', () => {
-        windowWidth.value = window.innerWidth
-      }, false);
-    })
-
     return {
         dayData,
         tableData,
         historyData,
         apiLoading,
-        isMobile,
+        isMobiles,
         currentChange,
         disabledDate
     }
