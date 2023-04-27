@@ -12,7 +12,16 @@
                         <span
                             v-for="(items,indexs) in 2" :key="indexs"
                             class="z-[5] w-[15px] h-[15px] md:w-[40px] md:h-[40px] bg-contain bg-center bg-no-repeat flex flex-wrap justify-center items-center text-[12px] md:text-lg"
-                            :class="'ball-' + ((indexs)+2)+' getball_'+(index+(indexs)*10)"
+                            :class="'ball-' + ((indexs)+2)+ ' getball_'+(index+(indexs)*10)"
+                        >
+                            {{ drawResult[index+(indexs)*10] }}
+                        </span>
+                    </div>
+                    <div v-else-if="!runBallStatus && !upStatus" class="w-[100%] h-[100%] flex flex-col flex-wrap justify-center items-center">
+                        <span
+                            v-for="(items,indexs) in 2" :key="indexs"
+                            class="z-[5] w-[15px] h-[15px] md:w-[40px] md:h-[40px] bg-contain bg-center bg-no-repeat flex flex-wrap justify-center items-center text-[12px] md:text-lg"
+                            :class="'ball-' + ((indexs)+2)"
                         >
                             {{ drawResult[index+(indexs)*10] }}
                         </span>
@@ -20,20 +29,20 @@
                 </div>
             </div>
             <div class="absolute w-[100%] h-[100%] bottom-[0px] flex flex-wrap justify-center items-end">
-                <!-- <div class="w-[100%] h-auto flex flex-wrap justify-center items-end">
+                <div v-if="runBallStatus" class="w-[100%] h-auto flex flex-wrap justify-center items-end">
                     <span
                         v-for="(item,index) in 80" :key="index"
                         class="z-[2] w-[15px] h-[15px] md:w-[40px] md:h-[40px] bg-contain bg-center bg-no-repeat flex flex-wrap justify-center items-center text-[12px] md:text-lg"
-                        :class="'ball-' + ((item%4)+1) + (runBallStatus && item <= 80 ? ' wieyi_'+item : ' diaol_' + item )"
+                        :class="'ball-' + ((item%4)+1) + ' wieyi_'+item"
                     >
                         {{ item }}
                     </span>
-                </div> -->
-                <div class="w-[100%] h-auto flex flex-wrap justify-center items-end">
+                </div>
+                <div v-else class="w-[100%] h-auto flex flex-wrap justify-center items-end">
                     <span
                         v-for="(item,index) in otherBall" :key="index"
                         class="z-[2] w-[15px] h-[15px] md:w-[40px] md:h-[40px] bg-contain bg-center bg-no-repeat flex flex-wrap justify-center items-center text-[12px] md:text-lg"
-                        :class="'ball-' + ((index%4)+1) + (runBallStatus ? ' wieyi_'+(index+1) : ' diaol_' + (index+1) )"
+                        :class="'ball-' + ((index%4)+1)+' diaol_' + item"
                     >
                         {{ item }}
                     </span>
@@ -98,7 +107,7 @@ setup() {
     const drawData = ref(null)
     const windowWidth = ref(0)
     const runBallStatus = ref(false)
-    const upStatus = ref(true)
+    const upStatus = ref(false)
     const historyData = computed(() => {
         let target = []
         if(!drawData.value) return target
@@ -157,19 +166,17 @@ setup() {
         return val.join(' ')
     }
     const textDo = () => {
-        console.log('==============================')
-        // console.log('textDo',newData.value)
-        // console.log('qq',drawResult.value)
-        console.log('otherBall',otherBall.value)
- 
-        upStatus.value = false
-        runBallStatus.value = !runBallStatus.value
+        // console.log('==============================')
+        if(runBallStatus.value || upStatus.value) return false
+        console.log('textDo')
+        runBallStatus.value = true
         setTimeout(function (){
+            runBallStatus.value = false
             upStatus.value = true
-        },1500)
-        setTimeout(function (){
-            runBallStatus.value = !runBallStatus.value
-        },2500)
+            setTimeout(function (){
+                upStatus.value = false
+            },1000)
+        },3000)
         
     }
     //初始動作
