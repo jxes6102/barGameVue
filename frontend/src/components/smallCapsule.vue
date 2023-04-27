@@ -64,17 +64,15 @@ export default {
      * displayTitle 期數
      * drawData 開獎資料
      * displayTitle 顯示期數訊息
-     * initTimeStatus 控制顯示時間狀態
      * displayTime 顯示時間訊息
      */
     let fallTimes = 0
-    let runBallStatus = ref(false)
-    let messageText = ref('')
-    let fallNum = ref('')
-    let fallStatus = ref(false)
-    let nowSeconds = ref(0)
-    let timer1 = ref(null)
-    let initTimeStatus = ref(false)
+    const runBallStatus = ref(false)
+    const messageText = ref('')
+    const fallNum = ref('')
+    const fallStatus = ref(false)
+    const nowSeconds = ref(0)
+    const timer1 = ref(null)
     const displayTitle = computed(() => {
         return '台灣賓果 期號: ' + drawData.value.no
     })
@@ -84,21 +82,21 @@ export default {
     const drawData = computed(() => {
         return props.allData
     });
+    //監聽開獎資料改變
     watch(drawData, (newVal,oldVal)=>{
         if(oldVal && (JSON.stringify(oldVal) !== '{}')){
             if(parseInt(newVal.no) > parseInt(oldVal.no)) {
                 play()
                 getTime()
-                initTimeStatus.value = true
             }
         }else if(JSON.stringify(oldVal) === '{}'){
             messageText.value = newVal.reward.join(' , ')
         }
     })
+    //監聽秒數改變
     watch(nowSeconds, (newVal,oldVal)=>{
         if(newVal === 0){
             getTime()
-            initTimeStatus.value = true
             controlRunBall(true)
         }
     })

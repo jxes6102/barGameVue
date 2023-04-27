@@ -72,6 +72,15 @@ export default {
     Back
   },
   setup() {
+    /**
+     * windowWidth 螢幕寬度
+     * dayData 日期
+     * historyData 歷史紀錄
+     * apiLoading loading狀態
+     * tableData 表格資料
+     * isMobile 使用裝置
+     * 
+     */
     const store = useStore()
     const windowWidth = ref(0)
     const dayData = ref(null)
@@ -92,16 +101,15 @@ export default {
     const isMobile = computed(() => {
       return windowWidth.value <= 768 ? true : false
     })
-    
-
+    //設定選擇日期範圍
     const disabledDate = (time) => {
         return (time.getTime() > Date.now()) || (time.getTime() < (Date.now() - 2592000000))
     }
-    
+    //監聽日期改變
     watch(dayData, async(newVal,oldVal)=>{
         await getHistory()
     })
-
+    // 拿取紀錄API
     const getHistory = async(nowpage = 1) => {
         if(apiLoading.value) return false
         apiLoading.value = true
@@ -111,7 +119,7 @@ export default {
         historyData.value = store.state.allrecord
         apiLoading.value = false
     }
-
+    // 切換分頁時觸發
     const currentChange = async(value) => {
         await getHistory(value)
     }

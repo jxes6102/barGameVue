@@ -85,19 +85,17 @@ export default {
      * sortData 排序後資料
      * displayTime 顯示時間訊息
      * isMobile 判斷裝置
-     * initTimeStatus 控制顯示時間狀態
      * timer2 扣時timer
      * nowSeconds 剩餘秒數
      * windowWidth 螢幕寬度
      */
     const store = useStore();
-    let nowSeconds = ref(0)
+    const nowSeconds = ref(0)
     const windowWidth = ref(0)
     const animationStatusArr = ref([])
     const historyItem = ref(null)
     const timer1 = ref(null)
     const timer2 = ref(null)
-    let initTimeStatus = ref(false)
     const drawData = ref(null)
     const downStatus = ref(false)
     const historyData = computed(() => {
@@ -146,7 +144,6 @@ export default {
         // console.log(parseInt(newVal.no),parseInt(oldVal.no))
         if(parseInt(newVal.no) > parseInt(oldVal.no)) {
           down()
-          initTimeStatus.value = true
         }
       }
     })
@@ -154,7 +151,6 @@ export default {
     watch(nowSeconds, (newVal,oldVal)=>{
         if(newVal === 0){
             getTime()
-            initTimeStatus.value = true
             for(let i = 0;i<20;i++){
               animationStatusArr.value[i] = true
             }

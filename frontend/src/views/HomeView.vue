@@ -7,10 +7,10 @@
         <div class="w-[80px] md:w-[100px] text-base md:text-2xl bg-[#8ac6d1] px-2 py-1 rounded-[5px] cursor-pointer hover:opacity-80" @click="toLinkCapsule">capsule</div>
       </div>
       <div class="w-[100%] md:w-auto md:h-auto flex flex-wrap justify-center items-center">
-        <div class="w-[80px] md:w-[100px] text-base md:text-2xl bg-[#8ac6d1] px-2 py-1 rounded-[5px] cursor-pointer hover:opacity-80" @click="toLinkHistory">history</div>
+        <div class="w-[80px] md:w-[100px] text-base md:text-2xl bg-[#8ac6d1] px-2 py-1 rounded-[5px] cursor-pointer hover:opacity-80" @click="toLinkBox">box</div>
       </div>
       <div class="w-[100%] md:w-auto md:h-auto flex flex-wrap justify-center items-center">
-        <div class="w-[80px] md:w-[100px] text-base md:text-2xl bg-[#8ac6d1] px-2 py-1 rounded-[5px] cursor-pointer hover:opacity-80" @click="toLinkBox">box</div>
+        <div class="w-[80px] md:w-[100px] text-base md:text-2xl bg-[#8ac6d1] px-2 py-1 rounded-[5px] cursor-pointer hover:opacity-80" @click="toLinkHistory">history</div>
       </div>
   </div>
 </template>
@@ -22,7 +22,7 @@ export default {
   components: {
   },
   setup() {
-    const router = useRouter();
+    const router = useRouter()
     const toLinkBar = () => {
         router.push({ name: "bar" });
     }

@@ -90,6 +90,7 @@ setup() {
     /**
      * historyItem 歷史紀錄區塊ref
      * timer1 設定timer 1/10s
+     * timer2 扣時timer
      * drawData 原始api資料
      * historyData api資料整理
      * newData 最新一筆
@@ -99,6 +100,12 @@ setup() {
      * sortData 排序後資料
      * windowWidth 螢幕寬度
      * isMobile 判斷裝置
+     * nowSeconds 當前剩餘秒數
+     * runBallStatus 滾球動畫狀態
+     * upStatus 吸球動畫狀態
+     * otherBall 除去中獎球陣列
+     * displayTitle 期號訊息
+     * displayTime 時間訊息
      */
     const nowSeconds = ref(0)
     const store = useStore();
@@ -158,6 +165,7 @@ setup() {
         return target
     })
     const displayTitle = computed(() => {
+        if(!newData.value?.no) return ''
         return '台灣賓果 期號: ' + newData.value.no
     })
     const displayTime = computed(() => {
@@ -194,6 +202,7 @@ setup() {
     const toStr = (val) => {
         return val.join(' ')
     }
+    //開獎動畫
     const openReward = () => {
         if(upStatus.value) return false
         ctrlRunBall(true)
@@ -206,6 +215,7 @@ setup() {
             },1000)
         },1000)
     }
+    //控制滾球狀態
     const ctrlRunBall = (status = false) => {
         runBallStatus.value = status
     }
