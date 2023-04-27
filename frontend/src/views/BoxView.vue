@@ -59,12 +59,12 @@
                     class="w-[120px] h-[120px] md:w-[250px] md:h-[250px] bg-[url('/src/assets/images/rotate.png')] bg-contain bg-center bg-no-repeat z-[4]"
                 ></div>
             </div>
+            <!-- 開獎訊息 -->
+            <div class="absolute w-[100%] h-auto top-[-60px] flex flex-wrap justify-center items-center ">
+                <div class="w-[100%] text-base md:text-2xl font-bold text-[red]">{{ displayTitle }}</div>
+                <div class="w-[100%] text-xs md:text-lg font-bold text-[red]">{{ displayTime }}</div>
+            </div>
         </div>
-      </div>
-      <!-- 模擬開獎 -->
-      <div class="w-[100%] h-auto flex flex-wrap justify-center items-center ">
-        <!-- <el-button class="bg-[#67c23a]" type="success" @click="openReward">測試按鈕</el-button> -->
-        <div>{{ displayTime }}</div>
       </div>
       <!-- 新歷史紀錄 -->
       <div class="w-[800px] h-[25vh] flex flex-wrap justify-center items-center">
@@ -78,15 +78,12 @@
 // @ is an alias to /src
 /*eslint-disable*/
 import { ref,computed,onMounted,onBeforeUnmount,watch } from 'vue'
-// import axios from 'axios'
 import Back from '@/components/Back.vue'
-// import SmallCapsule from '@/components/smallCapsule.vue'
 import SmallHistory from '@/components/smallHistory.vue'
 import { useStore } from "vuex";
 export default {
 components: {
     Back,
-    // SmallCapsule,
     SmallHistory,
 },
 setup() {
@@ -160,6 +157,9 @@ setup() {
         }
         return target
     })
+    const displayTitle = computed(() => {
+        return '台灣賓果 期號: ' + newData.value.no
+    })
     const displayTime = computed(() => {
       return '下期開獎時間: ' + Math.floor(nowSeconds.value/60)+":"+nowSeconds.value%60
     })
@@ -195,9 +195,7 @@ setup() {
         return val.join(' ')
     }
     const openReward = () => {
-        // console.log('==============================')
         if(upStatus.value) return false
-        console.log('openReward')
         ctrlRunBall(true)
         setTimeout(function (){
             runBallStatus.value = false
@@ -206,7 +204,7 @@ setup() {
             setTimeout(function (){
                 upStatus.value = false
             },1000)
-        },2000)
+        },1000)
     }
     const ctrlRunBall = (status = false) => {
         runBallStatus.value = status
@@ -230,9 +228,9 @@ setup() {
             windowWidth.value = window.innerWidth
         }, false);
 
-        setTimeout(function (){
-            // runBallStatus.value = true
-        },1500)
+        // setTimeout(function (){
+        //     runBallStatus.value = true
+        // },1500)
         
     })
 
@@ -254,6 +252,7 @@ setup() {
         upStatus,
         otherBall,
         displayTime,
+        displayTitle,
         openReward,
         toStr,
         }
