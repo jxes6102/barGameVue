@@ -63,7 +63,8 @@
       </div>
       <!-- 模擬開獎 -->
       <div class="w-[100%] h-auto flex flex-wrap justify-center items-center ">
-        <el-button class="bg-[#67c23a]" type="success" @click="textDo">測試按鈕</el-button>
+        <!-- <el-button class="bg-[#67c23a]" type="success" @click="openReward">測試按鈕</el-button> -->
+        <div>{{ displayTime }}</div>
       </div>
       <!-- 新歷史紀錄 -->
       <div class="w-[800px] h-[25vh] flex flex-wrap justify-center items-center">
@@ -75,7 +76,8 @@
 </template>
 <script>
 // @ is an alias to /src
-import { ref,computed,onMounted,onBeforeUnmount } from 'vue'
+/*eslint-disable*/
+import { ref,computed,onMounted,onBeforeUnmount,watch } from 'vue'
 // import axios from 'axios'
 import Back from '@/components/Back.vue'
 // import SmallCapsule from '@/components/smallCapsule.vue'
@@ -101,9 +103,11 @@ setup() {
      * windowWidth 螢幕寬度
      * isMobile 判斷裝置
      */
+    const nowSeconds = ref(0)
     const store = useStore();
     const historyItem = ref(null)
     const timer1 = ref(null)
+    const timer2 = ref(null)
     const drawData = ref(null)
     const windowWidth = ref(0)
     const runBallStatus = ref(false)
@@ -156,6 +160,31 @@ setup() {
         }
         return target
     })
+    const displayTime = computed(() => {
+      return '下期開獎時間: ' + Math.floor(nowSeconds.value/60)+":"+nowSeconds.value%60
+    })
+    // 監聽剩餘秒數
+    watch(nowSeconds, (newVal,oldVal)=>{
+        if(newVal === 0){
+            getTime()
+            ctrlRunBall(true)
+        }
+    })
+    // 監聽api改變後拉桿
+    watch(newData, (newVal,oldVal)=>{
+      if(oldVal){
+        if(parseInt(newVal.no) > parseInt(oldVal.no)) {
+            openReward()
+        }
+      }
+    })
+    // 計算時間
+    const getTime = () => {
+        const time = new Date();
+        let getMinutes = time.getMinutes();
+        let getSeconds = time.getSeconds();
+        nowSeconds.value = (4-getMinutes%5)*60+(60-getSeconds)
+    }
     //pyapi拿獎項資料
     const pyCatchNum = async() => {
         await store.dispatch('pyGet')
@@ -165,23 +194,30 @@ setup() {
     const toStr = (val) => {
         return val.join(' ')
     }
-    const textDo = () => {
+    const openReward = () => {
         // console.log('==============================')
-        if(runBallStatus.value || upStatus.value) return false
-        console.log('textDo')
-        runBallStatus.value = true
+        if(upStatus.value) return false
+        console.log('openReward')
+        ctrlRunBall(true)
         setTimeout(function (){
             runBallStatus.value = false
+            ctrlRunBall(false)
             upStatus.value = true
             setTimeout(function (){
                 upStatus.value = false
             },1000)
-        },3000)
-        
+        },2000)
+    }
+    const ctrlRunBall = (status = false) => {
+        runBallStatus.value = status
     }
     //初始動作
     const init = () => {
+        getTime()
         pyCatchNum()
+        timer2.value = window.setInterval((async() => {
+          nowSeconds.value--
+        } ), 1000)
     }
     init()
 
@@ -202,6 +238,7 @@ setup() {
 
     onBeforeUnmount(() => {
         clearInterval(timer1.value)
+        clearInterval(timer2.value)
     })
 
     return {
@@ -216,7 +253,8 @@ setup() {
         runBallStatus,
         upStatus,
         otherBall,
-        textDo,
+        displayTime,
+        openReward,
         toStr,
         }
 
