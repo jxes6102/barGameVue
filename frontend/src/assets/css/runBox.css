@@ -308,17 +308,17 @@ opacity: 1;
 
 @keyframes around3 {  
     0%{ transform:translate(0px,0px)  }
-	25%{transform:translate(-50%,-400%) }
-	50%{transform:translate(-150%,-800%) }
-	75%{transform:translate(100%,-200%) }
+	25%{transform:translate(300%,-500%) }
+	50%{transform:translate(600%,-600%) }
+	75%{transform:translate(500%,-300%) }
 	100%{ transform:translate(0px,0px)  }
 }
 
 @keyframes around4 {  
 	0%{ transform:translate(0px,0px)  }
-	25%{transform:translate(-150%,-450%) }
-	50%{transform:translate(-250%,-800%) }
-	75%{transform:translate(-300%,-200%) }
+	25%{transform:translate(100%,-450%) }
+	50%{transform:translate(500%,-600%) }
+	75%{transform:translate(400%,-200%) }
 	100%{ transform:translate(0px,0px)  }
 }
 
@@ -949,17 +949,17 @@ opacity: 1;
 
     @keyframes around3 {  
         0%{ transform:translate(0px,0px)  }
-        25%{transform:translate(-50%,-700%) }
-        50%{transform:translate(-150%,-1200%) }
-        75%{transform:translate(50%,-600%) }
+        25%{transform:translate(100%,-700%) }
+        50%{transform:translate(500%,-800%) }
+        75%{transform:translate(400%,-300%) }
         100%{ transform:translate(0px,0px)  }
     }
 
     @keyframes around4 {  
         0%{ transform:translate(0px,0px)  }
-        25%{transform:translate(-150%,-800%) }
-        50%{transform:translate(-250%,-1200%) }
-        75%{transform:translate(50%,-500%) }
+        25%{transform:translate(50%,-500%) }
+        50%{transform:translate(500%,-800%) }
+        75%{transform:translate(550%,-400%) }
         100%{ transform:translate(0px,0px)  }
     }
 

@@ -33,7 +33,7 @@
                     <span
                         v-for="(item,index) in 80" :key="index"
                         class="z-[2] w-[15px] h-[15px] md:w-[40px] md:h-[40px] bg-contain bg-center bg-no-repeat flex flex-wrap justify-center items-center text-[12px] md:text-lg"
-                        :class="(true)? ('ball-' + ((item%4)+1) + ' wieyi_'+item) : ''"
+                        :class="(item === 4)? ('ball-' + ((item%4)+1) + ' wieyi_'+item) : ''"
                     >
                         {{ item }}
                     </span>
@@ -51,11 +51,11 @@
             <!-- 滾輪 -->
             <div class="absolute w-[100%] h-auto top-[25%] flex flex-wrap justify-center items-center gap-x-[10px] md:gap-x-[50px]">
                 <div 
-                    :class="runBallStatus ? 'rotateStyle' : ''" 
+                    :class="runBallStatus ? 'rotateStyle1' : ''" 
                     class="w-[120px] h-[120px] md:w-[250px] md:h-[250px] bg-[url('/src/assets/images/rotate.png')] bg-contain bg-center bg-no-repeat z-[4]"
                 ></div>
                 <div 
-                    :class="runBallStatus ? 'rotateStyle' : ''" 
+                    :class="runBallStatus ? 'rotateStyle2' : ''" 
                     class="w-[120px] h-[120px] md:w-[250px] md:h-[250px] bg-[url('/src/assets/images/rotate.png')] bg-contain bg-center bg-no-repeat z-[4]"
                 ></div>
             </div>
@@ -227,13 +227,13 @@ setup() {
     init()
 
     onMounted(() => {
-        timer1.value = window.setInterval((async() => {
-            await pyCatchNum()
-        } ), 5500)
+        // timer1.value = window.setInterval((async() => {
+        //     await pyCatchNum()
+        // } ), 5500)
 
-        // setTimeout(function (){
-        //     runBallStatus.value = true
-        // },1500)
+        setTimeout(function (){
+            runBallStatus.value = true
+        },1500)
         
     })
 
@@ -276,7 +276,7 @@ setup() {
     .ball-4{
         background-image: url('/src/assets/images/canpin_4.png');
     }
-    @keyframes rotates{
+    @keyframes rotates1{
         0% {
             transform: rotate(0deg);
         }
@@ -284,7 +284,18 @@ setup() {
             transform: rotate(360deg);
         }
     }
-    .rotateStyle{
-        animation: rotates 1s linear infinite;
+    @keyframes rotates2{
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(-360deg);
+        }
+    }
+    .rotateStyle1{
+        animation: rotates1 1s linear infinite;
+    }
+    .rotateStyle2{
+        animation: rotates2 1s linear infinite;
     }
 </style>
