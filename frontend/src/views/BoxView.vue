@@ -210,7 +210,7 @@ setup() {
             setTimeout(function (){
                 upStatus.value = false
             },1000)
-        },1000)
+        },2000)
     }
     //控制滾球狀態
     const ctrlRunBall = (status = false) => {
