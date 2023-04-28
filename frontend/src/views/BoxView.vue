@@ -33,7 +33,7 @@
                     <span
                         v-for="(item,index) in 80" :key="index"
                         class="z-[2] w-[15px] h-[15px] md:w-[40px] md:h-[40px] bg-contain bg-center bg-no-repeat flex flex-wrap justify-center items-center text-[12px] md:text-lg"
-                        :class="(item == 60)? ('ball-' + ((item%4)+1) + ' wieyi_'+item) : ''"
+                        :class="(item <= 80)? ('ball-' + ((item%4)+1) + ' wieyi_'+item) : ''"
                     >
                         {{ item }}
                     </span>
@@ -49,14 +49,14 @@
                 </div>
             </div>
             <!-- 滾輪 -->
-            <div class="absolute w-[100%] h-auto top-[25%] flex flex-wrap justify-center items-center gap-x-[10px] md:gap-x-[50px]">
+            <div class="absolute w-[100%] h-auto top-[25%] flex flex-wrap justify-center items-center gap-x-[5px] md:gap-x-[50px]">
                 <div 
                     :class="runBallStatus ? 'rotateStyle1' : ''" 
-                    class="w-[120px] h-[120px] md:w-[250px] md:h-[250px] bg-[url('/src/assets/images/rotate.png')] bg-contain bg-center bg-no-repeat z-[4]"
+                    class="w-[140px] h-[140px] md:w-[280px] md:h-[280px] bg-[url('/src/assets/images/rotate.png')] bg-contain bg-center bg-no-repeat z-[4]"
                 ></div>
                 <div 
                     :class="runBallStatus ? 'rotateStyle2' : ''" 
-                    class="w-[120px] h-[120px] md:w-[250px] md:h-[250px] bg-[url('/src/assets/images/rotate.png')] bg-contain bg-center bg-no-repeat z-[4]"
+                    class="w-[140px] h-[140px] md:w-[280px] md:h-[280px] bg-[url('/src/assets/images/rotate.png')] bg-contain bg-center bg-no-repeat z-[4]"
                 ></div>
             </div>
             <!-- 開獎訊息 -->
@@ -227,13 +227,13 @@ setup() {
     init()
 
     onMounted(() => {
-        // timer1.value = window.setInterval((async() => {
-        //     await pyCatchNum()
-        // } ), 5500)
+        timer1.value = window.setInterval((async() => {
+            await pyCatchNum()
+        } ), 5500)
 
-        setTimeout(function (){
-            runBallStatus.value = true
-        },1500)
+        // setTimeout(function (){
+        //     runBallStatus.value = true
+        // },1500)
         
     })
 
