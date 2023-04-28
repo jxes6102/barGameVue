@@ -33,7 +33,7 @@
                     <span
                         v-for="(item,index) in 80" :key="index"
                         class="z-[2] w-[15px] h-[15px] md:w-[40px] md:h-[40px] bg-contain bg-center bg-no-repeat flex flex-wrap justify-center items-center text-[12px] md:text-lg"
-                        :class="(item <= 30)? ('ball-' + ((item%4)+1) + ' wieyi_'+item) : ''"
+                        :class="(item <= 40)? ('ball-' + ((item%4)+1) + ' wieyi_'+item) : ''"
                     >
                         {{ item }}
                     </span>
