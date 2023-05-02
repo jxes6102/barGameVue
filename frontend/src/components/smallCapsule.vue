@@ -74,7 +74,7 @@ export default {
     const nowSeconds = ref(0)
     const timer1 = ref(null)
     const displayTitle = computed(() => {
-        return '台灣賓果 期號: ' + drawData.value.no
+        return '台灣賓果 期號: ' + (parseInt(drawData.value.no)+1)
     })
     const displayTime = computed(() => {
         return '下期開獎時間: ' + Math.floor(nowSeconds.value/60)+":"+nowSeconds.value%60

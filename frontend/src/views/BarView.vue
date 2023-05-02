@@ -119,7 +119,7 @@ export default {
     })
     const termResult = computed(() => {
       if(!newData.value) return []
-      return newData.value.no
+      return (parseInt(newData.value.no)+1)
     })
     const specialPosition = computed(() => {
       if(!newData.value) return -1

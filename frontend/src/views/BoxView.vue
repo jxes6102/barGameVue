@@ -163,7 +163,7 @@ setup() {
     })
     const displayTitle = computed(() => {
         if(!newData.value?.no) return ''
-        return '台灣賓果 期號: ' + newData.value.no
+        return '台灣賓果 期號: ' + (parseInt(newData.value.no)+1)
     })
     const displayTime = computed(() => {
       return '下期開獎時間: ' + Math.floor(nowSeconds.value/60)+":"+nowSeconds.value%60
