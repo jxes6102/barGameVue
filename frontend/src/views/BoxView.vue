@@ -33,7 +33,7 @@
                     <span
                         v-for="(item,index) in 80" :key="index"
                         class="z-[2] w-[15px] h-[15px] md:w-[40px] md:h-[40px] bg-contain bg-center bg-no-repeat flex flex-wrap justify-center items-center text-[12px] md:text-lg"
-                        :class="(item <= 10 && item >= 1)? ('ball-' + ((item%4)+1) + ' wieyi_'+item) : ''"
+                        :class="(item <= 80)? ('ball-' + ((item%4)+1) + ' wieyi_'+item) : ''"
                     >
                         {{ item }}
                     </span>
@@ -227,13 +227,13 @@ setup() {
     init()
 
     onMounted(() => {
-        // timer1.value = window.setInterval((async() => {
-        //     await pyCatchNum()
-        // } ), 5500)
+        timer1.value = window.setInterval((async() => {
+            await pyCatchNum()
+        } ), 5500)
 
-        setTimeout(function (){
-            runBallStatus.value = true
-        },1500)
+        // setTimeout(function (){
+        //     runBallStatus.value = true
+        // },1500)
         
     })
 
