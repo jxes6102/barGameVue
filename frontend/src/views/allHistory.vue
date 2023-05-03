@@ -95,11 +95,16 @@ export default {
       for(let item of historyData.value[page.value]){
         let numArr = item.preDrawCode.split(',')
         numArr.splice(numArr.indexOf(numArr[numArr.length - 1]),1)
-        let font = (item.sumBigSmall=== 1 ? '大' : '小') + (item.singleDoubleCount=== 1 ? '單' : '雙')
+        let font = (item.sumBigSmall=== 1 ? '' : '小') + (item.singleDoubleCount=== 1 ? '單' : '雙')
+        let singleCount = 0
+        for(let i = 0;i<numArr.length;i++){
+            if(numArr[i]%2 === 1) singleCount++
+        }
         target.push({
           no:item.preDrawIssue,
           reward:numArr,
-          decision:font
+          decision:font,
+          count:singleCount
         })
       }
       return target

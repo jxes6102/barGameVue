@@ -292,162 +292,162 @@ opacity: 1;
    -+    ++ */
 
 @keyframes around1 {  
-	0%{ transform:translate(0px,0px)  }
+	0%{ transform:translate(1000%,-400%)  }
 	25%{transform:translate(100%,-200%) }
 	50%{transform:translate(300%,-400%) }
 	75%{transform:translate(500%,-300%) }
-	100%{ transform:translate(0px,0px)  }
+	100%{ transform:translate(1000%,-400%)  }
 }
 @keyframes around2 {  
-	0%{ transform:translate(0px,0px)  }
+	0%{ transform:translate(800%,-300%) }
 	25%{transform:translate(-100%,-300%) }
 	50%{transform:translate(300%,-400%) }
 	75%{transform:translate(500%,-200%) }
-	100%{ transform:translate(0px,0px)  }
+	100%{ transform:translate(800%,-300%) }
 }
 
 @keyframes around3 {  
-    0%{ transform:translate(0px,0px)  }
+    0%{ transform:translate(800%,-200%) }
 	25%{transform:translate(100%,-200%) }
 	50%{transform:translate(400%,-400%) }
 	75%{transform:translate(500%,-300%) }
-	100%{ transform:translate(0px,0px)  }
+	100%{ transform:translate(800%,-200%) }
 }
 
 @keyframes around4 {  
-	0%{ transform:translate(0px,0px)  }
+	0%{ transform:translate(600%,-300%) }
 	25%{transform:translate(100%,-450%) }
 	50%{transform:translate(400%,-400%) }
 	75%{transform:translate(200%,-200%) }
-	100%{ transform:translate(0px,0px)  }
+	100%{ transform:translate(600%,-300%) }
 }
 
 @keyframes around5 {  
-	0%{ transform:translate(0px,0px)  }
+	0%{ transform:translate(400%,-100%) }
 	25%{transform:translate(-100%,-300%) }
 	50%{transform:translate(200%,-400%) }
 	75%{transform:translate(100%,-250%) }
-	100%{ transform:translate(0px,0px)  }
+	100%{ transform:translate(400%,-100%) }
 }
 
 @keyframes around6 {  
-    0%{ transform:translate(0px,0px)  }
+    0%{ transform:translate(500%,-200%)  }
 	25%{transform:translate(-40%,-350%) }
 	50%{transform:translate(250%,-400%) }
 	75%{transform:translate(100%,-300%) }
-	100%{ transform:translate(0px,0px)  }
+	100%{ transform:translate(500%,-200%)  }
 }
 
 @keyframes around7 {  
-    0%{ transform:translate(0px,0px)  }
+    0%{ transform:translate(400%,-100%)  }
 	25%{transform:translate(-150%,-300%) }
 	50%{transform:translate(250%,-400%) }
 	75%{transform:translate(100%,-200%) }
-	100%{ transform:translate(0px,0px)  }
+	100%{ transform:translate(400%,-100%)  }
 }
 
 @keyframes around8 {  
-    0%{ transform:translate(0px,0px)  }
+    0%{ transform:translate(-400%,-200%)  }
 	25%{transform:translate(-200%,-300%) }
 	50%{transform:translate(250%,-400%) }
 	75%{transform:translate(150%,-400%) }
-	100%{ transform:translate(0px,0px)  }
+	100%{ transform:translate(-400%,-200%)  }
 }
 
 @keyframes around9 {  
-    0%{ transform:translate(0px,0px)  }
+    0%{ transform:translate(-600%,-200%)  }
 	25%{transform:translate(-300%,-350%) }
 	50%{transform:translate(150%,-400%) }
 	75%{transform:translate(250%,-300%) }
-	100%{ transform:translate(0px,0px)  }
+	100%{ transform:translate(-600%,-200%)  }
 }
 
 @keyframes around10 {  
-    0%{ transform:translate(0px,0px)  }
+    0%{ transform:translate(-600%,-100%)  }
 	25%{transform:translate(-400%,-50%) }
 	50%{transform:translate(-250%,-400%) }
 	75%{transform:translate(100%,-300%) }
-	100%{ transform:translate(0px,0px)  }
+	100%{ transform:translate(-600%,-100%)  }
 }
 
 @keyframes around11 {  
-    0%{ transform:translate(0px,0px)  }
+    0%{ transform:translate(500%,-300%)  }
 	25%{transform:translate(200%,-250%) }
 	50%{transform:translate(-150%,-400%) }
 	75%{transform:translate(-250%,-200%) }
-	100%{ transform:translate(0px,0px)  }
+	100%{ transform:translate(500%,-300%)  }
 }
 
 @keyframes around12 {  
-	0%{ transform:translate(0px,0px)  }
+	0%{ transform:translate(600%,-200%)  }
 	25%{transform:translate(300%,-250%) }
 	50%{transform:translate(100%,-400%) }
 	75%{transform:translate(50%,-300%) }
-	100%{ transform:translate(0px,0px)  }
+	100%{ transform:translate(600%,-200%)  }
 }
 
 @keyframes around13 {  
-    0%{ transform:translate(0px,0px)  }
+    0%{ transform:translate(500%,-300%)  }
 	25%{transform:translate(100%,-350%) }
 	50%{transform:translate(-150%,-400%) }
 	75%{transform:translate(-100%,-200%) }
-	100%{ transform:translate(0px,0px)  }
+	100%{ transform:translate(500%,-300%)  }
 }
 
 @keyframes around14 {  
-    0%{ transform:translate(0px,0px)  }
+    0%{ transform:translate(500%,-100%)  }
 	25%{transform:translate(200%,-250%) }
 	50%{transform:translate(-150%,-400%) }
 	75%{transform:translate(-300%,-300%) }
-	100%{ transform:translate(0px,0px)  }
+	100%{ transform:translate(500%,-100%)  }
 }
 
 @keyframes around15 {  
-    0%{ transform:translate(0px,0px)  }
+    0%{ transform:translate(500%,-200%) }
 	25%{transform:translate(200%,-350%) }
 	50%{transform:translate(-150%,-400%) }
 	75%{transform:translate(-200%,-300%) }
-	100%{ transform:translate(0px,0px)  }
+	100%{ transform:translate(500%,-200%)  }
 }
 
 @keyframes around16 {  
-    0%{ transform:translate(0px,0px)  }
+    0%{ transform:translate(400%,-300%) }
 	25%{transform:translate(100%,-350%) }
 	50%{transform:translate(-100%,-400%) }
 	75%{transform:translate(-300%,-250%) }
-	100%{ transform:translate(0px,0px)  }
+	100%{ transform:translate(400%,-300%)  }
 }
 
 @keyframes around17 {  
-    0%{ transform:translate(0px,0px)  }
+    0%{ transform:translate(-700%,-300%)  }
 	25%{transform:translate(100%,-350%) }
 	50%{transform:translate(-250%,-400%) }
 	75%{transform:translate(-400%,-250%) }
-	100%{ transform:translate(0px,0px)  }
+	100%{ transform:translate(-700%,-300%)  }
 }
 
 @keyframes around18 {  
-    0%{ transform:translate(0px,0px)  }
+    0%{ transform:translate(-600%,-300%)  }
 	25%{transform:translate(-100%,-350%) }
 	50%{transform:translate(-250%,-400%) }
 	75%{transform:translate(-400%,-150%) }
-	100%{ transform:translate(0px,0px)  }
+	100%{ transform:translate(-600%,-300%)  }
 }
 
 @keyframes around19 {  
-	0%{ transform:translate(0px,0px)  }
+	0%{ transform:translate(-900%,-200%)  }
 	25%{transform:translate(-100%,-350%) }
 	50%{transform:translate(-350%,-400%) }
 	75%{transform:translate(-500%,-200%) }
-	100%{ transform:translate(0px,0px)  }
+	100%{ transform:translate(-900%,-200%)  }
 }
 
 @keyframes around20 {  
-    0%{ transform:translate(0px,0px)  }
+    0%{ transform:translate(-800%,-300%)  }
 	25%{transform:translate(-100%,-350%) }
 	50%{transform:translate(-250%,-400%) }
 	75%{transform:translate(-400%,-250%) }
-	100%{ transform:translate(0px,0px)  }
+	100%{ transform:translate(-800%,-300%)  }
 }
 
 @keyframes around21 {  
