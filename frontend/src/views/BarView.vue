@@ -234,7 +234,6 @@ export default {
       downStatus,
       drawResult,
       termResult,
-      historyData,
       specialPosition,
       animationStatusArr,
       sortData,

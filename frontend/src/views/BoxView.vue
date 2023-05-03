@@ -91,15 +91,12 @@ components: {
 },
 setup() {
     /**
-     * historyItem 歷史紀錄區塊ref
      * timer1 設定timer 1/10s
      * timer2 扣時timer
      * drawData 原始api資料
      * historyData api資料整理
      * newData 最新一筆
      * drawResult 最新一筆號碼
-     * termResult 最新一筆編號
-     * specialPosition 最新一筆特別號位置
      * sortData 排序後資料
      * nowSeconds 當前剩餘秒數
      * runBallStatus 滾球動畫狀態
@@ -110,7 +107,6 @@ setup() {
      */
     const nowSeconds = ref(0)
     const store = useStore();
-    const historyItem = ref(null)
     const timer1 = ref(null)
     const timer2 = ref(null)
     const drawData = ref(null)
@@ -137,14 +133,6 @@ setup() {
     const drawResult = computed(() => {
         if(!newData.value) return []
         return newData.value.reward
-    })
-    const termResult = computed(() => {
-        if(!newData.value) return []
-        return newData.value.no
-    })
-    const specialPosition = computed(() => {
-        if(!newData.value) return -1
-        return newData.value.reward.indexOf(newData.value.special)
     })
     const sortData = computed(() => {
         if(!historyData.value) return []
@@ -243,19 +231,14 @@ setup() {
     })
 
     return {
-        historyItem,
         drawResult,
-        termResult,
         historyData,
-        specialPosition,
         sortData,
-        newData,
         runBallStatus,
         upStatus,
         otherBall,
         displayTime,
         displayTitle,
-        openReward,
         toStr,
         }
 

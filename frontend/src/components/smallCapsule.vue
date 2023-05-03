@@ -164,7 +164,6 @@ export default {
         fallNum,
         fallStatus,
         displayTitle,
-        drawData,
         displayTime,
     }
 
