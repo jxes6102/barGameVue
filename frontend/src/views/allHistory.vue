@@ -47,9 +47,9 @@
             <el-pagination
                 small
                 background
-                :page-size="100"
+                :page-size="1"
                 layout="prev, pager, next"
-                :total="historyData?.page?.count || 1"
+                :total="historyData?.length || 1"
                 class=""
                 @current-change="currentChange"
                 :disabled="apiLoading"
@@ -86,6 +86,7 @@ export default {
     const dayData = ref(null)
     const historyData = ref([])
     const apiLoading = ref(false)
+    const page = ref(0)
     const tableData = computed(() => {
       let target = []
       if(!historyData.value.data) return target
@@ -110,15 +111,21 @@ export default {
     const getHistory = async(nowpage = 1) => {
         if(apiLoading.value) return false
         apiLoading.value = true
-        let startTime = dayData.value.getFullYear()+'-'+(dayData.value.getMonth()+1)+'-'+dayData.value.getDate()+'%2000:00:00'
-        let endTime = dayData.value.getFullYear()+'-'+(dayData.value.getMonth()+1)+'-'+dayData.value.getDate()+'%2023:59:59'
-        await store.dispatch('getHistory',{startTime,endTime,page:nowpage})
+        // console.log(dayData.value.getFullYear()+'-'+(dayData.value.getMonth()+1)+'-'+dayData.value.getDate())
+        let date = dayData.value.getFullYear()+'-'+(dayData.value.getMonth()+1)+'-'+dayData.value.getDate()
+        // let startTime = dayData.value.getFullYear()+'-'+(dayData.value.getMonth()+1)+'-'+dayData.value.getDate()+'%2000:00:00'
+        // let endTime = dayData.value.getFullYear()+'-'+(dayData.value.getMonth()+1)+'-'+dayData.value.getDate()+'%2023:59:59'
+        await store.dispatch('getOtherHistory',{day:date})
         historyData.value = store.state.allrecord
+        console.log('historyData',historyData.value[page.value])
         apiLoading.value = false
     }
     // 切換分頁時觸發
     const currentChange = async(value) => {
-        await getHistory(value)
+        page.value = value - 1
+        console.log('historyData',historyData.value[page.value])
+        // console.log('page',value)
+        // await getHistory(value)
     }
 
     return {
