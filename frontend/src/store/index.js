@@ -1,6 +1,5 @@
 import { createStore } from 'vuex'
 import axios from 'axios'
-import { ElLoading } from 'element-plus'
 /*eslint-disable*/
 export default createStore({
   state: {
@@ -9,7 +8,6 @@ export default createStore({
     // https://api.api68.com/LuckTwenty/getBaseLuckTwentyList.do
     todayrecord:{},
     allrecord:[],
-    loadingObj:null,
     isMobile:false
   },
   getters: {
@@ -17,21 +15,6 @@ export default createStore({
   mutations: {
     setTodayrecord(state,value){
       state.todayrecord = value
-    },
-    setAllrecord(state,value){
-      state.allrecord = value
-    },
-    changeLoading (state,status) {
-      if(status){
-        state.loadingObj = ElLoading.service({
-          lock: true,
-          text: 'Loading',
-          background: 'rgba(0, 0, 0, 0.7)',
-        })
-      }else{
-        state.loadingObj.close()
-        // console.log('loadingObj',state.loadingObj)
-      }
     },
     setMobile (state,value){
       state.isMobile = (value <= 768) ? true : false
