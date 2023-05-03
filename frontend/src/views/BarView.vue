@@ -14,11 +14,14 @@
           class="w-[40px] h-[40px] md:w-[70px] md:h-[70px] mr-[10px] md:mr-[10px] border-[gray] border-solid  border-[2px] rounded-[4px] overflow-hidden"
           >
           <div v-for="(items) in 100" :key="items*2"
-            class="result-txt"
-            :class="animationStatusArr[index] ? 'is-play' : ''"
+            :class="animationStatusArr[index] ? 'is-play' : 'slowly'"
             :id="'result-'+(items-1)">
-              <div class="flex justify-center text-[30px] md:text-[48px]" v-if="items === 1">{{ drawResult ? drawResult[index] : '?' }}</div>
-              <div class="flex justify-center text-[30px] md:text-[48px]" v-else>{{items - 1}}</div>
+              <div v-if="items === 1">
+                <div v-for="(num,numIndex) in 3" :key="num*2" class="flex justify-center text-[30px] md:text-[48px]">{{ drawResult[index] ? drawResult[index]-numIndex : '?' }}</div>
+              </div>
+              <div v-else>
+                <div class="flex justify-center text-[30px] md:text-[48px]">{{items - 1}}</div>
+              </div>
           </div>
         </div>
       </div>
@@ -115,7 +118,7 @@ export default {
     })
     const drawResult = computed(() => {
       if(!newData.value) return []
-      return newData.value.reward
+      return newData.value.reward.map((item) => parseInt(item))
     })
     const termResult = computed(() => {
       if(!newData.value) return []
@@ -215,6 +218,10 @@ export default {
       timer1.value = window.setInterval((async() => {
         await pyCatchNum()
       } ), 5500)
+
+      // setTimeout(()=>{
+      //   startAnimation()
+      // },500)
     })
 
     onBeforeUnmount(() => {
@@ -284,14 +291,29 @@ export default {
 
 
 /*輪盤轉動動畫---start*/
-.is-play.result-txt {
-  animation: resultPlay 2s infinite linear;
+.is-play {
+  animation: resultPlay 3s infinite linear;
 }
 
 @keyframes resultPlay {
+  0% {
+    transform: translateY(0%)
+  }
   100% {
     transform: translateY(-9000%)
   }
 }
 /*輪盤轉動動畫---end*/
+
+.slowly{
+  animation: slowPlay 1s linear;
+}
+@keyframes slowPlay {
+  0% {
+    transform: translateY(-90%)
+  }
+  100% {
+    transform: translateY(0%)
+  }
+}
 </style>
