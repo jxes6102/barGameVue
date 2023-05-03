@@ -18,12 +18,13 @@
                             <div class="flex flex-wrap justify-start items-center gap-x-0.5">
                                 <div 
                                     v-for="(item,index) in scope.row.reward" :key="index"
-                                    class="w-[25px] h-[25px] bg-[white] rounded-[50%] flex justify-center items-center border-solid border-2 border-[#1687a7] font-bold"
+                                    :class="(index===19) ? 'border-[#dd0a35]' : 'border-[#1687a7]'"
+                                    class="w-[25px] h-[25px] bg-[white] rounded-[50%] flex justify-center items-center border-solid border-2 font-bold"
                                 >{{ item }}</div>
                             </div>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable prop="time" label="時間" width="80"/>
+                    <el-table-column prop="decision" label="結果" width="60"/>
                 </el-table>
             </div>
             <div v-else class="w-[800px] h-[60vh] flex flex-wrap justify-center items-center">
@@ -34,12 +35,13 @@
                             <div class="flex flex-wrap justify-start items-center gap-x-0.5">
                                 <div 
                                     v-for="(item,index) in scope.row.reward" :key="index"
-                                    class="w-[25px] h-[25px] bg-[white] rounded-[50%] flex justify-center items-center border-solid border-2 border-[#1687a7] font-bold"
+                                    :class="(index===19) ? 'border-[#dd0a35]' : 'border-[#1687a7]'"
+                                    class="w-[25px] h-[25px] bg-[white] rounded-[50%] flex justify-center items-center border-solid border-2 font-bold"
                                 >{{ item }}</div>
                             </div>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable prop="time" label="時間"/>
+                    <el-table-column prop="decision" label="結果"/>
                 </el-table>
             </div>
         </div>
@@ -89,12 +91,15 @@ export default {
     const page = ref(0)
     const tableData = computed(() => {
       let target = []
-      if(!historyData.value.data) return target
-      for(let item of historyData.value.data){
+      if(!historyData.value.length) return target
+      for(let item of historyData.value[page.value]){
+        let numArr = item.preDrawCode.split(',')
+        numArr.splice(numArr.indexOf(numArr[numArr.length - 1]),1)
+        let font = (item.sumBigSmall=== 1 ? '大' : '小') + (item.singleDoubleCount=== 1 ? '單' : '雙')
         target.push({
-          no:item.issue,
-          reward:item.drawResult.split(','),
-          time:item.drawTime.split(' ')[1]
+          no:item.preDrawIssue,
+          reward:numArr,
+          decision:font
         })
       }
       return target
@@ -116,16 +121,14 @@ export default {
         // let startTime = dayData.value.getFullYear()+'-'+(dayData.value.getMonth()+1)+'-'+dayData.value.getDate()+'%2000:00:00'
         // let endTime = dayData.value.getFullYear()+'-'+(dayData.value.getMonth()+1)+'-'+dayData.value.getDate()+'%2023:59:59'
         await store.dispatch('getOtherHistory',{day:date})
+        page.value = 0
         historyData.value = store.state.allrecord
-        console.log('historyData',historyData.value[page.value])
         apiLoading.value = false
     }
     // 切換分頁時觸發
     const currentChange = async(value) => {
-        page.value = value - 1
-        console.log('historyData',historyData.value[page.value])
-        // console.log('page',value)
         // await getHistory(value)
+        page.value = value - 1
     }
 
     return {

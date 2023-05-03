@@ -16,6 +16,9 @@ export default createStore({
     setTodayrecord(state,value){
       state.todayrecord = value
     },
+    setAllrecord(state,value){
+      state.allrecord = value
+    },
     setMobile (state,value){
       state.isMobile = (value <= 768) ? true : false
     }
@@ -69,7 +72,7 @@ export default createStore({
         let page = Math.floor((response.data.result.data.length/100) + 1)
         let target = []
         for(let i = 1;i<=page;i++){
-          target.push([response.data.result.data.slice((i-1)*100,i*100)])
+          target.push(response.data.result.data.slice((i-1)*100,i*100))
         }
         content.commit('setAllrecord',target)
       })
