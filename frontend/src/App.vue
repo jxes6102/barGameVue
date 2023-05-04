@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { ref,onMounted } from 'vue'
+import { ref,reactive,onMounted } from 'vue'
 import { useStore } from "vuex";
 export default {
 
@@ -12,6 +12,9 @@ export default {
   setup() {
     const store = useStore()
     const windowWidth = ref(0)
+    const states = reactive({
+      deferredPrompt: null,
+    });
 
     const setWidth = () => {
       store.commit('setMobile',windowWidth.value)
@@ -23,6 +26,21 @@ export default {
         windowWidth.value = window.innerWidth
         setWidth()
       }, false);
+
+      window.addEventListener("beforeinstallprompt", e => {
+        e.preventDefault();
+        states.deferredPrompt = e;
+      });
+      window.addEventListener("appinstalled", () => {
+        states.deferredPrompt = null;
+      });
+      document.querySelector("#app").addEventListener("click", () => {
+        if (states.deferredPrompt) {
+          states.deferredPrompt.prompt();
+          states.deferredPrompt = null;
+        }
+      });
+
     })
     return {
     }
