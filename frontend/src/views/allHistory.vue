@@ -110,7 +110,6 @@ export default {
           no:item.preDrawIssue,
           reward:numArr,
           decision:font,
-          count:singleCount
         })
       }
       return target
