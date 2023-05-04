@@ -20,13 +20,14 @@ export default {
       store.commit('setMobile',windowWidth.value)
     }
     onMounted(() => {
+      // 監聽螢幕寬度
       windowWidth.value = window.innerWidth
       setWidth()
       window.addEventListener('resize', () => {
         windowWidth.value = window.innerWidth
         setWidth()
       }, false);
-
+      // PWA相關
       window.addEventListener("beforeinstallprompt", e => {
         e.preventDefault();
         states.deferredPrompt = e;
@@ -35,10 +36,10 @@ export default {
         states.deferredPrompt = null;
       });
       document.querySelector("#app").addEventListener("click", () => {
-        if (states.deferredPrompt) {
-          states.deferredPrompt.prompt();
-          states.deferredPrompt = null;
-        }
+        // if (states.deferredPrompt) {
+        //   states.deferredPrompt.prompt();
+        //   states.deferredPrompt = null;
+        // }
       });
 
     })
