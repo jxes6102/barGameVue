@@ -1,8 +1,8 @@
 <template>
     <div class="w-[100vw] h-[100vh] overflow-hidden flex flex-wrap justify-center items-start">
       <!-- 主畫面 -->
-      <div class="w-[100vw] h-[75vh] bg-[#FCF4D9] flex flex-wrap justify-center items-center">
-        <div class="relative w-[300px] h-[250px] md:w-[800px] md:h-[500px] bg-[#CDFFFF] rounded-md md:rounded-xl">
+      <div class="w-[100vw] h-[70vh] bg-[#FCF4D9] flex flex-wrap justify-center items-center">
+        <div class="relative w-[300px] h-[200px] md:w-[800px] top-[45px] md:top-[0px] md:h-[450px] bg-[#CDFFFF] rounded-md md:rounded-xl">
             <div class="absolute w-auto h-auto flex flex-wrap justify-center items-center">
                 <div 
                     v-for="(item,index) in 10" :key="index"
@@ -49,7 +49,7 @@
                 </div>
             </div>
             <!-- 滾輪 -->
-            <div class="absolute w-[100%] h-auto top-[25%] flex flex-wrap justify-center items-center gap-x-[5px] md:gap-x-[50px]">
+            <div class="absolute w-[100%] h-auto top-[15%] md:top-[20%] flex flex-wrap justify-center items-center gap-x-[5px] md:gap-x-[50px]">
                 <div 
                     :class="runBallStatus ? 'rotateStyle1' : ''" 
                     class="w-[140px] h-[140px] md:w-[280px] md:h-[280px] bg-[url('/src/assets/images/rotate.png')] bg-contain bg-center bg-no-repeat z-[4]"
@@ -67,8 +67,8 @@
         </div>
       </div>
       <!-- 新歷史紀錄 -->
-      <div class="w-[800px] h-[25vh] flex flex-wrap justify-center items-center">
-        <SmallHistory :tableData="sortData"></SmallHistory>
+      <div class="w-[800px] h-[35vh] flex flex-wrap justify-center items-center">
+        <SmallHistory :tableData="sortData" :tableHeight="'30vh'"></SmallHistory>
       </div>
       <!-- 回上頁 -->
       <Back></Back>
@@ -196,7 +196,7 @@ setup() {
             upStatus.value = true
             setTimeout(function (){
                 upStatus.value = false
-            },1000)
+            },1500)
         },2000)
     }
     //控制滾球狀態
