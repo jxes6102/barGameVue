@@ -15,14 +15,10 @@ body{
 	background:#fff; 
 	color:#000000
 }
-a{
--webkit-tap-highlight-color: rgba(0,0,0,0);
--webkit-tap-highlight-color: transparent;
-}
 .none{ display:none}
 
 /*中奖*/
-.dila_Y{width:110px; height:90px; animation:cujpin 0.15s ease-out  forwards;-webkit-animation:cujpin 0.15s ease-out  forwards; }
+.dila_Y{width:110px; height:90px; animation:cujpin 0.15s ease-out  forwards; }
 .diaL_one{width:85px; height:85px; position:relative; }
 .diaL_one:after{
 	content:attr(data-content);
@@ -37,7 +33,6 @@ a{
 	display:block;
 	background:url(../images/zj_1.png) no-repeat;
 	animation:fanda 0.7s ease-out  forwards;
-	-webkit-animation:fanda 0.7s ease-out  forwards;
 }
 
 @media (max-width: 767px) {
@@ -55,7 +50,6 @@ a{
 	display:block;
 	background:url(../images/zj_1.png) no-repeat;
 	animation:fanda 0.7s ease-out  forwards;
-	-webkit-animation:fanda 0.7s ease-out  forwards;
 	background-repeat: no-repeat;
 	background-size: contain;
 }
@@ -75,10 +69,10 @@ transform:scale(1);
 }
 }
 
-.tc_anima{ animation:title1 0.3s linear; -webkit-animation:title1 0.3s linear;}
+.tc_anima{ animation:title1 0.3s linear;}
 @keyframes title1{
 	from{ opacity:0; transform:scale(0,0);}
 	to{ opacity:1; transform:scale(1,1);}	
 }
 
-.zuadon_dh{animation:around 2s linear backwards ;-webkit-animation:around 2s linear backwards ;}
+.zuadon_dh{animation:around 2s linear backwards ;}
