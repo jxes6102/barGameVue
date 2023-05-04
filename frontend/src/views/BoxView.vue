@@ -192,7 +192,6 @@ setup() {
         if(upStatus.value) return false
         ctrlRunBall(true)
         setTimeout(function (){
-            runBallStatus.value = false
             ctrlRunBall(false)
             upStatus.value = true
             setTimeout(function (){
@@ -215,13 +214,14 @@ setup() {
     init()
 
     onMounted(() => {
-        // timer1.value = window.setInterval((async() => {
-        //     await pyCatchNum()
-        // } ), 5500)
+        timer1.value = window.setInterval((async() => {
+            await pyCatchNum()
+        } ), 5500)
 
-        setTimeout(function (){
-            runBallStatus.value = true
-        },1500)
+        // setTimeout(function (){
+        //     // openReward()
+        //     // runBallStatus.value = true
+        // },1500)
         
     })
 
