@@ -95,11 +95,17 @@ export default {
       for(let item of historyData.value[page.value]){
         let numArr = item.preDrawCode.split(',')
         numArr.splice(numArr.indexOf(numArr[numArr.length - 1]),1)
-        let font = (item.sumBigSmall=== 1 ? '' : '小') + (item.singleDoubleCount=== 1 ? '單' : '雙')
         let singleCount = 0
         for(let i = 0;i<numArr.length;i++){
             if(numArr[i]%2 === 1) singleCount++
         }
+        let font = ''
+        if(singleCount>=13) font = '單'
+        else if(singleCount>=11&&singleCount<13) font = '小單'
+        else if(singleCount === 10) font = '和'
+        else if(singleCount>=8&&singleCount<10) font = '小雙'
+        else font = '雙'
+
         target.push({
           no:item.preDrawIssue,
           reward:numArr,
