@@ -2,7 +2,7 @@
     <div class="w-[100vw] h-[100vh] overflow-hidden flex flex-wrap justify-center items-start">
       <!-- 主畫面 -->
       <div class="w-[100vw] h-[70vh] bg-[#FCF4D9] flex flex-wrap justify-center items-center">
-        <div class="relative w-[300px] h-[200px] md:w-[800px] top-[45px] md:top-[0px] md:h-[450px] bg-[#CDFFFF] rounded-md md:rounded-xl">
+        <div class="relative w-[300px] h-[200px] md:w-[800px] md:h-[450px] top-[45px] md:top-[0px] bg-[#CDFFFF] rounded-md md:rounded-xl">
             <div class="absolute w-auto h-auto flex flex-wrap justify-center items-center">
                 <div 
                     v-for="(item,index) in 10" :key="index"
@@ -67,7 +67,7 @@
         </div>
       </div>
       <!-- 新歷史紀錄 -->
-      <div class="w-[800px] h-[35vh] flex flex-wrap justify-center items-center">
+      <div class="w-[800px] h-[30vh] flex flex-wrap justify-center items-center">
         <SmallHistory :tableData="sortData" :tableHeight="'30vh'"></SmallHistory>
       </div>
       <!-- 回上頁 -->
