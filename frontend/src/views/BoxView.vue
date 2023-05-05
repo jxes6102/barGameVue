@@ -12,7 +12,7 @@
                         <span
                             v-for="(items,indexs) in 2" :key="indexs"
                             class="z-[5] w-[15px] h-[15px] md:w-[40px] md:h-[40px] bg-contain bg-center bg-no-repeat flex flex-wrap justify-center items-center text-[12px] md:text-lg"
-                            :class="'ball-' + ((indexs)+2)+ ' getball_'+(index+(indexs)*10)"
+                            :class="(drawResult[index+(indexs)*10] === drawSpecial ? 'ball-4' : 'ball-' + ((parseInt(drawResult[index+(indexs)*10]))%3+1)) + ' getball_'+(index+(indexs)*10)"
                         >
                             {{ drawResult[index+(indexs)*10] }}
                         </span>
@@ -21,7 +21,7 @@
                         <span
                             v-for="(items,indexs) in 2" :key="indexs"
                             class="z-[5] w-[15px] h-[15px] md:w-[40px] md:h-[40px] bg-contain bg-center bg-no-repeat flex flex-wrap justify-center items-center text-[12px] md:text-lg"
-                            :class="'ball-' + ((indexs)+2)"
+                            :class="drawResult[index+(indexs)*10] === drawSpecial ? 'ball-4' :  'ball-' + ((parseInt(drawResult[index+(indexs)*10]))%3+1)"
                         >
                             {{ drawResult[index+(indexs)*10] }}
                         </span>
@@ -33,7 +33,7 @@
                     <span
                         v-for="(item,index) in 80" :key="index"
                         class="z-[2] w-[15px] h-[15px] md:w-[40px] md:h-[40px] bg-contain bg-center bg-no-repeat flex flex-wrap justify-center items-center text-[12px] md:text-lg"
-                        :class="(!upStatus) || (otherBall.includes(item) && upStatus)  ? ('ball-' + ((item%4)+1) + ' wieyi_'+item) : 'opacity-0'"
+                        :class="(!upStatus) || (otherBall.includes(item) && upStatus)  ? ('ball-' + ((item%3)+1) + ' wieyi_'+item) : 'opacity-0'"
                     >
                         {{ item }}
                     </span>
@@ -42,7 +42,7 @@
                     <span
                         v-for="(item,index) in otherBall" :key="index"
                         class="z-[2] w-[15px] h-[15px] md:w-[40px] md:h-[40px] bg-contain bg-center bg-no-repeat flex flex-wrap justify-center items-center text-[12px] md:text-lg"
-                        :class="'ball-' + ((item%4)+1)+' diaol_' + item"
+                        :class="'ball-' + ((item%3)+1)+' diaol_' + item"
                     >
                         {{ item }}
                     </span>
@@ -59,11 +59,11 @@
                     class="w-[140px] h-[140px] md:w-[280px] md:h-[280px] bg-[url('/src/assets/images/rotate.png')] bg-contain bg-center bg-no-repeat z-[4]"
                 ></div>
             </div>
-            <!-- 開獎訊息 -->
-            <div class="absolute w-[100%] h-auto top-[-45px] md:top-[-60px] flex flex-wrap justify-center items-center ">
-                <div class="w-[100%] text-base md:text-2xl font-bold text-[red]">{{ displayTitle }}</div>
-                <div class="w-[100%] text-xs md:text-lg font-bold text-[red]">{{ displayTime }}</div>
-            </div>
+        </div>
+        <!-- 開獎訊息 -->
+        <div class="absolute w-[100%] h-auto top-[60px] md:top-[30px] flex flex-wrap justify-center items-center z-[13]">
+            <div class="w-[100%] text-base md:text-2xl font-bold text-[red]">{{ displayTitle }}</div>
+            <div class="w-[100%] text-xs md:text-lg font-bold text-[red]">{{ displayTime }}</div>
         </div>
       </div>
       <!-- 新歷史紀錄 -->
@@ -133,6 +133,10 @@ setup() {
     const drawResult = computed(() => {
         if(!newData.value) return []
         return newData.value.reward
+    })
+    const drawSpecial = computed(() => {
+        if(!newData.value) return []
+        return newData.value.special
     })
     const sortData = computed(() => {
         if(!historyData.value) return []
@@ -239,6 +243,7 @@ setup() {
         otherBall,
         displayTime,
         displayTitle,
+        drawSpecial,
         toStr,
         }
 
