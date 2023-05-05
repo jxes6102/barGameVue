@@ -1539,26 +1539,26 @@ opacity: 1;
 }
 
 
-.getball_0{animation:runball_0 1.5s linear;}
-.getball_1{animation:runball_1 1.5s linear;}
-.getball_2{animation:runball_2 1.5s linear;}
-.getball_3{animation:runball_3 1.5s linear;}
-.getball_4{animation:runball_4 1.5s linear;}
-.getball_5{animation:runball_5 1.5s linear;}
-.getball_6{animation:runball_6 1.5s linear;}
-.getball_7{animation:runball_7 1.5s linear;}
-.getball_8{animation:runball_8 1.5s linear;}
-.getball_9{animation:runball_9 1.5s linear;}
-.getball_10{animation:runball_10 1.5s linear;}
-.getball_11{animation:runball_11 1.5s linear;}
-.getball_12{animation:runball_12 1.5s linear;}
-.getball_13{animation:runball_13 1.5s linear;}
-.getball_14{animation:runball_14 1.5s linear;}
-.getball_15{animation:runball_15 1.5s linear;}
-.getball_16{animation:runball_16 1.5s linear;}
-.getball_17{animation:runball_17 1.5s linear;}
-.getball_18{animation:runball_18 1.5s linear;}
-.getball_19{animation:runball_19 1.5s linear;}
+.getball_0{animation:runball_0 1s linear;}
+.getball_1{animation:runball_1 1s linear;}
+.getball_2{animation:runball_2 1s linear;}
+.getball_3{animation:runball_3 1s linear;}
+.getball_4{animation:runball_4 1s linear;}
+.getball_5{animation:runball_5 1s linear;}
+.getball_6{animation:runball_6 1s linear;}
+.getball_7{animation:runball_7 1s linear;}
+.getball_8{animation:runball_8 1s linear;}
+.getball_9{animation:runball_9 1s linear;}
+.getball_10{animation:runball_10 1s linear;}
+.getball_11{animation:runball_11 1s linear;}
+.getball_12{animation:runball_12 1s linear;}
+.getball_13{animation:runball_13 1s linear;}
+.getball_14{animation:runball_14 1s linear;}
+.getball_15{animation:runball_15 1s linear;}
+.getball_16{animation:runball_16 1s linear;}
+.getball_17{animation:runball_17 1s linear;}
+.getball_18{animation:runball_18 1s linear;}
+.getball_19{animation:runball_19 1s linear;}
 
 @keyframes runball_0 {  
     0%  {transform:translate(300%,600%)}

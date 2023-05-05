@@ -33,7 +33,7 @@
                     <span
                         v-for="(item,index) in 80" :key="index"
                         class="z-[2] w-[15px] h-[15px] md:w-[40px] md:h-[40px] bg-contain bg-center bg-no-repeat flex flex-wrap justify-center items-center text-[12px] md:text-lg"
-                        :class="(item <= 80)? ('ball-' + ((item%4)+1) + ' wieyi_'+item) : ''"
+                        :class="(!upStatus) || (otherBall.includes(item) && upStatus)  ? ('ball-' + ((item%4)+1) + ' wieyi_'+item) : 'opacity-0'"
                     >
                         {{ item }}
                     </span>
@@ -192,10 +192,10 @@ setup() {
         if(upStatus.value) return false
         ctrlRunBall(true)
         setTimeout(function (){
-            ctrlRunBall(false)
             upStatus.value = true
             setTimeout(function (){
                 upStatus.value = false
+                ctrlRunBall(false)
             },1500)
         },2000)
     }
