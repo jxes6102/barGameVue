@@ -52,13 +52,13 @@
                 :page-size="1"
                 layout="prev, pager, next"
                 :total="historyData?.length || 1"
-                class=""
                 @current-change="currentChange"
                 :disabled="apiLoading"
             />
         </div>
         <!-- 回上頁 -->
         <Back></Back>
+        <load v-show="!tableData.length"></load>
     </div>
 </template>
 
@@ -67,11 +67,13 @@
 // @ is an alias to /src
 import { ref,watch,computed } from 'vue'
 import Back from '@/components/Back.vue'
-import { useStore } from "vuex";
+import { useStore } from "vuex"
+import load from '@/components/load.vue'
 export default {
   name: 'allHistory',
   components: {
-    Back
+    Back,
+    load
   },
   setup() {
     /**
@@ -140,6 +142,13 @@ export default {
         // await getHistory(value)
         page.value = value - 1
     }
+    // 初始化
+    const init = () => {
+        let date = new Date()
+        date.setDate(date.getDate() - 1)
+        dayData.value = date
+    }
+    init()
 
     return {
         dayData,

@@ -8,20 +8,22 @@
         As a directive
       </el-button>
       <el-button type="primary" @click="openFullScreen2"> As a service </el-button>
-      <div class="w-[10vw] h-[10vh] bg-[red] glass"></div>
+      <div :class="strColor" class="w-[10vw] h-[10vh] glass"></div>
+      <el-button type="primary" @click="colorGG">change color</el-button>
     </div>
 </template>
 <script>
 /*eslint-disable*/
 // @ is an alias to /src
 import { ElLoading } from 'element-plus'
-import { ref } from 'vue'
+import { ref,computed } from 'vue'
 import { useRouter } from "vue-router";
 export default {
   name: 'about',
   components: {
   },
   setup() {
+    const strColor = ref('red')
     const tableData = ref([
       {
         date: '2016-05-03',
@@ -70,6 +72,17 @@ export default {
         loading.close()
       }, 2000)
     }
+    const colorStyle = computed(() => {
+      return 'bg-['+strColor.value+']'
+    });
+    const colorGG = () => {
+      console.log('colorGG')
+      if(strColor.value === 'red') {
+        strColor.value === 'blue'
+      }else {
+        strColor.value === 'red'
+      }
+    }
     
     return {
         toLinkBar,
@@ -77,7 +90,10 @@ export default {
         tableData,
         fullscreenLoading,
         openFullScreen1,
-        openFullScreen2
+        openFullScreen2,
+        colorGG,
+        strColor,
+        colorStyle
     }
 
   }
