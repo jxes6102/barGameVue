@@ -17,7 +17,8 @@ import { ref,computed,onMounted,onBeforeUnmount } from 'vue'
 import Back from '@/components/Back.vue'
 import SmallCapsule from '@/components/smallCapsule.vue'
 import SmallHistory from '@/components/smallHistory.vue'
-import { useStore } from "vuex";
+import { useStore } from "vuex"
+import { useI18n } from 'vue-i18n'
 export default {
   components: {
     Back,
@@ -36,7 +37,8 @@ export default {
      * specialPosition 最新一筆特別號位置
      * sortData 排序後資料
      */
-    const store = useStore();
+    const store = useStore()
+    const { t } = useI18n()
     const historyItem = ref(null)
     const timer1 = ref(null)
     const drawData = ref(null)
@@ -44,12 +46,18 @@ export default {
       let target = []
       if(!drawData.value) return target
       for(let key in drawData.value){
+        let toSC = drawData.value[key][3]
+        if(toSC === '小單') toSC = t('result2')
+        else if(toSC === '單') toSC = t('result1')
+        else if(toSC === '小雙') toSC = t('result4')
+        else if(toSC === '雙') toSC = t('result5')
+        else if(toSC === '和') toSC = t('result3')
+
         target.push({
           no:key,
           reward:drawData.value[key][0].split(' ').filter((item) => item),
           special:drawData.value[key][1],
-          sizeDecision:drawData.value[key][2],
-          singleDecision:drawData.value[key][3]
+          singleDecision:toSC
         })
       }
       return target

@@ -41,6 +41,7 @@
 // @ is an alias to /src
 import { ref,computed,onMounted,watch,onBeforeUnmount } from 'vue'
 import load from '@/components/load.vue'
+import { useI18n } from 'vue-i18n'
 export default {
   name: 'capsuleComponent',
   components: {
@@ -66,6 +67,7 @@ export default {
      * displayTitle 顯示期數訊息
      * displayTime 顯示時間訊息
      */
+    const { t } = useI18n()
     let fallTimes = 0
     const runBallStatus = ref(false)
     const messageText = ref('')
@@ -74,10 +76,10 @@ export default {
     const nowSeconds = ref(0)
     const timer1 = ref(null)
     const displayTitle = computed(() => {
-        return '台灣賓果 期號: ' + (parseInt(drawData.value.no)+1)
+        return t('title') + (parseInt(drawData.value.no)+1)
     })
     const displayTime = computed(() => {
-        return '下期開獎時間: ' + Math.floor(nowSeconds.value/60)+":"+nowSeconds.value%60
+        return t('time') + Math.floor(nowSeconds.value/60)+":"+nowSeconds.value%60
     })
     const drawData = computed(() => {
         return props.allData

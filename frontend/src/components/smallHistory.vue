@@ -1,7 +1,7 @@
 <template>
     <el-table v-if="isMobiles" :data="tableData" :max-height="tableHeights" style="width:300px;font-size:10px;">
-        <el-table-column sortable prop="no" label="期號" width="90"/>
-        <el-table-column prop="reward" label="開獎號碼">
+        <el-table-column sortable prop="no" :label="t('no')" width="90"/>
+        <el-table-column prop="reward" :label="t('reward')">
           <template #default="scope">
             <div class="flex flex-wrap justify-start items-center gap-x-0.5">
               <div
@@ -13,11 +13,11 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="singleDecision" label="結果" width="60"/>
+        <el-table-column prop="singleDecision" :label="t('singleDecision')" width="60"/>
     </el-table>
     <el-table v-else :data="tableData" :max-height="tableHeights" style="width:800px;">
-        <el-table-column sortable prop="no" label="期號" width="100"/>
-        <el-table-column width="600" prop="reward" label="開獎號碼">
+        <el-table-column sortable prop="no" :label="t('no')" width="100"/>
+        <el-table-column width="600" prop="reward" :label="t('reward')">
           <template #default="scope">
             <div class="flex flex-wrap justify-start items-center gap-x-0.5">
               <div 
@@ -29,13 +29,14 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="singleDecision" label="結果"/>
+        <el-table-column prop="singleDecision" :label="t('singleDecision')"/>
     </el-table>
 </template>
 <script>
 // @ is an alias to /src
-import { useStore } from "vuex";
+import { useStore } from "vuex"
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 export default {
   components: {},
   props: {
@@ -51,6 +52,7 @@ export default {
     }
   },
   setup(props) {
+    const { t } = useI18n()
     const store = useStore()
     const isMobiles = computed(() => {
         return store.state.isMobile
@@ -66,7 +68,8 @@ export default {
     return {
         isMobiles,
         tableDatas,
-        tableHeights
+        tableHeights,
+        t
     }
 
   }

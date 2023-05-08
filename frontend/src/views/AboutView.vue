@@ -10,6 +10,8 @@
       <el-button type="primary" @click="openFullScreen2"> As a service </el-button>
       <div :class="strColor" class="w-[10vw] h-[10vh] glass"></div>
       <el-button type="primary" @click="colorGG">change color</el-button>
+      <div>きんぎょ这感觉要学过UIUXt{{ t('message') }}</div>
+      <div class="w-[60px] md:w-[80px] text-base md:text-2xl bg-[#8ac6d1] rounded-[5px] cursor-pointer hover:opacity-80" @click="changeLang">切換語言</div>
     </div>
 </template>
 <script>
@@ -17,12 +19,14 @@
 // @ is an alias to /src
 import { ElLoading } from 'element-plus'
 import { ref,computed } from 'vue'
-import { useRouter } from "vue-router";
+import { useRouter } from "vue-router"
+import { useI18n } from 'vue-i18n'
 export default {
   name: 'about',
   components: {
   },
   setup() {
+    const { t,locale } = useI18n()
     const strColor = ref('red')
     const tableData = ref([
       {
@@ -83,6 +87,15 @@ export default {
         strColor.value === 'red'
       }
     }
+
+    const changeLang = () => {
+      // console.log('changeLang')
+      // locale.value = 'sc'
+      // locale.value = 'en'
+      locale.value = 'tc'
+      console.log(locale.value)
+      console.log(t('message'))
+    }
     
     return {
         toLinkBar,
@@ -93,7 +106,9 @@ export default {
         openFullScreen2,
         colorGG,
         strColor,
-        colorStyle
+        colorStyle,
+        t,
+        changeLang
     }
 
   }

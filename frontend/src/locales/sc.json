@@ -1,0 +1,14 @@
+{
+    "message": "哈嘍 i18n !!",
+    "title":"台湾宾果 期号: ",
+    "time":"下期开奖时间: ",
+    "no":"期号",
+    "reward":"开奖号码",
+    "singleDecision":"结果",
+    "placeholder":"选择查询日期",
+    "result1":"单",
+    "result2":"小单",
+    "result3":"和",
+    "result4":"小双",
+    "result5":"双"
+}
