@@ -7,7 +7,9 @@
                 <div class="absolute top-[-50px] md:top-[-150px] md:left-[5%] w-[280px] md:w-[90%] h-[100px] md:h-[200px] bg-[#f3f1b0] rounded-lg shadow-2xl flex flex-wrap justify-center items-center z-[11]">
                     <div class="w-[100%] h-1/4 font-extrabold text-base md:text-4xl text-red-500 flex flex-wrap justify-center items-center">{{ displayTitle }}</div>
                     <div class="w-[100%] h-1/4 font-extrabold text-xs md:text-2xl text-red-500 flex flex-wrap justify-center items-center">{{ displayTime }}</div>
-                    <div class="w-[100%] h-1/2 px-[10px] md:px-[60px] font-extrabold text-xs md:text-2xl text-red-500 break-all flex flex-wrap justify-center items-center">{{ messageText }}</div>
+                    <div class="w-[100%] h-1/2 px-[10px] md:px-[60px] font-extrabold text-xs md:text-2xl text-red-500 flex flex-wrap justify-center items-center">
+                        <div v-for="(item,index) in messageText" :key="index" class="w-[10%] h-auto">{{ item }}</div>
+                    </div>
                 </div>
                 <!-- go標誌 -->
                 <div class="absolute w-[70px] h-[70px] md:w-[124px] md:h-[124px] top-[53%] left-[105px] md:left-[290px] bg-[url('/src/assets/images/an_go.png')] bg-contain bg-center bg-no-repeat z-[4]"></div>
@@ -92,7 +94,7 @@ export default {
                 getTime()
             }
         }else if(JSON.stringify(oldVal) === '{}'){
-            messageText.value = newVal.reward.join(' , ')
+            messageText.value = newVal.reward
         }
     })
     //監聽秒數改變
@@ -109,7 +111,7 @@ export default {
             controlRunBall(true)
             setTimeout(function (){
                 // 掉球
-                messageText.value = drawData.value.reward.slice(0,fallTimes+1).join(' , ')
+                messageText.value = drawData.value.reward.slice(0,fallTimes+1)
                 fallNum.value = drawData.value.reward[fallTimes]
                 fallStatus.value = true
                 setTimeout(function (){
