@@ -1,7 +1,12 @@
 <template>
     <div class="w-[100vw] h-[100vh] overflow-hidden flex flex-wrap justify-center items-start">
       <!-- 主畫面 -->
-      <div class="w-[100vw] h-[70vh] bg-[#FCF4D9] flex flex-wrap justify-center items-center">
+      <div class="w-[100vw] h-[75vh] bg-[#FCF4D9] flex-col flex flex-wrap justify-center items-center">
+        <!-- 開獎訊息 -->
+        <div class="w-[100%] h-auto flex flex-wrap justify-center items-center z-[13]">
+            <div class="w-[100%] text-base md:text-2xl font-bold text-[red]">{{ displayTitle }}</div>
+            <div class="w-[100%] text-xs md:text-lg font-bold text-[red]">{{ displayTime }}</div>
+        </div>
         <div class="relative w-[300px] h-[200px] md:w-[800px] md:h-[450px] top-[45px] md:top-[0px] bg-[#CDFFFF] rounded-md md:rounded-xl">
             <div class="absolute w-auto h-auto flex flex-wrap justify-center items-center">
                 <div 
@@ -60,15 +65,10 @@
                 ></div>
             </div>
         </div>
-        <!-- 開獎訊息 -->
-        <div class="absolute w-[100%] h-auto top-[60px] md:top-[30px] flex flex-wrap justify-center items-center z-[13]">
-            <div class="w-[100%] text-base md:text-2xl font-bold text-[red]">{{ displayTitle }}</div>
-            <div class="w-[100%] text-xs md:text-lg font-bold text-[red]">{{ displayTime }}</div>
-        </div>
       </div>
       <!-- 新歷史紀錄 -->
-      <div class="w-[800px] h-[30vh] flex flex-wrap justify-center items-center">
-        <SmallHistory :tableData="sortData" :tableHeight="'30vh'"></SmallHistory>
+      <div class="w-[800px] h-[25vh] flex flex-wrap justify-center items-center">
+        <SmallHistory :tableData="sortData" :tableHeight="'25vh'"></SmallHistory>
       </div>
       <!-- 回上頁 -->
       <Back></Back>
