@@ -27,7 +27,6 @@ export default {
   },
   setup() {
     /**
-     * historyItem 歷史紀錄區塊ref
      * timer1 設定timer 1/10s
      * drawData 原始api資料
      * historyData api資料整理
@@ -39,7 +38,6 @@ export default {
      */
     const store = useStore()
     const { t } = useI18n()
-    const historyItem = ref(null)
     const timer1 = ref(null)
     const drawData = ref(null)
     const historyData = computed(() => {
@@ -108,7 +106,6 @@ export default {
     })
 
     return {
-      historyItem,
       drawResult,
       termResult,
       historyData,
