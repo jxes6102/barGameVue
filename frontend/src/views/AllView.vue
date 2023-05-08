@@ -17,9 +17,51 @@
                 <div class="w-[100%] h-auto pl-2 flex flex-wrap justify-center items-center font-extrabold text-base md:text-xl text-red-500">{{ displayTime }}</div>
             </div>
             <div class="w-[25%] h-auto">123</div>
-            <!-- 新歷史紀錄 -->
-            <div class="w-[800px] h-[60vh] flex flex-wrap justify-center items-center">
-                <SmallHistory :tableData="sortData" tableHeight="60vh"></SmallHistory>
+            <!-- 歷史紀錄 -->
+            <div class="w-[800px] h-[55vh] flex flex-wrap justify-center items-center">
+                <el-table v-if="isMobiles" :data="sortData" max-height="55vh" style="width:300px;font-size:10px;">
+                    <el-table-column sortable prop="no" :label="t('no')" width="90"/>
+                    <el-table-column prop="reward" :label="t('reward')">
+                    <template #default="scope">
+                        <div class="flex flex-wrap justify-start items-center gap-x-0.5">
+                        <div
+                            v-for="(item,index) in scope.row.reward" :key="index"
+                            :class="item === scope.row.special ? 'hidden' : ''"
+                            class="w-[22px] h-[22px] bg-[white] rounded-[50%] flex justify-center items-center border-solid border-2 border-[#1687a7] font-bold"
+                        >{{ item }}</div>
+                        <div class="w-[22px] h-[22px] bg-[white] rounded-[50%] flex justify-center items-center border-solid border-2 border-[#dd0a35] font-bold">{{ scope.row.special }}</div>
+                        </div>
+                    </template>
+                    </el-table-column>
+                    <el-table-column prop="singleDecision" :label="t('singleDecision')" width="60"/>
+                </el-table>
+                <el-table v-else :data="sortData" max-height="55vh" style="width:800px;">
+                    <el-table-column sortable prop="no" :label="t('no')" width="100"/>
+                    <el-table-column width="600" prop="reward" :label="t('reward')">
+                    <template #default="scope">
+                        <div class="flex flex-wrap justify-start items-center gap-x-0.5">
+                        <div 
+                            v-for="(item,index) in scope.row.reward" :key="index"
+                            :class="item === scope.row.special ? 'hidden' : ''"
+                            class="w-[25px] h-[25px] bg-[white] rounded-[50%] flex justify-center items-center border-solid border-2 border-[#1687a7] font-bold"
+                        >{{ item }}</div>
+                        <div class="w-[25px] h-[25px] bg-[white] rounded-[50%] flex justify-center items-center border-solid border-2 border-[#dd0a35] font-bold">{{ scope.row.special }}</div>
+                        </div>
+                    </template>
+                    </el-table-column>
+                    <el-table-column prop="singleDecision" :label="t('singleDecision')"/>
+                </el-table>
+            </div>
+            <div class="w-[100%] h-auto flex flex-wrap justify-center items-start">
+                <el-pagination
+                    small
+                    background
+                    :page-size="1"
+                    layout="prev, pager, next"
+                    :total="historyData?.length || 1"
+                    @current-change="currentChange"
+                    :disabled="apiLoading"
+                />
             </div>
         </div>
         <!-- 回上頁 -->
@@ -53,6 +95,7 @@ export default {
     const isMobiles = computed(() => {
         return store.state.isMobile
     })
+    const apiLoading = ref(false)
     const timer1 = ref(null)
     const timer2 = ref(null)
     const nowSeconds = ref(0)
@@ -188,12 +231,19 @@ export default {
     }
     init()
 
+    const currentChange = () => {
+        console.log('currentChange')
+    }
+
     return {
         displayTitle,
         displayTime,
         drawResult,
         t,
-        sortData
+        sortData,
+        isMobiles,
+        apiLoading,
+        currentChange,
     }
 
   }
