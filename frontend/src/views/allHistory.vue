@@ -13,8 +13,8 @@
         <div class="w-[100%] h-auto flex flex-wrap justify-center items-center">
             <div v-if="isMobiles" class="w-[300px] h-[60vh] flex flex-wrap justify-center items-center">
                 <el-table :data="tableData" max-height="60vh" style="width:300px;font-size:10px">
-                    <el-table-column sortable prop="no" label="期號" width="90"/>
-                    <el-table-column prop="reward" label="開獎號碼">
+                    <el-table-column sortable prop="no" :label="t('no')" width="90"/>
+                    <el-table-column prop="reward" :label="t('reward')">
                         <template #default="scope">
                             <div class="flex flex-wrap justify-start items-center gap-x-0.5">
                                 <div 
@@ -25,13 +25,13 @@
                             </div>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="decision" label="結果" width="60"/>
+                    <el-table-column prop="decision" :label="t('singleDecision')" width="60"/>
                 </el-table>
             </div>
             <div v-else class="w-[800px] h-[60vh] flex flex-wrap justify-center items-center">
                 <el-table :data="tableData" max-height="60vh" style="width:800px;">
-                    <el-table-column sortable prop="no" label="期號" width="100"/>
-                    <el-table-column width="600" prop="reward" label="開獎號碼">
+                    <el-table-column sortable prop="no" :label="t('no')" width="100"/>
+                    <el-table-column width="600" prop="reward" :label="t('reward')">
                         <template #default="scope">
                             <div class="flex flex-wrap justify-start items-center gap-x-0.5">
                                 <div 
@@ -42,7 +42,7 @@
                             </div>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="decision" label="結果"/>
+                    <el-table-column prop="decision" :label="t('singleDecision')"/>
                 </el-table>
             </div>
         </div>
@@ -70,6 +70,7 @@ import { ref,watch,computed } from 'vue'
 import Back from '@/components/Back.vue'
 import { useStore } from "vuex"
 import load from '@/components/load.vue'
+import { useI18n } from 'vue-i18n'
 export default {
   name: 'allHistory',
   components: {
@@ -85,10 +86,11 @@ export default {
      * isMobiles 使用裝置
      * sortNoStatus 排序狀態
      */
+    const { t } = useI18n()
     const store = useStore()
     const isMobiles = computed(() => {
         return store.state.isMobile
-    });
+    })
     const dayData = ref(null)
     const historyData = ref([])
     const apiLoading = ref(false)
@@ -105,11 +107,11 @@ export default {
             if(numArr[i]%2 === 1) singleCount++
         }
         let font = ''
-        if(singleCount>=13) font = '單'
-        else if(singleCount>=11&&singleCount<13) font = '小單'
-        else if(singleCount === 10) font = '和'
-        else if(singleCount>=8&&singleCount<10) font = '小雙'
-        else font = '雙'
+        if(singleCount>=13) font = t('result1')
+        else if(singleCount>=11&&singleCount<13) font = t('result2')
+        else if(singleCount === 10) font = t('result3')
+        else if(singleCount>=8&&singleCount<10) font = t('result4')
+        else font = t('result5')
 
         target.push({
           no:item.preDrawIssue,
@@ -170,6 +172,7 @@ export default {
         currentChange,
         disabledDate,
         clickSort,
+        t
     }
 
   }

@@ -82,7 +82,8 @@ import { ref,computed,onMounted,onBeforeUnmount,watch } from 'vue'
 import Back from '@/components/Back.vue'
 import SmallHistory from '@/components/smallHistory.vue'
 import load from '@/components/load.vue'
-import { useStore } from "vuex";
+import { useStore } from "vuex"
+import { useI18n } from 'vue-i18n'
 export default {
 components: {
     Back,
@@ -106,7 +107,8 @@ setup() {
      * displayTime 時間訊息
      */
     const nowSeconds = ref(0)
-    const store = useStore();
+    const { t } = useI18n()
+    const store = useStore()
     const timer1 = ref(null)
     const timer2 = ref(null)
     const drawData = ref(null)
@@ -116,12 +118,18 @@ setup() {
         let target = []
         if(!drawData.value) return target
         for(let key in drawData.value){
+            let toSC = drawData.value[key][3]
+            if(toSC === '小單') toSC = t('result2')
+            else if(toSC === '單') toSC = t('result1')
+            else if(toSC === '小雙') toSC = t('result4')
+            else if(toSC === '雙') toSC = t('result5')
+            else if(toSC === '和') toSC = t('result3')
             target.push({
             no:key,
             reward:drawData.value[key][0].split(' ').filter((item) => item),
             special:drawData.value[key][1],
             sizeDecision:drawData.value[key][2],
-            singleDecision:drawData.value[key][3]
+            singleDecision:toSC
             })
         }
         return target
@@ -154,11 +162,11 @@ setup() {
         return target
     })
     const displayTitle = computed(() => {
-        if(!newData.value?.no) return ''
-        return '台灣賓果 期號: ' + (parseInt(newData.value.no)+1)
+        if(!newData.value?.no) return 0
+        return t('title') + + (parseInt(newData.value.no)+1)
     })
     const displayTime = computed(() => {
-      return '下期開獎時間: ' + Math.floor(nowSeconds.value/60)+":"+nowSeconds.value%60
+        return t('time') + Math.floor(nowSeconds.value/60)+":"+nowSeconds.value%60
     })
     // 監聽剩餘秒數
     watch(nowSeconds, (newVal,oldVal)=>{

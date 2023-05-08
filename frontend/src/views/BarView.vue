@@ -2,7 +2,7 @@
   <div class="w-[100vw] h-[100vh] overflow-hidden flex flex-wrap justify-center items-center">
     <!-- 訊息 -->
     <div class="w-full h-[25vh] flex flex-wrap justify-end items-end">
-      <div class="w-full h-[90%] text-lg font-bold flex flex-wrap justify-center items-end">{{ '編號: ' + termResult }}</div>
+      <div class="w-full h-[90%] text-lg font-bold flex flex-wrap justify-center items-end">{{ displayTitle }}</div>
       <div class="w-full h-auto text-lg font-bold">{{ displayTime }}</div>
     </div>
     <!-- 主畫面 -->
@@ -65,7 +65,8 @@ import { ref,computed,onMounted,onBeforeUnmount,watch } from 'vue'
 import Back from '@/components/Back.vue'
 import SmallHistory from '@/components/smallHistory.vue'
 import load from '@/components/load.vue'
-import { useStore } from "vuex";
+import { useStore } from "vuex"
+import { useI18n } from 'vue-i18n'
 export default {
   name: 'HomeView',
   components: {
@@ -83,14 +84,14 @@ export default {
      * historyData api資料整理
      * newData 最新一筆
      * drawResult 最新一筆號碼
-     * termResult 最新一筆編號
      * specialPosition 最新一筆特別號位置
      * sortData 排序後資料
      * displayTime 顯示時間訊息
      * timer2 扣時timer
      * nowSeconds 剩餘秒數
      */
-    const store = useStore();
+    const { t } = useI18n()
+    const store = useStore()
     const nowSeconds = ref(0)
     const animationStatusArr = ref([])
     const historyItem = ref(null)
@@ -102,12 +103,18 @@ export default {
       let target = []
       if(!drawData.value) return target
       for(let key in drawData.value){
+        let toSC = drawData.value[key][3]
+        if(toSC === '小單') toSC = t('result2')
+        else if(toSC === '單') toSC = t('result1')
+        else if(toSC === '小雙') toSC = t('result4')
+        else if(toSC === '雙') toSC = t('result5')
+        else if(toSC === '和') toSC = t('result3')
         target.push({
           no:key,
           reward:drawData.value[key][0].split(' ').filter((item) => item),
           special:drawData.value[key][1],
           sizeDecision:drawData.value[key][2],
-          singleDecision:drawData.value[key][3]
+          singleDecision:toSC
         })
       }
       return target
@@ -120,10 +127,6 @@ export default {
       if(!newData.value) return []
       return newData.value.reward.map((item) => parseInt(item))
     })
-    const termResult = computed(() => {
-      if(!newData.value) return []
-      return (parseInt(newData.value.no)+1)
-    })
     const specialPosition = computed(() => {
       if(!newData.value) return -1
       return newData.value.reward.indexOf(newData.value.special)
@@ -132,8 +135,12 @@ export default {
       if(!historyData.value) return []
       return JSON.parse(JSON.stringify(historyData.value)).reverse()
     })
+    const displayTitle = computed(() => {
+        if(!newData.value?.no) return 0
+        return t('title') + (parseInt(newData.value.no)+1)
+    })
     const displayTime = computed(() => {
-      return '下期開獎時間: ' + Math.floor(nowSeconds.value/60)+":"+nowSeconds.value%60
+        return t('time') + Math.floor(nowSeconds.value/60)+":"+nowSeconds.value%60
     })
     // 監聽api改變後拉桿
     watch(newData, (newVal,oldVal)=>{
@@ -233,10 +240,10 @@ export default {
       historyItem,
       downStatus,
       drawResult,
-      termResult,
       specialPosition,
       animationStatusArr,
       sortData,
+      displayTitle,
       displayTime,
       toStr,
     }
