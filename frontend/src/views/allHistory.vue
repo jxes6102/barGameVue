@@ -1,6 +1,6 @@
 <template>
     <div class="w-[100vw] h-[100vh] bg-[#fcfce5] flex flex-wrap justify-center items-center">
-        <div class="w-[100%] h-[15vh] flex flex-wrap justify-center items-end">
+        <div class="w-[100%] h-[15vh] flex flex-wrap justify-center items-end gap-[10px]">
             <el-date-picker
                 v-model="dayData"
                 type="date"
@@ -8,6 +8,7 @@
                 :disabled-date="disabledDate"
                 :disabled="apiLoading"
             />
+            <div class="w-[60px] md:w-[80px] text-base md:text-2xl bg-[#8ac6d1] rounded-[5px] cursor-pointer hover:opacity-80" @click="clickSort">排序</div>
         </div>
         <div class="w-[100%] h-auto flex flex-wrap justify-center items-center">
             <div v-if="isMobiles" class="w-[300px] h-[60vh] flex flex-wrap justify-center items-center">
@@ -82,6 +83,7 @@ export default {
      * apiLoading loading狀態
      * tableData 表格資料
      * isMobiles 使用裝置
+     * sortNoStatus 排序狀態
      */
     const store = useStore()
     const isMobiles = computed(() => {
@@ -91,6 +93,7 @@ export default {
     const historyData = ref([])
     const apiLoading = ref(false)
     const page = ref(0)
+    const sortNoStatus = ref(false)
     const tableData = computed(() => {
       let target = []
       if(!historyData.value.length) return target
@@ -113,6 +116,10 @@ export default {
           reward:numArr,
           decision:font,
         })
+
+        if(sortNoStatus.value) {
+            target.reverse()
+        }
       }
       return target
     })
@@ -142,6 +149,10 @@ export default {
         // await getHistory(value)
         page.value = value - 1
     }
+    // 點擊排序
+    const clickSort = () => {
+        sortNoStatus.value = !sortNoStatus.value
+    }
     // 初始化
     const init = () => {
         let date = new Date()
@@ -157,7 +168,8 @@ export default {
         apiLoading,
         isMobiles,
         currentChange,
-        disabledDate
+        disabledDate,
+        clickSort,
     }
 
   }
