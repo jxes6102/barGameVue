@@ -12,6 +12,7 @@
       <el-button type="primary" @click="colorGG">change color</el-button>
       <div>きんぎょ这感觉要学过UIUXt{{ t('message') }}</div>
       <div class="w-[60px] md:w-[80px] text-base md:text-2xl bg-[#8ac6d1] rounded-[5px] cursor-pointer hover:opacity-80" @click="changeLang">切換語言</div>
+      <div @click="ggtest">gg</div>
     </div>
 </template>
 <script>
@@ -21,6 +22,7 @@ import { ElLoading } from 'element-plus'
 import { ref,computed } from 'vue'
 import { useRouter } from "vue-router"
 import { useI18n } from 'vue-i18n'
+import axios from 'axios'
 export default {
   name: 'about',
   components: {
@@ -96,6 +98,26 @@ export default {
       console.log(locale.value)
       console.log(t('message'))
     }
+    let ggStr = 'size'
+    const ggtest = () => {
+      console.log('ggtest')
+      if(ggStr === 'size') ggStr = 'order'
+      else ggStr = 'size'
+      axios.post('http://127.0.0.1:5000/getallhistory', {
+        sortType: ggStr,
+      },{
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+      .then(function (response) {
+        console.log(response.data.split('\n'));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    }
+    
     
     return {
         toLinkBar,
@@ -108,7 +130,8 @@ export default {
         strColor,
         colorStyle,
         t,
-        changeLang
+        changeLang,
+        ggtest
     }
 
   }
