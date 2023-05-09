@@ -16,8 +16,8 @@
                     <div v-if="upStatus" class="w-[100%] h-[100%] flex flex-col flex-wrap justify-center items-center">
                         <span
                             v-for="(items,indexs) in 2" :key="indexs"
-                            class="z-[5] w-[15px] h-[15px] md:w-[40px] md:h-[40px] bg-contain bg-center bg-no-repeat flex flex-wrap justify-center items-center text-[12px] md:text-lg"
-                            :class="(drawResult[index+(indexs)*10] === drawSpecial ? 'ball-4' : 'ball-' + ((parseInt(drawResult[index+(indexs)*10]))%3+1)) + ' getball_'+(index+(indexs)*10)"
+                            class="z-[5] w-[15px] h-[15px] md:w-[40px] md:h-[40px] rounded-[50%] font-bold text-[white] flex flex-wrap justify-center items-center text-[12px] md:text-lg"
+                            :class="(drawResult[index+(indexs)*10] === drawSpecial ? 'ball-2' : 'ball-1') + ' getball_'+(index+(indexs)*10)"
                         >
                             {{ drawResult[index+(indexs)*10] }}
                         </span>
@@ -25,8 +25,8 @@
                     <div v-else-if="!runBallStatus && !upStatus" class="w-[100%] h-[100%] flex flex-col flex-wrap justify-center items-center">
                         <span
                             v-for="(items,indexs) in 2" :key="indexs"
-                            class="z-[5] w-[15px] h-[15px] md:w-[40px] md:h-[40px] bg-contain bg-center bg-no-repeat flex flex-wrap justify-center items-center text-[12px] md:text-lg"
-                            :class="drawResult[index+(indexs)*10] === drawSpecial ? 'ball-4' :  'ball-' + ((parseInt(drawResult[index+(indexs)*10]))%3+1)"
+                            class="z-[5] w-[15px] h-[15px] md:w-[40px] md:h-[40px] rounded-[50%] font-bold text-[white] flex flex-wrap justify-center items-center text-[12px] md:text-lg"
+                            :class="drawResult[index+(indexs)*10] === drawSpecial ? 'ball-2' :  'ball-1'"
                         >
                             {{ drawResult[index+(indexs)*10] }}
                         </span>
@@ -37,8 +37,8 @@
                 <div v-if="runBallStatus" class="w-[100%] h-auto flex flex-wrap justify-center items-end">
                     <span
                         v-for="(item,index) in 80" :key="index"
-                        class="z-[2] w-[15px] h-[15px] md:w-[40px] md:h-[40px] bg-contain bg-center bg-no-repeat flex flex-wrap justify-center items-center text-[12px] md:text-lg"
-                        :class="(!upStatus) || (otherBall.includes(item) && upStatus)  ? ('ball-' + ((item%3)+1) + ' wieyi_'+item) : 'opacity-0'"
+                        class="z-[2] w-[15px] h-[15px] md:w-[40px] md:h-[40px] rounded-[50%] font-bold text-[white] flex flex-wrap justify-center items-center text-[12px] md:text-lg ball-1"
+                        :class="(!upStatus) || (otherBall.includes(item) && upStatus)  ? ('wieyi_'+item) : 'opacity-0'"
                     >
                         {{ item }}
                     </span>
@@ -46,8 +46,8 @@
                 <div v-else class="w-[100%] h-auto flex flex-wrap justify-center items-end">
                     <span
                         v-for="(item,index) in otherBall" :key="index"
-                        class="z-[2] w-[15px] h-[15px] md:w-[40px] md:h-[40px] bg-contain bg-center bg-no-repeat flex flex-wrap justify-center items-center text-[12px] md:text-lg"
-                        :class="'ball-' + ((item%3)+1)+' diaol_' + item"
+                        class="z-[2] w-[15px] h-[15px] md:w-[40px] md:h-[40px] rounded-[50%] font-bold text-[white] flex flex-wrap justify-center items-center text-[12px] md:text-lg ball-1"
+                        :class="'diaol_' + item"
                     >
                         {{ item }}
                     </span>
@@ -230,10 +230,10 @@ setup() {
             await pyCatchNum()
         } ), 5500)
 
-        // setTimeout(function (){
-        //     // openReward()
-        //     // runBallStatus.value = true
-        // },1500)
+        setTimeout(function (){
+            openReward()
+            // runBallStatus.value = true
+        },1500)
         
     })
 
@@ -261,16 +261,10 @@ setup() {
 <style src="@/assets/css/runBox.css" scoped></style>
 <style scoped>
     .ball-1{
-        background-image: url('/src/assets/images/canpin_1.png');
+        background:radial-gradient(circle at 35% 25%,#9b98f5 0,#716ddd 20%,#4743d0 40%,#1f19bf 90%,#302bc4 95%,#4743d0 100%);
     }
     .ball-2{
-        background-image: url('/src/assets/images/canpin_2.png');
-    }
-    .ball-3{
-        background-image: url('/src/assets/images/canpin_3.png');
-    }
-    .ball-4{
-        background-image: url('/src/assets/images/canpin_4.png');
+        background:radial-gradient(circle at 35% 25%,#f67b7b 0,#df5d5d 20%,#e14d4d 40%,#bb1919 90%,#d32f2f 95%,#e14d4d 100%);
     }
     @keyframes rotates1{
         0% {
