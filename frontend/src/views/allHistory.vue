@@ -19,8 +19,8 @@
                             <div class="flex flex-wrap justify-start items-center gap-x-0.5">
                                 <div 
                                     v-for="(item,index) in scope.row.reward" :key="index"
-                                    :class="(index===19) ? 'border-[#dd0a35]' : 'border-[#1687a7]'"
-                                    class="w-[25px] h-[25px] bg-[white] rounded-[50%] flex justify-center items-center border-solid border-2 font-bold"
+                                    :class="(index===19) ? 'ball-color-2' : 'ball-color-1'"
+                                    class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-white"
                                 >{{ item }}</div>
                             </div>
                         </template>
@@ -36,8 +36,8 @@
                             <div class="flex flex-wrap justify-start items-center gap-x-0.5">
                                 <div 
                                     v-for="(item,index) in scope.row.reward" :key="index"
-                                    :class="(index===19) ? 'border-[#dd0a35]' : 'border-[#1687a7]'"
-                                    class="w-[25px] h-[25px] bg-[white] rounded-[50%] flex justify-center items-center border-solid border-2 font-bold"
+                                    :class="(index===19) ? 'ball-color-2' : 'ball-color-1'"
+                                    class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-white"
                                 >{{ item }}</div>
                             </div>
                         </template>
@@ -179,4 +179,10 @@ export default {
 }
 </script>
 <style scoped>
+.ball-color-1{
+  background:radial-gradient(circle at 35% 25%,#9b98f5 0,#716ddd 20%,#4743d0 40%,#1f19bf 90%,#302bc4 95%,#4743d0 100%);
+}
+.ball-color-2{
+  background:radial-gradient(circle at 35% 25%,#f67b7b 0,#df5d5d 20%,#e14d4d 40%,#bb1919 90%,#d32f2f 95%,#e14d4d 100%);
+}
 </style>

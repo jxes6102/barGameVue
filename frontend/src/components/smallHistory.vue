@@ -7,9 +7,11 @@
               <div
                 v-for="(item,index) in scope.row.reward" :key="index"
                 :class="item === scope.row.special ? 'hidden' : ''"
-                class="w-[22px] h-[22px] bg-[white] rounded-[50%] flex justify-center items-center border-solid border-2 border-[#1687a7] font-bold"
+                class="w-[22px] h-[22px] rounded-[50%] flex justify-center items-center font-bold text-[white] ball-color-1"
               >{{ item }}</div>
-              <div class="w-[22px] h-[22px] bg-[white] rounded-[50%] flex justify-center items-center border-solid border-2 border-[#dd0a35] font-bold">{{ scope.row.special }}</div>
+              <div 
+                class="w-[22px] h-[22px] rounded-[50%] flex justify-center items-center font-bold text-[white] ball-color-2"
+              >{{ scope.row.special }}</div>
             </div>
           </template>
         </el-table-column>
@@ -23,9 +25,11 @@
               <div 
                 v-for="(item,index) in scope.row.reward" :key="index"
                 :class="item === scope.row.special ? 'hidden' : ''"
-                class="w-[25px] h-[25px] bg-[white] rounded-[50%] flex justify-center items-center border-solid border-2 border-[#1687a7] font-bold"
+                class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-[white] ball-color-1"
               >{{ item }}</div>
-              <div class="w-[25px] h-[25px] bg-[white] rounded-[50%] flex justify-center items-center border-solid border-2 border-[#dd0a35] font-bold">{{ scope.row.special }}</div>
+              <div 
+                class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-[white] ball-color-2"
+              >{{ scope.row.special }}</div>
             </div>
           </template>
         </el-table-column>
@@ -64,7 +68,6 @@ export default {
         return props.tableHeight
     });
 
-
     return {
         isMobiles,
         tableDatas,
@@ -76,4 +79,10 @@ export default {
 }
 </script>
 <style scoped>
+.ball-color-1{
+  background:radial-gradient(circle at 35% 25%,#9b98f5 0,#716ddd 20%,#4743d0 40%,#1f19bf 90%,#302bc4 95%,#4743d0 100%);
+}
+.ball-color-2{
+  background:radial-gradient(circle at 35% 25%,#f67b7b 0,#df5d5d 20%,#e14d4d 40%,#bb1919 90%,#d32f2f 95%,#e14d4d 100%);
+}
 </style>
