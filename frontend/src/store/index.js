@@ -1,5 +1,6 @@
 import { createStore } from 'vuex'
 import axios from 'axios'
+import { useI18n } from 'vue-i18n'
 /*eslint-disable*/
 export default createStore({
   state: {
@@ -60,6 +61,43 @@ export default createStore({
     //     // console.log('always executed')
     //   });
     // },
+    async getTodayHistory(content) {
+      const { t } = useI18n()      
+      await axios.get('https://0906-114-47-84-241.ngrok-free.app/gethistory')
+      .then((response) => {
+        // handle success
+        let target = []
+        let data = []
+        for(let key in response.data){
+            let toSC = response.data[key][3]
+            if(toSC === '小單') toSC = t('result2')
+            else if(toSC === '單') toSC = t('result1')
+            else if(toSC === '小雙') toSC = t('result4')
+            else if(toSC === '雙') toSC = t('result5')
+            else if(toSC === '和') toSC = t('result3')
+            data.push({
+              no:key,
+              reward:response.data[key][0].split(' ').filter((item) => item),
+              special:response.data[key][1],
+              sizeDecision:response.data[key][2],
+              singleDecision:toSC
+            })
+        }
+        let page = Math.floor((data.length/100) + 1)
+        for(let i = 1;i<=page;i++){
+          target.push(data.slice((i-1)*100,i*100))
+        }
+        content.commit('setAllrecord',target)
+      })
+      .catch((error) => {
+        // handle error
+        console.log(error);
+      })
+      .finally(()=> {
+        // always executed
+        // console.log('always executed')
+      });
+    },
     async getOtherHistory(content,payload) {
       // console.log('payload',payload)
       let url = 'https://api.api68.com/LuckTwenty/getBaseLuckTwentyList.do'

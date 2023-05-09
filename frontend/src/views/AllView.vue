@@ -1,6 +1,6 @@
 <template>
     <div class="w-[100vw] h-[100vh] bg-[#fcfce5] flex flex-wrap justify-center items-center">
-        <div class="w-[90vw] h-[100vh] flex flex-wrap justify-center items-center max-w-[1200px]">
+        <div class="w-[90vw] h-[100vh] flex flex-wrap justify-center items-center max-w-[1000px]">
             <div class="w-[50%] h-auto flex flex-wrap justify-center items-center gap-y-2">
                 <div class="w-[100%] h-auto pl-2 flex flex-wrap justify-start items-center font-extrabold text-base md:text-xl text-red-500">{{ displayTitle }}</div>
                 <div 
@@ -17,9 +17,33 @@
                 <div class="w-[100%] h-auto pl-2 flex flex-wrap justify-center items-center font-extrabold text-base md:text-xl text-red-500">{{ displayTime }}</div>
             </div>
             <div class="w-[25%] h-auto">123</div>
+            
             <!-- 歷史紀錄 -->
-            <div class="w-[800px] h-[55vh] flex flex-wrap justify-center items-center">
-                <el-table v-if="isMobiles" :data="sortData" max-height="55vh" style="width:300px;font-size:10px;">
+            <div class="w-[800px] h-[65vh] flex flex-wrap justify-center items-center">
+                <!-- 工具列 -->
+                <div class="w-[800px] h-[5vh] flex flex-wrap justify-center items-center">
+                    <div class="w-[25%] h-[100%] flex flex-wrap justify-start items-center">開獎紀錄</div>
+                    <div class="w-[25%] h-[100%] flex flex-wrap justify-center items-center">
+                        <el-switch
+                            v-model="value2"
+                            class="mb-2"
+                            style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
+                            active-text="由大到小"
+                            inactive-text="由小到大"
+                        />
+                    </div>
+                    <div class="w-[25%] h-[100%] flex flex-wrap justify-end items-center">選擇日期 : </div>
+                    <div class="w-[25%] h-[100%] flex flex-wrap justify-center items-center">
+                        <el-date-picker
+                            v-model="dayData"
+                            type="date"
+                            placeholder="選擇查詢日期"
+                            :disabled-date="disabledDate"
+                            :disabled="apiLoading"
+                        />
+                    </div>
+                </div>
+                <el-table v-if="isMobiles" :data="sortData" max-height="60vh" style="width:300px;font-size:10px;">
                     <el-table-column sortable prop="no" :label="t('no')" width="90"/>
                     <el-table-column prop="reward" :label="t('reward')">
                     <template #default="scope">
@@ -35,7 +59,7 @@
                     </el-table-column>
                     <el-table-column prop="singleDecision" :label="t('singleDecision')" width="60"/>
                 </el-table>
-                <el-table v-else :data="sortData" max-height="55vh" style="width:800px;">
+                <el-table v-else :data="sortData" max-height="60vh" style="width:800px;">
                     <el-table-column sortable prop="no" :label="t('no')" width="100"/>
                     <el-table-column width="600" prop="reward" :label="t('reward')">
                     <template #default="scope">
@@ -56,7 +80,7 @@
                 <el-pagination
                     small
                     background
-                    :page-size="1"
+                    :page-size="100"
                     layout="prev, pager, next"
                     :total="historyData?.length || 1"
                     @current-change="currentChange"
@@ -102,24 +126,17 @@ export default {
     const drawData = ref(null)
     const runBallStatus = ref(false)
     const upStatus = ref(false)
+    const dayData = ref(null)
+    const page = ref(0)
     const historyData = computed(() => {
         let target = []
         if(!drawData.value) return target
-        for(let key in drawData.value){
-            let toSC = drawData.value[key][3]
-            if(toSC === '小單') toSC = t('result2')
-            else if(toSC === '單') toSC = t('result1')
-            else if(toSC === '小雙') toSC = t('result4')
-            else if(toSC === '雙') toSC = t('result5')
-            else if(toSC === '和') toSC = t('result3')
-            target.push({
-            no:key,
-            reward:drawData.value[key][0].split(' ').filter((item) => item),
-            special:drawData.value[key][1],
-            sizeDecision:drawData.value[key][2],
-            singleDecision:toSC
-            })
-        }
+        target = drawData.value[page.value]
+ 
+        // if(sortNoStatus.value) {
+        //     target.reverse()
+        // }
+        // console.log('target',target)
         return target
     })
     const newData = computed(() => {
@@ -180,8 +197,10 @@ export default {
     }
     //pyapi拿獎項資料
     const pyCatchNum = async() => {
-        await store.dispatch('pyGet')
-        drawData.value = store.state.todayrecord
+        await store.dispatch('getTodayHistory')
+        drawData.value = store.state.allrecord
+        page.value = 0
+        console.log('drawData',drawData.value)
     }
     //轉換格式
     const toStr = (val) => {
@@ -205,9 +224,11 @@ export default {
     }
 
     onMounted(() => {
-        timer1.value = window.setInterval((async() => {
-            await pyCatchNum()
-        } ), 5500)
+        // timer1.value = window.setInterval((async() => {
+        //     await pyCatchNum()
+        // } ), 5500)
+
+        // store.dispatch('getTodayHistory')
 
         // setTimeout(function (){
         //     // openReward()
@@ -232,8 +253,16 @@ export default {
     init()
 
     const currentChange = () => {
+        page.value = value - 1
         console.log('currentChange')
     }
+
+    //設定選擇日期範圍
+    const disabledDate = (time) => {
+        return (time.getTime() > Date.now()) || (time.getTime() < (Date.now() - 2592000000))
+    }
+
+    const value2 = ref(false)
 
     return {
         displayTitle,
@@ -243,7 +272,11 @@ export default {
         sortData,
         isMobiles,
         apiLoading,
+        dayData,
+        historyData,
         currentChange,
+        disabledDate,
+        value2
     }
 
   }
