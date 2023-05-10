@@ -26,7 +26,7 @@ export default createStore({
   },
   actions: {
     async pyGet(content,payload) {
-      await axios.get('https://0906-114-47-84-241.ngrok-free.app/gethistory')
+      await axios.get('http://127.0.0.1:5000/gethistory')
       .then((response) => {
         // handle success
         content.commit('setTodayrecord',response.data)

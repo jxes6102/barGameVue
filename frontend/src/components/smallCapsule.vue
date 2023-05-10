@@ -17,9 +17,9 @@
                 <div class="absolute w-[260px] h-[230px] md:w-[450px] md:h-[405px] top-[0px] left-[10px]  md:left-[120px] overflow-hidden rounded-[240px_240px_0px_0px] ">
                     <span
                         v-for="(item,index) in 80" :key="index"
-                        class="z-[2] w-[20px] h-[20px] md:w-[35px] md:h-[35px]"
+                        class="z-[2] w-[20px] h-[20px] md:w-[35px] md:h-[35px] base_ball"
                         :class="'qiu_' + item + ' diaol_' + item + (runBallStatus ? ' wieyi_'+item : '')"
-                    ></span>
+                    >{{ item }}</span>
                 </div>
                 <!-- 滾輪 -->
                 <div 
@@ -174,7 +174,7 @@ export default {
   }
 }
 </script>
-<style src="@/assets/css/ball.css" scoped></style>
+<style src="@/assets/css/testBall.css" scoped></style>
 <style src="@/assets/css/run.css" scoped></style>
 <style src="@/assets/css/style.css" scoped></style>
 <style scoped>
