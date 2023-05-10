@@ -28,7 +28,6 @@ export default {
   setup() {
     /**
      * timer1 設定timer 1/10s
-     * drawData 原始api資料
      * historyData api資料整理
      * newData 最新一筆
      * drawResult 最新一筆號碼
@@ -36,30 +35,10 @@ export default {
      * specialPosition 最新一筆特別號位置
      * sortData 排序後資料
      */
-    const store = useStore()
     const { t } = useI18n()
+    const store = useStore()
     const timer1 = ref(null)
-    const drawData = ref(null)
-    const historyData = computed(() => {
-      let target = []
-      if(!drawData.value) return target
-      for(let key in drawData.value){
-        let toSC = drawData.value[key][3]
-        if(toSC === '小單') toSC = t('result2')
-        else if(toSC === '單') toSC = t('result1')
-        else if(toSC === '小雙') toSC = t('result4')
-        else if(toSC === '雙') toSC = t('result5')
-        else if(toSC === '和') toSC = t('result3')
-
-        target.push({
-          no:key,
-          reward:drawData.value[key][0].split(' ').filter((item) => item),
-          special:drawData.value[key][1],
-          singleDecision:toSC
-        })
-      }
-      return target
-    })
+    const historyData = ref([])
     const newData = computed(() => {
       if(!historyData.value) return {}
       return historyData.value[historyData.value.length - 1]
@@ -82,8 +61,8 @@ export default {
     })
     //pyapi拿獎項資料
     const pyCatchNum = async() => {
-      await store.dispatch('pyGet')
-      drawData.value = store.state.todayrecord
+      await store.dispatch('pyGet',{getText:t})
+      historyData.value = store.state.todayrecord
     }
     //轉換格式
     const toStr = (val) => {

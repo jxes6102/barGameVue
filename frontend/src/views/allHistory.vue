@@ -32,7 +32,7 @@
             <div v-else class="w-[800px] h-[60vh] flex flex-wrap justify-center items-center">
                 <el-table :data="tableData" max-height="60vh" style="width:800px;">
                     <el-table-column sortable prop="no" :label="t('no')" width="100"/>
-                    <el-table-column width="570" prop="reward" :label="t('reward')">
+                    <el-table-column prop="reward" :label="t('reward')">
                         <template #default="scope">
                             <div class="flex flex-wrap justify-start items-center gap-x-0.5">
                                 <div 

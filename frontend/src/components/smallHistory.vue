@@ -3,7 +3,7 @@
         <el-table-column sortable prop="no" :label="t('no')" width="90"/>
         <el-table-column prop="reward" :label="t('reward')">
           <template #default="scope">
-            <div class="flex flex-wrap justify-start items-center gap-x-0.5">
+            <div class="flex flex-wrap justify-start items-center gap-x-[2px]">
               <div
                 v-for="(item,index) in scope.row.reward" :key="index"
                 :class="item === scope.row.special ? 'hidden' : ''"
@@ -15,11 +15,12 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="singleDecision" :label="t('singleDecision')" width="60"/>
+        <el-table-column prop="singleDecision" :label="t('singleDecision')" width="50"/>
+        <el-table-column prop="time" :label="t('openTime')" width="60"/>
     </el-table>
     <el-table v-else :data="tableData" :max-height="tableHeights" style="width:800px;">
         <el-table-column sortable prop="no" :label="t('no')" width="100"/>
-        <el-table-column width="600" prop="reward" :label="t('reward')">
+        <el-table-column prop="reward" :label="t('reward') ">
           <template #default="scope">
             <div class="flex flex-wrap justify-start items-center gap-x-0.5">
               <div 
@@ -33,7 +34,8 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="singleDecision" :label="t('singleDecision')"/>
+        <el-table-column prop="singleDecision" :label="t('singleDecision')" width="60"/>
+        <el-table-column prop="time" :label="t('openTime')" width="70"/>
     </el-table>
 </template>
 <script>

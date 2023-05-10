@@ -29,8 +29,8 @@
                 <!--出口-->
                 <div class="absolute w-[80px] h-[80px] left-[100px] top-[325px] md:w-[136px] md:h-[138px] md:left-[285px] md:top-[580px] z-[1]"><img src="@/assets/images/mendong.png"></div>
                 <!--掉落物-->
-                <div class="absolute w-[130px] h-[110px]  left-[85px] top-[325px] md:left-[290px] md:top-[610px] z-[2] flex flex-wrap justify-center items-center" :class="fallStatus ? 'dila_Y' : ''">
-                    <span :data-content="fallNum" :class="fallStatus ? 'diaL_one' : ''"></span>
+                <div v-show="fallStatus" class="absolute w-[130px] h-[110px] left-[85px] top-[325px] md:left-[290px] md:top-[610px] z-[2] flex flex-wrap justify-center items-center" :class="fallStatus ? 'dila_Y' : ''">
+                    <span :data-content="fallNum" :class="fallStatus ? 'diaL_one' : ''">{{ fallNum }}</span>
                 </div>
             </div>
         </div>

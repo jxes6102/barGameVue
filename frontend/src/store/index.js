@@ -7,9 +7,9 @@ export default createStore({
     // pyURL:'https://0906-114-47-84-241.ngrok-free.app/gethistory',
     // origin:'http://127.0.0.1:5000/gethistory',
     // https://api.api68.com/LuckTwenty/getBaseLuckTwentyList.do
-    todayrecord:{},
+    todayrecord:[],
     allrecord:[],
-    isMobile:false
+    isMobile:false,
   },
   getters: {
   },
@@ -29,7 +29,28 @@ export default createStore({
       await axios.get('http://127.0.0.1:5000/gethistory')
       .then((response) => {
         // handle success
-        content.commit('setTodayrecord',response.data)
+        let data = response.data
+        let target = []
+        let time = 425
+        for(let key in data){
+            let toSC = data[key][3]
+            let timeStr = Math.floor(time/60) + ":" + (time%60 >= 10 ? time%60 : '0' + time%60)
+            time+=5
+            if(toSC === '小單') toSC = payload.getText('result2')
+            else if(toSC === '單') toSC = payload.getText('result1')
+            else if(toSC === '小雙') toSC = payload.getText('result4')
+            else if(toSC === '雙') toSC = payload.getText('result5')
+            else if(toSC === '和') toSC = payload.getText('result3')
+            target.push({
+                no:key,
+                reward:data[key][0].split(' ').filter((item) => item),
+                special:data[key][1],
+                sizeDecision:data[key][2],
+                singleDecision:toSC,
+                time:timeStr
+            })
+        }
+        content.commit('setTodayrecord',target)
       })
       .catch((error) => {
         // handle error
@@ -62,9 +83,9 @@ export default createStore({
     //   });
     // },
     async getTodayHistory(content) {
-      const { t } = useI18n()      
       await axios.get('https://0906-114-47-84-241.ngrok-free.app/gethistory')
       .then((response) => {
+        const { t } = useI18n()
         // handle success
         let target = []
         let data = []
