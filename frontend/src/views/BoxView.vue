@@ -209,10 +209,10 @@ setup() {
             await pyCatchNum()
         } ), 5500)
 
-        setTimeout(function (){
-            openReward()
-            // runBallStatus.value = true
-        },1500)
+        // setTimeout(function (){
+        //     // openReward()
+        //     // runBallStatus.value = true
+        // },1500)
         
     })
 
