@@ -7,13 +7,14 @@ import './assets/tailwind.css'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
-import twCn from 'element-plus/dist/locale/zh-tw.mjs'
+// import twCn from 'element-plus/dist/locale/zh-tw.mjs'
+import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 import i18n from './i18n'
 
 const app = createApp(App)
 
 app.use(ElementPlus, {
-    locale: twCn,
+    locale: zhCn,
 })
 
 app.use(i18n).use(store).use(router).use(ElementPlus).mount('#app')

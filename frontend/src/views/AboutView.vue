@@ -1,6 +1,6 @@
 <template>
     <div class="w-[100vw] h-[100vh] bg-[#fcfce5] flex flex-wrap justify-center items-center gap-[20px]">
-      <el-button
+      <!-- <el-button
         v-loading.fullscreen.lock="fullscreenLoading"
         type="primary"
         @click="openFullScreen1"
@@ -12,7 +12,8 @@
       <el-button type="primary" @click="colorGG">change color</el-button>
       <div>きんぎょ这感觉要学过UIUXt{{ t('message') }}</div>
       <div class="w-[60px] md:w-[80px] text-base md:text-2xl bg-[#8ac6d1] rounded-[5px] cursor-pointer hover:opacity-80" @click="changeLang">切換語言</div>
-      <div @click="ggtest">gg</div>
+      <div @click="ggtest">gg</div> -->
+      <div class="w-[300px] h-[200px] md:w-[800px] md:h-[450px] bg-cover bg-no-repeat bg-[url('/src/assets/images/boxbackground.jpg')]"></div>
     </div>
 </template>
 <script>

@@ -7,7 +7,7 @@
             <div class="w-[100%] text-base md:text-2xl font-bold text-[red]">{{ displayTitle }}</div>
             <div class="w-[100%] text-xs md:text-lg font-bold text-[red]">{{ displayTime }}</div>
         </div>
-        <div class="relative w-[300px] h-[200px] md:w-[800px] md:h-[450px] top-[45px] md:top-[0px] bg-[#CDFFFF] rounded-md md:rounded-xl">
+        <div class="relative w-[300px] h-[200px] md:w-[800px] md:h-[450px] top-[45px] md:top-[0px] bg-cover bg-no-repeat bg-[url('/src/assets/images/boxbackground.jpg')] rounded-md md:rounded-xl">
             <div class="absolute w-auto h-auto flex flex-wrap justify-center items-center">
                 <div 
                     v-for="(item,index) in 10" :key="index"
@@ -145,7 +145,7 @@ setup() {
         return t('title') + + (parseInt(newData.value.no)+1)
     })
     const displayTime = computed(() => {
-        return t('time') + Math.floor(nowSeconds.value/60)+":"+nowSeconds.value%60
+        return t('time') + Math.floor(nowSeconds.value/60)+":"+nowSeconds.value%60 + ' 、 ' + t('rewardLen',{existing:historyData.value.length,remain:203-historyData.value.length}) +historyData.value.length
     })
     // 監聽剩餘秒數
     watch(nowSeconds, (newVal,oldVal)=>{
@@ -209,10 +209,10 @@ setup() {
             await pyCatchNum()
         } ), 5500)
 
-        // setTimeout(function (){
-        //     // openReward()
-        //     // runBallStatus.value = true
-        // },1500)
+        setTimeout(function (){
+            openReward()
+            // runBallStatus.value = true
+        },1500)
         
     })
 
