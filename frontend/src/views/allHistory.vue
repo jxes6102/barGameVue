@@ -8,7 +8,7 @@
                 :disabled-date="disabledDate"
                 :disabled="apiLoading"
             />
-            <div class="w-[60px] md:w-[80px] text-base md:text-2xl bg-[#8ac6d1] rounded-[5px] cursor-pointer hover:opacity-80" @click="clickSort">排序</div>
+            <!-- <div class="w-[60px] md:w-[80px] text-base md:text-2xl bg-[#8ac6d1] rounded-[5px] cursor-pointer hover:opacity-80" @click="clickSort">排序</div> -->
         </div>
         <div class="w-[100%] h-auto flex flex-wrap justify-center items-center">
             <div v-if="isMobiles" class="w-[300px] h-[60vh] flex flex-wrap justify-center items-center">
@@ -16,7 +16,7 @@
                     <el-table-column sortable prop="no" :label="t('no')" width="90"/>
                     <el-table-column prop="reward" :label="t('reward')">
                         <template #default="scope">
-                            <div class="flex flex-wrap justify-start items-center gap-x-0.5">
+                            <div class="flex flex-wrap justify-start items-center">
                                 <div 
                                     v-for="(item,index) in scope.row.reward" :key="index"
                                     :class="(index===19) ? 'ball-color-2' : 'ball-color-1'"
@@ -25,13 +25,14 @@
                             </div>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="decision" :label="t('singleDecision')" width="60"/>
+                    <el-table-column prop="decision" :label="t('singleDecision')" width="50"/>
+                    <el-table-column prop="time" width="60" :label="t('openTime')"/>
                 </el-table>
             </div>
             <div v-else class="w-[800px] h-[60vh] flex flex-wrap justify-center items-center">
                 <el-table :data="tableData" max-height="60vh" style="width:800px;">
                     <el-table-column sortable prop="no" :label="t('no')" width="100"/>
-                    <el-table-column width="600" prop="reward" :label="t('reward')">
+                    <el-table-column width="570" prop="reward" :label="t('reward')">
                         <template #default="scope">
                             <div class="flex flex-wrap justify-start items-center gap-x-0.5">
                                 <div 
@@ -42,7 +43,8 @@
                             </div>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="decision" :label="t('singleDecision')"/>
+                    <el-table-column prop="decision" width="60" :label="t('singleDecision')"/>
+                    <el-table-column prop="time" width="60" :label="t('openTime')"/>
                 </el-table>
             </div>
         </div>
@@ -117,6 +119,7 @@ export default {
           no:item.preDrawIssue,
           reward:numArr,
           decision:font,
+          time:item.preDrawTime.split(' ')[1].substr(0,5)
         })
 
         if(sortNoStatus.value) {
