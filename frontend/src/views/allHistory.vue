@@ -13,6 +13,7 @@
         <div class="w-[100%] h-auto flex flex-wrap justify-center items-center">
             <div v-if="isMobiles" class="w-[300px] h-[60vh] flex flex-wrap justify-center items-center">
                 <el-table :data="tableData" max-height="60vh" style="width:300px;font-size:10px">
+                    <el-table-column prop="time" width="60" :label="t('openTime')"/>
                     <el-table-column sortable prop="no" :label="t('no')" width="90"/>
                     <el-table-column prop="reward" :label="t('reward')">
                         <template #default="scope">
@@ -26,11 +27,11 @@
                         </template>
                     </el-table-column>
                     <el-table-column prop="decision" :label="t('singleDecision')" width="50"/>
-                    <el-table-column prop="time" width="60" :label="t('openTime')"/>
                 </el-table>
             </div>
             <div v-else class="w-[800px] h-[60vh] flex flex-wrap justify-center items-center">
                 <el-table :data="tableData" max-height="60vh" style="width:800px;">
+                    <el-table-column prop="time" width="60" :label="t('openTime')"/>
                     <el-table-column sortable prop="no" :label="t('no')" width="100"/>
                     <el-table-column prop="reward" :label="t('reward')">
                         <template #default="scope">
@@ -44,7 +45,6 @@
                         </template>
                     </el-table-column>
                     <el-table-column prop="decision" width="60" :label="t('singleDecision')"/>
-                    <el-table-column prop="time" width="60" :label="t('openTime')"/>
                 </el-table>
             </div>
         </div>

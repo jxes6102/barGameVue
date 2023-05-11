@@ -145,7 +145,8 @@ setup() {
         return t('title') + + (parseInt(newData.value.no)+1)
     })
     const displayTime = computed(() => {
-        return t('time') + Math.floor(nowSeconds.value/60)+":"+nowSeconds.value%60 + ' 、 ' + t('rewardLen',{existing:historyData.value.length,remain:203-historyData.value.length}) +historyData.value.length
+        return t('time') + Math.floor(nowSeconds.value/60)+":"+nowSeconds.value%60
+        // return t('time') + Math.floor(nowSeconds.value/60)+":"+nowSeconds.value%60 + ' 、 ' + t('rewardLen',{existing:historyData.value.length,remain:203-historyData.value.length}) +historyData.value.length
     })
     // 監聽剩餘秒數
     watch(nowSeconds, (newVal,oldVal)=>{
