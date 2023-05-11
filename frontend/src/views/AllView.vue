@@ -1,15 +1,14 @@
 <template>
     <div class="w-[100vw] h-[100vh] bg-[#fcfce5] flex flex-wrap justify-center items-center">
         <div class="w-[90vw] h-[100vh] flex flex-wrap justify-center items-center max-w-[1000px]">
-            <div class="w-[50%] h-auto flex flex-wrap justify-center items-center gap-y-2">
+            <div class="w-[50%] h-auto flex flex-wrap justify-start items-center gap-y-2">
                 <div class="w-[100%] h-auto pl-2 flex flex-wrap justify-start items-center font-extrabold text-base md:text-xl text-red-500">{{ displayTitle }}</div>
-                <div 
-                    v-for="(item,index) in drawResult" :key="item+index"
-                    class="w-[10%] h-auto flex flex-wrap justify-center items-center "
-                    >
-                    <div class="w-[35px] h-[35px] bg-[#1687a7] rounded-[50%] flex justify-center items-center border-solid border-2 border-[#1687a7] font-bold text-[#fff]">
-                        {{ item }}
-                    </div>
+                <div class="w-[250px] md:w-[380px] h-auto flex flex-wrap justify-start items-center gap-[2px]">
+                    <div 
+                        v-for="(item,index) in drawResult" :key="index"
+                        :class="(index===19) ? 'ball-color-2' : 'ball-color-1'"
+                        class="w-[22px] h-[22px] md:w-[35px] md:h-[35px] rounded-[50%] flex justify-center items-center text-xs md:text-base font-bold text-white"
+                    >{{ item }}</div>
                 </div>
             </div>
             <div class="w-[25%] h-auto flex flex-wrap justify-center items-center gap-y-2">
@@ -17,12 +16,11 @@
                 <div class="w-[100%] h-auto pl-2 flex flex-wrap justify-center items-center font-extrabold text-base md:text-xl text-red-500">{{ displayTime }}</div>
             </div>
             <div class="w-[25%] h-auto">放元件</div>
-            
             <!-- 歷史紀錄 -->
             <div class="w-[800px] h-[65vh] flex flex-wrap justify-center items-center">
                 <!-- 工具列 -->
                 <div class="w-[300px] md:w-[800px] h-auto flex flex-wrap justify-center items-center">
-                    <div class="w-[50%] md:w-[25%] h-[100%] flex flex-wrap justify-start items-center">開獎紀錄</div>
+                    <div class="w-[50%] md:w-[25%] h-[100%] flex flex-wrap justify-start items-center">{{ t('rewardRecord') }}</div>
                     <div class="w-[50%] md:w-[25%] h-[100%] flex flex-wrap justify-center items-center">
                         <el-switch
                             v-model="value2"
@@ -32,7 +30,7 @@
                             inactive-text="依開獎順序"
                         />
                     </div>
-                    <div class="w-[50%] md:w-[25%] h-[100%] flex flex-wrap justify-end items-center">選擇日期 : </div>
+                    <div class="w-[50%] md:w-[25%] h-[100%] flex flex-wrap justify-end items-center">{{t('choseDay')}} </div>
                     <div class="w-[50%] md:w-[25%] h-[100%] flex flex-wrap justify-center items-center">
                         <el-date-picker
                             v-model="dayData"
@@ -77,7 +75,6 @@
                         <el-table-column prop="decision" width="60" :label="t('singleDecision')"/>
                     </el-table>
                 </div>
-                
             </div>
             <div class="w-[100%] h-auto flex flex-wrap justify-center items-start">
                 <el-pagination
@@ -130,16 +127,14 @@ export default {
     const dayData = ref(null)
     const page = ref(0)
     const newData = computed(() => {
-        if(!tableData.value) return {}
-        return tableData.value[tableData.value.length - 1]
-    })
-    const testData = computed(() => {
         if(!historyData.value) return {}
         return historyData.value[0][0]
     })
     const drawResult = computed(() => {
-        if(!newData.value) return []
-        return newData.value.reward
+        if(!newData.value.preDrawCode) return []
+        let target = newData.value.preDrawCode.split(',')
+        target.splice(target.indexOf(target[target.length - 1]),1)
+        return target
     })
     const tableData = computed(() => {
       let target = []
@@ -172,8 +167,8 @@ export default {
       return target
     })
     const displayTitle = computed(() => {
-        if(!newData.value?.no) return 0
-        return t('title') + + (parseInt(newData.value.no))
+        if(!newData.value?.preDrawIssue) return 0
+        return t('title') + (newData.value.preDrawIssue)
     })
     const displayTime = computed(() => {
         return Math.floor(nowSeconds.value/60)+"分 : "+nowSeconds.value%60 + "秒"
@@ -182,7 +177,6 @@ export default {
     watch(nowSeconds, (newVal,oldVal)=>{
         if(newVal === 0){
             getTime()
-            ctrlRunBall(true)
         }
     })
     //監聽日期改變
@@ -225,7 +219,7 @@ export default {
 
         
         setTimeout(function (){
-            console.log('testData',testData.value)
+            console.log('newData',newData.value)
         },1500)
 
     })

@@ -12,5 +12,7 @@
     "result4":"小双",
     "result5":"双",
     "openTime":"时间",
-    "rewardLen":"已开{existing}期，还有{remain}期"
+    "rewardLen":"已开{existing}期，还有{remain}期",
+    "rewardRecord":"开奖纪录",
+    "choseDay":"选择日期:"
 }
