@@ -4,7 +4,7 @@ import { useI18n } from 'vue-i18n'
 /*eslint-disable*/
 export default createStore({
   state: {
-    // pyURL:'https://0906-114-47-84-241.ngrok-free.app/gethistory',
+    // pyURL:'https://c113-61-227-7-196.ngrok-free.app/gethistory',
     // origin:'http://127.0.0.1:5000/gethistory',
     // https://api.api68.com/LuckTwenty/getBaseLuckTwentyList.do
     todayrecord:[],
@@ -26,7 +26,7 @@ export default createStore({
   },
   actions: {
     async pyGet(content,payload) {
-      await axios.get('http://127.0.0.1:5000/gethistory')
+      await axios.get('https://c113-61-227-7-196.ngrok-free.app/gethistory')
       .then((response) => {
         // handle success
         let data = response.data
@@ -83,7 +83,7 @@ export default createStore({
     //   });
     // },
     async getTodayHistory(content) {
-      await axios.get('https://0906-114-47-84-241.ngrok-free.app/gethistory')
+      await axios.get('https://c113-61-227-7-196.ngrok-free.app/gethistory')
       .then((response) => {
         const { t } = useI18n()
         // handle success
