@@ -7,6 +7,62 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from time import sleep
+# database test
+import mysql.connector
+from mysql.connector import Error
+def databaseTest():
+    try:
+        # 連接 MySQL/MariaDB 資料庫
+        connection = mysql.connector.connect(
+            host='localhost',          # 主機名稱
+            database='pycrawler', # 資料庫名稱
+            user='root',        # 帳號
+            password='')  # 密碼
+
+        if connection.is_connected():
+
+            # 顯示資料庫版本
+            db_Info = connection.get_server_info()
+            print("資料庫版本：", db_Info)
+
+            # 查詢
+            cursor = connection.cursor()
+            cursor.execute("SELECT * FROM `testtable`;")
+            record = cursor.fetchall()
+            print("目前使用的資料庫：", record)
+            for item in record:
+                print(item)
+
+            #修改
+            # cursor = connection.cursor()
+            # # single
+            # # cursor.execute("INSERT INTO testtable (text) VALUES ('%s')" % 'add from flask-2')
+            # #many
+            # add = "INSERT INTO testtable (text,number) VALUES (%s,%s)"
+            # data = ("add from flask-3",789)
+            # cursor.execute(add,data)
+            # # Make sure data is committed to the database
+            # connection.commit()
+
+            #刪除 DELETE FROM `testtable` WHERE `number` = 789;
+            # cursor = connection.cursor()
+            # # single
+            # # cursor.execute("DELETE FROM testtable WHERE number = %s" % 456)
+            # connection.commit()
+
+    except Error as e:
+        print("資料庫連接失敗：", e)
+
+    finally:
+        if (connection.is_connected()):
+            cursor.close()
+            connection.close()
+            print("資料庫連線已關閉")
+
+# databaseTest()
+# database test
+
+
 # options = Options()
 # options.chrome_executable_path='./chromedriver.exe'
 # driver = webdriver.Chrome(options = options)
