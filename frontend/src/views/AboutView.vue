@@ -14,6 +14,7 @@
       <div class="w-[60px] md:w-[80px] text-base md:text-2xl bg-[#8ac6d1] rounded-[5px] cursor-pointer hover:opacity-80" @click="changeLang">切換語言</div>
       <div @click="ggtest">gg</div> -->
       <div class="w-[300px] h-[200px] md:w-[800px] md:h-[450px] bg-cover bg-no-repeat bg-[url('/src/assets/images/boxbackground.jpg')]"></div>
+      <input ref="checkItem" type="checkbox" name="vehicle" value="Car"  /> I have a car
     </div>
 </template>
 <script>
@@ -118,7 +119,15 @@ export default {
         console.log(error);
       });
     }
-    
+    const checkStatus = ref(false)
+    const checkItem = ref(null)
+    setTimeout(() => {
+      // checkItem.value.click()
+      checkItem.value.checked = true
+      setTimeout(() => {
+        checkItem.value.checked = false
+      }, 2000)
+    }, 2000)
     
     return {
         toLinkBar,
@@ -132,7 +141,9 @@ export default {
         colorStyle,
         t,
         changeLang,
-        ggtest
+        ggtest,
+        checkStatus,
+        checkItem
     }
 
   }

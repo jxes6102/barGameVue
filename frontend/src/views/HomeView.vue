@@ -13,7 +13,7 @@
         <div class="w-[80px] md:w-[100px] text-base md:text-2xl bg-[#8ac6d1] px-2 py-1 rounded-[5px] cursor-pointer hover:opacity-80" @click="toLinkHistory">history</div>
       </div>
   </div>
-  <div class="fixed w-auto h-auto bottom-0 right-0 text-base text-[red] p-1">0.41</div>
+  <div class="fixed w-auto h-auto bottom-0 right-0 text-base text-[red] p-1">0.42</div>
 </template>
 <script>
 // @ is an alias to /src

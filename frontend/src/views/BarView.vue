@@ -1,12 +1,10 @@
 <template>
   <div class="w-[100vw] h-[100vh] overflow-hidden flex flex-wrap justify-center items-center">
-    <!-- 訊息 -->
-    <div class="w-full h-[25vh] flex flex-wrap justify-end items-end">
-      <div class="w-full h-[90%] text-lg font-bold flex flex-wrap justify-center items-end">{{ displayTitle }}</div>
-      <div class="w-full h-auto text-lg font-bold">{{ displayTime }}</div>
-    </div>
     <!-- 主畫面 -->
-    <div class="relative h-[50vh] w-[100vw] flex flex-wrap justify-center items-center">
+    <div class="relative h-[75vh] w-[100vw] flex-col flex flex-wrap justify-center items-center">
+      <!-- 訊息 -->
+      <div class="w-full h-auto text-lg font-bold flex flex-wrap justify-center items-center">{{ displayTitle }}</div>
+      <div class="w-full h-auto text-lg font-bold">{{ displayTime }}</div>
       <div class="flex flex-wrap justify-center items-center h-[300px] w-[250px] md:h-[400px] md:w-[800px] text-white">
         <div
           v-for="(item,index) in 20" :key="item+index"
@@ -26,7 +24,7 @@
         </div>
       </div>
       <!--拉桿-->
-      <div class="absolute scale-[0.5] md:scale-100 h-[400px] w-[40px] bg-[#666] top-[0px] right-[5px] md:right-[5%] cursor-pointer">
+      <div class="absolute scale-[0.5] md:scale-100 h-[400px] w-[40px] bg-[#666] top-[10%] right-[5px] md:right-[5%] cursor-pointer">
         <div
           v-show="!downStatus" 
           class="absolute block w-[20px] h-[200px] bg-[#ccc] bottom-1/2 left-0 right-0 rounded-[10px] my-0 mx-auto">

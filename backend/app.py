@@ -7,6 +7,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from time import sleep
+import time
 # database test
 import mysql.connector
 from mysql.connector import Error
@@ -33,7 +34,7 @@ def databaseTest():
             for item in record:
                 print(item)
 
-            #修改
+            #新增
             # cursor = connection.cursor()
             # # single
             # # cursor.execute("INSERT INTO testtable (text) VALUES ('%s')" % 'add from flask-2')
@@ -61,6 +62,19 @@ def databaseTest():
 
 # databaseTest()
 # database test
+# gettest
+def printHello():
+ print ("Hello")
+ print("当前时间戳是", time.time())
+  
+def loop_func(func, second):
+ # 每隔second秒执行func函数
+ while True:
+  func()
+  time.sleep(second)
+  
+loop_func(printHello, 2)
+
 
 
 # options = Options()
