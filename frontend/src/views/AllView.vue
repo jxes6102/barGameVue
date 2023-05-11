@@ -16,24 +16,24 @@
                 <div class="w-[100%] h-auto pl-2 flex flex-wrap justify-center items-center font-extrabold text-base md:text-xl text-red-500">{{ t('time') }}</div>
                 <div class="w-[100%] h-auto pl-2 flex flex-wrap justify-center items-center font-extrabold text-base md:text-xl text-red-500">{{ displayTime }}</div>
             </div>
-            <div class="w-[25%] h-auto">123</div>
+            <div class="w-[25%] h-auto">放元件</div>
             
             <!-- 歷史紀錄 -->
             <div class="w-[800px] h-[65vh] flex flex-wrap justify-center items-center">
                 <!-- 工具列 -->
-                <div class="w-[800px] h-[5vh] flex flex-wrap justify-center items-center">
-                    <div class="w-[25%] h-[100%] flex flex-wrap justify-start items-center">開獎紀錄</div>
-                    <div class="w-[25%] h-[100%] flex flex-wrap justify-center items-center">
+                <div class="w-[300px] md:w-[800px] h-auto flex flex-wrap justify-center items-center">
+                    <div class="w-[50%] md:w-[25%] h-[100%] flex flex-wrap justify-start items-center">開獎紀錄</div>
+                    <div class="w-[50%] md:w-[25%] h-[100%] flex flex-wrap justify-center items-center">
                         <el-switch
                             v-model="value2"
                             class="mb-2"
                             style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
-                            active-text="由大到小"
-                            inactive-text="由小到大"
+                            active-text="依號碼大小"
+                            inactive-text="依開獎順序"
                         />
                     </div>
-                    <div class="w-[25%] h-[100%] flex flex-wrap justify-end items-center">選擇日期 : </div>
-                    <div class="w-[25%] h-[100%] flex flex-wrap justify-center items-center">
+                    <div class="w-[50%] md:w-[25%] h-[100%] flex flex-wrap justify-end items-center">選擇日期 : </div>
+                    <div class="w-[50%] md:w-[25%] h-[100%] flex flex-wrap justify-center items-center">
                         <el-date-picker
                             v-model="dayData"
                             type="date"
@@ -43,44 +43,47 @@
                         />
                     </div>
                 </div>
-                <el-table v-if="isMobiles" :data="sortData" max-height="60vh" style="width:300px;font-size:10px;">
-                    <el-table-column sortable prop="no" :label="t('no')" width="90"/>
-                    <el-table-column prop="reward" :label="t('reward')">
-                    <template #default="scope">
-                        <div class="flex flex-wrap justify-start items-center gap-x-0.5">
-                        <div
-                            v-for="(item,index) in scope.row.reward" :key="index"
-                            :class="item === scope.row.special ? 'hidden' : ''"
-                            class="w-[22px] h-[22px] bg-[white] rounded-[50%] flex justify-center items-center border-solid border-2 border-[#1687a7] font-bold"
-                        >{{ item }}</div>
-                        <div class="w-[22px] h-[22px] bg-[white] rounded-[50%] flex justify-center items-center border-solid border-2 border-[#dd0a35] font-bold">{{ scope.row.special }}</div>
-                        </div>
-                    </template>
-                    </el-table-column>
-                    <el-table-column prop="singleDecision" :label="t('singleDecision')" width="60"/>
-                </el-table>
-                <el-table v-else :data="sortData" max-height="60vh" style="width:800px;">
-                    <el-table-column sortable prop="no" :label="t('no')" width="100"/>
-                    <el-table-column width="600" prop="reward" :label="t('reward')">
-                    <template #default="scope">
-                        <div class="flex flex-wrap justify-start items-center gap-x-0.5">
-                        <div 
-                            v-for="(item,index) in scope.row.reward" :key="index"
-                            :class="item === scope.row.special ? 'hidden' : ''"
-                            class="w-[25px] h-[25px] bg-[white] rounded-[50%] flex justify-center items-center border-solid border-2 border-[#1687a7] font-bold"
-                        >{{ item }}</div>
-                        <div class="w-[25px] h-[25px] bg-[white] rounded-[50%] flex justify-center items-center border-solid border-2 border-[#dd0a35] font-bold">{{ scope.row.special }}</div>
-                        </div>
-                    </template>
-                    </el-table-column>
-                    <el-table-column prop="singleDecision" :label="t('singleDecision')"/>
-                </el-table>
+                <div class="w-auto h-[50vh] md:h-[60vh]">
+                    <el-table v-if="isMobiles" :data="tableData" max-height="50vh" style="width:300px;font-size:10px;">
+                        <el-table-column prop="time" width="60" :label="t('openTime')"/>
+                        <el-table-column sortable prop="no" :label="t('no')" width="90"/>
+                        <el-table-column prop="reward" :label="t('reward')">
+                            <template #default="scope">
+                                <div class="flex flex-wrap justify-start items-center">
+                                    <div 
+                                        v-for="(item,index) in scope.row.reward" :key="index"
+                                        :class="(index===19) ? 'ball-color-2' : 'ball-color-1'"
+                                        class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-white"
+                                    >{{ item }}</div>
+                                </div>
+                            </template>
+                        </el-table-column>
+                        <el-table-column prop="decision" :label="t('singleDecision')" width="50"/>
+                    </el-table>
+                    <el-table v-else :data="tableData" max-height="60vh" style="width:800px;">
+                        <el-table-column prop="time" width="60" :label="t('openTime')"/>
+                        <el-table-column sortable prop="no" :label="t('no')" width="100"/>
+                        <el-table-column prop="reward" :label="t('reward')">
+                            <template #default="scope">
+                                <div class="flex flex-wrap justify-start items-center gap-x-0.5">
+                                    <div 
+                                        v-for="(item,index) in scope.row.reward" :key="index"
+                                        :class="(index===19) ? 'ball-color-2' : 'ball-color-1'"
+                                        class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-white"
+                                    >{{ item }}</div>
+                                </div>
+                            </template>
+                        </el-table-column>
+                        <el-table-column prop="decision" width="60" :label="t('singleDecision')"/>
+                    </el-table>
+                </div>
+                
             </div>
             <div class="w-[100%] h-auto flex flex-wrap justify-center items-start">
                 <el-pagination
                     small
                     background
-                    :page-size="100"
+                    :page-size="1"
                     layout="prev, pager, next"
                     :total="historyData?.length || 1"
                     @current-change="currentChange"
@@ -123,48 +126,50 @@ export default {
     const timer1 = ref(null)
     const timer2 = ref(null)
     const nowSeconds = ref(0)
-    const drawData = ref(null)
-    const runBallStatus = ref(false)
-    const upStatus = ref(false)
+    const historyData = ref(null)
     const dayData = ref(null)
     const page = ref(0)
-    const historyData = computed(() => {
-        let target = []
-        if(!drawData.value) return target
-        target = drawData.value[page.value]
- 
-        // if(sortNoStatus.value) {
-        //     target.reverse()
-        // }
-        // console.log('target',target)
-        return target
-    })
     const newData = computed(() => {
+        if(!tableData.value) return {}
+        return tableData.value[tableData.value.length - 1]
+    })
+    const testData = computed(() => {
         if(!historyData.value) return {}
-        return historyData.value[historyData.value.length - 1]
+        return historyData.value[0][0]
     })
     const drawResult = computed(() => {
         if(!newData.value) return []
         return newData.value.reward
     })
-    const drawSpecial = computed(() => {
-        if(!newData.value) return []
-        return newData.value.special
-    })
-    const sortData = computed(() => {
-        if(!historyData.value) return []
-        return JSON.parse(JSON.stringify(historyData.value)).reverse()
-    })
-    const otherBall = computed(() => {
-        if(!drawResult.value.length) return []
-        let target = []
-        let nowArr = drawResult.value.map((item)=> parseInt(item))
-        for(let i = 1;i<=80;i++){
-            if(!nowArr.includes(i)){
-                target.push(i)
-            }
+    const tableData = computed(() => {
+      let target = []
+      if(!historyData.value) return target
+      for(let item of historyData.value[page.value]){
+        let numArr = item.preDrawCode.split(',')
+        numArr.splice(numArr.indexOf(numArr[numArr.length - 1]),1)
+        let singleCount = 0
+        for(let i = 0;i<numArr.length;i++){
+            if(numArr[i]%2 === 1) singleCount++
         }
-        return target
+        let font = ''
+        if(singleCount>=13) font = t('result1')
+        else if(singleCount>=11&&singleCount<13) font = t('result2')
+        else if(singleCount === 10) font = t('result3')
+        else if(singleCount>=8&&singleCount<10) font = t('result4')
+        else font = t('result5')
+
+        target.push({
+          no:item.preDrawIssue,
+          reward:numArr,
+          decision:font,
+          time:item.preDrawTime.split(' ')[1].substr(0,5)
+        })
+
+        // if(sortNoStatus.value) {
+        //     target.reverse()
+        // }
+      }
+      return target
     })
     const displayTitle = computed(() => {
         if(!newData.value?.no) return 0
@@ -180,13 +185,9 @@ export default {
             ctrlRunBall(true)
         }
     })
-    // 監聽api改變後拉桿
-    watch(newData, (newVal,oldVal)=>{
-      if(oldVal){
-        if(parseInt(newVal.no) > parseInt(oldVal.no)) {
-            openReward()
-        }
-      }
+    //監聽日期改變
+    watch(dayData, async(newVal,oldVal)=>{
+        await getHistory()
     })
     // 計算時間
     const getTime = () => {
@@ -196,31 +197,23 @@ export default {
         nowSeconds.value = (4-getMinutes%5)*60+(60-getSeconds)
     }
     //pyapi拿獎項資料
-    const pyCatchNum = async() => {
-        await store.dispatch('getTodayHistory')
-        drawData.value = store.state.allrecord
+    // const pyCatchNum = async() => {
+    //     await store.dispatch('getOtherHistory')
+    //     drawData.value = store.state.allrecord
+    //     page.value = 0
+    //     console.log('drawData',drawData.value)
+    // }
+    const getHistory = async(nowpage = 1) => {
+        if(apiLoading.value) return false
+        apiLoading.value = true
+        // console.log(dayData.value.getFullYear()+'-'+(dayData.value.getMonth()+1)+'-'+dayData.value.getDate())
+        let date = dayData.value.getFullYear()+'-'+(dayData.value.getMonth()+1)+'-'+dayData.value.getDate()
+        // let startTime = dayData.value.getFullYear()+'-'+(dayData.value.getMonth()+1)+'-'+dayData.value.getDate()+'%2000:00:00'
+        // let endTime = dayData.value.getFullYear()+'-'+(dayData.value.getMonth()+1)+'-'+dayData.value.getDate()+'%2023:59:59'
+        await store.dispatch('getOtherHistory',{day:date})
         page.value = 0
-        console.log('drawData',drawData.value)
-    }
-    //轉換格式
-    const toStr = (val) => {
-        return val.join(' ')
-    }
-    //開獎動畫
-    const openReward = () => {
-        if(upStatus.value) return false
-        ctrlRunBall(true)
-        setTimeout(function (){
-            upStatus.value = true
-            setTimeout(function (){
-                upStatus.value = false
-                ctrlRunBall(false)
-            },1500)
-        },2000)
-    }
-    //控制滾球狀態
-    const ctrlRunBall = (status = false) => {
-        runBallStatus.value = status
+        historyData.value = store.state.allrecord
+        apiLoading.value = false
     }
 
     onMounted(() => {
@@ -230,11 +223,11 @@ export default {
 
         // store.dispatch('getTodayHistory')
 
-        // setTimeout(function (){
-        //     // openReward()
-        //     // runBallStatus.value = true
-        // },1500)
         
+        setTimeout(function (){
+            console.log('testData',testData.value)
+        },1500)
+
     })
 
     onBeforeUnmount(() => {
@@ -245,14 +238,17 @@ export default {
     //初始動作
     const init = () => {
         getTime()
-        pyCatchNum()
+        let date = new Date()
+        date.setDate(date.getDate())
+        dayData.value = date
+        // pyCatchNum()
         timer2.value = window.setInterval((async() => {
           nowSeconds.value--
         } ), 1000)
     }
     init()
 
-    const currentChange = () => {
+    const currentChange = (value) => {
         page.value = value - 1
         console.log('currentChange')
     }
@@ -265,22 +261,28 @@ export default {
     const value2 = ref(false)
 
     return {
+        drawResult,
         displayTitle,
         displayTime,
-        drawResult,
         t,
-        sortData,
         isMobiles,
         apiLoading,
         dayData,
         historyData,
         currentChange,
         disabledDate,
-        value2
+        value2,
+        tableData,
     }
 
   }
 }
 </script>
 <style scoped>
+.ball-color-1{
+  background:radial-gradient(circle at 35% 25%,#9b98f5 0,#716ddd 20%,#4743d0 40%,#1f19bf 90%,#302bc4 95%,#4743d0 100%);
+}
+.ball-color-2{
+  background:radial-gradient(circle at 35% 25%,#f67b7b 0,#df5d5d 20%,#e14d4d 40%,#bb1919 90%,#d32f2f 95%,#e14d4d 100%);
+}
 </style>
