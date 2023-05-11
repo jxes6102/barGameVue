@@ -1,7 +1,7 @@
 <template>
   <div class="w-[100vw] h-[100vh] overflow-hidden flex flex-wrap justify-center items-center">
     <!-- 主畫面 -->
-    <div class="relative h-[75vh] w-[100vw] flex-col flex flex-wrap justify-center items-center">
+    <div class="relative min-h-[360px] h-[75vh] w-[100vw] flex-col flex flex-wrap justify-center items-center">
       <!-- 訊息 -->
       <div class="w-full h-auto text-lg font-bold flex flex-wrap justify-center items-center">{{ displayTitle }}</div>
       <div class="w-full h-auto text-lg font-bold">{{ displayTime }}</div>
