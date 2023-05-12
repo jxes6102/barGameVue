@@ -46,8 +46,8 @@
                         />
                     </div>
                 </div>
-                <div class="w-auto h-[50vh] md:h-[60vh]">
-                    <el-table v-if="isMobiles" :data="tableData" max-height="50vh" style="width:300px;font-size:10px;">
+                <div class="w-auto h-[55vh] md:h-[60vh]">
+                    <el-table v-if="isMobiles" :data="tableData" max-height="55vh" style="width:300px;font-size:10px;">
                         <el-table-column prop="time" width="60" :label="t('openTime')"/>
                         <el-table-column sortable prop="no" :label="t('no')" width="90"/>
                         <el-table-column prop="reward" :label="t('reward')">
@@ -92,17 +92,6 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="w-[100%] h-auto flex flex-wrap justify-center items-start">
-                <el-pagination
-                    small
-                    background
-                    :page-size="1"
-                    layout="prev, pager, next"
-                    :total="historyData?.length || 1"
-                    @current-change="currentChange"
-                    :disabled="apiLoading"
-                />
-            </div> -->
         </div>
         <!-- 回上頁 -->
         <Back></Back>
