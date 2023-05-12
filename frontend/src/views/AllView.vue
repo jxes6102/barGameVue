@@ -20,7 +20,14 @@
                             <div class="w-[100%] h-auto pl-2 flex flex-wrap justify-center items-center font-extrabold text-base md:text-xl text-red-500">{{ t('time') }}</div>
                             <div class="w-[100%] h-auto pl-2 flex flex-wrap justify-center items-center font-extrabold text-base md:text-xl text-red-500">{{ displayTime }}</div>
                         </div>
-                        <div class="w-[50%] h-auto">放元件</div>
+                        <div class="w-[50%] h-auto flex flex-wrap justify-center items-center gap-1">
+                            <div 
+                                v-for="(item,index) in gameList" 
+                                :key="index"
+                                @click="ctrlGame(item)"
+                                class="w-[30%] text-[12px] md:text-[12px] bg-[#8ac6d1] px-1 py-1 rounded-[5px] cursor-pointer hover:opacity-80"
+                            >{{ item }}</div>
+                        </div>
                     </div>
                 </div>
                 <!-- 工具列 -->
@@ -96,6 +103,18 @@
         <!-- 回上頁 -->
         <Back></Back>
         <load v-show="false"></load>
+        <div v-if="openStatus" class="absolute w-full h-full flex flex-wrap justify-center items-center">
+            <div
+                @click="ctrlGame('')"
+                class="fixed w-full h-full left-0 top-0 bg-slate-800 z-[111] opacity-50 flex flex-wrap justify-center items-center"
+            ></div>
+            <!-- <div class="w-[80%] h-[70%] md:h-[80%] bg-[white] z-[122]">
+                <component :is="openStatus" :allData="newData"></component>
+            </div> -->
+            <div class="w-auto h-auto bg-[white] z-[122] flex flex-wrap justify-center items-center">
+                <component :is="openStatus" :allData="newData" :displayTitle="displayTitle" :displayTime="displayTime"></component>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -108,12 +127,18 @@ import { useStore } from "vuex"
 import load from '@/components/load.vue'
 import { useI18n } from 'vue-i18n'
 import SmallHistory from '@/components/smallHistory.vue'
+import bar from '@/components/bar.vue'
+import capsule from '@/components/capsule.vue'
+import chest from '@/components/chest.vue'
 export default {
   name: 'allView',
   components: {
     SmallHistory,
     Back,
-    load
+    load,
+    bar,
+    capsule,
+    chest
   },
   setup() {
     /**
@@ -124,6 +149,11 @@ export default {
     const isMobiles = computed(() => {
         return store.state.isMobile
     })
+    const gameList = ref([
+        'bar',
+        'capsule',
+        'chest',
+    ])
     const apiLoading = ref(false)
     const timer1 = ref(null)
     const timer2 = ref(null)
@@ -275,6 +305,12 @@ export default {
 
     const orderStatus = ref(false)
 
+    const openStatus = ref()
+    const ctrlGame = (name) => {
+        openStatus.value = name
+        console.log('name',name)
+    }
+
     return {
         drawResult,
         displayTitle,
@@ -285,6 +321,10 @@ export default {
         historyData,
         orderStatus,
         tableData,
+        gameList,
+        openStatus,
+        newData,
+        ctrlGame,
         t,
         currentChange,
         disabledDate,
