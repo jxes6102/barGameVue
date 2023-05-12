@@ -1,27 +1,32 @@
 <template>
     <div class="w-[100vw] h-[100vh] bg-[#fcfce5] flex flex-wrap justify-center items-center">
         <div class="w-[90vw] h-[100vh] flex flex-wrap justify-center items-center max-w-[1000px]">
-            <div class="w-[50%] h-auto flex flex-wrap justify-start items-center gap-y-2">
-                <div class="w-[100%] h-auto pl-2 flex flex-wrap justify-start items-center font-extrabold text-base md:text-xl text-red-500">{{ displayTitle }}</div>
-                <div class="w-[250px] md:w-[380px] h-auto flex flex-wrap justify-start items-center gap-[2px]">
-                    <div 
-                        v-for="(item,index) in drawResult" :key="index"
-                        :class="(index===19) ? 'ball-color-2' : 'ball-color-1'"
-                        class="w-[22px] h-[22px] md:w-[35px] md:h-[35px] rounded-[50%] flex justify-center items-center text-xs md:text-base font-bold text-white"
-                    >{{ item }}</div>
+            <!-- title -->
+            <div class="w-[100%] h-[25vh] flex flex-wrap justify-center items-center">
+                <div class="w-[100%] md:w-[50%] h-auto flex flex-wrap justify-center md:justify-start items-center gap-y-2">
+                    <div class="w-[100%] h-auto pl-2 flex flex-wrap justify-center md:justify-start items-center font-extrabold text-base md:text-xl text-red-500">{{ displayTitle }}</div>
+                    <div class="w-[250px] md:w-[380px] h-auto flex flex-wrap justify-center md:justify-start items-center gap-[2px]">
+                        <div 
+                            v-for="(item,index) in drawResult" :key="index"
+                            :class="(index===19) ? 'ball-color-2' : 'ball-color-1'"
+                            class="w-[22px] h-[22px] md:w-[35px] md:h-[35px] rounded-[50%] flex justify-center items-center text-xs md:text-base font-bold text-white"
+                        >{{ item }}</div>
+                    </div>
+                </div>
+                <div class="w-[100%] md:w-[50%] h-auto flex flex-wrap justify-center items-center">
+                    <div class="w-[50%] h-auto flex flex-wrap justify-center items-center gap-y-2">
+                        <div class="w-[100%] h-auto pl-2 flex flex-wrap justify-center items-center font-extrabold text-base md:text-xl text-red-500">{{ t('time') }}</div>
+                        <div class="w-[100%] h-auto pl-2 flex flex-wrap justify-center items-center font-extrabold text-base md:text-xl text-red-500">{{ displayTime }}</div>
+                    </div>
+                    <div class="w-[50%] h-auto">放元件</div>
                 </div>
             </div>
-            <div class="w-[25%] h-auto flex flex-wrap justify-center items-center gap-y-2">
-                <div class="w-[100%] h-auto pl-2 flex flex-wrap justify-center items-center font-extrabold text-base md:text-xl text-red-500">{{ t('time') }}</div>
-                <div class="w-[100%] h-auto pl-2 flex flex-wrap justify-center items-center font-extrabold text-base md:text-xl text-red-500">{{ displayTime }}</div>
-            </div>
-            <div class="w-[25%] h-auto">放元件</div>
             <!-- 歷史紀錄 -->
-            <div class="w-[800px] h-[65vh] flex flex-wrap justify-center items-center">
+            <div class="w-[800px] h-[70vh] flex-col flex flex-wrap justify-start items-center gap-y-2">
                 <!-- 工具列 -->
                 <div class="w-[300px] md:w-[800px] h-auto flex flex-wrap justify-center items-center">
-                    <div class="w-[50%] md:w-[25%] h-[100%] flex flex-wrap justify-start items-center">{{ t('rewardRecord') }}</div>
-                    <div class="w-[50%] md:w-[25%] h-[100%] flex flex-wrap justify-center items-center">
+                    <div class="w-[25%] md:w-[33%] h-[100%] text-base md:text-xl font-bold flex flex-wrap justify-start items-center">{{ t('rewardRecord') }}</div>
+                    <!-- <div class="w-[50%] md:w-[25%] h-[100%] flex flex-wrap justify-center items-center">
                         <el-switch
                             v-model="value2"
                             class="mb-2"
@@ -29,9 +34,9 @@
                             active-text="依號碼大小"
                             inactive-text="依開獎順序"
                         />
-                    </div>
-                    <div class="w-[50%] md:w-[25%] h-[100%] flex flex-wrap justify-end items-center">{{t('choseDay')}} </div>
-                    <div class="w-[50%] md:w-[25%] h-[100%] flex flex-wrap justify-center items-center">
+                    </div> -->
+                    <div class="w-[25%] md:w-[33%] h-[100%] flex flex-wrap justify-end items-center">{{t('choseDay')}} </div>
+                    <div class="w-[50%] md:w-[34%] h-[100%] flex flex-wrap justify-center items-center">
                         <el-date-picker
                             v-model="dayData"
                             type="date"
@@ -74,9 +79,20 @@
                         </el-table-column>
                         <el-table-column prop="decision" width="60" :label="t('singleDecision')"/>
                     </el-table>
+                    <div class="w-[100%] h-auto mt-2 flex flex-wrap justify-center items-center">
+                        <el-pagination
+                            small
+                            background
+                            :page-size="1"
+                            layout="prev, pager, next"
+                            :total="historyData?.length || 1"
+                            @current-change="currentChange"
+                            :disabled="apiLoading"
+                        />
+                    </div>
                 </div>
             </div>
-            <div class="w-[100%] h-auto flex flex-wrap justify-center items-start">
+            <!-- <div class="w-[100%] h-auto flex flex-wrap justify-center items-start">
                 <el-pagination
                     small
                     background
@@ -86,7 +102,7 @@
                     @current-change="currentChange"
                     :disabled="apiLoading"
                 />
-            </div>
+            </div> -->
         </div>
         <!-- 回上頁 -->
         <Back></Back>
@@ -176,6 +192,18 @@ export default {
     const displayTime = computed(() => {
         return Math.floor(nowSeconds.value/60)+"分 : "+nowSeconds.value%60 + "秒"
     })
+    // 監聽api改變
+    watch(newData, (newVal,oldVal)=>{
+      if(oldVal){
+        let apiDate = (dayData.value.getMonth())+'-'+dayData.value.getDate()
+        let nowDate = (new Date().getMonth())+'-'+(new Date().getDate())
+        if((parseInt(newVal.no) > parseInt(oldVal.no)) && (apiDate===nowDate)) {
+            setTimeout(()=>{
+                getHistory()
+            },25500)
+        }
+      }
+    })
     // 監聽剩餘秒數
     watch(nowSeconds, (newVal,oldVal)=>{
         if(newVal === 0){
@@ -194,14 +222,13 @@ export default {
         let getSeconds = time.getSeconds();
         nowSeconds.value = (4-getMinutes%5)*60+(60-getSeconds)
     }
-    //pyapi拿獎項資料
+    //pyapi拿今天獎項資料
     const pyCatchNum = async() => {
         await store.dispatch('pyGet',{getText:t})
         todayData.value = store.state.todayrecord
-        console.log('todayData',todayData.value)
-        console.log('todayData',todayData.value[0])
-        // console.log('drawData',store.state.todayrecord)
+        // console.log('todayData',store.state.todayrecord)
     }
+    //拿除了今天獎項資料
     const getHistory = async(nowpage = 1) => {
         if(apiLoading.value) return false
         apiLoading.value = true
@@ -216,9 +243,9 @@ export default {
     }
 
     onMounted(() => {
-        // timer1.value = window.setInterval((async() => {
-        //     await pyCatchNum()
-        // } ), 5500)
+        timer1.value = window.setInterval((async() => {
+            await pyCatchNum()
+        } ), 5500)
 
         // store.dispatch('getTodayHistory')
 
