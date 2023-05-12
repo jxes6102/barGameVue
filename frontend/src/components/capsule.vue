@@ -5,15 +5,22 @@
 
                 <div class="absolute w-[50px] h-[50px] md:w-[90px] md:h-[90px] top-[53%] left-[41%] bg-[url('/src/assets/images/an_go.png')] bg-contain bg-center bg-no-repeat z-[4]"></div>
 
-                <!-- <div class="absolute w-[260px] h-[230px] md:w-[450px] md:h-[405px] top-[0px] left-[10px]  md:left-[120px] overflow-hidden rounded-[240px_240px_0px_0px] ">
+                <div class=" absolute w-[65%] h-[58%] top-0 left-[17%] overflow-hidden rounded-[200px_200px_0px_0px] ">
                     <span
                         v-for="(item,index) in 80" :key="index"
-                        class="z-[2] w-[20px] h-[20px] md:w-[35px] md:h-[35px] base_ball"
+                        class="base_ball"
+                        :class="item <= 80 ? 'qiu_' + item + ' diaol_' + item : ''"
+                    >{{ item }}</span>
+                </div>
+                <!-- <div class="bg-white absolute w-[63%] h-[58%] top-0 left-[18%] overflow-hidden rounded-[200px_200px_0px_0px] ">
+                    <span
+                        v-for="(item,index) in 80" :key="index"
+                        class="base_ball"
                         :class="'qiu_' + item + ' diaol_' + item + (runBallStatus ? ' wieyi_'+item : '')"
                     >{{ item }}</span>
                 </div> -->
 
-                <div 
+                <div
                     :class="runBallStatus ? 'rotateStyle' : ''" 
                     class="absolute w-[80px] h-[80px] md:w-[160px] md:h-[160px] top-[25%] md:top-[20%] left-[calc(50%-40px)] md:left-[calc(50%-80px)] bg-[url('/src/assets/images/rotate.png')] bg-contain bg-center bg-no-repeat z-[4]"
                 ></div>
@@ -25,7 +32,7 @@
                 </div> -->
             </div>
             <div class="absolute top-[10px] md:top-[20px] w-[80%] h-auto bg-[#f3f1b0] rounded-lg shadow-2xl flex flex-wrap justify-center items-center z-[11]">
-                <div class="w-[100%] h-auto font-extrabold text-[16px] md:text-2xl text-red-500 flex flex-wrap justify-center items-center ">{{ displayTitle }}</div>
+                <div class="w-[100%] h-auto font-extrabold text-[14px] md:text-xl text-red-500 flex flex-wrap justify-center items-center ">{{ displayTitle }}</div>
                 <div class="w-[100%] h-auto font-extrabold text-[12px] md:text-lg text-red-500 flex flex-wrap justify-center items-center">{{ t('time') + displayTime }}</div>
                 <div class="w-[100%] h-1/2 px-[10px] md:px-[60px] font-extrabold text-[12px] md:text-lg text-red-500 flex flex-wrap justify-center items-center">
                     <div v-for="(item,index) in drawData.reward" :key="index" class="w-[10%] h-auto">{{ item }}</div>
@@ -182,7 +189,7 @@ export default {
   }
 }
 </script>
-<style src="@/assets/css/testBall.css" scoped></style>
+<style src="@/assets/css/gameBall.css" scoped></style>
 <style src="@/assets/css/run.css" scoped></style>
 <style src="@/assets/css/style.css" scoped></style>
 <style scoped>
