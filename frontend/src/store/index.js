@@ -50,6 +50,7 @@ export default createStore({
                 time:timeStr
             })
         }
+        // console.log('target',target)
         content.commit('setTodayrecord',target)
       })
       .catch((error) => {

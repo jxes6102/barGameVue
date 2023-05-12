@@ -123,19 +123,22 @@ export default {
     const timer1 = ref(null)
     const timer2 = ref(null)
     const nowSeconds = ref(0)
-    const historyData = ref(null)
     const dayData = ref(null)
     const page = ref(0)
+    const todayData = ref(null)
     const newData = computed(() => {
-        if(!historyData.value) return {}
-        return historyData.value[0][0]
+        if(!todayData.value) return {}
+        return todayData.value[todayData.value.length-1]
     })
     const drawResult = computed(() => {
-        if(!newData.value.preDrawCode) return []
-        let target = newData.value.preDrawCode.split(',')
-        target.splice(target.indexOf(target[target.length - 1]),1)
+        if(!newData.value.reward) return []
+        let position = newData.value.reward.indexOf(newData.value.special)
+        let target = newData.value.reward
+        target.splice(position,1)
+        target.push(newData.value.special)
         return target
     })
+    const historyData = ref(null)
     const tableData = computed(() => {
       let target = []
       if(!historyData.value) return target
@@ -167,8 +170,8 @@ export default {
       return target
     })
     const displayTitle = computed(() => {
-        if(!newData.value?.preDrawIssue) return 0
-        return t('title') + (newData.value.preDrawIssue)
+        if(!newData.value?.no) return 0
+        return t('title') + (newData.value.no)
     })
     const displayTime = computed(() => {
         return Math.floor(nowSeconds.value/60)+"分 : "+nowSeconds.value%60 + "秒"
@@ -182,6 +185,7 @@ export default {
     //監聽日期改變
     watch(dayData, async(newVal,oldVal)=>{
         await getHistory()
+        // console.log('dayData',dayData.value)
     })
     // 計算時間
     const getTime = () => {
@@ -191,12 +195,13 @@ export default {
         nowSeconds.value = (4-getMinutes%5)*60+(60-getSeconds)
     }
     //pyapi拿獎項資料
-    // const pyCatchNum = async() => {
-    //     await store.dispatch('getOtherHistory')
-    //     drawData.value = store.state.allrecord
-    //     page.value = 0
-    //     console.log('drawData',drawData.value)
-    // }
+    const pyCatchNum = async() => {
+        await store.dispatch('pyGet',{getText:t})
+        todayData.value = store.state.todayrecord
+        console.log('todayData',todayData.value)
+        console.log('todayData',todayData.value[0])
+        // console.log('drawData',store.state.todayrecord)
+    }
     const getHistory = async(nowpage = 1) => {
         if(apiLoading.value) return false
         apiLoading.value = true
@@ -219,7 +224,7 @@ export default {
 
         
         setTimeout(function (){
-            console.log('newData',newData.value)
+            // console.log('newData',newData.value)
         },1500)
 
     })
@@ -235,7 +240,7 @@ export default {
         let date = new Date()
         date.setDate(date.getDate())
         dayData.value = date
-        // pyCatchNum()
+        pyCatchNum()
         timer2.value = window.setInterval((async() => {
           nowSeconds.value--
         } ), 1000)
@@ -244,7 +249,7 @@ export default {
 
     const currentChange = (value) => {
         page.value = value - 1
-        console.log('currentChange')
+        // console.log('currentChange')
     }
 
     //設定選擇日期範圍
@@ -258,15 +263,15 @@ export default {
         drawResult,
         displayTitle,
         displayTime,
-        t,
         isMobiles,
         apiLoading,
         dayData,
         historyData,
-        currentChange,
-        disabledDate,
         value2,
         tableData,
+        t,
+        currentChange,
+        disabledDate,
     }
 
   }
