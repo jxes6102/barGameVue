@@ -1,11 +1,11 @@
 <template>
     <!-- <div>capsule</div> -->
-        <div class="relative flex flex-wrap justify-center items-center w-[270px] h-[400px] md:w-[500px] md:h-[700px] bg-no-repeat bg-cover bg-center bg-[url('/src/assets/images/background.png')]">
+        <div class="relative flex flex-wrap justify-center items-center w-[290px] h-[450px] md:w-[500px] md:h-[700px] bg-no-repeat bg-cover bg-center bg-[url('/src/assets/images/background.png')]">
             <div class="absolute bg-[url('/src/assets/images/game_ndj.png')] bg-contain bg-center bg-no-repeat top-[5%] w-[100%] h-[70%] z-[3]">
 
-                <div class="absolute w-[50px] h-[50px] md:w-[90px] md:h-[90px] top-[53%] left-[41%] bg-[url('/src/assets/images/an_go.png')] bg-contain bg-center bg-no-repeat z-[4]"></div>
+                <div class="absolute w-[55px] h-[55px] md:w-[90px] md:h-[90px] top-[53%] left-[41%] bg-[url('/src/assets/images/an_go.png')] bg-contain bg-center bg-no-repeat z-[4]"></div>
 
-                <div class=" absolute w-[65%] h-[58%] top-0 left-[17%] overflow-hidden rounded-[200px_200px_0px_0px] ">
+                <div class=" absolute w-[70%] h-[58%] md:w-[65%] md:h-[58%] top-0 left-[15%] md:left-[17%] overflow-hidden rounded-[200px_200px_0px_0px] ">
                     <span
                         v-for="(item,index) in 80" :key="index"
                         class="base_ball"
@@ -25,7 +25,7 @@
                     class="absolute w-[80px] h-[80px] md:w-[160px] md:h-[160px] top-[25%] md:top-[20%] left-[calc(50%-40px)] md:left-[calc(50%-80px)] bg-[url('/src/assets/images/rotate.png')] bg-contain bg-center bg-no-repeat z-[4]"
                 ></div>
 
-                <div class="absolute w-[60px] h-[60px] md:w-[90px] md:h-[90px] left-[40%] top-[81%] md:top-[84%] z-[1]"><img src="@/assets/images/mendong.png"></div>
+                <div class="absolute w-[65px] h-[65px] md:w-[90px] md:h-[90px] left-[40%] top-[81%] md:top-[84%] z-[1]"><img src="@/assets/images/mendong.png"></div>
 
                 <!-- <div v-show="fallStatus" class="absolute w-[130px] h-[110px] left-[85px] top-[325px] md:left-[290px] md:top-[610px] z-[2] flex flex-wrap justify-center items-center" :class="fallStatus ? 'dila_Y' : ''">
                     <span :data-content="fallNum" :class="fallStatus ? 'diaL_one' : ''">{{ fallNum }}</span>
