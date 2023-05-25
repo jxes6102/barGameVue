@@ -25,7 +25,7 @@
                                 v-for="(item,index) in gameList" 
                                 :key="index"
                                 @click="ctrlGame(item)"
-                                class="w-[30%] text-[12px] md:text-[12px] bg-[#8ac6d1] px-1 py-1 rounded-[5px] cursor-pointer hover:opacity-80"
+                                class="w-auto text-[12px] md:text-[12px] bg-[#8ac6d1] px-1 py-1 rounded-[5px] cursor-pointer hover:opacity-80"
                             >{{ item }}</div>
                         </div>
                     </div>

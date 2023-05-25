@@ -67,14 +67,12 @@ export default {
     }
   },
   setup(props) {
-    // console.log('displayTime',props.displayTime)
     /**
      * fallTimes 掉球次數
      * runBallStatus 滾球動畫狀態
      * messageText 號碼訊息
      * fallNum  掉落數字
      * fallStatus 掉落動畫狀態
-     * nowSeconds 剩餘秒數
      * timer1 扣時timer
      * displayTitle 期數
      * drawData 開獎資料
@@ -87,14 +85,7 @@ export default {
     const messageText = ref('')
     const fallNum = ref('')
     const fallStatus = ref(false)
-    const nowSeconds = ref(0)
-    const timer1 = ref(null)
-    // const displayTitle = computed(() => {
-    //     return t('title') + (parseInt(drawData.value.no)+1)
-    // })
-    // const displayTime = computed(() => {
-    //     return t('time') + Math.floor(nowSeconds.value/60)+":"+nowSeconds.value%60
-    // })
+
     const drawData = computed(() => {
         // console.log('props.allData',props.allData)
         return props.allData
@@ -110,13 +101,7 @@ export default {
             messageText.value = newVal.reward
         }
     })
-    //監聽秒數改變
-    watch(nowSeconds, (newVal,oldVal)=>{
-        if(newVal === 0){
-            getTime()
-            controlRunBall(true)
-        }
-    })
+
 
     //掉球動作
     const fallBall = () => {
@@ -148,20 +133,11 @@ export default {
         // 掉球和結果動畫
         fallBall()
     }
-    // 計算時間
-    const getTime = () => {
-        const time = new Date();
-        let getMinutes = time.getMinutes();
-        let getSeconds = time.getSeconds();
-        nowSeconds.value = (4-getMinutes%5)*60+(60-getSeconds)
-    }
+
     //初始動作
     const init = async() => {
         getTime()
 
-        timer1.value = window.setInterval((async() => {
-            nowSeconds.value--
-        } ), 1000)
     }
     init()
 
@@ -172,7 +148,7 @@ export default {
         // },2500)
     })
     onBeforeUnmount(() => {
-      clearInterval(timer1.value)
+
     })
 
     return {
@@ -181,8 +157,6 @@ export default {
         fallNum,
         fallStatus,
         drawData,
-        // displayTitle,
-        // displayTime,
         t
     }
 
