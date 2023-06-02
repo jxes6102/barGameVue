@@ -24,9 +24,9 @@
                             <div 
                                 v-for="(item,index) in gameList" 
                                 :key="index"
-                                @click="ctrlGame(item)"
+                                @click="ctrlGame(item.key)"
                                 class="w-auto text-[12px] md:text-[12px] bg-[#8ac6d1] px-1 py-1 rounded-[5px] cursor-pointer hover:opacity-80"
-                            >{{ item }}</div>
+                            >{{ item.name }}</div>
                         </div>
                     </div>
                 </div>
@@ -148,9 +148,9 @@ export default {
         return store.state.isMobile
     })
     const gameList = ref([
-        'bar',
-        'capsule',
-        'chest',
+        {name:'拉霸機',key:'bar'},
+        {name:'搖彩機',key:'capsule'},
+        {name:'開彩球',key:'chest'},
     ])
     const apiLoading = ref(false)
     const timer1 = ref(null)
