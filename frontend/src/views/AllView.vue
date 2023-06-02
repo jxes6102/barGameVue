@@ -101,16 +101,13 @@
             </div>
         </div>
         <!-- 回上頁 -->
-        <Back></Back>
+        <!-- <Back></Back> -->
         <load v-show="false"></load>
         <div v-if="openStatus" class="absolute w-full h-full flex flex-wrap justify-center items-center">
             <div
                 @click="ctrlGame('')"
                 class="fixed w-full h-full left-0 top-0 bg-slate-800 z-[111] opacity-50 flex flex-wrap justify-center items-center"
             ></div>
-            <!-- <div class="w-[80%] h-[70%] md:h-[80%] bg-[white] z-[122]">
-                <component :is="openStatus" :allData="newData"></component>
-            </div> -->
             <div class="w-auto h-auto bg-[white] z-[122] flex flex-wrap justify-center items-center">
                 <component :is="openStatus" :allData="newData" :displayTitle="displayTitle" :displayTime="displayTime"></component>
             </div>
@@ -130,6 +127,7 @@ import SmallHistory from '@/components/smallHistory.vue'
 import bar from '@/components/bar.vue'
 import capsule from '@/components/capsule.vue'
 import chest from '@/components/chest.vue'
+import { useRouter } from "vue-router"
 export default {
   name: 'allView',
   components: {
@@ -306,9 +304,18 @@ export default {
     const orderStatus = ref(false)
 
     const openStatus = ref()
+    const router = useRouter();
     const ctrlGame = (name) => {
-        openStatus.value = name
         console.log('name',name)
+        // openStatus.value = name
+        if(name === 'chest'){
+            router.push({ name: "boxView" });
+        }else if(name === 'bar'){
+            router.push({ name: "bar" });
+        }else if(name === 'capsule'){
+            router.push({ name: "capsule" });
+        }
+        
     }
 
     return {

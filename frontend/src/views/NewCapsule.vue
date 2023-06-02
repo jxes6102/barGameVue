@@ -3,9 +3,9 @@
     <!-- 主畫面 -->
     <SmallCapsule :allData="newData"></SmallCapsule>
     <!-- 新歷史紀錄 -->
-    <div class="w-[800px] h-[25vh] flex flex-wrap justify-center items-center">
+    <!-- <div class="w-[800px] h-[25vh] flex flex-wrap justify-center items-center">
       <SmallHistory :tableData="sortData"></SmallHistory>
-    </div>
+    </div> -->
     <!-- 回上頁 -->
     <Back></Back>
   </div>
@@ -16,14 +16,14 @@ import { ref,computed,onMounted,onBeforeUnmount } from 'vue'
 // import axios from 'axios'
 import Back from '@/components/Back.vue'
 import SmallCapsule from '@/components/smallCapsule.vue'
-import SmallHistory from '@/components/smallHistory.vue'
+// import SmallHistory from '@/components/smallHistory.vue'
 import { useStore } from "vuex"
 import { useI18n } from 'vue-i18n'
 export default {
   components: {
     Back,
     SmallCapsule,
-    SmallHistory,
+    // SmallHistory,
   },
   setup() {
     /**
