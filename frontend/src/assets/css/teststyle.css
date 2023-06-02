@@ -1,0 +1,77 @@
+
+*{padding:0px;margin:0px;font-family:"微软雅黑";font-size:100%; font-style:normal}
+dd,dl,dt,em,i,p,textarea,a,div{padding:0px;margin:0px;}
+a{text-decoration:none;}
+img{border:0px;}
+ul,li{padding:0px;margin:0px;list-style:none;}
+.fl{ float:left}
+.fr{ float:right}
+body{
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+	color:#ffc476; 
+	background:#fff; 
+	color:#000000
+}
+.none{ display:none}
+
+/*中奖*/
+.dila_Y{width:110px; height:90px; animation:cujpin 0.15s ease-out  forwards; }
+
+.diaL_one{
+	position:absolute;
+	width:65px; 
+	height:65px;
+	border-radius: 50%;
+	font-weight: 700;
+	color: white;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	font-size: 30px;
+	animation:fanda 0.7s ease-out  forwards;
+	background:radial-gradient(circle at 35% 25%,#9b98f5 0,#716ddd 20%,#4743d0 40%,#1f19bf 90%,#302bc4 95%,#4743d0 100%);
+}
+
+@media (max-width: 767px) {
+.diaL_one{
+	position:absolute;
+	width:40px; 
+	height:40px;
+	border-radius: 50%;
+	font-weight: 700;
+	color: white;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	font-size: 16px;
+	animation:fanda 0.7s ease-out  forwards;
+	background:radial-gradient(circle at 35% 25%,#9b98f5 0,#716ddd 20%,#4743d0 40%,#1f19bf 90%,#302bc4 95%,#4743d0 100%);
+}
+}
+
+@keyframes cujpin{
+0%{ transform:translateY(-50px);}
+100% {  
+transform:translateY(0); 
+}
+}
+
+@keyframes fanda{
+0%{ transform:scale(0.7);}
+100% {  
+transform:scale(1);
+}
+}
+
+.tc_anima{ animation:title1 0.3s linear;}
+@keyframes title1{
+	from{ opacity:0; transform:scale(0,0);}
+	to{ opacity:1; transform:scale(1,1);}	
+}
+
+.zuadon_dh{animation:around 2s linear backwards ;}

@@ -9,16 +9,9 @@
                     <span
                         v-for="(item,index) in 80" :key="index"
                         class="base_ball"
-                        :class="item <= 80 ? 'qiu_' + item + ' diaol_' + item : ''"
-                    >{{ item }}</span>
-                </div>
-                <!-- <div class="bg-white absolute w-[63%] h-[58%] top-0 left-[18%] overflow-hidden rounded-[200px_200px_0px_0px] ">
-                    <span
-                        v-for="(item,index) in 80" :key="index"
-                        class="base_ball"
                         :class="'qiu_' + item + ' diaol_' + item + (runBallStatus ? ' wieyi_'+item : '')"
                     >{{ item }}</span>
-                </div> -->
+                </div>
 
                 <div
                     :class="runBallStatus ? 'rotateStyle' : ''" 
@@ -27,15 +20,20 @@
 
                 <div class="absolute w-[65px] h-[65px] md:w-[90px] md:h-[90px] left-[40%] top-[81%] md:top-[84%] z-[1]"><img src="@/assets/images/mendong.png"></div>
 
-                <!-- <div v-show="fallStatus" class="absolute w-[130px] h-[110px] left-[85px] top-[325px] md:left-[290px] md:top-[610px] z-[2] flex flex-wrap justify-center items-center" :class="fallStatus ? 'dila_Y' : ''">
+                <div v-show="fallStatus" class="absolute w-[130px] h-[110px] left-[90px] top-[85%] md:left-[190px] md:top-[85%] z-[2] flex flex-wrap justify-center items-center" :class="fallStatus ? 'dila_Y' : ''">
                     <span :data-content="fallNum" :class="fallStatus ? 'diaL_one' : ''">{{ fallNum }}</span>
-                </div> -->
+                </div>
             </div>
             <div class="absolute top-[10px] md:top-[20px] w-[80%] h-auto bg-[#f3f1b0] rounded-lg shadow-2xl flex flex-wrap justify-center items-center z-[11]">
                 <div class="w-[100%] h-auto font-extrabold text-[14px] md:text-xl text-red-500 flex flex-wrap justify-center items-center ">{{ displayTitle }}</div>
                 <div class="w-[100%] h-auto font-extrabold text-[12px] md:text-lg text-red-500 flex flex-wrap justify-center items-center">{{ t('time') + displayTime }}</div>
-                <div class="w-[100%] h-1/2 px-[10px] md:px-[60px] font-extrabold text-[12px] md:text-lg text-red-500 flex flex-wrap justify-center items-center">
+                <div v-if="!fallTimes"
+                    class="w-[100%] h-1/2 px-[10px] md:px-[60px] font-extrabold text-[12px] md:text-lg text-red-500 flex flex-wrap justify-center items-center">
                     <div v-for="(item,index) in drawData.reward" :key="index" class="w-[10%] h-auto">{{ item }}</div>
+                </div>
+                <div v-else
+                    class="w-[100%] h-1/2 px-[10px] md:px-[60px] font-extrabold text-[12px] md:text-lg text-red-500 flex flex-wrap justify-center items-center">
+                    <div v-for="(item,index) in messageText" :key="index" class="w-[10%] h-auto">{{ item }}</div>
                 </div>
             </div>
         </div>
@@ -80,45 +78,51 @@ export default {
      * displayTime 顯示時間訊息
      */
     const { t } = useI18n()
-    let fallTimes = 0
+    const fallTimes = ref(0)
     const runBallStatus = ref(false)
     const messageText = ref('')
     const fallNum = ref('')
     const fallStatus = ref(false)
 
     const drawData = computed(() => {
-        // console.log('props.allData',props.allData)
         return props.allData
+    });
+    const timeData = computed(() => {
+        return props.displayTime
     });
     //監聽開獎資料改變
     watch(drawData, (newVal,oldVal)=>{
         if(oldVal && (JSON.stringify(oldVal) !== '{}')){
             if(parseInt(newVal.no) > parseInt(oldVal.no)) {
                 play()
-                getTime()
+                // getTime()
             }
         }else if(JSON.stringify(oldVal) === '{}'){
             messageText.value = newVal.reward
         }
     })
-
+    watch(timeData, (newVal,oldVal)=>{
+        if(newVal === '0分 : 1秒') {
+            controlRunBall(true)
+        }
+    })
 
     //掉球動作
     const fallBall = () => {
-        if(fallTimes<20){
+        if(fallTimes.value<20){
             controlRunBall(true)
             setTimeout(function (){
                 // 掉球
-                messageText.value = drawData.value.reward.slice(0,fallTimes+1)
-                fallNum.value = drawData.value.reward[fallTimes]
+                messageText.value = drawData.value.reward.slice(0,fallTimes.value+1)
+                fallNum.value = drawData.value.reward[fallTimes.value]
                 fallStatus.value = true
                 setTimeout(function (){
                     // 收球
                     fallStatus.value = false
-                    fallTimes++
+                    fallTimes.value++
                     fallBall()
                 },150)
-            },50)
+            },100)
         }else {
             controlRunBall(false)
         }
@@ -129,17 +133,15 @@ export default {
     }
     // 開獎動作
     const play = () => {
-        fallTimes = 0
+        fallTimes.value = 0
         // 掉球和結果動畫
         fallBall()
     }
 
-    //初始動作
-    const init = async() => {
-        getTime()
-
-    }
-    init()
+    // //初始動作
+    // const init = async() => {
+    // }
+    // init()
 
     onMounted(() => {
         // setTimeout(function (){
@@ -157,6 +159,7 @@ export default {
         fallNum,
         fallStatus,
         drawData,
+        fallTimes,
         t
     }
 
@@ -165,7 +168,7 @@ export default {
 </script>
 <style src="@/assets/css/gameBall.css" scoped></style>
 <style src="@/assets/css/run.css" scoped></style>
-<style src="@/assets/css/style.css" scoped></style>
+<style src="@/assets/css/teststyle.css" scoped></style>
 <style scoped>
 @keyframes rotates{
   0% {
