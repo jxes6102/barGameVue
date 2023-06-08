@@ -199,13 +199,14 @@ export default {
     init()
 
     onMounted(() => {
-      timer1.value = window.setInterval((async() => {
-        await pyCatchNum()
-      } ), 5500)
+      // timer1.value = window.setInterval((async() => {
+      //   await pyCatchNum()
+      // } ), 5500)
 
-      // setTimeout(()=>{
-      //   startAnimation()
-      // },500)
+      setTimeout(()=>{
+        // startAnimation()
+        down()
+      },1500)
     })
 
     onBeforeUnmount(() => {

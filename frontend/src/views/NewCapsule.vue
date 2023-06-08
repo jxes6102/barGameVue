@@ -1,5 +1,5 @@
 <template>
-  <div class="w-[100vw] h-[100vh] overflow-hidden flex flex-wrap justify-center items-start">
+  <div class="w-[100vw] h-[100vh] overflow-hidden flex flex-wrap justify-center items-start bg-[#fcfce5]">
     <!-- 主畫面 -->
     <SmallCapsule :allData="newData"></SmallCapsule>
     <!-- 新歷史紀錄 -->
