@@ -1,11 +1,11 @@
 <template>
-  <div class="w-[100vw] h-[100vh] overflow-hidden flex flex-wrap justify-center items-center">
+  <div class="w-[100vw] h-[100vh] overflow-hidden flex flex-wrap justify-center items-center bg-[#fcfce5]">
     <!-- 主畫面 -->
     <div class="relative min-h-[360px] h-[100vh] w-[100vw] flex-col flex flex-wrap justify-center items-center">
       <!-- 訊息 -->
       <div class="w-full h-auto text-lg font-bold flex flex-wrap justify-center items-center">{{ displayTitle }}</div>
       <div class="w-full h-auto text-lg font-bold">{{ displayTime }}</div>
-      <div class="flex flex-wrap justify-center items-center h-[300px] w-[250px] md:h-[400px] md:w-[800px] text-white">
+      <!-- <div class="flex flex-wrap justify-center items-center h-[300px] w-[250px] md:h-[400px] md:w-[800px] text-white bg-no-repeat bg-cover bg-center bg-[url('/src/assets/images/slotbackground.png')]">
         <div
           v-for="(item,index) in 20" :key="item+index"
           :class="(specialPosition === index) && !animationStatusArr[index] ? 'bg-rose-800' :'bg-[LightCoral]'"
@@ -20,6 +20,26 @@
               <div v-else>
                 <div class="flex justify-center text-[30px] md:text-[48px]">{{items - 1}}</div>
               </div>
+          </div>
+        </div>
+      </div> -->
+      <div class="h-[250px] w-[250px] md:w-[650px] md:h-[550px] text-white bg-no-repeat bg-cover bg-center bg-[url('/src/assets/images/slotbackground.png')]">
+        <div class="relative flex flex-wrap justify-center items-center top-[45%] left-[10%] md:top-[46%] md:left-[16%] w-[200px] h-[58px] md:w-[442px] md:h-[120px] bg-[#040d26] gap-[2px] md:gap-[5px]">
+          <div
+            v-for="(item,index) in 20" :key="item+index"
+            :class="(specialPosition === index) && !animationStatusArr[index] ? 'bg-rose-800' :'bg-[LightCoral]'"
+            class="w-[18px] h-[18px] md:w-[38px] md:h-[38px] border-[gray] border-solid  border-[2px] rounded-[4px] overflow-hidden"
+            >
+            <div v-for="(items) in 100" :key="items*2"
+              :class="animationStatusArr[index] ? 'is-play' : 'slowly'"
+              :id="'result-'+(items-1)">
+                <div v-if="items === 1">
+                  <div v-for="(num,numIndex) in 3" :key="num*2" class="flex justify-center text-[12px] md:text-[26px]">{{ drawResult[index] ? drawResult[index]-numIndex : '?' }}</div>
+                </div>
+                <div v-else>
+                  <div class="flex justify-center text-[12px] md:text-[26px]">{{items - 1}}</div>
+                </div>
+            </div>
           </div>
         </div>
       </div>
@@ -199,14 +219,14 @@ export default {
     init()
 
     onMounted(() => {
-      // timer1.value = window.setInterval((async() => {
-      //   await pyCatchNum()
-      // } ), 5500)
+      timer1.value = window.setInterval((async() => {
+        await pyCatchNum()
+      } ), 5500)
 
-      setTimeout(()=>{
-        // startAnimation()
-        down()
-      },1500)
+      // setTimeout(()=>{
+      //   // startAnimation()
+      //   // down()
+      // },1500)
     })
 
     onBeforeUnmount(() => {
