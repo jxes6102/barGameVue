@@ -44,7 +44,7 @@
         </div>
       </div>
       <!--拉桿-->
-      <div class="absolute scale-[0.5] md:scale-100 h-[400px] w-[40px] bg-[#666] top-[10%] right-[5px] md:right-[5%] cursor-pointer">
+      <div class="absolute scale-[0.5] md:scale-100 h-[400px] w-[40px] bg-[#666] top-[calc(50%-200px)] right-[10px] md:right-[10%] cursor-pointer">
         <div
           v-show="!downStatus" 
           class="absolute block w-[20px] h-[200px] bg-[#ccc] bottom-1/2 left-0 right-0 rounded-[10px] my-0 mx-auto">
