@@ -23,12 +23,12 @@
           </div>
         </div>
       </div> -->
-      <div class="h-[250px] w-[250px] md:w-[650px] md:h-[550px] text-white bg-no-repeat bg-cover bg-center bg-[url('/src/assets/images/slotbackground.png')]">
-        <div class="relative flex flex-wrap justify-center items-center top-[45%] left-[10%] md:top-[46%] md:left-[16%] w-[200px] h-[58px] md:w-[442px] md:h-[120px] bg-[#040d26] gap-[2px] md:gap-[5px]">
+      <div class="h-[215px] w-[265px] md:w-[685px] md:h-[550px] text-white bg-no-repeat bg-cover bg-center bg-[url('/src/assets/images/slotbackground.png')]">
+        <div class="relative flex flex-wrap justify-center items-center top-[45%] left-[18%] md:top-[46%] md:left-[18%] w-[171px] h-[48px] md:w-[440px] md:h-[120px] bg-[#040d26] gap-[1px] md:gap-[5px]">
           <div
             v-for="(item,index) in 20" :key="item+index"
             :class="(specialPosition === index) && !animationStatusArr[index] ? 'bg-rose-800' :'bg-[LightCoral]'"
-            class="w-[18px] h-[18px] md:w-[38px] md:h-[38px] border-[gray] border-solid  border-[2px] rounded-[4px] overflow-hidden"
+            class="w-[16px] h-[16px] md:w-[38px] md:h-[38px] border-[gray] border-solid border-[1px] md:border-[2px] rounded-[4px] overflow-hidden"
             >
             <div v-for="(items) in 100" :key="items*2"
               :class="animationStatusArr[index] ? 'is-play' : 'slowly'"
