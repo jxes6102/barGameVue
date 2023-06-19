@@ -1,10 +1,10 @@
 <template>
-  <div class="w-[100vw] h-[100vh] overflow-hidden flex flex-wrap justify-center items-center bg-[#fcfce5]">
+  <div class="w-[100vw] h-[100vh] overflow-hidden flex flex-wrap justify-center items-center bg-no-repeat bg-cover bg-center bg-[url('/src/assets/images/wrapbg.png')]">
     <!-- 主畫面 -->
     <div class="relative min-h-[360px] h-[100vh] w-[100vw] flex-col flex flex-wrap justify-center items-center">
       <!-- 訊息 -->
-      <div class="w-full h-auto text-lg font-bold flex flex-wrap justify-center items-center">{{ displayTitle }}</div>
-      <div class="w-full h-auto text-lg font-bold">{{ displayTime }}</div>
+      <div class="w-full h-auto text-lg font-bold flex flex-wrap justify-center items-center text-red-500">{{ displayTitle }}</div>
+      <div class="w-full h-auto text-lg font-bold text-red-500">{{ displayTime }}</div>
       <!-- <div class="flex flex-wrap justify-center items-center h-[300px] w-[250px] md:h-[400px] md:w-[800px] text-white bg-no-repeat bg-cover bg-center bg-[url('/src/assets/images/slotbackground.png')]">
         <div
           v-for="(item,index) in 20" :key="item+index"
