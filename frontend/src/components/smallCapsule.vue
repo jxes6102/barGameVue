@@ -78,7 +78,7 @@ export default {
     const nowSeconds = ref(0)
     const timer1 = ref(null)
     const displayTitle = computed(() => {
-        return t('title') + (parseInt(drawData.value.no)+1)
+        return t('title') + (parseInt(drawData.value.no))
     })
     const displayTime = computed(() => {
         return t('time') + Math.floor(nowSeconds.value/60)+":"+nowSeconds.value%60

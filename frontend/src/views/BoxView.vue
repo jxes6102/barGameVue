@@ -142,7 +142,7 @@ setup() {
     })
     const displayTitle = computed(() => {
         if(!newData.value?.no) return 0
-        return t('title') + + (parseInt(newData.value.no)+1)
+        return t('title') + + (parseInt(newData.value.no))
     })
     const displayTime = computed(() => {
         return t('time') + Math.floor(nowSeconds.value/60)+":"+nowSeconds.value%60

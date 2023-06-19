@@ -74,6 +74,19 @@
     <!-- 回上頁 -->
     <Back></Back>
     <load v-show="!sortData.length"></load>
+    <audio
+      hidden="true"
+      ref="pullbgm"
+    >
+      <source  src="../assets/music/pullbgm.mp3" type="audio/mpeg">
+    </audio>
+    <audio
+      loop
+      hidden="true"
+      ref="rollbgm"
+    >
+      <source  src="../assets/music/rollbgm.mp3" type="audio/mpeg">
+    </audio>
   </div>
 </template>
 <script>
@@ -116,6 +129,8 @@ export default {
     const timer2 = ref(null)
     const downStatus = ref(false)
     const historyData = ref([])
+    const pullbgm = ref(null)
+    const rollbgm = ref(null)
     const newData = computed(() => {
       if(!historyData.value) return {}
       return historyData.value[historyData.value.length - 1]
@@ -134,10 +149,10 @@ export default {
     })
     const displayTitle = computed(() => {
         if(!newData.value?.no) return 0
-        return t('title') + (parseInt(newData.value.no)+1)
+        return t('title') + (parseInt(newData.value.no))
     })
     const displayTime = computed(() => {
-        return t('time') + Math.floor(nowSeconds.value/60)+":"+nowSeconds.value%60
+        return t('time') + Math.floor(nowSeconds.value/60)+"分"+nowSeconds.value%60+"秒"
     })
     // 監聽api改變後拉桿
     watch(newData, (newVal,oldVal)=>{
@@ -155,10 +170,11 @@ export default {
             for(let i = 0;i<20;i++){
               animationStatusArr.value[i] = true
             }
-            downStatus.value = true
-            setTimeout(()=>{
-              downStatus.value = false
-            },1000)
+            // downStatus.value = true
+            // setTimeout(()=>{
+            //   downStatus.value = false
+            // },1000)
+            rollbgm.value.play()
         }
     })
     // 計算時間
@@ -181,14 +197,21 @@ export default {
       for(let i = 0;i<20;i++){
         setTimeout((i) => {
           animationStatusArr.value[i] = false
-          // if(i==19){
-          //   historyItem.value.scrollTop = 0
-          // }
+          if(i==19){
+            // historyItem.value.scrollTop = 0
+            rollbgm.value.pause()
+          }
         }, i*500, i)
       }
     }
     //拉手把動畫
     const down = () => {
+      rollbgm.value.pause()
+      pullbgm.value.play()
+      setTimeout(()=>{
+        rollbgm.value.play()
+      },1000)
+      
       startAnimation()
       if(downStatus.value) return false
       downStatus.value = true
@@ -227,6 +250,7 @@ export default {
       //   // startAnimation()
       //   // down()
       // },1500)
+      
     })
 
     onBeforeUnmount(() => {
@@ -243,6 +267,8 @@ export default {
       sortData,
       displayTitle,
       displayTime,
+      pullbgm,
+      rollbgm,
       toStr,
     }
 

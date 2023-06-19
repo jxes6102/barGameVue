@@ -5,7 +5,7 @@
             <div class="w-[800px] h-[100%] flex-col flex flex-wrap justify-center items-center gap-y-2">
                 <!-- title -->
                 <div class="w-[100%] h-auto flex flex-wrap justify-center items-center">
-                    <div class="w-[100%] md:w-[50%] h-auto flex flex-wrap justify-center md:justify-start items-center gap-y-2">
+                    <div class="relative w-[100%] md:w-[50%] h-auto flex flex-wrap justify-center md:justify-start items-center gap-y-2">
                         <div class="w-[100%] h-auto pl-2 flex flex-wrap justify-center md:justify-start items-center font-extrabold text-base md:text-xl text-red-500">{{ displayTitle }}</div>
                         <div class="w-[250px] md:w-[380px] h-auto flex flex-wrap justify-center md:justify-start items-center gap-[2px]">
                             <div 
@@ -13,6 +13,10 @@
                                 :class="(index===19) ? 'ball-color-2' : 'ball-color-1'"
                                 class="w-[22px] h-[22px] md:w-[35px] md:h-[35px] rounded-[50%] flex justify-center items-center text-xs md:text-base font-bold text-white"
                             >{{ item }}</div>
+                        </div>
+                        <div v-if="!drawStatus" class="absolute w-[100%] h-[100%] flex justify-center items-center">
+                            <div class="z-[3] text-xl font-bold text-red-600">開獎中...</div>
+                            <div class="absolute bg-[#A6A6A6] w-[100%] h-[100%] opacity-70"></div>
                         </div>
                     </div>
                     <div class="w-[100%] md:w-[50%] h-auto flex flex-wrap justify-center items-center">
@@ -102,7 +106,7 @@
         </div>
         <!-- 回上頁 -->
         <!-- <Back></Back> -->
-        <load v-show="false"></load>
+        <load v-show="displayTitle === 0"></load>
         <div v-if="openStatus" class="absolute w-full h-full flex flex-wrap justify-center items-center">
             <div
                 @click="ctrlGame('')"
@@ -209,12 +213,14 @@ export default {
     const displayTime = computed(() => {
         return Math.floor(nowSeconds.value/60)+"分 : "+nowSeconds.value%60 + "秒"
     })
+    const drawStatus = ref(true)
     // 監聽api改變
     watch(newData, (newVal,oldVal)=>{
       if(oldVal){
         let apiDate = (dayData.value.getMonth())+'-'+dayData.value.getDate()
         let nowDate = (new Date().getMonth())+'-'+(new Date().getDate())
         if((parseInt(newVal.no) > parseInt(oldVal.no)) && (apiDate===nowDate)) {
+            drawStatus.value = true
             setTimeout(()=>{
                 getHistory()
             },25500)
@@ -224,6 +230,7 @@ export default {
     // 監聽剩餘秒數
     watch(nowSeconds, (newVal,oldVal)=>{
         if(newVal === 0){
+            drawStatus.value = false
             getTime()
         }
     })
@@ -266,7 +273,6 @@ export default {
 
         // store.dispatch('getTodayHistory')
 
-        
         setTimeout(function (){
             // console.log('newData',newData.value)
         },1500)
@@ -331,6 +337,7 @@ export default {
         gameList,
         openStatus,
         newData,
+        drawStatus,
         ctrlGame,
         t,
         currentChange,
