@@ -1,7 +1,7 @@
 <template>
-    <div class="w-[100%] h-[100%] overflow-x-hidden overflow-y-auto flex flex-wrap justify-center items-start">
+    <div class="w-[100%] h-[100%] overflow-x-hidden overflow-y-auto flex flex-wrap justify-center items-start bg-[url('/src/assets/images/black_backGround.png')] bg-contain bg-center">
       <!-- 主畫面 -->
-      <div class="w-[100vw] h-[70vh] bg-[#FCF4D9] flex-col flex flex-wrap justify-center items-center">
+      <div class="w-[100vw] h-[70vh] md:h-[90vh] flex-col flex flex-wrap justify-center items-center">
         <!-- 開獎訊息 -->
         <div class="w-[100%] h-auto flex flex-wrap justify-center items-center z-[13]">
             <div class="w-[100%] text-base md:text-2xl font-bold text-[red]">{{ displayTitle }}</div>

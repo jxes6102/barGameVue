@@ -18,12 +18,16 @@
       <div @click="ggtest">gg</div> -->
       <!-- <div class="w-[300px] h-[200px] md:w-[800px] md:h-[450px] bg-cover bg-no-repeat bg-[url('/src/assets/images/boxbackground.jpg')]"></div>
       <input ref="checkItem" type="checkbox" name="vehicle" value="Car"  /> I have a car -->
-      <div>
+      <!-- <div>
         <input :type="inputType ? 'password' : 'text'">
-      </div>
+      </div> -->
       <!-- <div>
         <input ref="inputType">
       </div> -->
+
+      <div class="w-[100vw] h-[100vh] bg-[#6623ec] bg-[url('/src/assets/images/black_backGround.png')] bg-contain bg-center">
+        
+      </div>
     </div>
 </template>
 <script>
@@ -145,7 +149,7 @@ export default {
     const inputType = ref(true)
     // const inputType = ref(null)
     onMounted(() => {
-      console.log('inputType.value',inputType.value)
+      // console.log('inputType.value',inputType.value)
       
       // setTimeout(() => {
       //   if(inputType.value.type = 'password') inputType.value.type  = 'text'
@@ -168,18 +172,18 @@ export default {
       //   }, 2000)
       // }, 2000)
 
-      setTimeout(() => {
-        inputType.value = !inputType.value
-        setTimeout(() => {
-          inputType.value = !inputType.value
-          setTimeout(() => {
-            inputType.value = !inputType.value
-            setTimeout(() => {
-              inputType.value = !inputType.value
-            }, 2000)
-          }, 2000)
-        }, 2000)
-      }, 2000)
+      // setTimeout(() => {
+      //   inputType.value = !inputType.value
+      //   setTimeout(() => {
+      //     inputType.value = !inputType.value
+      //     setTimeout(() => {
+      //       inputType.value = !inputType.value
+      //       setTimeout(() => {
+      //         inputType.value = !inputType.value
+      //       }, 2000)
+      //     }, 2000)
+      //   }, 2000)
+      // }, 2000)
     })
     
     

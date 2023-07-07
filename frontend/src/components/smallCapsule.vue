@@ -1,5 +1,5 @@
 <template>
-    <div class="scale-[0.85] w-[100vw] h-[100vh] flex flex-wrap justify-center items-center">
+    <div class="scale-[0.85] w-[100vw] h-[100%] flex flex-wrap justify-center items-center">
         <div class="absolute flex flex-wrap justify-center items-center w-[100vw] h-[100vh] md:w-[700px] md:h-[900px] bg-no-repeat bg-cover bg-center bg-[url('/src/assets/images/background.png')]">
             <!-- 機器 -->
             <div class="md:scale-[0.65] absolute bg-[url('/src/assets/images/game_ndj.png')] bg-contain bg-center bg-no-repeat w-[280px] h-[400px] md:w-[700px] md:h-[700px] z-[3]">

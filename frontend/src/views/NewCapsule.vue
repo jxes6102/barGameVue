@@ -1,11 +1,11 @@
 <template>
-  <div class="w-[100vw] h-[100vh] overflow-hidden flex flex-wrap justify-center items-start bg-[#fcfce5]">
+  <div class="w-[100vw] h-[100vh] overflow-x-hidden overflow-y-auto flex flex-wrap justify-center items-start bg-[url('/src/assets/images/black_backGround.png')] bg-contain bg-center">
     <!-- 主畫面 -->
     <SmallCapsule :allData="newData"></SmallCapsule>
     <!-- 新歷史紀錄 -->
-    <!-- <div class="w-[800px] h-[25vh] flex flex-wrap justify-center items-center">
-      <SmallHistory :tableData="sortData"></SmallHistory>
-    </div> -->
+    <div class="w-[800px] h-[50vh] md:h-[60vh] flex flex-wrap justify-center items-center z-[9999]">
+      <SmallHistory :tableData="sortData" :tableHeight="'45vh'"></SmallHistory>
+    </div>
     <!-- 回上頁 -->
     <Back></Back>
   </div>
@@ -16,14 +16,14 @@ import { ref,computed,onMounted,onBeforeUnmount } from 'vue'
 // import axios from 'axios'
 import Back from '@/components/Back.vue'
 import SmallCapsule from '@/components/smallCapsule.vue'
-// import SmallHistory from '@/components/smallHistory.vue'
+import SmallHistory from '@/components/smallHistory.vue'
 import { useStore } from "vuex"
 import { useI18n } from 'vue-i18n'
 export default {
   components: {
     Back,
     SmallCapsule,
-    // SmallHistory,
+    SmallHistory,
   },
   setup() {
     /**
