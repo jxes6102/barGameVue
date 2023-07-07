@@ -1,7 +1,7 @@
 <template>
-  <div class="w-[100vw] h-[100vh] overflow-hidden flex flex-wrap justify-center items-center bg-no-repeat bg-cover bg-center bg-[url('/src/assets/images/wrapbg.png')]">
+  <div class="w-[100%] h-[100%] overflow-x-hidden overflow-y-auto flex flex-wrap justify-center items-center bg-[url('/src/assets/images/black_backGround.png')] bg-contain bg-center">
     <!-- 主畫面 -->
-    <div class="relative min-h-[360px] h-[100vh] w-[100vw] flex-col flex flex-wrap justify-center items-center">
+    <div class="relative min-h-[360px] h-[70vh] md:h-[90vh] w-[100vw] flex-col flex flex-wrap justify-center items-center">
       <!-- 訊息 -->
       <div class="w-full h-auto text-lg font-bold flex flex-wrap justify-center items-center text-red-500">{{ displayTitle }}</div>
       <div class="w-full h-auto text-lg font-bold text-red-500">{{ displayTime }}</div>
@@ -68,9 +68,9 @@
       </div>
     </div>
     <!-- 新歷史紀錄 -->
-    <!-- <div class="w-[800px] h-[25vh] flex flex-wrap justify-center items-center">
-      <SmallHistory :tableData="sortData"></SmallHistory>
-    </div> -->
+    <div class="w-[800px] h-[50vh] flex flex-wrap justify-center items-center">
+      <SmallHistory :tableData="sortData" :tableHeight="'45vh'"></SmallHistory>
+    </div>
     <!-- 回上頁 -->
     <Back></Back>
     <load v-show="!sortData.length"></load>
@@ -94,7 +94,7 @@
 // @ is an alias to /src
 import { ref,computed,onMounted,onBeforeUnmount,watch } from 'vue'
 import Back from '@/components/Back.vue'
-// import SmallHistory from '@/components/smallHistory.vue'
+import SmallHistory from '@/components/smallHistory.vue'
 import load from '@/components/load.vue'
 import { useStore } from "vuex"
 import { useI18n } from 'vue-i18n'
@@ -102,7 +102,7 @@ export default {
   name: 'HomeView',
   components: {
     Back,
-    // SmallHistory,
+    SmallHistory,
     load
   },
   setup() {
