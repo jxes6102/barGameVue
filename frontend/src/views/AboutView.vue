@@ -1,8 +1,8 @@
 <template>
     <div class="w-[100vw] h-[100vh] bg-[#fcfce5] flex flex-wrap justify-center items-center">
-      <div class="w-[250px] h-[250px] md:w-[650px] md:h-[550px] bg-no-repeat bg-cover bg-center bg-[url('/src/assets/images/slotbackground.png')]">
+      <!-- <div class="w-[250px] h-[250px] md:w-[650px] md:h-[550px] bg-no-repeat bg-cover bg-center bg-[url('/src/assets/images/slotbackground.png')]">
 
-      </div>
+      </div> -->
       <!-- <el-button
         v-loading.fullscreen.lock="fullscreenLoading"
         type="primary"
@@ -18,13 +18,19 @@
       <div @click="ggtest">gg</div> -->
       <!-- <div class="w-[300px] h-[200px] md:w-[800px] md:h-[450px] bg-cover bg-no-repeat bg-[url('/src/assets/images/boxbackground.jpg')]"></div>
       <input ref="checkItem" type="checkbox" name="vehicle" value="Car"  /> I have a car -->
+      <div>
+        <input :type="inputType ? 'password' : 'text'">
+      </div>
+      <!-- <div>
+        <input ref="inputType">
+      </div> -->
     </div>
 </template>
 <script>
 /*eslint-disable*/
 // @ is an alias to /src
 import { ElLoading } from 'element-plus'
-import { ref,computed } from 'vue'
+import { ref,computed,onMounted } from 'vue'
 import { useRouter } from "vue-router"
 import { useI18n } from 'vue-i18n'
 import axios from 'axios'
@@ -33,6 +39,7 @@ export default {
   components: {
   },
   setup() {
+    console.log('123qweasdzxc')
     const { t,locale } = useI18n()
     const strColor = ref('red')
     const tableData = ref([
@@ -131,6 +138,50 @@ export default {
     //     checkItem.value.checked = false
     //   }, 2000)
     // }, 2000)
+
+    
+    
+
+    const inputType = ref(true)
+    // const inputType = ref(null)
+    onMounted(() => {
+      console.log('inputType.value',inputType.value)
+      
+      // setTimeout(() => {
+      //   if(inputType.value.type = 'password') inputType.value.type  = 'text'
+      //   else inputType.value.type  = 'password'
+      //   console.log('inputType.value',inputType.value.type)
+      //   setTimeout(() => {
+      //     if(inputType.value.type = 'password') inputType.value.type = 'text'
+      //     else inputType.value.type = 'password'
+      //     console.log('inputType.value',inputType.value.type)
+      //     setTimeout(() => {
+      //       if(inputType.value.type = 'password') inputType.value.type = 'text'
+      //       else inputType.value.type = 'password'
+      //       console.log('inputType.value',inputType.value.type)
+      //       setTimeout(() => {
+      //         if(inputType.value.type = 'password') inputType.value.type = 'text'
+      //         else inputType.value.type = 'password'
+      //         console.log('inputType.value',inputType.value.type)
+      //       }, 2000)
+      //     }, 2000)
+      //   }, 2000)
+      // }, 2000)
+
+      setTimeout(() => {
+        inputType.value = !inputType.value
+        setTimeout(() => {
+          inputType.value = !inputType.value
+          setTimeout(() => {
+            inputType.value = !inputType.value
+            setTimeout(() => {
+              inputType.value = !inputType.value
+            }, 2000)
+          }, 2000)
+        }, 2000)
+      }, 2000)
+    })
+    
     
     return {
         toLinkBar,
@@ -146,7 +197,8 @@ export default {
         changeLang,
         ggtest,
         checkStatus,
-        checkItem
+        checkItem,
+        inputType
     }
 
   }

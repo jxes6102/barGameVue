@@ -1,7 +1,7 @@
 <template>
-    <div class="w-[100vw] h-[100vh] overflow-hidden flex flex-wrap justify-center items-start">
+    <div class="w-[100%] h-[100%] overflow-x-hidden overflow-y-auto flex flex-wrap justify-center items-start">
       <!-- 主畫面 -->
-      <div class="w-[100vw] h-[100vh] bg-[#FCF4D9] flex-col flex flex-wrap justify-center items-center">
+      <div class="w-[100vw] h-[70vh] bg-[#FCF4D9] flex-col flex flex-wrap justify-center items-center">
         <!-- 開獎訊息 -->
         <div class="w-[100%] h-auto flex flex-wrap justify-center items-center z-[13]">
             <div class="w-[100%] text-base md:text-2xl font-bold text-[red]">{{ displayTitle }}</div>
@@ -67,9 +67,9 @@
         </div>
       </div>
       <!-- 新歷史紀錄 -->
-      <!-- <div class="w-[800px] h-[25vh] flex flex-wrap justify-center items-center">
-        <SmallHistory :tableData="sortData" :tableHeight="'25vh'"></SmallHistory>
-      </div> -->
+      <div class="w-[800px] h-[50vh] flex flex-wrap justify-center items-center overflow-x-hidden z-[22]">
+        <SmallHistory :tableData="sortData" :tableHeight="'45vh'"></SmallHistory>
+      </div>
       <!-- 回上頁 -->
       <Back></Back>
       <load v-show="!historyData.length"></load>
@@ -80,14 +80,14 @@
 /*eslint-disable*/
 import { ref,computed,onMounted,onBeforeUnmount,watch } from 'vue'
 import Back from '@/components/Back.vue'
-// import SmallHistory from '@/components/smallHistory.vue'
+import SmallHistory from '@/components/smallHistory.vue'
 import load from '@/components/load.vue'
 import { useStore } from "vuex"
 import { useI18n } from 'vue-i18n'
 export default {
 components: {
     Back,
-    // SmallHistory,
+    SmallHistory,
     load
 },
 setup() {
@@ -223,16 +223,16 @@ setup() {
     })
 
     return {
-        drawResult,
-        historyData,
-        sortData,
-        runBallStatus,
-        upStatus,
-        otherBall,
-        displayTime,
-        displayTitle,
-        drawSpecial,
-        toStr,
+            drawResult,
+            historyData,
+            sortData,
+            runBallStatus,
+            upStatus,
+            otherBall,
+            displayTime,
+            displayTitle,
+            drawSpecial,
+            toStr,
         }
 
     }
