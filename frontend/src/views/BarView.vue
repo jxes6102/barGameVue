@@ -80,13 +80,13 @@
     >
       <source  src="../assets/music/pullbgm.mp3" type="audio/mpeg">
     </audio>
-    <audio
+    <!-- <audio
       loop
       hidden="true"
       ref="rollbgm"
     >
       <source  src="../assets/music/rollbgm.mp3" type="audio/mpeg">
-    </audio>
+    </audio> -->
   </div>
 </template>
 <script>
@@ -130,7 +130,7 @@ export default {
     const downStatus = ref(false)
     const historyData = ref([])
     const pullbgm = ref(null)
-    const rollbgm = ref(null)
+    // const rollbgm = ref(null)
     const newData = computed(() => {
       if(!historyData.value) return {}
       return historyData.value[historyData.value.length - 1]
@@ -174,7 +174,7 @@ export default {
             // setTimeout(()=>{
             //   downStatus.value = false
             // },1000)
-            rollbgm.value.play()
+            // rollbgm.value.play()
         }
     })
     // 計算時間
@@ -199,18 +199,18 @@ export default {
           animationStatusArr.value[i] = false
           if(i==19){
             // historyItem.value.scrollTop = 0
-            rollbgm.value.pause()
+            // rollbgm.value.pause()
           }
         }, i*500, i)
       }
     }
     //拉手把動畫
     const down = () => {
-      rollbgm.value.pause()
+      // rollbgm.value.pause()
       pullbgm.value.play()
-      setTimeout(()=>{
-        rollbgm.value.play()
-      },1000)
+      // setTimeout(()=>{
+      //   rollbgm.value.play()
+      // },1000)
       
       startAnimation()
       if(downStatus.value) return false
@@ -268,7 +268,7 @@ export default {
       displayTitle,
       displayTime,
       pullbgm,
-      rollbgm,
+      // rollbgm,
       toStr,
     }
 
