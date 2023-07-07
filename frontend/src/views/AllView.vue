@@ -61,7 +61,7 @@
                     <el-table v-if="isMobiles" :data="tableData" max-height="45vh" style="width:300px;font-size:10px;">
                         <el-table-column prop="time" width="60" :label="t('openTime')"/>
                         <el-table-column sortable prop="no" :label="t('no')" width="90"/>
-                        <el-table-column prop="reward" :label="t('reward')">
+                        <el-table-column prop="reward" :label="t('reward')" width="280">
                             <template #default="scope">
                                 <div class="flex flex-wrap justify-start items-center">
                                     <div 
