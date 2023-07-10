@@ -34,40 +34,32 @@
                         </div>
                     </div>
                 </div>
-                <!-- 工具列 -->
-                <div class="w-[300px] md:w-[800px] h-auto flex flex-wrap justify-center items-center">
-                    <div class="w-[25%] md:w-[33%] h-[100%] text-base md:text-xl font-bold flex flex-wrap justify-start items-center">{{ t('rewardRecord') }}</div>
-                    <!-- <div class="w-[50%] md:w-[25%] h-[100%] flex flex-wrap justify-center items-center">
-                        <el-switch
-                            v-model="orderStatus"
-                            class="mb-2"
-                            style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
-                            active-text="依號碼大小"
-                            inactive-text="依開獎順序"
-                        />
-                    </div> -->
-                    <div class="w-[25%] md:w-[33%] h-[100%] flex flex-wrap justify-end items-center">{{t('choseDay')}} </div>
-                    <div class="w-[50%] md:w-[34%] h-[100%] flex flex-wrap justify-center items-center">
-                        <el-date-picker
-                            v-model="dayData"
-                            type="date"
-                            placeholder="選擇查詢日期"
-                            :disabled-date="disabledDate"
-                            :disabled="apiLoading"
-                        />
+            
+                <div class="w-auto h-[70vh] md:h-[60vh] flex flex-wrap justify-center items-center md:gap-y-2">
+                    <!-- 工具列 -->
+                    <div class="w-[300px] md:w-[800px] h-auto flex flex-wrap justify-center items-center">
+                        <div class="w-[25%] md:w-[33%] h-[100%] text-base md:text-xl font-bold flex flex-wrap justify-start items-center">{{ t('rewardRecord') }}</div>
+                        <div class="w-[25%] md:w-[33%] h-[100%] flex flex-wrap justify-end items-center">{{t('choseDay')}} </div>
+                        <div class="w-[50%] md:w-[34%] h-[100%] flex flex-wrap justify-center items-center">
+                            <el-date-picker
+                                v-model="dayData"
+                                type="date"
+                                placeholder="選擇查詢日期"
+                                :disabled-date="disabledDate"
+                                :disabled="apiLoading"
+                            />
+                        </div>
                     </div>
-                </div>
-                <div class="w-auto h-[60vh] md:h-[60vh]">
                     <el-table v-if="isMobiles" :data="tableData" max-height="55vh" style="width:100vw;font-size:10px;">
-                        <el-table-column prop="time" width="60" :label="t('openTime')"/>
-                        <el-table-column sortable prop="no" :label="t('no')" width="90"/>
-                        <el-table-column prop="reward" :label="t('reward')" width="280">
+                        <el-table-column prop="time" width="55" :label="t('openTime')"/>
+                        <el-table-column sortable prop="no" :label="t('no')" width="85"/>
+                        <el-table-column prop="reward" :label="t('reward')" width="180">
                             <template #default="scope">
                                 <div class="flex flex-wrap justify-start items-center">
                                     <div 
                                         v-for="(item,index) in scope.row.reward" :key="index"
                                         :class="(index===19) ? 'ball-color-2' : 'ball-color-1'"
-                                        class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-white"
+                                        class="w-[15px] h-[15px] rounded-[50%] flex justify-center items-center font-bold text-[12px] text-white"
                                     >{{ item }}</div>
                                 </div>
                             </template>
@@ -90,7 +82,7 @@
                         </el-table-column>
                         <el-table-column prop="decision" width="60" :label="t('singleDecision')"/>
                     </el-table>
-                    <div class="w-[100%] h-auto mt-2 flex flex-wrap justify-center items-center">
+                    <div class="w-[100%] h-auto flex flex-wrap justify-center items-center">
                         <el-pagination
                             small
                             background
