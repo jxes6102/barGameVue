@@ -55,7 +55,7 @@
                         <el-table-column sortable prop="no" :label="t('no')" width="85"/>
                         <el-table-column prop="reward" :label="t('reward')" width="180">
                             <template #default="scope">
-                                <div class="flex flex-wrap justify-start items-center">
+                                <div class="flex flex-wrap justify-start items-center gap-x-[0.5px]">
                                     <div 
                                         v-for="(item,index) in scope.row.reward" :key="index"
                                         :class="(index===19) ? 'ball-color-2' : 'ball-color-1'"

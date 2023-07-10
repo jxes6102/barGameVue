@@ -1,17 +1,17 @@
 <template>
-    <el-table v-if="isMobiles" :data="tableData" :max-height="tableHeights" style="width:300px;font-size:10px;">
-        <el-table-column prop="time" :label="t('openTime')" width="60"/>  
-        <el-table-column sortable prop="no" :label="t('no')" width="90"/>
-        <el-table-column prop="reward" :label="t('reward')" width="260">
+    <el-table v-if="isMobiles" :data="tableData" :max-height="tableHeights" style="width:100vw;font-size:10px;">
+        <el-table-column prop="time" :label="t('openTime')" width="55"/>  
+        <el-table-column sortable prop="no" :label="t('no')" width="85"/>
+        <el-table-column prop="reward" :label="t('reward')" width="180">
           <template #default="scope">
-            <div class="flex flex-wrap justify-start items-center gap-x-[1px]">
+            <div class="flex flex-wrap justify-start items-center gap-x-[0.5px]">
               <div
                 v-for="(item,index) in scope.row.reward" :key="index"
                 :class="item === scope.row.special ? 'hidden' : ''"
-                class="w-[22px] h-[22px] rounded-[50%] flex justify-center items-center font-bold text-[white] ball-color-1"
+                class="w-[15px] h-[15px] rounded-[50%] flex justify-center items-center font-bold text-[12px] text-[white] ball-color-1"
               >{{ item }}</div>
               <div 
-                class="w-[22px] h-[22px] rounded-[50%] flex justify-center items-center font-bold text-[white] ball-color-2"
+                class="w-[15px] h-[15px] rounded-[50%] flex justify-center items-center font-bold text-[12px] text-[white] ball-color-2"
               >{{ scope.row.special }}</div>
             </div>
           </template>
