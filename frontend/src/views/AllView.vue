@@ -2,7 +2,7 @@
     <div class="w-[100vw] h-[100vh] bg-[#fcfce5] flex flex-wrap justify-center items-center">
         <div class="w-[90vw] h-[100vh] flex flex-wrap justify-center items-center max-w-[1000px]">
             <!-- 歷史紀錄 -->
-            <div class="w-[800px] h-[100%] flex-col flex flex-wrap justify-center items-center gap-y-2">
+            <div class="w-[800px] h-[100%] flex-col flex flex-wrap justify-around md:justify-center items-center md:gap-y-2">
                 <!-- title -->
                 <div class="w-[100%] h-auto flex flex-wrap justify-center items-center">
                     <div class="relative w-[100%] md:w-[50%] h-auto flex flex-wrap justify-center md:justify-start items-center gap-y-2">
@@ -57,8 +57,8 @@
                         />
                     </div>
                 </div>
-                <div class="w-auto h-[45vh] md:h-[60vh]">
-                    <el-table v-if="isMobiles" :data="tableData" max-height="45vh" style="width:100vw;font-size:10px;">
+                <div class="w-auto h-[60vh] md:h-[60vh]">
+                    <el-table v-if="isMobiles" :data="tableData" max-height="55vh" style="width:100vw;font-size:10px;">
                         <el-table-column prop="time" width="60" :label="t('openTime')"/>
                         <el-table-column sortable prop="no" :label="t('no')" width="90"/>
                         <el-table-column prop="reward" :label="t('reward')" width="280">
