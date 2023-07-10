@@ -26,7 +26,7 @@ export default createStore({
   },
   actions: {
     async pyGet(content,payload) {
-      await axios.get('https://c113-61-227-7-196.ngrok-free.app/gethistory')
+      await axios.get('https://5bc2-61-227-68-194.ngrok-free.app/gethistory')
       .then((response) => {
         // handle success
         let data = response.data

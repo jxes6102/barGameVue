@@ -58,7 +58,7 @@
                     </div>
                 </div>
                 <div class="w-auto h-[45vh] md:h-[60vh]">
-                    <el-table v-if="isMobiles" :data="tableData" max-height="45vh" style="width:300px;font-size:10px;">
+                    <el-table v-if="isMobiles" :data="tableData" max-height="45vh" style="width:100vw;font-size:10px;">
                         <el-table-column prop="time" width="60" :label="t('openTime')"/>
                         <el-table-column sortable prop="no" :label="t('no')" width="90"/>
                         <el-table-column prop="reward" :label="t('reward')" width="280">
