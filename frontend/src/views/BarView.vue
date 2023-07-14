@@ -117,16 +117,13 @@ export default {
      * specialPosition 最新一筆特別號位置
      * sortData 排序後資料
      * displayTime 顯示時間訊息
-     * timer2 扣時timer
      * nowSeconds 剩餘秒數
      */
     const { t } = useI18n()
     const store = useStore()
-    const nowSeconds = ref(0)
     const animationStatusArr = ref([])
     const historyItem = ref(null)
     const timer1 = ref(null)
-    const timer2 = ref(null)
     const downStatus = ref(false)
     const historyData = ref([])
     const pullbgm = ref(null)
@@ -151,8 +148,12 @@ export default {
         if(!newData.value?.no) return 0
         return t('title') + (parseInt(newData.value.no))
     })
+    const nowSeconds = computed(() => { 
+        return store.state.originTime
+    })
     const displayTime = computed(() => {
-        return t('time') + Math.floor(nowSeconds.value/60)+"分"+nowSeconds.value%60+"秒"
+        let target = store.state.originTime
+        return t('time') + Math.floor(target/60)+"分 : "+target%60 + "秒"
     })
     // 監聽api改變後拉桿
     watch(newData, (newVal,oldVal)=>{
@@ -166,7 +167,6 @@ export default {
     // 監聽剩餘秒數
     watch(nowSeconds, (newVal,oldVal)=>{
         if(newVal === 0){
-            getTime()
             for(let i = 0;i<20;i++){
               animationStatusArr.value[i] = true
             }
@@ -177,13 +177,6 @@ export default {
             // rollbgm.value.play()
         }
     })
-    // 計算時間
-    const getTime = () => {
-        const time = new Date();
-        let getMinutes = time.getMinutes();
-        let getSeconds = time.getSeconds();
-        nowSeconds.value = (4-getMinutes%5)*60+(60-getSeconds)
-    }
     //pyapi拿獎項資料
     const pyCatchNum = async() => {
       await store.dispatch('pyGet',{getText:t})
@@ -232,11 +225,6 @@ export default {
         animationStatusArr.value.push(false)
       }
 
-      getTime()
-
-      timer2.value = window.setInterval((async() => {
-          nowSeconds.value--
-      } ), 1000)
     }
 
     init()
@@ -255,7 +243,6 @@ export default {
 
     onBeforeUnmount(() => {
       clearInterval(timer1.value)
-      clearInterval(timer2.value)
     })
 
     return {

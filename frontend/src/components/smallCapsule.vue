@@ -44,6 +44,7 @@
 import { ref,computed,onMounted,watch,onBeforeUnmount } from 'vue'
 import load from '@/components/load.vue'
 import { useI18n } from 'vue-i18n'
+import { useStore } from "vuex"
 export default {
   name: 'capsuleComponent',
   components: {
@@ -63,25 +64,27 @@ export default {
      * fallNum  掉落數字
      * fallStatus 掉落動畫狀態
      * nowSeconds 剩餘秒數
-     * timer1 扣時timer
      * displayTitle 期數
      * drawData 開獎資料
      * displayTitle 顯示期數訊息
      * displayTime 顯示時間訊息
      */
+    const store = useStore()
     const { t } = useI18n()
     let fallTimes = 0
     const runBallStatus = ref(false)
     const messageText = ref('')
     const fallNum = ref('')
     const fallStatus = ref(false)
-    const nowSeconds = ref(0)
-    const timer1 = ref(null)
     const displayTitle = computed(() => {
         return t('title') + (parseInt(drawData.value.no))
     })
     const displayTime = computed(() => {
-        return t('time') + Math.floor(nowSeconds.value/60)+":"+nowSeconds.value%60
+        let target = store.state.originTime
+        return t('time') + Math.floor(target/60)+"分 : "+target%60 + "秒"
+    })
+    const nowSeconds = computed(() => { 
+        return store.state.originTime
     })
     const drawData = computed(() => {
         return props.allData
@@ -91,7 +94,6 @@ export default {
         if(oldVal && (JSON.stringify(oldVal) !== '{}')){
             if(parseInt(newVal.no) > parseInt(oldVal.no)) {
                 play()
-                getTime()
             }
         }else if(JSON.stringify(oldVal) === '{}'){
             messageText.value = newVal.reward
@@ -100,7 +102,6 @@ export default {
     //監聽秒數改變
     watch(nowSeconds, (newVal,oldVal)=>{
         if(newVal === 0){
-            getTime()
             controlRunBall(true)
         }
     })
@@ -135,20 +136,8 @@ export default {
         // 掉球和結果動畫
         fallBall()
     }
-    // 計算時間
-    const getTime = () => {
-        const time = new Date();
-        let getMinutes = time.getMinutes();
-        let getSeconds = time.getSeconds();
-        nowSeconds.value = (4-getMinutes%5)*60+(60-getSeconds)
-    }
     //初始動作
     const init = async() => {
-        getTime()
-
-        timer1.value = window.setInterval((async() => {
-            nowSeconds.value--
-        } ), 1000)
     }
     init()
 
@@ -159,7 +148,6 @@ export default {
         // },2500)
     })
     onBeforeUnmount(() => {
-      clearInterval(timer1.value)
     })
 
     return {

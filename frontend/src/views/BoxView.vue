@@ -93,7 +93,6 @@ components: {
 setup() {
     /**
      * timer1 設定timer 1/10s
-     * timer2 扣時timer
      * historyData api資料整理
      * newData 最新一筆
      * drawResult 最新一筆號碼
@@ -105,11 +104,9 @@ setup() {
      * displayTitle 期號訊息
      * displayTime 時間訊息
      */
-    const nowSeconds = ref(0)
     const { t } = useI18n()
     const store = useStore()
     const timer1 = ref(null)
-    const timer2 = ref(null)
     const runBallStatus = ref(false)
     const upStatus = ref(false)
     const historyData = ref([])
@@ -144,14 +141,16 @@ setup() {
         if(!newData.value?.no) return 0
         return t('title') + + (parseInt(newData.value.no))
     })
+    const nowSeconds = computed(() => { 
+        return store.state.originTime
+    })
     const displayTime = computed(() => {
-        return t('time') + Math.floor(nowSeconds.value/60)+":"+nowSeconds.value%60
-        // return t('time') + Math.floor(nowSeconds.value/60)+":"+nowSeconds.value%60 + ' 、 ' + t('rewardLen',{existing:historyData.value.length,remain:203-historyData.value.length}) +historyData.value.length
+        let target = store.state.originTime
+        return t('time') + Math.floor(target/60)+"分 : "+target%60 + "秒"
     })
     // 監聽剩餘秒數
     watch(nowSeconds, (newVal,oldVal)=>{
         if(newVal === 0){
-            getTime()
             ctrlRunBall(true)
         }
     })
@@ -163,13 +162,6 @@ setup() {
         }
       }
     })
-    // 計算時間
-    const getTime = () => {
-        const time = new Date();
-        let getMinutes = time.getMinutes();
-        let getSeconds = time.getSeconds();
-        nowSeconds.value = (4-getMinutes%5)*60+(60-getSeconds)
-    }
     //pyapi拿獎項資料
     const pyCatchNum = async() => {
         await store.dispatch('pyGet',{getText:t})
@@ -197,11 +189,7 @@ setup() {
     }
     //初始動作
     const init = () => {
-        getTime()
         pyCatchNum()
-        timer2.value = window.setInterval((async() => {
-          nowSeconds.value--
-        } ), 1000)
     }
     init()
 
@@ -219,7 +207,6 @@ setup() {
 
     onBeforeUnmount(() => {
         clearInterval(timer1.value)
-        clearInterval(timer2.value)
     })
 
     return {
