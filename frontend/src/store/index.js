@@ -1,6 +1,7 @@
 import { createStore } from 'vuex'
 import axios from 'axios'
 import { useI18n } from 'vue-i18n'
+import {getHistory} from '@/api/api'
 /*eslint-disable*/
 export default createStore({
   state: {
@@ -10,6 +11,11 @@ export default createStore({
     todayrecord:[],
     allrecord:[],
     isMobile:false,
+    daykey:{
+      date:'2023/7/1',
+      term:112036744
+    },
+    termInTimeData:{}
   },
   getters: {
   },
@@ -22,20 +28,39 @@ export default createStore({
     },
     setMobile (state,value){
       state.isMobile = (value <= 768) ? true : false
+    },
+    countDayTrem(state){
+      let countDiff = (sDate1, sDate2) => { // yyyy-mm-dd 格式
+        let oDate1 = new Date(sDate1);
+        let oDate2 = new Date(sDate2);
+        let iDays = parseInt((oDate1 - oDate2) / 1000 / 60 / 60 / 24); // 把相差的毫秒數轉換為天數
+        return iDays;
+      };
+      let dt = new Date()
+      let nowDate = (1900+dt.getYear())+'/'+(dt.getMonth()+1)+'/'+dt.getDate()
+      let diffDay = countDiff(nowDate,state.daykey.date)
+      let countTrem = state.daykey.term + diffDay*203
+      let timeSecond = 425
+      for(let i = 0;i<203;i++){
+        let timeStr = Math.floor(timeSecond/60) + ":" + (timeSecond%60 >= 10 ? timeSecond%60 : '0' + timeSecond%60)
+        state.termInTimeData[countTrem] = timeStr
+        countTrem++
+        timeSecond+=5
+      }
     }
   },
   actions: {
     async pyGet(content,payload) {
-      await axios.get('https://5bc2-61-227-68-194.ngrok-free.app/gethistory')
-      .then((response) => {
+      getHistory().then((response) => {
         // handle success
         let data = response.data
         let target = []
-        let time = 425
+        // let time = 425
         for(let key in data){
             let toSC = data[key][3]
-            let timeStr = Math.floor(time/60) + ":" + (time%60 >= 10 ? time%60 : '0' + time%60)
-            time+=5
+            // let timeStr = Math.floor(time/60) + ":" + (time%60 >= 10 ? time%60 : '0' + time%60)
+            // time+=5
+            let timeStr = content.state.termInTimeData[key]
             if(toSC === '小單') toSC = payload.getText('result2')
             else if(toSC === '單') toSC = payload.getText('result1')
             else if(toSC === '小雙') toSC = payload.getText('result4')

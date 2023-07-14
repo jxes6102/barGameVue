@@ -19,6 +19,9 @@ export default {
     const setWidth = () => {
       store.commit('setMobile',windowWidth.value)
     }
+
+    store.commit('countDayTrem')
+    
     onMounted(() => {
       // 監聽螢幕寬度
       windowWidth.value = window.innerWidth

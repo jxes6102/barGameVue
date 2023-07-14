@@ -160,7 +160,7 @@ export default {
         return todayData.value[todayData.value.length-1]
     })
     const drawResult = computed(() => {
-        if(!newData.value.reward) return []
+        if(!newData.value?.reward) return []
         let position = newData.value.reward.indexOf(newData.value.special)
         let target = newData.value.reward
         target.splice(position,1)
@@ -209,6 +209,7 @@ export default {
     // 監聽api改變
     watch(newData, (newVal,oldVal)=>{
       if(oldVal){
+        if(!newVal?.no || !oldVal.no) return false
         let apiDate = (dayData.value.getMonth())+'-'+dayData.value.getDate()
         let nowDate = (new Date().getMonth())+'-'+(new Date().getDate())
         if((parseInt(newVal.no) > parseInt(oldVal.no)) && (apiDate===nowDate)) {
