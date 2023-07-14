@@ -14,6 +14,7 @@ scheduler = APScheduler()  # 定时任务调度器
 scheduler.init_app(app)
 scheduler.start()  # 定时任务开始
 
+todaytList = {}
 
 @app.route("/")
 def test():
@@ -64,6 +65,17 @@ def test():
 
 @app.route('/gethistory', methods=['GET'])
 def getHistory():
+    return todaytList
+
+@app.route('/getTime', methods=['GET'])
+def getTime():
+    nowTime = int(time.time()) # 取得現在時間
+    return {'time': nowTime}
+
+@scheduler.task('interval', id='test_job', seconds=4, misfire_grace_time=2000)
+def my_sys_log():
+    # localtime = time.asctime(time.localtime(time.time()))
+    # print("Time:", localtime)
     # 抓網頁
     url = 'https://www.taiwanlottery.com.tw/Lotto/BINGOBINGO/drawing.aspx'
     res = requests.get(url)
@@ -96,37 +108,11 @@ def getHistory():
     matrix = np.array(sortData)
     matrix = matrix[matrix[:,0].argsort()]
     #輸出
-    obj = {}
+    global todaytList
+    todaytList = {}
     for item in matrix:
-        obj[item[0]] = [item[1],item[2],item[3],item[4]]
-    
-    # response = make_response(obj,200)
-    # response.headers["ngrok-skip-browser-warning"] = "any"
-    # response.headers["Access-Control-Allow-Origin"] = "*"
-    # response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
-    
-    # return response
-    return obj
+        todaytList[item[0]] = [item[1],item[2],item[3],item[4]]
 
-@app.route('/getTime', methods=['GET'])
-def getTime():
-    nowTime = int(time.time()) # 取得現在時間
-    # localtime = time.localtime()
-    # struct_time = time.localtime(nowTime) # 轉換成時間元組
-    # print('localtime: ',localtime)
-    # print('struct_time: ',struct_time)
-    # print('nowTime: ',nowTime)
-    return {'time': nowTime}
-
-# @app.route('/testGrab', methods=['GET'])
-# def originGrab():
-#     nowTime = int(time.time()) # 取得現在時間
-#     return {'time': nowTime}
-
-# @scheduler.task('interval', id='test_job', seconds=5, misfire_grace_time=900)
-# def my_sys_log():
-#     localtime = time.asctime(time.localtime(time.time()))
-#     print("Time:", localtime)
 
 if __name__ == "__main__":
     app.config['JSON_AS_ASCII'] = False
