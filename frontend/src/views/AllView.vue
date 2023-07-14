@@ -88,7 +88,7 @@
                             background
                             :page-size="1"
                             layout="prev, pager, next"
-                            :total="historyData?.length || 1"
+                            :total="tableTotal"
                             @current-change="currentChange"
                             :disabled="apiLoading"
                         />
@@ -167,34 +167,48 @@ export default {
     })
     const historyData = ref(null)
     const tableData = computed(() => {
-      let target = []
-      if(!historyData.value) return target
-      for(let item of historyData.value[page.value]){
-        let numArr = item.preDrawCode.split(',')
-        numArr.splice(numArr.indexOf(numArr[numArr.length - 1]),1)
-        let singleCount = 0
-        for(let i = 0;i<numArr.length;i++){
-            if(numArr[i]%2 === 1) singleCount++
+        let target = []
+        let choseDate = dayData.value.getMonth()+1+"/"+dayData.value.getDate()
+        let now = new Date()
+        let nowDate = now.getMonth()+1+"/"+now.getDate()
+        
+        if(choseDate===nowDate){
+            if(!todayData.value) return target
+            for(let item of todayData.value){
+                target.push({
+                    no:item.no,
+                    reward:item.reward,
+                    decision:item.singleDecision,
+                    time:item.time
+                })
+            }
+            target.reverse()
+        }else {
+            if(!historyData.value) return target
+            for(let item of historyData.value[page.value]){
+                let numArr = item.preDrawCode.split(',')
+                numArr.splice(numArr.indexOf(numArr[numArr.length - 1]),1)
+                let singleCount = 0
+                for(let i = 0;i<numArr.length;i++){
+                    if(numArr[i]%2 === 1) singleCount++
+                }
+                let font = ''
+                if(singleCount>=13) font = t('result1')
+                else if(singleCount>=11&&singleCount<13) font = t('result2')
+                else if(singleCount === 10) font = t('result3')
+                else if(singleCount>=8&&singleCount<10) font = t('result4')
+                else font = t('result5')
+
+                target.push({
+                    no:item.preDrawIssue,
+                    reward:numArr,
+                    decision:font,
+                    time:item.preDrawTime.split(' ')[1].substr(0,5)
+                })
+            }
         }
-        let font = ''
-        if(singleCount>=13) font = t('result1')
-        else if(singleCount>=11&&singleCount<13) font = t('result2')
-        else if(singleCount === 10) font = t('result3')
-        else if(singleCount>=8&&singleCount<10) font = t('result4')
-        else font = t('result5')
-
-        target.push({
-          no:item.preDrawIssue,
-          reward:numArr,
-          decision:font,
-          time:item.preDrawTime.split(' ')[1].substr(0,5)
-        })
-
-        // if(sortNoStatus.value) {
-        //     target.reverse()
-        // }
-      }
-      return target
+        
+        return target
     })
     const displayTitle = computed(() => {
         if(!newData.value?.no) return 0
@@ -208,6 +222,16 @@ export default {
         return Math.floor(target/60)+"分 : "+target%60 + "秒"
     })
     const drawStatus = ref(true)
+    const tableTotal = computed(() => {
+        let choseDate = dayData.value.getMonth()+1+"/"+dayData.value.getDate()
+        let now = new Date()
+        let nowDate = now.getMonth()+1+"/"+now.getDate()
+        if(choseDate===nowDate){
+            return 1
+        }else{
+            return historyData.value?.length || 1
+        }
+    })
     // 監聽api改變
     watch(newData, (newVal,oldVal)=>{
       if(oldVal){
@@ -290,7 +314,6 @@ export default {
     }
 
     const orderStatus = ref(false)
-
     const openStatus = ref()
     const router = useRouter();
     const ctrlGame = (name) => {
@@ -320,6 +343,7 @@ export default {
         openStatus,
         newData,
         drawStatus,
+        tableTotal,
         ctrlGame,
         t,
         currentChange,
