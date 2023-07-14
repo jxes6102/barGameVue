@@ -1,7 +1,7 @@
 import { createStore } from 'vuex'
 import axios from 'axios'
 import { useI18n } from 'vue-i18n'
-import {getHistory} from '@/api/api'
+import {getHistory,getTime} from '@/api/api'
 /*eslint-disable*/
 export default createStore({
   state: {
@@ -15,7 +15,8 @@ export default createStore({
       date:'2023/7/1',
       term:112036744
     },
-    termInTimeData:{}
+    termInTimeData:{},
+    originTime:0
   },
   getters: {
   },
@@ -29,7 +30,7 @@ export default createStore({
     setMobile (state,value){
       state.isMobile = (value <= 768) ? true : false
     },
-    countDayTrem(state){
+    countDayTerm(state){
       let countDiff = (sDate1, sDate2) => { // yyyy-mm-dd 格式
         let oDate1 = new Date(sDate1);
         let oDate2 = new Date(sDate2);
@@ -47,6 +48,15 @@ export default createStore({
         countTrem++
         timeSecond+=5
       }
+    },
+    countSecond(state){
+      window.setInterval((async() => {
+        if(state.originTime > 0){
+          state.originTime--
+        }else{
+          state.originTime = 300
+        }
+      } ), 1000)
     }
   },
   actions: {
@@ -87,27 +97,21 @@ export default createStore({
         // console.log('always executed')
       });
     },
-    // async getHistory(content,payload) {
-    //   // console.log('payload',payload)
-    //   let url = 'https://globalcaipiaokong.com/api/trial/draw-result-by-datetime'
-    //   url+='?code=twklb&rows=100'
-    //   url+='&start_time='+payload.startTime+'&end_time='+payload.endTime+'&page='+payload.page
-
-    //   await axios.get(url)
-    //   .then((response) => {
-    //     // handle success
-    //     // console.log('getHistory',response)
-    //     content.commit('setAllrecord',response.data.data)
-    //   })
-    //   .catch((error) => {
-    //     // handle error
-    //     console.log(error);
-    //   })
-    //   .finally(()=> {
-    //     // always executed
-    //     // console.log('always executed')
-    //   });
-    // },
+    async getOriginTime(content,payload) {
+      getTime().then((response) => {
+        let date = new Date(response.data.time * 1000)
+        let second = 300 - (date.getMinutes()%5*60 + date.getSeconds())
+        content.state.originTime = second
+      })
+      .catch((error) => {
+        // handle error
+        console.log(error);
+      })
+      .finally(()=> {
+        // always executed
+        // console.log('always executed')
+      });
+    },
     async getTodayHistory(content) {
       await axios.get('https://c113-61-227-7-196.ngrok-free.app/gethistory')
       .then((response) => {

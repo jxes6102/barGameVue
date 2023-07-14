@@ -150,8 +150,6 @@ export default {
     ])
     const apiLoading = ref(false)
     const timer1 = ref(null)
-    const timer2 = ref(null)
-    const nowSeconds = ref(0)
     const dayData = ref(null)
     const page = ref(0)
     const todayData = ref(null)
@@ -202,8 +200,12 @@ export default {
         if(!newData.value?.no) return 0
         return t('title') + (newData.value.no)
     })
+    const nowSeconds = computed(() => { 
+        return store.state.originTime
+    })
     const displayTime = computed(() => {
-        return Math.floor(nowSeconds.value/60)+"分 : "+nowSeconds.value%60 + "秒"
+        let target = store.state.originTime
+        return Math.floor(target/60)+"分 : "+target%60 + "秒"
     })
     const drawStatus = ref(true)
     // 監聽api改變
@@ -224,7 +226,6 @@ export default {
     watch(nowSeconds, (newVal,oldVal)=>{
         if(newVal === 0){
             drawStatus.value = false
-            getTime()
         }
     })
     //監聽日期改變
@@ -232,13 +233,6 @@ export default {
         await getHistory()
         // console.log('dayData',dayData.value)
     })
-    // 計算時間
-    const getTime = () => {
-        const time = new Date();
-        let getMinutes = time.getMinutes();
-        let getSeconds = time.getSeconds();
-        nowSeconds.value = (4-getMinutes%5)*60+(60-getSeconds)
-    }
     //pyapi拿今天獎項資料
     const pyCatchNum = async() => {
         await store.dispatch('pyGet',{getText:t})
@@ -274,19 +268,14 @@ export default {
 
     onBeforeUnmount(() => {
         clearInterval(timer1.value)
-        clearInterval(timer2.value)
     })
 
     //初始動作
     const init = () => {
-        getTime()
         let date = new Date()
         date.setDate(date.getDate())
         dayData.value = date
         pyCatchNum()
-        timer2.value = window.setInterval((async() => {
-          nowSeconds.value--
-        } ), 1000)
     }
     init()
 

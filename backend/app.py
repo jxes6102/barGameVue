@@ -116,12 +116,12 @@ def getTime():
     # print('localtime: ',localtime)
     # print('struct_time: ',struct_time)
     # print('nowTime: ',nowTime)
-    return {'data': nowTime}
+    return {'time': nowTime}
 
-@app.route('/testGrab', methods=['GET'])
-def testGrab():
-    nowTime = int(time.time()) # 取得現在時間
-    return {'data': nowTime}
+# @app.route('/testGrab', methods=['GET'])
+# def originGrab():
+#     nowTime = int(time.time()) # 取得現在時間
+#     return {'time': nowTime}
 
 # @scheduler.task('interval', id='test_job', seconds=5, misfire_grace_time=900)
 # def my_sys_log():

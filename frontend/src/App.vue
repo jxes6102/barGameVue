@@ -20,7 +20,9 @@ export default {
       store.commit('setMobile',windowWidth.value)
     }
 
-    store.commit('countDayTrem')
+    store.commit('countDayTerm')
+    store.dispatch('getOriginTime')
+    store.commit('countSecond')
     
     onMounted(() => {
       // 監聽螢幕寬度
