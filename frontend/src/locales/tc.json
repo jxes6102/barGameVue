@@ -14,5 +14,8 @@
     "openTime":"時間",
     "rewardLen":"已開{existing}期，剩餘{remain}期",
     "rewardRecord":"開獎紀錄",
-    "choseDay":"選擇日期"
+    "choseDay":"選擇日期",
+    "game1":"拉霸機",
+    "game2":"搖彩機",
+    "game3":"開彩球"
 }

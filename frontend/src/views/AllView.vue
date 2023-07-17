@@ -4,7 +4,7 @@
             <!-- 歷史紀錄 -->
             <div class="w-[800px] h-[100%] flex-col flex flex-wrap justify-around md:justify-center items-center md:gap-y-2">
                 <!-- title -->
-                <div class="w-[100%] h-auto flex flex-wrap justify-center items-center">
+                <div class="w-[100%] h-auto flex flex-wrap justify-center items-center gap-y-2">
                     <div class="relative w-[100%] md:w-[50%] h-auto flex flex-wrap justify-center md:justify-start items-center gap-y-2">
                         <div class="relative w-[100%] h-auto flex flex-wrap justify-center items-center gap-x-2">
                             <div class="w-auto h-auto font-extrabold text-base md:text-xl text-red-500">{{ displayTitle }}</div>
@@ -22,28 +22,24 @@
                             <div class="absolute bg-[#A6A6A6] w-[100%] h-[100%] opacity-70"></div>
                         </div>
                     </div>
-                    <div class="w-[100%] md:w-[50%] h-auto flex flex-wrap justify-center items-center">
+                    <div class="w-[100%] md:w-[50%] h-auto flex flex-wrap justify-center items-center gap-y-2">
                         <div class="w-[100%] h-auto flex flex-wrap justify-center items-center gap-x-2">
                             <div class="w-auto h-auto flex flex-wrap justify-center items-center font-extrabold text-sm md:text-xl text-red-500">{{ t('time') }}</div>
-                            <!-- <div class="w-auto h-auto flex flex-wrap justify-center items-center font-extrabold text-base md:text-xl text-red-500">{{ displayTime }}</div> -->
                             <div class="w-[30%] md:w-[70%] px-2">
                                 <el-progress status="warning" :percentage="timePercentage" :show-text="false" />
                             </div>
                              <div class="w-[auto] h-auto flex flex-wrap justify-center items-center font-extrabold text-sm md:text-base text-red-500">{{ displayTime }}</div>
                         </div>
-                        <!-- <div class="w-[100%] h-auto flex flex-wrap justify-center items-center">
-                            <div class="w-[70%] px-2">
-                                <el-progress status="warning" :percentage="timePercentage" :show-text="false" />
-                            </div>
-                             <div class="w-[auto] h-auto flex flex-wrap justify-center items-center font-extrabold text-sm md:text-base text-red-500">{{ displayTime }}</div>
-                        </div> -->
                         <div class="w-[100%] h-auto flex flex-wrap justify-center items-center gap-1">
-                            <div 
+                            <div
                                 v-for="(item,index) in gameList" 
                                 :key="index"
                                 @click="ctrlGame(item.key)"
-                                class="w-auto text-[12px] md:text-[12px] bg-[#8ac6d1] px-1 py-1 rounded-[5px] cursor-pointer hover:opacity-80"
-                            >{{ item.name }}</div>
+                                class="w-auto  bg-[#8ac6d1] px-1 py-1 rounded-[5px] flex flex-wrap justify-center items-center cursor-pointer hover:opacity-80"
+                            >
+                                <el-icon size="20"><VideoPlay /></el-icon>
+                                <div class="flex flex-wrap justify-center items-center text-base">{{ item.name }}</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -157,9 +153,9 @@ export default {
         return store.state.isMobile
     })
     const gameList = ref([
-        {name:'拉霸機',key:'bar'},
-        {name:'搖彩機',key:'capsule'},
-        {name:'開彩球',key:'chest'},
+        {name:t('game1'),key:'bar'},
+        {name:t('game2'),key:'capsule'},
+        {name:t('game3'),key:'chest'},
     ])
     const apiLoading = ref(false)
     const timer1 = ref(null)
@@ -343,7 +339,7 @@ export default {
     const openStatus = ref()
     const router = useRouter();
     const ctrlGame = (name) => {
-        console.log('name',name)
+        // console.log('name',name)
         // openStatus.value = name
         if(name === 'chest'){
             router.push({ name: "boxView" });

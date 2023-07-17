@@ -47,15 +47,6 @@ export default createStore({
         countTrem++
         timeSecond+=5
       }
-    },
-    countSecond(state){
-      window.setInterval((async() => {
-        if(state.originTime > 0){
-          state.originTime--
-        }else{
-          state.originTime = 300
-        }
-      } ), 1000)
     }
   },
   actions: {

@@ -22,7 +22,9 @@ export default {
 
     store.commit('countDayTerm')
     store.dispatch('getOriginTime')
-    store.commit('countSecond')
+    window.setInterval((async() => {
+      store.dispatch('getOriginTime')
+    } ), 1000)
     
     onMounted(() => {
       // 監聽螢幕寬度
