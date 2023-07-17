@@ -1,7 +1,7 @@
 import request from '@/api/index'
 
 export const getHistory = (data) => {
-  const url = '/gethistory'
+  const url = '/api/gethistory'
   const method = 'get'
   return request({
     method,
@@ -11,7 +11,7 @@ export const getHistory = (data) => {
 }
 
 export const getTime = (data) => {
-  const url = '/getTime'
+  const url = '/api/getTime'
   const method = 'get'
   return request({
     method,
@@ -21,7 +21,7 @@ export const getTime = (data) => {
 }
 
 export const getTest = (data) => {
-  const url = '/'
+  const url = '/api'
   const method = 'get'
   return request({
     method,

@@ -16,7 +16,7 @@ scheduler.start()  # 定时任务开始
 
 todaytList = {}
 
-@app.route("/")
+@app.route("/api")
 def test():
     # # 抓網頁
     # url = 'https://www.taiwanlottery.com.tw/Lotto/BINGOBINGO/drawing.aspx'
@@ -63,11 +63,11 @@ def test():
     # # print(obj)
     return jsonify({'test': 'nice'})
 
-@app.route('/gethistory', methods=['GET'])
+@app.route('/api/gethistory', methods=['GET'])
 def getHistory():
     return todaytList
 
-@app.route('/getTime', methods=['GET'])
+@app.route('/api/getTime', methods=['GET'])
 def getTime():
     nowTime = int(time.time()) # 取得現在時間
     return {'time': nowTime}
