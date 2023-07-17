@@ -6,7 +6,10 @@
                 <!-- title -->
                 <div class="w-[100%] h-auto flex flex-wrap justify-center items-center">
                     <div class="relative w-[100%] md:w-[50%] h-auto flex flex-wrap justify-center md:justify-start items-center gap-y-2">
-                        <div class="w-[100%] h-auto pl-2 flex flex-wrap justify-center md:justify-start items-center font-extrabold text-base md:text-xl text-red-500">{{ displayTitle }}</div>
+                        <div class="relative w-[100%] h-auto flex flex-wrap justify-center items-center gap-x-2">
+                            <div class="w-auto h-auto font-extrabold text-base md:text-xl text-red-500">{{ displayTitle }}</div>
+                            <div class="w-auto h-auto font-extrabold text-xs md:text-sm text-red-500">{{ statistics}}</div>
+                        </div>
                         <div class="w-[250px] md:w-[380px] h-auto flex flex-wrap justify-center md:justify-start items-center gap-[2px]">
                             <div 
                                 v-for="(item,index) in drawResult" :key="index"
@@ -20,11 +23,21 @@
                         </div>
                     </div>
                     <div class="w-[100%] md:w-[50%] h-auto flex flex-wrap justify-center items-center">
-                        <div class="w-[50%] h-auto flex flex-wrap justify-center items-center gap-y-2">
-                            <div class="w-[100%] h-auto pl-2 flex flex-wrap justify-center items-center font-extrabold text-base md:text-xl text-red-500">{{ t('time') }}</div>
-                            <div class="w-[100%] h-auto pl-2 flex flex-wrap justify-center items-center font-extrabold text-base md:text-xl text-red-500">{{ displayTime }}</div>
+                        <div class="w-[100%] h-auto flex flex-wrap justify-center items-center gap-x-2">
+                            <div class="w-auto h-auto flex flex-wrap justify-center items-center font-extrabold text-sm md:text-xl text-red-500">{{ t('time') }}</div>
+                            <!-- <div class="w-auto h-auto flex flex-wrap justify-center items-center font-extrabold text-base md:text-xl text-red-500">{{ displayTime }}</div> -->
+                            <div class="w-[30%] md:w-[70%] px-2">
+                                <el-progress status="warning" :percentage="timePercentage" :show-text="false" />
+                            </div>
+                             <div class="w-[auto] h-auto flex flex-wrap justify-center items-center font-extrabold text-sm md:text-base text-red-500">{{ displayTime }}</div>
                         </div>
-                        <div class="w-[50%] h-auto flex flex-wrap justify-center items-center gap-1">
+                        <!-- <div class="w-[100%] h-auto flex flex-wrap justify-center items-center">
+                            <div class="w-[70%] px-2">
+                                <el-progress status="warning" :percentage="timePercentage" :show-text="false" />
+                            </div>
+                             <div class="w-[auto] h-auto flex flex-wrap justify-center items-center font-extrabold text-sm md:text-base text-red-500">{{ displayTime }}</div>
+                        </div> -->
+                        <div class="w-[100%] h-auto flex flex-wrap justify-center items-center gap-1">
                             <div 
                                 v-for="(item,index) in gameList" 
                                 :key="index"
@@ -212,10 +225,25 @@ export default {
     })
     const displayTitle = computed(() => {
         if(!newData.value?.no) return 0
-        return t('title') + (newData.value.no)
+        return (newData.value.no) + t('title') 
+    })
+    const statistics = computed(() => {
+        if(!tableData.value) return ''
+        let choseDate = dayData.value.getMonth()+1+"/"+dayData.value.getDate()
+        let now = new Date()
+        let nowDate = now.getMonth()+1+"/"+now.getDate()
+        
+        if(choseDate===nowDate){
+            return t('rewardLen',{existing:tableData.value.length,remain:203-tableData.value.length})
+        }
+
+        return ''
     })
     const nowSeconds = computed(() => { 
         return store.state.originTime
+    })
+    const timePercentage = computed(() => {
+        return 100 - Math.floor(store.state.originTime/3 )
     })
     const displayTime = computed(() => {
         let target = store.state.originTime
@@ -280,9 +308,7 @@ export default {
     onMounted(() => {
         timer1.value = window.setInterval((async() => {
             await pyCatchNum()
-        } ), 5500)
-
-        // store.dispatch('getTodayHistory')
+        } ), 3500)
 
         setTimeout(function (){
             // console.log('newData',newData.value)
@@ -344,6 +370,8 @@ export default {
         newData,
         drawStatus,
         tableTotal,
+        statistics,
+        timePercentage,
         ctrlGame,
         t,
         currentChange,

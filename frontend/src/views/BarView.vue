@@ -232,7 +232,7 @@ export default {
     onMounted(() => {
       timer1.value = window.setInterval((async() => {
         await pyCatchNum()
-      } ), 5500)
+      } ), 3500)
 
       // setTimeout(()=>{
       //   // startAnimation()

@@ -1,6 +1,6 @@
 {
     "message": "哈嘍 i18n !!",
-    "title":"台灣賓果 期號: ",
+    "title":"期開獎",
     "time":"下期開獎時間: ",
     "no":"期號",
     "reward":"開獎號碼",
@@ -12,7 +12,7 @@
     "result4":"小雙",
     "result5":"雙",
     "openTime":"時間",
-    "rewardLen":"已開{existing}期，還有{remain}期",
+    "rewardLen":"已開{existing}期，剩餘{remain}期",
     "rewardRecord":"開獎紀錄",
     "choseDay":"選擇日期"
 }

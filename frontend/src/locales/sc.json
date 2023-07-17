@@ -1,6 +1,6 @@
 {
     "message": "哈嘍 i18n !!",
-    "title":"台湾宾果 期号: ",
+    "title":"期开奖",
     "time":"下期开奖时间: ",
     "no":"期号",
     "reward":"开奖号码",
@@ -12,7 +12,7 @@
     "result4":"小双",
     "result5":"双",
     "openTime":"时间",
-    "rewardLen":"已开{existing}期，还有{remain}期",
+    "rewardLen":"已开{existing}期，剩余{remain}期",
     "rewardRecord":"开奖纪录",
     "choseDay":"选择日期"
 }
