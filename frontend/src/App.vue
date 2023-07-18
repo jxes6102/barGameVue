@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { ref,reactive,onMounted } from 'vue'
+import { ref,reactive,onMounted,onBeforeUnmount } from 'vue'
 import { useStore } from "vuex";
 export default {
 
@@ -12,6 +12,8 @@ export default {
   setup() {
     const store = useStore()
     const windowWidth = ref(0)
+    const timerCheck = ref(null)
+    const timerCount = ref(null)
     const states = reactive({
       deferredPrompt: null,
     });
@@ -22,8 +24,13 @@ export default {
 
     store.commit('countDayTerm')
     store.dispatch('getOriginTime')
-    window.setInterval((async() => {
+    timerCheck.value = window.setInterval((async() => {
       store.dispatch('getOriginTime')
+    } ), 30000)
+
+    store.commit('countOriginTime')
+    timerCount.value = window.setInterval((async() => {
+      store.commit('countOriginTime')
     } ), 1000)
     
     onMounted(() => {
@@ -50,6 +57,12 @@ export default {
       });
 
     })
+
+    onBeforeUnmount(() => {
+        clearInterval(timerCheck.value)
+        clearInterval(timerCount.value)
+    })
+
     return {
     }
   }

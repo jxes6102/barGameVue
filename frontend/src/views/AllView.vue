@@ -1,107 +1,102 @@
 <template>
-    <div class="w-[100vw] h-[100vh] bg-[#fcfce5] flex flex-wrap justify-center items-center">
-        <div class="w-[90vw] h-[100vh] flex flex-wrap justify-center items-center max-w-[1000px]">
-            <!-- 歷史紀錄 -->
-            <div class="w-[800px] h-[100%] flex-col flex flex-wrap justify-around md:justify-center items-center md:gap-y-2">
-                <!-- title -->
-                <div class="w-[100%] h-auto flex flex-wrap justify-center items-center gap-y-2">
-                    <div class="relative w-[100%] md:w-[50%] h-auto flex flex-wrap justify-center md:justify-start items-center gap-y-2">
-                        <div class="relative w-[100%] h-auto flex flex-wrap justify-center items-center gap-x-2">
-                            <div class="w-auto h-auto font-extrabold text-base md:text-xl text-red-500">{{ displayTitle }}</div>
-                            <div class="w-auto h-auto font-extrabold text-xs md:text-sm text-red-500">{{ statistics}}</div>
-                        </div>
-                        <div class="w-[250px] md:w-[380px] h-auto flex flex-wrap justify-center md:justify-start items-center gap-[2px]">
-                            <div 
-                                v-for="(item,index) in drawResult" :key="index"
-                                :class="(index===19) ? 'ball-color-2' : 'ball-color-1'"
-                                class="w-[22px] h-[22px] md:w-[35px] md:h-[35px] rounded-[50%] flex justify-center items-center text-xs md:text-base font-bold text-white"
-                            >{{ item }}</div>
-                        </div>
-                        <div v-if="!drawStatus" class="absolute w-[100%] h-[100%] flex justify-center items-center">
-                            <div class="z-[3] text-xl font-bold text-red-600">開獎中...</div>
-                            <div class="absolute bg-[#A6A6A6] w-[100%] h-[100%] opacity-70"></div>
-                        </div>
+    <div class="w-[100vw] h-[100vh] overflow-x-hidden overflow-y-auto bg-[#fcfce5] flex flex-wrap justify-center items-center">
+        <div class="w-[90vw] h-[100%] flex flex-wrap justify-center items-center max-w-[1000px] gap-y-2">
+            <div class="w-[100%] h-auto flex flex-wrap justify-center items-center gap-y-4 md:gap-y-2">
+                <div class="relative w-[100%] md:w-[50%] h-auto flex flex-wrap justify-center md:justify-center items-center gap-y-4 md:gap-y-2">
+                    <div class="relative w-[100%] h-auto flex flex-wrap justify-center items-center gap-x-2">
+                        <div class="w-auto h-auto font-extrabold text-base md:text-xl text-red-500">{{ displayTitle }}</div>
+                        <div class="w-auto h-auto font-extrabold text-xs md:text-sm text-red-500">{{ statistics}}</div>
                     </div>
-                    <div class="w-[100%] md:w-[50%] h-auto flex flex-wrap justify-center items-center gap-y-2">
-                        <div class="w-[100%] h-auto flex flex-wrap justify-center items-center gap-x-2">
-                            <div class="w-auto h-auto flex flex-wrap justify-center items-center font-extrabold text-sm md:text-xl text-red-500">{{ t('time') }}</div>
-                            <div class="w-[30%] md:w-[70%] px-2">
-                                <el-progress status="warning" :percentage="timePercentage" :show-text="false" />
-                            </div>
-                             <div class="w-[auto] h-auto flex flex-wrap justify-center items-center font-extrabold text-sm md:text-base text-red-500">{{ displayTime }}</div>
+                    <div class="w-[250px] md:w-[380px] h-auto flex flex-wrap justify-center md:justify-start items-center gap-[2px]">
+                        <div 
+                            v-for="(item,index) in drawResult" :key="index"
+                            :class="(index===19) ? 'ball-color-2' : 'ball-color-1'"
+                            class="w-[22px] h-[22px] md:w-[35px] md:h-[35px] rounded-[50%] flex justify-center items-center text-xs md:text-base font-bold text-white"
+                        >{{ item }}</div>
+                    </div>
+                    <div v-if="!drawStatus" class="absolute w-[100%] h-[100%] flex justify-center items-center">
+                        <div class="z-[3] text-xl font-bold text-red-600">開獎中...</div>
+                        <div class="absolute bg-[#A6A6A6] w-[100%] h-[100%] opacity-70"></div>
+                    </div>
+                </div>
+                <div class="w-[100%] md:w-[50%] h-auto flex flex-wrap justify-center items-center gap-y-2">
+                    <div class="w-[100%] h-auto flex flex-wrap justify-center items-center gap-x-2">
+                        <div class="w-auto h-auto flex flex-wrap justify-center items-center font-extrabold text-sm md:text-xl text-red-500">{{ t('time') }}</div>
+                        <div class="w-[30%] md:w-[50%] px-2">
+                            <el-progress status="warning" :percentage="timePercentage" :show-text="false" />
                         </div>
-                        <div class="w-[100%] h-auto flex flex-wrap justify-center items-center gap-1">
-                            <div
-                                v-for="(item,index) in gameList" 
-                                :key="index"
-                                @click="ctrlGame(item.key)"
-                                class="w-auto  bg-[#8ac6d1] px-1 py-1 rounded-[5px] flex flex-wrap justify-center items-center cursor-pointer hover:opacity-80"
-                            >
-                                <el-icon size="20"><VideoPlay /></el-icon>
-                                <div class="flex flex-wrap justify-center items-center text-base">{{ item.name }}</div>
-                            </div>
+                        <div class="w-[auto] h-auto flex flex-wrap justify-center items-center font-extrabold text-sm md:text-base text-red-500">{{ displayTime }}</div>
+                    </div>
+                    <div class="w-[100%] h-auto flex flex-wrap justify-center items-center gap-1">
+                        <div
+                            v-for="(item,index) in gameList" 
+                            :key="index"
+                            @click="ctrlGame(item.key)"
+                            class="w-auto  bg-[#8ac6d1] px-1 py-1 rounded-[5px] flex flex-wrap justify-center items-center cursor-pointer hover:opacity-80"
+                        >
+                            <el-icon size="20"><VideoPlay /></el-icon>
+                            <div class="flex flex-wrap justify-center items-center text-base">{{ item.name }}</div>
                         </div>
                     </div>
                 </div>
-            
-                <div class="w-auto h-[70vh] md:h-[60vh] flex flex-wrap justify-center items-center md:gap-y-2">
-                    <!-- 工具列 -->
-                    <div class="w-[300px] md:w-[800px] h-auto flex flex-wrap justify-center items-center">
-                        <div class="w-[25%] md:w-[33%] h-[100%] text-base md:text-xl font-bold flex flex-wrap justify-start items-center">{{ t('rewardRecord') }}</div>
-                        <div class="w-[25%] md:w-[33%] h-[100%] flex flex-wrap justify-end items-center">{{t('choseDay')}} </div>
-                        <div class="w-[50%] md:w-[34%] h-[100%] flex flex-wrap justify-center items-center">
-                            <el-date-picker
-                                v-model="dayData"
-                                type="date"
-                                placeholder="選擇查詢日期"
-                                :disabled-date="disabledDate"
-                                :disabled="apiLoading"
-                            />
-                        </div>
-                    </div>
-                    <el-table v-if="isMobiles" :data="tableData" max-height="55vh" style="width:100vw;font-size:10px;">
-                        <el-table-column prop="time" width="55" :label="t('openTime')"/>
-                        <el-table-column sortable prop="no" :label="t('no')" width="85"/>
-                        <el-table-column prop="reward" :label="t('reward')" width="180">
-                            <template #default="scope">
-                                <div class="flex flex-wrap justify-start items-center gap-x-[0.5px]">
-                                    <div 
-                                        v-for="(item,index) in scope.row.reward" :key="index"
-                                        :class="(index===19) ? 'ball-color-2' : 'ball-color-1'"
-                                        class="w-[15px] h-[15px] rounded-[50%] flex justify-center items-center font-bold text-[12px] text-white"
-                                    >{{ item }}</div>
-                                </div>
-                            </template>
-                        </el-table-column>
-                        <el-table-column prop="decision" :label="t('singleDecision')" width="50"/>
-                    </el-table>
-                    <el-table v-else :data="tableData" max-height="60vh" style="width:800px;">
-                        <el-table-column prop="time" width="60" :label="t('openTime')"/>
-                        <el-table-column sortable prop="no" :label="t('no')" width="100"/>
-                        <el-table-column prop="reward" :label="t('reward')">
-                            <template #default="scope">
-                                <div class="flex flex-wrap justify-start items-center gap-x-0.5">
-                                    <div 
-                                        v-for="(item,index) in scope.row.reward" :key="index"
-                                        :class="(index===19) ? 'ball-color-2' : 'ball-color-1'"
-                                        class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-white"
-                                    >{{ item }}</div>
-                                </div>
-                            </template>
-                        </el-table-column>
-                        <el-table-column prop="decision" width="60" :label="t('singleDecision')"/>
-                    </el-table>
-                    <div class="w-[100%] h-auto flex flex-wrap justify-center items-center">
-                        <el-pagination
-                            small
-                            background
-                            :page-size="1"
-                            layout="prev, pager, next"
-                            :total="tableTotal"
-                            @current-change="currentChange"
+            </div>
+        
+            <div class="w-auto h-[70vh] md:h-[auto] flex flex-wrap justify-center items-center gap-y-2">
+                <div class="w-[300px] md:w-[800px] h-auto flex flex-wrap justify-center items-center">
+                    <div class="w-[25%] md:w-[33%] h-[100%] text-base md:text-xl font-bold flex flex-wrap justify-start items-center">{{ t('rewardRecord') }}</div>
+                    <div class="w-[25%] md:w-[33%] h-[100%] flex flex-wrap justify-end items-center">{{t('choseDay')}} </div>
+                    <div class="w-[50%] md:w-[34%] h-[100%] flex flex-wrap justify-center items-center">
+                        <el-date-picker
+                            v-model="dayData"
+                            type="date"
+                            placeholder="選擇查詢日期"
+                            :disabled-date="disabledDate"
                             :disabled="apiLoading"
                         />
                     </div>
+                </div>
+                <el-table v-if="isMobiles" :data="tableData" max-height="55vh" style="width:100vw;font-size:10px;">
+                    <el-table-column prop="time" width="55" :label="t('openTime')"/>
+                    <el-table-column sortable prop="no" :label="t('no')" width="85"/>
+                    <el-table-column prop="reward" :label="t('reward')" width="180">
+                        <template #default="scope">
+                            <div class="flex flex-wrap justify-start items-center gap-x-[0.5px]">
+                                <div 
+                                    v-for="(item,index) in scope.row.reward" :key="index"
+                                    :class="(index===19) ? 'ball-color-2' : 'ball-color-1'"
+                                    class="w-[15px] h-[15px] rounded-[50%] flex justify-center items-center font-bold text-[12px] text-white"
+                                >{{ item }}</div>
+                            </div>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="decision" :label="t('singleDecision')" width="50"/>
+                </el-table>
+                <el-table v-else :data="tableData" max-height="60vh" style="width:800px;">
+                    <el-table-column prop="time" width="60" :label="t('openTime')"/>
+                    <el-table-column sortable prop="no" :label="t('no')" width="100"/>
+                    <el-table-column prop="reward" :label="t('reward')">
+                        <template #default="scope">
+                            <div class="flex flex-wrap justify-start items-center gap-x-0.5">
+                                <div 
+                                    v-for="(item,index) in scope.row.reward" :key="index"
+                                    :class="(index===19) ? 'ball-color-2' : 'ball-color-1'"
+                                    class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-white"
+                                >{{ item }}</div>
+                            </div>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="decision" width="60" :label="t('singleDecision')"/>
+                </el-table>
+                <div class="w-[100%] h-auto flex flex-wrap justify-center items-center">
+                    <el-pagination
+                        small
+                        background
+                        :page-size="1"
+                        layout="prev, pager, next"
+                        :total="tableTotal"
+                        @current-change="currentChange"
+                        :disabled="apiLoading"
+                    />
                 </div>
             </div>
         </div>

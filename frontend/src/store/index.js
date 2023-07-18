@@ -47,6 +47,16 @@ export default createStore({
         countTrem++
         timeSecond+=5
       }
+    },
+    setOriginTime(state,value){
+      state.originTime = value
+    },
+    countOriginTime(state){
+      if(state.originTime>0){
+        state.originTime--
+      }else{
+        state.originTime = 300
+      }
     }
   },
   actions: {
@@ -91,7 +101,7 @@ export default createStore({
       getTime().then((response) => {
         let date = new Date(response.data.time * 1000)
         let second = 300 - (date.getMinutes()%5*60 + date.getSeconds())
-        content.state.originTime = second
+        content.commit('setOriginTime',second)
       })
       .catch((error) => {
         // handle error
