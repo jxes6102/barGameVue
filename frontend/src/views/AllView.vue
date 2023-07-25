@@ -91,7 +91,7 @@
                     <el-pagination
                         small
                         background
-                        :page-size="1"
+                        :page-size="pageSizeCount"
                         layout="prev, pager, next"
                         :total="tableTotal"
                         @current-change="currentChange"
@@ -187,6 +187,7 @@ export default {
                 })
             }
             target.reverse()
+            target = target.slice((page.value)*100,(page.value+1)*100)
         }else {
             if(!historyData.value) return target
             for(let item of historyData.value[page.value]){
@@ -246,9 +247,19 @@ export default {
         let now = new Date()
         let nowDate = now.getMonth()+1+"/"+now.getDate()
         if(choseDate===nowDate){
-            return 1
+            return todayData.value?.length || 1
         }else{
             return historyData.value?.length || 1
+        }
+    })
+    const pageSizeCount = computed(()=>{
+        let choseDate = dayData.value.getMonth()+1+"/"+dayData.value.getDate()
+        let now = new Date()
+        let nowDate = now.getMonth()+1+"/"+now.getDate()
+        if(choseDate===nowDate){
+            return 100
+        }else{
+            return 1
         }
     })
     // 監聽api改變
@@ -322,7 +333,6 @@ export default {
 
     const currentChange = (value) => {
         page.value = value - 1
-        // console.log('currentChange')
     }
 
     //設定選擇日期範圍
@@ -363,6 +373,7 @@ export default {
         tableTotal,
         statistics,
         timePercentage,
+        pageSizeCount,
         ctrlGame,
         t,
         currentChange,
