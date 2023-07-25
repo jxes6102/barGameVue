@@ -22,7 +22,6 @@ export default {
       store.commit('setMobile',windowWidth.value)
     }
 
-    store.commit('countDayTerm')
     store.dispatch('getOriginTime')
     timerCheck.value = window.setInterval((async() => {
       store.dispatch('getOriginTime')

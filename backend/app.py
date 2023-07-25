@@ -126,16 +126,15 @@ def writeFile():
     nowDate = datetime.date.today()
     dayDif = (nowDate-originDate).days
     todayTerm = termKey+203*dayDif
+    dataDict = {}
+    timeSecond = 425
+    global termInTimeData
 
     with open("./lottery/today.json") as file:
         data = json.load(file)
         data = {}
         with open('./lottery/today.json', 'w') as f: 
             json.dump(data, f, indent = 2)
-
-    dataDict = {}
-    timeSecond = 425
-    global termInTimeData
 
     for i in range(todayTerm, todayTerm+203):
         dataDict[i] = []
