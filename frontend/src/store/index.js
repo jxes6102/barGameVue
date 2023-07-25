@@ -67,6 +67,7 @@ export default createStore({
         let target = []
         // let time = 425
         for(let key in data){
+            if(!data[key].length) break
             let toSC = data[key][3]
             // let timeStr = Math.floor(time/60) + ":" + (time%60 >= 10 ? time%60 : '0' + time%60)
             // time+=5
@@ -85,7 +86,7 @@ export default createStore({
                 time:timeStr
             })
         }
-        // console.log('target',target)
+        console.log('target',target)
         content.commit('setTodayrecord',target)
       })
       .catch((error) => {
