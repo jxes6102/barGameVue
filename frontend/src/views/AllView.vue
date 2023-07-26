@@ -1,6 +1,10 @@
 <template>
     <div class="w-[100vw] h-[100vh] overflow-x-hidden overflow-y-auto bg-[#fcfce5] flex flex-wrap justify-center items-center">
-        <div class="w-[90vw] h-[100%] flex flex-wrap justify-center items-center max-w-[1000px] gap-y-2">
+        <div class="w-[100%] h-[12%] md:h-[15%] bg-[#ffdf00] flex justify-center items-center">
+            <img class="w-[40px] h-[40px]" src="@/assets/images/lottery.png">
+            <div class="text-3xl md:text-4xl text-white">台灣5分賓果</div>
+        </div>
+        <div class="w-[100vw] h-[85%] flex flex-wrap justify-center items-center max-w-[1000px] gap-y-2">
             <div class="w-[100%] h-auto flex flex-wrap justify-center items-center gap-y-4 md:gap-y-2">
                 <div class="relative w-[100%] md:w-[50%] h-auto flex flex-wrap justify-center md:justify-center items-center gap-y-4 md:gap-y-2">
                     <div class="relative w-[100%] h-auto flex flex-wrap justify-center items-center gap-x-2">
@@ -41,7 +45,7 @@
                 </div>
             </div>
         
-            <div class="w-auto h-[70vh] md:h-[auto] flex flex-wrap justify-center items-center gap-y-2">
+            <div class="w-auto h-[60vh] md:h-[auto] flex flex-wrap justify-center items-center gap-y-2">
                 <div class="w-[300px] md:w-[800px] h-auto flex flex-wrap justify-center items-center">
                     <div class="w-[25%] md:w-[33%] h-[100%] text-base md:text-xl font-bold flex flex-wrap justify-start items-center">{{ t('rewardRecord') }}</div>
                     <div class="w-[25%] md:w-[33%] h-[100%] flex flex-wrap justify-end items-center">{{t('choseDay')}} </div>
@@ -55,7 +59,7 @@
                         />
                     </div>
                 </div>
-                <el-table v-if="isMobiles" :data="tableData" max-height="55vh" style="width:100vw;font-size:10px;">
+                <el-table v-if="isMobiles" :data="tableData" max-height="45vh" style="width:100vw;font-size:10px;">
                     <el-table-column prop="time" width="55" :label="t('openTime')"/>
                     <el-table-column sortable prop="no" :label="t('no')" width="85"/>
                     <el-table-column prop="reward" :label="t('reward')" width="180">
@@ -71,7 +75,7 @@
                     </el-table-column>
                     <el-table-column prop="decision" :label="t('singleDecision')" width="50"/>
                 </el-table>
-                <el-table v-else :data="tableData" max-height="60vh" style="width:800px;">
+                <el-table v-else :data="tableData" max-height="55vh" style="width:800px;">
                     <el-table-column prop="time" width="60" :label="t('openTime')"/>
                     <el-table-column sortable prop="no" :label="t('no')" width="100"/>
                     <el-table-column prop="reward" :label="t('reward')">
@@ -226,7 +230,7 @@ export default {
         let nowDate = now.getMonth()+1+"/"+now.getDate()
         
         if(choseDate===nowDate){
-            return t('rewardLen',{existing:tableData.value.length,remain:203-tableData.value.length})
+            return t('rewardLen',{existing:(todayData.value?.length || 0),remain:203-(todayData.value?.length || 0)})
         }
 
         return ''
@@ -310,7 +314,7 @@ export default {
     onMounted(() => {
         timer1.value = window.setInterval((async() => {
             await pyCatchNum()
-        } ), 3500)
+        } ), 4500)
 
         setTimeout(function (){
             // console.log('newData',newData.value)

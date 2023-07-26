@@ -1,28 +1,10 @@
 <template>
   <div class="w-[100%] h-[100%] overflow-x-hidden overflow-y-auto flex flex-wrap justify-center items-center bg-[url('/src/assets/images/black_backGround.png')] bg-contain bg-center">
     <!-- 主畫面 -->
-    <div class="relative min-h-[360px] h-[70vh] md:h-[90vh] w-[100vw] flex-col flex flex-wrap justify-center items-center">
+    <div class="relative min-h-[360px] h-[50vh] md:h-[90vh] w-[100vw] flex-col flex flex-wrap justify-center items-center">
       <!-- 訊息 -->
       <div class="w-full h-auto text-lg font-bold flex flex-wrap justify-center items-center text-red-500">{{ displayTitle }}</div>
       <div class="w-full h-auto text-lg font-bold text-red-500">{{ displayTime }}</div>
-      <!-- <div class="flex flex-wrap justify-center items-center h-[300px] w-[250px] md:h-[400px] md:w-[800px] text-white bg-no-repeat bg-cover bg-center bg-[url('/src/assets/images/slotbackground.png')]">
-        <div
-          v-for="(item,index) in 20" :key="item+index"
-          :class="(specialPosition === index) && !animationStatusArr[index] ? 'bg-rose-800' :'bg-[LightCoral]'"
-          class="w-[40px] h-[40px] md:w-[70px] md:h-[70px] mr-[10px] md:mr-[10px] border-[gray] border-solid  border-[2px] rounded-[4px] overflow-hidden"
-          >
-          <div v-for="(items) in 100" :key="items*2"
-            :class="animationStatusArr[index] ? 'is-play' : 'slowly'"
-            :id="'result-'+(items-1)">
-              <div v-if="items === 1">
-                <div v-for="(num,numIndex) in 3" :key="num*2" class="flex justify-center text-[30px] md:text-[48px]">{{ drawResult[index] ? drawResult[index]-numIndex : '?' }}</div>
-              </div>
-              <div v-else>
-                <div class="flex justify-center text-[30px] md:text-[48px]">{{items - 1}}</div>
-              </div>
-          </div>
-        </div>
-      </div> -->
       <div class="h-[215px] w-[265px] md:w-[685px] md:h-[550px] text-white bg-no-repeat bg-cover bg-center bg-[url('/src/assets/images/slotbackground.png')]">
         <div class="relative flex flex-wrap justify-center items-center top-[45%] left-[18%] md:top-[46%] md:left-[18%] w-[171px] h-[48px] md:w-[440px] md:h-[120px] bg-[#040d26] gap-[1px] md:gap-[5px]">
           <div
