@@ -24,7 +24,7 @@
       <!-- <div>
         <input ref="inputType">
       </div> -->
-
+      <input id="myTextField" value="Text field." />
       <div class="w-[100vw] h-[100vh] bg-[#6623ec] bg-[url('/src/assets/images/black_backGround.png')] bg-contain bg-center">
         
       </div>
