@@ -1,9 +1,10 @@
 <template>
   <div class="w-[100%] h-[100%] overflow-x-hidden overflow-y-auto flex flex-wrap justify-center items-center bg-[url('/src/assets/images/black_backGround.png')] bg-contain bg-center">
     <!-- 主畫面 -->
-    <div class="relative min-h-[360px] h-[50vh] md:h-[90vh] w-[100vw] flex-col flex flex-wrap justify-center items-center">
+    <div class="relative min-h-[320px] h-[auto] md:h-[90vh] w-[100vw] flex-col flex flex-wrap justify-center items-center">
       <!-- 訊息 -->
       <div class="w-full h-auto text-lg font-bold flex flex-wrap justify-center items-center text-red-500">{{ displayTitle }}</div>
+      <div class="w-full h-auto text-lg font-bold flex flex-wrap justify-center items-center text-red-500">{{ statistics }}</div>
       <div class="w-full h-auto text-lg font-bold text-red-500">{{ displayTime }}</div>
       <div class="h-[215px] w-[265px] md:w-[685px] md:h-[550px] text-white bg-no-repeat bg-cover bg-center bg-[url('/src/assets/images/slotbackground.png')]">
         <div class="relative flex flex-wrap justify-center items-center top-[45%] left-[18%] md:top-[46%] md:left-[18%] w-[171px] h-[48px] md:w-[440px] md:h-[120px] bg-[#040d26] gap-[1px] md:gap-[5px]">
@@ -128,7 +129,7 @@ export default {
     })
     const displayTitle = computed(() => {
         if(!newData.value?.no) return 0
-        return t('title') + (parseInt(newData.value.no))
+        return (parseInt(newData.value.no)) + t('title')
     })
     const nowSeconds = computed(() => { 
         return store.state.originTime
@@ -136,6 +137,10 @@ export default {
     const displayTime = computed(() => {
         let target = store.state.originTime
         return t('time') + Math.floor(target/60)+"分 : "+target%60 + "秒"
+    })
+    const statistics = computed(() => {
+        if(!historyData.value) return ''
+        return t('rewardLen',{existing:(historyData.value?.length || 0),remain:203-(historyData.value?.length || 0)})
     })
     // 監聽api改變後拉桿
     watch(newData, (newVal,oldVal)=>{
@@ -237,6 +242,7 @@ export default {
       displayTitle,
       displayTime,
       pullbgm,
+      statistics,
       // rollbgm,
       toStr,
     }

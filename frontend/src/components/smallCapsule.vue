@@ -77,7 +77,7 @@ export default {
     const fallNum = ref('')
     const fallStatus = ref(false)
     const displayTitle = computed(() => {
-        return t('title') + (parseInt(drawData.value.no))
+        return (parseInt(drawData.value.no)) + t('title')
     })
     const displayTime = computed(() => {
         let target = store.state.originTime

@@ -1,7 +1,7 @@
 <template>
     <div class="w-[100vw] h-[100vh] overflow-x-hidden overflow-y-auto bg-[#fcfce5] flex flex-wrap justify-center items-center">
         <div class="w-[100%] h-[12%] md:h-[15%] bg-[#ffdf00] flex justify-center items-center">
-            <img class="w-[40px] h-[40px]" src="@/assets/images/lottery.png">
+            <img class="absolute left-2 w-[75px] h-[60px] md:w-[100px] md:h-[80px]" src="@/assets/images/lottery.png">
             <div class="text-3xl md:text-4xl text-white">台灣5分賓果</div>
         </div>
         <div class="w-[100vw] h-[85%] flex flex-wrap justify-center items-center max-w-[1000px] gap-y-2">
@@ -45,7 +45,7 @@
                 </div>
             </div>
         
-            <div class="w-auto h-[60vh] md:h-[auto] flex flex-wrap justify-center items-center gap-y-2">
+            <div class="w-auto h-[60vh] md:h-[auto] flex flex-wrap justify-center items-center gap-y-2 min-h-[60vh]">
                 <div class="w-[300px] md:w-[800px] h-auto flex flex-wrap justify-center items-center">
                     <div class="w-[25%] md:w-[33%] h-[100%] text-base md:text-xl font-bold flex flex-wrap justify-start items-center">{{ t('rewardRecord') }}</div>
                     <div class="w-[25%] md:w-[33%] h-[100%] flex flex-wrap justify-end items-center">{{t('choseDay')}} </div>

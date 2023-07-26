@@ -1,13 +1,14 @@
 <template>
     <div class="w-[100%] h-[100%] overflow-x-hidden overflow-y-auto flex flex-wrap justify-center items-start bg-[url('/src/assets/images/black_backGround.png')] bg-contain bg-center">
       <!-- 主畫面 -->
-      <div class="w-[100vw] h-[50vh] md:h-[90vh] flex-col flex flex-wrap justify-center items-center">
+      <div class="w-[100vw]  h-[50vh] md:h-[90vh] flex-col flex flex-wrap justify-center items-center">
         <!-- 開獎訊息 -->
         <div class="w-[100%] h-auto flex flex-wrap justify-center items-center z-[13]">
             <div class="w-[100%] text-base md:text-2xl font-bold text-[red]">{{ displayTitle }}</div>
+            <div class="w-[100%] text-xs md:text-lg font-bold text-[red]">{{ statistics }}</div>
             <div class="w-[100%] text-xs md:text-lg font-bold text-[red]">{{ displayTime }}</div>
         </div>
-        <div class="relative w-[300px] h-[200px] md:w-[800px] md:h-[450px] top-[45px] md:top-[0px] bg-cover bg-no-repeat bg-[url('/src/assets/images/boxbackground.jpg')] rounded-md md:rounded-xl">
+        <div class="relative w-[300px] h-[200px] md:w-[800px] md:h-[450px] top-[25px] md:top-[0px] bg-cover bg-no-repeat bg-[url('/src/assets/images/boxbackground.jpg')] rounded-md md:rounded-xl">
             <div class="absolute w-auto h-auto flex flex-wrap justify-center items-center">
                 <div 
                     v-for="(item,index) in 10" :key="index"
@@ -139,7 +140,7 @@ setup() {
     })
     const displayTitle = computed(() => {
         if(!newData.value?.no) return 0
-        return t('title') + + (parseInt(newData.value.no))
+        return (parseInt(newData.value.no)) + t('title')
     })
     const nowSeconds = computed(() => { 
         return store.state.originTime
@@ -147,6 +148,10 @@ setup() {
     const displayTime = computed(() => {
         let target = store.state.originTime
         return t('time') + Math.floor(target/60)+"分 : "+target%60 + "秒"
+    })
+    const statistics = computed(() => {
+        if(!historyData.value) return ''
+        return t('rewardLen',{existing:(historyData.value?.length || 0),remain:203-(historyData.value?.length || 0)})
     })
     // 監聽剩餘秒數
     watch(nowSeconds, (newVal,oldVal)=>{
@@ -219,6 +224,7 @@ setup() {
             displayTime,
             displayTitle,
             drawSpecial,
+            statistics,
             toStr,
         }
 
