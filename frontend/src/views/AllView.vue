@@ -14,7 +14,7 @@
                     <div class="w-[250px] md:w-[380px] h-auto flex flex-wrap justify-center md:justify-start items-center gap-[2px]">
                         <div 
                             v-for="(item,index) in drawResult" :key="index"
-                            :class="(index===19) ? 'ball-color-2' : 'ball-color-1'"
+                            :class="(item===newData.special) ? 'ball-color-2' : 'ball-color-1'"
                             class="w-[22px] h-[22px] md:w-[35px] md:h-[35px] rounded-[50%] flex justify-center items-center text-xs md:text-base font-bold text-white"
                         >{{ item }}</div>
                     </div>
@@ -67,25 +67,37 @@
                             <div class="flex flex-wrap justify-start items-center gap-x-[0.5px]">
                                 <div 
                                     v-for="(item,index) in scope.row.reward" :key="index"
-                                    :class="(index===19) ? 'ball-color-2' : 'ball-color-1'"
-                                    class="w-[15px] h-[15px] rounded-[50%] flex justify-center items-center font-bold text-[12px] text-white"
+                                    class="w-[15px] h-[15px] rounded-[50%] flex justify-center items-center font-bold text-[12px] text-white ball-color-1"
                                 >{{ item }}</div>
+                            </div>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="special" width="60" :label="t('specialNum')">
+                        <template #default="scope">
+                            <div class="flex flex-wrap justify-start items-center gap-x-0.5">
+                                <div class="w-[20px] h-[20px] rounded-[50%] flex justify-center items-center font-bold text-white ball-color-2">{{ scope.row.special }}</div>
                             </div>
                         </template>
                     </el-table-column>
                     <el-table-column prop="decision" :label="t('singleDecision')" width="50"/>
                 </el-table>
-                <el-table v-else :data="tableData" max-height="55vh" style="width:800px;">
+                <el-table v-else :data="tableData" max-height="55vh" style="width:auto;">
                     <el-table-column prop="time" width="60" :label="t('openTime')"/>
                     <el-table-column sortable prop="no" :label="t('no')" width="100"/>
-                    <el-table-column prop="reward" :label="t('reward')">
+                    <el-table-column prop="reward" :label="t('reward')" width="570">
                         <template #default="scope">
                             <div class="flex flex-wrap justify-start items-center gap-x-0.5">
                                 <div 
                                     v-for="(item,index) in scope.row.reward" :key="index"
-                                    :class="(index===19) ? 'ball-color-2' : 'ball-color-1'"
-                                    class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-white"
+                                    class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-white ball-color-1"
                                 >{{ item }}</div>
+                            </div>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="special" width="80" :label="t('specialNum')">
+                        <template #default="scope">
+                            <div class="flex flex-wrap justify-start items-center gap-x-0.5">
+                                <div class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-white ball-color-2">{{ scope.row.special }}</div>
                             </div>
                         </template>
                     </el-table-column>
@@ -167,11 +179,11 @@ export default {
     })
     const drawResult = computed(() => {
         if(!newData.value?.reward) return []
-        let position = newData.value.reward.indexOf(newData.value.special)
-        let target = newData.value.reward
-        target.splice(position,1)
-        target.push(newData.value.special)
-        return target
+        // let position = newData.value.reward.indexOf(newData.value.special)
+        // let target = newData.value.reward
+        // target.splice(position,1)
+        // target.push(newData.value.special)
+        return newData.value.reward
     })
     const historyData = ref(null)
     const tableData = computed(() => {
@@ -187,7 +199,8 @@ export default {
                     no:item.no,
                     reward:item.reward,
                     decision:item.singleDecision,
-                    time:item.time
+                    time:item.time,
+                    special:item.special
                 })
             }
             target.reverse()

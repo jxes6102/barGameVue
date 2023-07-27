@@ -42,7 +42,7 @@ export default createStore({
         let data = response.data
         let target = []
         for(let key in data){
-            if(!data[key].length) break
+            if(!data[key].length) continue
             let toSC = data[key][3]
             if(toSC === '小單') toSC = payload.getText('result2')
             else if(toSC === '單') toSC = payload.getText('result1')
