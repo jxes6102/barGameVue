@@ -115,10 +115,12 @@ def modifyFile():
     with open("./lottery/today.json") as file:
         data = json.load(file)
         for key in todaytList:
-            data[key] = todaytList[key]
-
-        with open('./lottery/today.json', 'w') as f: 
-            json.dump(data, f, indent = 2)
+            if key in data:
+                data[key] = todaytList[key]
+                with open('./lottery/today.json', 'w') as f: 
+                    json.dump(data, f, indent = 2)
+            else:
+                break
 
 
 @scheduler.task('cron',id='job_2',day='*',hour='0',minute='10', misfire_grace_time=5000)
