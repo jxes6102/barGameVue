@@ -3,9 +3,13 @@
     <!-- 主畫面 -->
     <div class="relative min-h-[320px] h-[auto] md:h-[90vh] w-[100vw] flex-col flex flex-wrap justify-center items-center">
       <!-- 訊息 -->
-      <div class="w-full h-auto text-lg font-bold flex flex-wrap justify-center items-center text-red-500">{{ displayTitle }}</div>
-      <div class="w-full h-auto text-lg font-bold flex flex-wrap justify-center items-center text-red-500">{{ statistics }}</div>
-      <div class="w-full h-auto text-lg font-bold text-red-500">{{ displayTime }}</div>
+      <div class="relative w-[280px] md:w-[400px] h-auto flex flex-col flex-wrap justify-center items-center border border-solid border-red-800 rounded-md">
+        <img class="absolute w-[50px] h-[50px] md:w-[70px] md:h-[70px] left-0" src="@/assets/images/finger-1.png" alt="">
+        <img class="absolute w-[50px] h-[50px] md:w-[70px] md:h-[70px] right-0" src="@/assets/images/finger-2.png" alt="">
+        <div class="w-auto h-auto text-lg font-bold text-red-500">{{ displayTitle }}</div>
+        <div class="w-auto h-auto text-lg font-bold text-red-500">{{ statistics }}</div>
+        <div class="w-auto h-auto text-lg font-bold text-red-500">{{ displayTime }}</div>
+      </div>
       <div class="h-[215px] w-[265px] md:w-[685px] md:h-[550px] text-white bg-no-repeat bg-cover bg-center bg-[url('/src/assets/images/slotbackground.png')]">
         <div class="relative flex flex-wrap justify-center items-center top-[45%] left-[18%] md:top-[46%] md:left-[18%] w-[171px] h-[48px] md:w-[440px] md:h-[120px] bg-[#040d26] gap-[1px] md:gap-[5px]">
           <div

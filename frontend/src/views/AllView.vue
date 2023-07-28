@@ -2,7 +2,7 @@
     <div class="w-[100vw] h-[100vh] overflow-x-hidden overflow-y-auto bg-[#fcfce5] flex flex-wrap justify-center items-center">
         <div class="relative w-[100%] h-[12%] md:h-[15%] bg-[#ffdf00] flex justify-center items-center">
             <img class="absolute left-1 w-[75px] h-[60px] md:w-[100px] md:h-[80px]" src="@/assets/images/lottery.png">
-            <div class="text-xl md:text-4xl text-white">台灣5分賓果</div>
+            <div class="text-xl md:text-4xl text-white">{{ t("lotteryName") }}</div>
             <div class="absolute right-[2px] md:right-[10vw] w-[auto] h-auto flex flex-wrap justify-center items-center">
                 <!-- <div class="w-[auto] h-[auto]">{{t('choseDay')}} </div> -->
                 <div v-if="isMobiles" class="w-[auto] h-[auto] flex flex-wrap justify-center items-center">
@@ -67,15 +67,22 @@
                     </div>
                 </div>
             </div>
-        
-            <div class="w-auto h-[60vh] md:h-[auto] flex flex-wrap justify-center items-center gap-y-2 min-h-[60vh]">
-                <div class="w-[80%] h-auto flex flex-wrap justify-end items-center gap-x-2">
+            <div class="w-auto h-[60vh] md:h-[auto] flex flex-wrap justify-center items-center md:gap-y-2 min-h-[60vh]">
+                <div class="w-[auto] h-auto flex flex-wrap justify-center items-center border border-solid border-neutral-800 rounded-md">
+                    <div class="w-[100%] text-base md:text-xl">{{ t('sumArea') }}</div>
                     <div 
-                        v-for="(item,index) in tempResult" :key="index"
-                        class="w-[25px] h-[25px] md:w-[35px] md:h-[35px] rounded-[50%] flex justify-center items-center font-bold text-[12px] md:text-[16px] text-white ball-color-3"
-                    >{{ item }}</div>
+                        v-for="(item,index) in areaSumResult" 
+                        :key="index" 
+                        class="w-auto flex flex-wrap justify-around items-center">
+                        <div 
+                            class="w-[40px] md:w-[60px] text-[12px] md:text-base"
+                        >{{ item.title }}</div>
+                        <div 
+                            class="w-[25px] h-[25px] md:w-[35px] md:h-[35px] rounded-[50%] flex justify-center items-center font-bold text-[12px] md:text-[16px] text-white ball-color-3"
+                        >{{ item.number }}</div>
+                    </div>
                 </div>
-                <el-table v-if="isMobiles" :data="tableData" max-height="45vh" style="width:100vw;font-size:10px;">
+                <el-table v-if="isMobiles" :data="tableData" max-height="40vh" style="width:100vw;font-size:10px;">
                     <el-table-column prop="time" width="55" :label="t('openTime')"/>
                     <el-table-column sortable prop="no" :label="t('no')" width="85"/>
                     <el-table-column prop="reward" :label="t('reward')" width="180">
@@ -97,7 +104,7 @@
                     </el-table-column>
                     <el-table-column prop="decision" :label="t('singleDecision')" width="50"/>
                 </el-table>
-                <el-table v-else :data="tableData" max-height="55vh" style="width:auto;">
+                <el-table v-else :data="tableData" max-height="50vh" style="width:auto;">
                     <el-table-column prop="time" width="60" :label="t('openTime')"/>
                     <el-table-column sortable prop="no" :label="t('no')" width="100"/>
                     <el-table-column prop="reward" :label="t('reward')" width="570">
@@ -197,11 +204,15 @@ export default {
         if(!newData.value?.reward) return []
         return newData.value.reward
     })
-    const tempResult = computed(() => {
+    const areaSumResult = computed(() => {
         if(!newData.value?.reward) return []
         let target = []
         for(let i = 4;(i+2)<newData.value.reward.length;i+=3){
-            target.push(newData.value.reward.slice(i-1,i+2).reduce((accumulator, currentValue) => accumulator + parseInt(currentValue),0))
+            let sum = newData.value.reward.slice(i-1,i+2).reduce((accumulator, currentValue) => accumulator + parseInt(currentValue),0)
+            target.push({
+                title:(i-1)+"~"+(i+2)+': ',
+                number:sum
+            })
         }
         return target
     })
@@ -411,7 +422,7 @@ export default {
         statistics,
         timePercentage,
         pageSizeCount,
-        tempResult,
+        areaSumResult,
         ctrlGame,
         t,
         currentChange,
