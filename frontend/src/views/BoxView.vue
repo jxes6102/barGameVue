@@ -68,7 +68,7 @@
         </div>
       </div>
       <!-- 新歷史紀錄 -->
-      <div class="w-[800px] h-[50vh] flex flex-wrap justify-center items-center overflow-x-hidden z-[22]">
+      <div class="w-[auto] h-[50vh] flex flex-wrap justify-center items-center overflow-x-hidden z-[22]">
         <SmallHistory :tableData="sortData" :tableHeight="'45vh'"></SmallHistory>
       </div>
       <!-- 回上頁 -->

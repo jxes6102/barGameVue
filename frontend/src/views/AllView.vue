@@ -1,8 +1,31 @@
 <template>
     <div class="w-[100vw] h-[100vh] overflow-x-hidden overflow-y-auto bg-[#fcfce5] flex flex-wrap justify-center items-center">
-        <div class="w-[100%] h-[12%] md:h-[15%] bg-[#ffdf00] flex justify-center items-center">
-            <img class="absolute left-2 w-[75px] h-[60px] md:w-[100px] md:h-[80px]" src="@/assets/images/lottery.png">
-            <div class="text-3xl md:text-4xl text-white">台灣5分賓果</div>
+        <div class="relative w-[100%] h-[12%] md:h-[15%] bg-[#ffdf00] flex justify-center items-center">
+            <img class="absolute left-1 w-[75px] h-[60px] md:w-[100px] md:h-[80px]" src="@/assets/images/lottery.png">
+            <div class="text-xl md:text-4xl text-white">台灣5分賓果</div>
+            <div class="absolute right-[2px] md:right-[10vw] w-[auto] h-auto flex flex-wrap justify-center items-center">
+                <!-- <div class="w-[auto] h-[auto]">{{t('choseDay')}} </div> -->
+                <div v-if="isMobiles" class="w-[auto] h-[auto] flex flex-wrap justify-center items-center">
+                    <el-date-picker
+                        v-model="dayData"
+                        type="date"
+                        placeholder="選擇查詢日期"
+                        :disabled-date="disabledDate"
+                        :disabled="apiLoading"
+                        style="width: 110px;font-size: 12px;"
+                    />
+                </div>
+                <div v-else class="w-[auto] h-[auto] flex flex-wrap justify-center items-center">
+                    <el-date-picker
+                        v-model="dayData"
+                        type="date"
+                        placeholder="選擇查詢日期"
+                        :disabled-date="disabledDate"
+                        :disabled="apiLoading"
+                        style="width: 170px;font-size: 16px;"
+                    />
+                </div>
+            </div>
         </div>
         <div class="w-[100vw] h-[85%] flex flex-wrap justify-center items-center max-w-[1000px] gap-y-2">
             <div class="w-[100%] h-auto flex flex-wrap justify-center items-center gap-y-4 md:gap-y-2">
@@ -11,7 +34,7 @@
                         <div class="w-auto h-auto font-extrabold text-base md:text-xl text-red-500">{{ displayTitle }}</div>
                         <div class="w-auto h-auto font-extrabold text-xs md:text-sm text-red-500">{{ statistics}}</div>
                     </div>
-                    <div class="w-[250px] md:w-[380px] h-auto flex flex-wrap justify-center md:justify-start items-center gap-[2px]">
+                    <div class="w-[250px] md:w-[380px] h-auto flex flex-wrap justify-center md:justify-center items-center gap-[2px]">
                         <div 
                             v-for="(item,index) in drawResult" :key="index"
                             :class="(item===newData.special) ? 'ball-color-2' : 'ball-color-1'"
@@ -46,19 +69,6 @@
             </div>
         
             <div class="w-auto h-[60vh] md:h-[auto] flex flex-wrap justify-center items-center gap-y-2 min-h-[60vh]">
-                <div class="w-[300px] md:w-[800px] h-auto flex flex-wrap justify-center items-center">
-                    <div class="w-[25%] md:w-[33%] h-[100%] text-base md:text-xl font-bold flex flex-wrap justify-start items-center">{{ t('rewardRecord') }}</div>
-                    <div class="w-[25%] md:w-[33%] h-[100%] flex flex-wrap justify-end items-center">{{t('choseDay')}} </div>
-                    <div class="w-[50%] md:w-[34%] h-[100%] flex flex-wrap justify-center items-center">
-                        <el-date-picker
-                            v-model="dayData"
-                            type="date"
-                            placeholder="選擇查詢日期"
-                            :disabled-date="disabledDate"
-                            :disabled="apiLoading"
-                        />
-                    </div>
-                </div>
                 <el-table v-if="isMobiles" :data="tableData" max-height="45vh" style="width:100vw;font-size:10px;">
                     <el-table-column prop="time" width="55" :label="t('openTime')"/>
                     <el-table-column sortable prop="no" :label="t('no')" width="85"/>
@@ -74,7 +84,7 @@
                     </el-table-column>
                     <el-table-column prop="special" width="60" :label="t('specialNum')">
                         <template #default="scope">
-                            <div class="flex flex-wrap justify-start items-center gap-x-0.5">
+                            <div class="flex flex-wrap justify-center items-center gap-x-0.5">
                                 <div class="w-[20px] h-[20px] rounded-[50%] flex justify-center items-center font-bold text-white ball-color-2">{{ scope.row.special }}</div>
                             </div>
                         </template>
@@ -94,9 +104,9 @@
                             </div>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="special" width="80" :label="t('specialNum')">
+                    <el-table-column prop="special" width="70" :label="t('specialNum')">
                         <template #default="scope">
-                            <div class="flex flex-wrap justify-start items-center gap-x-0.5">
+                            <div class="flex flex-wrap justify-center items-center gap-x-0.5">
                                 <div class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-white ball-color-2">{{ scope.row.special }}</div>
                             </div>
                         </template>
@@ -209,7 +219,6 @@ export default {
             if(!historyData.value) return target
             for(let item of historyData.value[page.value]){
                 let numArr = item.preDrawCode.split(',')
-                numArr.splice(numArr.indexOf(numArr[numArr.length - 1]),1)
                 let singleCount = 0
                 for(let i = 0;i<numArr.length;i++){
                     if(numArr[i]%2 === 1) singleCount++
@@ -223,9 +232,10 @@ export default {
 
                 target.push({
                     no:item.preDrawIssue,
-                    reward:numArr,
+                    reward:numArr.slice(0,20),
                     decision:font,
-                    time:item.preDrawTime.split(' ')[1].substr(0,5)
+                    time:item.preDrawTime.split(' ')[1].substr(0,5),
+                    special:numArr[numArr.length - 1]
                 })
             }
         }

@@ -3,7 +3,7 @@
     <!-- 主畫面 -->
     <SmallCapsule :allData="newData"></SmallCapsule>
     <!-- 新歷史紀錄 -->
-    <div class="w-[800px] h-[50vh] md:h-[60vh] flex flex-wrap justify-center items-center z-[9999]">
+    <div class="w-[auto] h-[50vh] md:h-[60vh] flex flex-wrap justify-center items-center z-[9999]">
       <SmallHistory :tableData="sortData" :tableHeight="'45vh'"></SmallHistory>
     </div>
     <!-- 回上頁 -->

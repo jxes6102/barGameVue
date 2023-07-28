@@ -7,33 +7,39 @@
             <div class="flex flex-wrap justify-start items-center gap-x-[0.5px]">
               <div
                 v-for="(item,index) in scope.row.reward" :key="index"
-                :class="item === scope.row.special ? 'hidden' : ''"
                 class="w-[15px] h-[15px] rounded-[50%] flex justify-center items-center font-bold text-[12px] text-[white] ball-color-1"
               >{{ item }}</div>
-              <div 
-                class="w-[15px] h-[15px] rounded-[50%] flex justify-center items-center font-bold text-[12px] text-[white] ball-color-2"
-              >{{ scope.row.special }}</div>
             </div>
           </template>
         </el-table-column>
+        <el-table-column prop="special" width="60" :label="t('specialNum')">
+            <template #default="scope">
+                <div class="flex flex-wrap justify-center items-center gap-x-0.5">
+                    <div class="w-[20px] h-[20px] rounded-[50%] flex justify-center items-center font-bold text-white ball-color-2">{{ scope.row.special }}</div>
+                </div>
+            </template>
+        </el-table-column>
         <el-table-column prop="singleDecision" :label="t('singleDecision')" width="50"/>
     </el-table>
-    <el-table v-else :data="tableData" :max-height="tableHeights" style="width:800px;">
+    <el-table v-else :data="tableData" :max-height="tableHeights" style="width:auto;">
         <el-table-column prop="time" :label="t('openTime')" width="70"/>
         <el-table-column sortable prop="no" :label="t('no')" width="100"/>
-        <el-table-column prop="reward" :label="t('reward') ">
+        <el-table-column prop="reward" :label="t('reward')" width="570">
           <template #default="scope">
             <div class="flex flex-wrap justify-start items-center gap-x-0.5">
               <div 
                 v-for="(item,index) in scope.row.reward" :key="index"
-                :class="item === scope.row.special ? 'hidden' : ''"
                 class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-[white] ball-color-1"
               >{{ item }}</div>
-              <div 
-                class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-[white] ball-color-2"
-              >{{ scope.row.special }}</div>
             </div>
           </template>
+        </el-table-column>
+        <el-table-column prop="special" width="70" :label="t('specialNum')">
+            <template #default="scope">
+                <div class="flex flex-wrap justify-center items-center gap-x-0.5">
+                    <div class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-white ball-color-2">{{ scope.row.special }}</div>
+                </div>
+            </template>
         </el-table-column>
         <el-table-column prop="singleDecision" :label="t('singleDecision')" width="60"/>
     </el-table>
