@@ -69,6 +69,12 @@
             </div>
         
             <div class="w-auto h-[60vh] md:h-[auto] flex flex-wrap justify-center items-center gap-y-2 min-h-[60vh]">
+                <div class="w-[80%] h-auto flex flex-wrap justify-end items-center gap-x-2">
+                    <div 
+                        v-for="(item,index) in tempResult" :key="index"
+                        class="w-[25px] h-[25px] md:w-[35px] md:h-[35px] rounded-[50%] flex justify-center items-center font-bold text-[12px] md:text-[16px] text-white ball-color-3"
+                    >{{ item }}</div>
+                </div>
                 <el-table v-if="isMobiles" :data="tableData" max-height="45vh" style="width:100vw;font-size:10px;">
                     <el-table-column prop="time" width="55" :label="t('openTime')"/>
                     <el-table-column sortable prop="no" :label="t('no')" width="85"/>
@@ -189,11 +195,15 @@ export default {
     })
     const drawResult = computed(() => {
         if(!newData.value?.reward) return []
-        // let position = newData.value.reward.indexOf(newData.value.special)
-        // let target = newData.value.reward
-        // target.splice(position,1)
-        // target.push(newData.value.special)
         return newData.value.reward
+    })
+    const tempResult = computed(() => {
+        if(!newData.value?.reward) return []
+        let target = []
+        for(let i = 4;(i+2)<newData.value.reward.length;i+=3){
+            target.push(newData.value.reward.slice(i-1,i+2).reduce((accumulator, currentValue) => accumulator + parseInt(currentValue),0))
+        }
+        return target
     })
     const historyData = ref(null)
     const tableData = computed(() => {
@@ -401,6 +411,7 @@ export default {
         statistics,
         timePercentage,
         pageSizeCount,
+        tempResult,
         ctrlGame,
         t,
         currentChange,
@@ -416,5 +427,8 @@ export default {
 }
 .ball-color-2{
   background:radial-gradient(circle at 35% 25%,#f67b7b 0,#df5d5d 20%,#e14d4d 40%,#bb1919 90%,#d32f2f 95%,#e14d4d 100%);
+}
+.ball-color-3{
+  background:radial-gradient(circle at 35% 25%,#7ff67b 0,#68df5d 20%,#66e14d 40%,#31bb19 90%,#34d32f 95%,#63e14d 100%);
 }
 </style>

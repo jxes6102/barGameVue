@@ -52,7 +52,7 @@
     </div>
     <!-- 新歷史紀錄 -->
     <div class="w-[auto] h-[50vh] flex flex-wrap justify-center items-center">
-      <SmallHistory :tableData="sortData" :tableHeight="'45vh'"></SmallHistory>
+      <SmallHistory :tableData="sortData" :tableHeight="'50vh'"></SmallHistory>
     </div>
     <!-- 回上頁 -->
     <Back></Back>
