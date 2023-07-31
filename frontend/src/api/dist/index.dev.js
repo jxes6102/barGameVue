@@ -15,7 +15,7 @@ var TIMEOUT = 10000; // const DEFAULT_CACHE_EXPIRY_TIME = 3000
 
 exports.TIMEOUT = TIMEOUT;
 var CONFIG = {
-  baseURL: 'http://127.0.0.1:5000',
+  // baseURL: 'http://127.0.0.1:5000',
   // baseURL: 'https://ttlinblog.com',
   timeout: TIMEOUT
 };
