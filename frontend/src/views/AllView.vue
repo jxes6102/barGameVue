@@ -68,18 +68,18 @@
                 </div>
             </div>
             <div class="w-auto h-[60vh] md:h-[auto] flex flex-wrap justify-center items-center md:gap-y-2 min-h-[60vh]">
-                <div class="w-[100%] h-auto flex flex-wrap justify-center items-center gap-x-1 md:gap-x-2">
+                <div class="w-[100%] h-auto flex flex-wrap justify-center items-center gap-x-2">
                     <div class="w-[100%] text-base md:text-xl font-extrabold text-red-500">{{ t('sumArea') }}</div>
                     <div 
                         v-for="(item,index) in areaSumResult" 
                         :key="index" 
                         class="w-auto flex flex-wrap justify-around items-center">
                         <div v-for="(thing,thingIndex) in item.title" :key="thing" class="w-auto flex flex-wrap justify-center items-center">
-                            <div class="w-[20px] h-[20px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-[12px] md:text-[14px] text-white ball-color-3">{{ thing }}</div>
-                            <div>{{(thingIndex !== item.title.length - 1) ? "+" : "="}}</div>
+                            <div class="w-[22px] h-[22px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-[12px] md:text-[14px] text-white ball-color-3">{{ thing }}</div>
+                            <div class="font-black">{{(thingIndex !== item.title.length - 1) ? "+" : "="}}</div>
                         </div>
                         <div 
-                            class="w-[25px] h-[25px] md:w-[35px] md:h-[35px] rounded-[50%] flex justify-center items-center font-bold text-[12px] md:text-[16px] text-white ball-color-3"
+                            class="w-[22px] h-[22px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-[12px] md:text-[14px] text-white ball-color-3"
                         >{{ item.number }}</div>
                     </div>
                 </div>
