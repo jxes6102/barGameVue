@@ -437,10 +437,10 @@ export default {
   background:radial-gradient(circle at 35% 25%,#f67b7b 0,#df5d5d 20%,#e14d4d 40%,#bb1919 90%,#d32f2f 95%,#e14d4d 100%);
 }
 .ball-color-3{
-  background:radial-gradient(circle at 35% 25%,#f6c77b 0,#dfad5d 20%,#e1a34d 40%,#bba319 90%,#d3942f 95%,#e1ab4d 100%);
+  background:radial-gradient(circle at 35% 25%,#fae771 0,#f7e35f 20%,#fce238 40%,#fbdd20 90%,#fcdc12 95%,#ffdf00 100%);
 }
 .ball-color-4{
-  background:radial-gradient(circle at 35% 25%,#7bd2cf 0,#59b7b4 20%,#49aaa7 40%,#32a5a2 90%,#1b9b97 95%,#04908b 100%);
+  background:radial-gradient(circle at 35% 25%,#51cdc9 0,#3ed3ce 20%,#27aba6 40%,#14938f 90%,#077874 95%,#015856 100%);
 }
 
 .dayPick::v-deep .el-input__wrapper{
