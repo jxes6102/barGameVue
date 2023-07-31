@@ -79,7 +79,7 @@
                             <div class="font-black">{{(thingIndex !== item.title.length - 1) ? "+" : "="}}</div>
                         </div>
                         <div 
-                            class="w-[22px] h-[22px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-[12px] md:text-[14px] text-white ball-color-3"
+                            class="w-[22px] h-[22px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-[12px] md:text-[14px] text-white ball-color-4"
                         >{{ item.number }}</div>
                     </div>
                 </div>
@@ -439,8 +439,11 @@ export default {
 .ball-color-3{
   background:radial-gradient(circle at 35% 25%,#f6c77b 0,#dfad5d 20%,#e1a34d 40%,#bba319 90%,#d3942f 95%,#e1ab4d 100%);
 }
+.ball-color-4{
+  background:radial-gradient(circle at 35% 25%,#7bf685 0,#64df5d 20%,#4de172 40%,#19bb39 90%,#2fd345 95%,#4de154 100%);
+}
 
-.dayPick >>> .el-input__wrapper{
+.dayPick::v-deep .el-input__wrapper{
     background-color:#fdecbd
 }
 </style>
