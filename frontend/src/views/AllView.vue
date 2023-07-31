@@ -2,10 +2,10 @@
     <div class="w-[100vw] h-[100vh] overflow-x-hidden overflow-y-auto bg-[#fcfce5] flex flex-wrap justify-center items-center">
         <div class="relative w-[100%] h-[12%] md:h-[15%] bg-[#ffdf00] flex justify-center items-center">
             <img class="absolute left-1 w-[75px] h-[60px] md:w-[100px] md:h-[80px]" src="@/assets/images/lottery.png">
-            <div class="text-xl md:text-4xl text-white">{{ t("lotteryName") }}</div>
-            <div class="absolute right-[2px] md:right-[10vw] w-[auto] h-auto flex flex-wrap justify-center items-center">
+            <div class="text-base md:text-4xl text-white">{{ t("lotteryName") }}</div>
+            <div class="absolute right-0 md:right-[10vw] w-[auto] h-auto flex flex-wrap justify-center items-center">
                 <!-- <div class="w-[auto] h-[auto]">{{t('choseDay')}} </div> -->
-                <div v-if="isMobiles" class="w-[auto] h-[auto] flex flex-wrap justify-center items-center">
+                <div v-if="isMobiles" class="dayPick w-[auto] h-[auto] flex flex-wrap justify-center items-center">
                     <el-date-picker
                         v-model="dayData"
                         type="date"
@@ -15,7 +15,7 @@
                         style="width: 110px;font-size: 12px;"
                     />
                 </div>
-                <div v-else class="w-[auto] h-[auto] flex flex-wrap justify-center items-center">
+                <div v-else class="dayPick w-[auto] h-[auto] flex flex-wrap justify-center items-center">
                     <el-date-picker
                         v-model="dayData"
                         type="date"
@@ -68,15 +68,16 @@
                 </div>
             </div>
             <div class="w-auto h-[60vh] md:h-[auto] flex flex-wrap justify-center items-center md:gap-y-2 min-h-[60vh]">
-                <div class="w-[auto] h-auto flex flex-wrap justify-center items-center border border-solid border-neutral-800 rounded-md">
-                    <div class="w-[100%] text-base md:text-xl">{{ t('sumArea') }}</div>
+                <div class="w-[100%] h-auto flex flex-wrap justify-center items-center gap-x-1 md:gap-x-2">
+                    <div class="w-[100%] text-base md:text-xl font-extrabold text-red-500">{{ t('sumArea') }}</div>
                     <div 
                         v-for="(item,index) in areaSumResult" 
                         :key="index" 
                         class="w-auto flex flex-wrap justify-around items-center">
-                        <div 
-                            class="w-[40px] md:w-[60px] text-[12px] md:text-base"
-                        >{{ item.title }}</div>
+                        <div v-for="(thing,thingIndex) in item.title" :key="thing" class="w-auto flex flex-wrap justify-center items-center">
+                            <div class="w-[20px] h-[20px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-[12px] md:text-[14px] text-white ball-color-3">{{ thing }}</div>
+                            <div>{{(thingIndex !== item.title.length - 1) ? "+" : "="}}</div>
+                        </div>
                         <div 
                             class="w-[25px] h-[25px] md:w-[35px] md:h-[35px] rounded-[50%] flex justify-center items-center font-bold text-[12px] md:text-[16px] text-white ball-color-3"
                         >{{ item.number }}</div>
@@ -210,7 +211,7 @@ export default {
         for(let i = 4;(i+2)<newData.value.reward.length;i+=3){
             let sum = newData.value.reward.slice(i-1,i+2).reduce((accumulator, currentValue) => accumulator + parseInt(currentValue),0)
             target.push({
-                title:(i-1)+"~"+(i+2)+': ',
+                title:[i,i+1,i+2],
                 number:sum
             })
         }
@@ -333,19 +334,16 @@ export default {
     //監聽日期改變
     watch(dayData, async(newVal,oldVal)=>{
         await getHistory()
-        // console.log('dayData',dayData.value)
     })
     //pyapi拿今天獎項資料
     const pyCatchNum = async() => {
         await store.dispatch('pyGet',{getText:t})
         todayData.value = store.state.todayrecord
-        // console.log('todayData',store.state.todayrecord)
     }
     //拿除了今天獎項資料
     const getHistory = async(nowpage = 1) => {
         if(apiLoading.value) return false
         apiLoading.value = true
-        // console.log(dayData.value.getFullYear()+'-'+(dayData.value.getMonth()+1)+'-'+dayData.value.getDate())
         let date = dayData.value.getFullYear()+'-'+(dayData.value.getMonth()+1)+'-'+dayData.value.getDate()
         // let startTime = dayData.value.getFullYear()+'-'+(dayData.value.getMonth()+1)+'-'+dayData.value.getDate()+'%2000:00:00'
         // let endTime = dayData.value.getFullYear()+'-'+(dayData.value.getMonth()+1)+'-'+dayData.value.getDate()+'%2023:59:59'
@@ -392,7 +390,6 @@ export default {
     const openStatus = ref()
     const router = useRouter();
     const ctrlGame = (name) => {
-        // console.log('name',name)
         // openStatus.value = name
         if(name === 'chest'){
             router.push({ name: "boxView" });
@@ -440,6 +437,10 @@ export default {
   background:radial-gradient(circle at 35% 25%,#f67b7b 0,#df5d5d 20%,#e14d4d 40%,#bb1919 90%,#d32f2f 95%,#e14d4d 100%);
 }
 .ball-color-3{
-  background:radial-gradient(circle at 35% 25%,#7ff67b 0,#68df5d 20%,#66e14d 40%,#31bb19 90%,#34d32f 95%,#63e14d 100%);
+  background:radial-gradient(circle at 35% 25%,#f6c77b 0,#dfad5d 20%,#e1a34d 40%,#bba319 90%,#d3942f 95%,#e1ab4d 100%);
+}
+
+.dayPick >>> .el-input__wrapper{
+    background-color:#fdecbd
 }
 </style>

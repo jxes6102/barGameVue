@@ -4,8 +4,8 @@
     <div class="relative min-h-[320px] h-[auto] md:h-[90vh] w-[100vw] flex-col flex flex-wrap justify-center items-center">
       <!-- 訊息 -->
       <div class="relative w-[280px] md:w-[400px] h-auto flex flex-col flex-wrap justify-center items-center border border-solid border-red-800 rounded-md">
-        <img class="absolute w-[50px] h-[50px] md:w-[70px] md:h-[70px] left-0" src="@/assets/images/finger-1.png" alt="">
-        <img class="absolute w-[50px] h-[50px] md:w-[70px] md:h-[70px] right-0" src="@/assets/images/finger-2.png" alt="">
+        <img class="absolute w-[50px] h-[50px] md:w-[70px] md:h-[70px] left-0" src="@/assets/images/finger-4.png" alt="">
+        <img class="absolute w-[50px] h-[50px] md:w-[70px] md:h-[70px] right-0" src="@/assets/images/finger-3.png" alt="">
         <div class="w-auto h-auto text-lg font-bold text-red-500">{{ displayTitle }}</div>
         <div class="w-auto h-auto text-lg font-bold text-red-500">{{ statistics }}</div>
         <div class="w-auto h-auto text-lg font-bold text-red-500">{{ displayTime }}</div>
@@ -31,7 +31,7 @@
         </div>
       </div>
       <!--拉桿-->
-      <div class="absolute scale-[0.5] md:scale-100 h-[400px] w-[40px] bg-[#666] top-[calc(50%-200px)] right-[calc((100%-265px)/2-35px)] md:right-[calc((100%-685px)/2-60px)] cursor-pointer">
+      <div class="absolute scale-[0.5] md:scale-100 h-[400px] w-[40px] bg-[#666] top-[calc(50%-200px)] right-0 md:right-[calc((100%-685px)/2-60px)] cursor-pointer">
         <div
           v-show="!downStatus" 
           class="absolute block w-[20px] h-[200px] bg-[#ccc] bottom-1/2 left-0 right-0 rounded-[10px] my-0 mx-auto">

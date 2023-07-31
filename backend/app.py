@@ -123,7 +123,7 @@ def modifyFile():
                 break
 
 
-@scheduler.task('cron',id='job_2',day='*',hour='0',minute='10', misfire_grace_time=5000)
+@scheduler.task('cron',id='job_2',day='*',hour='7',minute='10', misfire_grace_time=5000)
 def checkJson():
     writeFile()
 
