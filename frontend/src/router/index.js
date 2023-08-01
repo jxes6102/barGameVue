@@ -56,4 +56,13 @@ const router = createRouter({
   routes
 })
 
+router.beforeEach(async (to, from) => {
+  // to：使用者要跳轉的路由
+  // from：使用者前一個訪問的路由
+  // 回傳 false 取消跳轉，true / undefined（預設）容許跳轉
+  // console.log('to',to)
+  // console.log('from',from)
+  return true
+})
+
 export default router

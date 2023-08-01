@@ -182,6 +182,7 @@ export default {
     /**
      * 
      */
+    console.log('load cache test gg')
     const { t } = useI18n()
     const store = useStore()
     const isMobiles = computed(() => {
