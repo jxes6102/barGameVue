@@ -12,6 +12,7 @@
                         placeholder="選擇查詢日期"
                         :disabled-date="disabledDate"
                         :disabled="apiLoading"
+                        :editable="false"
                         style="width: 110px;font-size: 12px;"
                     />
                 </div>
@@ -22,6 +23,7 @@
                         placeholder="選擇查詢日期"
                         :disabled-date="disabledDate"
                         :disabled="apiLoading"
+                        :editable="false"
                         style="width: 170px;font-size: 16px;"
                     />
                 </div>
@@ -41,12 +43,16 @@
                             class="w-[22px] h-[22px] md:w-[35px] md:h-[35px] rounded-[50%] flex justify-center items-center text-xs md:text-base font-bold text-white"
                         >{{ item }}</div>
                     </div>
-                    <div v-if="!drawStatus" class="absolute w-[100%] h-[100%] flex justify-center items-center">
+                    <div v-if="closeStatus" class="absolute w-[100%] h-[100%] flex justify-center items-center">
+                        <div class="z-[3] text-xl font-bold text-red-600">停開中...</div>
+                        <div class="absolute bg-[#A6A6A6] w-[100%] h-[100%] opacity-70"></div>
+                    </div>
+                    <div v-else-if="!drawStatus" class="absolute w-[100%] h-[100%] flex justify-center items-center">
                         <div class="z-[3] text-xl font-bold text-red-600">開獎中...</div>
                         <div class="absolute bg-[#A6A6A6] w-[100%] h-[100%] opacity-70"></div>
                     </div>
                 </div>
-                <div class="w-[100%] md:w-[50%] h-auto flex flex-wrap justify-center items-center gap-y-2">
+                <div class="relative w-[100%] md:w-[50%] h-auto flex flex-wrap justify-center items-center gap-y-2">
                     <div class="w-[100%] h-auto flex flex-wrap justify-center items-center gap-x-2">
                         <div class="w-auto h-auto flex flex-wrap justify-center items-center font-extrabold text-sm md:text-xl text-red-500">{{ t('time') }}</div>
                         <div class="w-[30%] md:w-[50%] px-2">
@@ -64,6 +70,10 @@
                             <el-icon size="20"><VideoPlay /></el-icon>
                             <div class="flex flex-wrap justify-center items-center text-base">{{ item.name }}</div>
                         </div>
+                    </div>
+                    <div v-if="closeStatus" class="absolute w-[100%] h-[100%] flex justify-center items-center">
+                        <div class="z-[3] text-xl font-bold text-red-600">停開中...</div>
+                        <div class="absolute bg-[#A6A6A6] w-[100%] h-[100%] opacity-70"></div>
                     </div>
                 </div>
             </div>
@@ -83,7 +93,7 @@
                         >{{ item.number }}</div>
                     </div>
                 </div>
-                <el-table v-if="isMobiles" :data="tableData" max-height="40vh" style="width:100vw;font-size:10px;">
+                <el-table v-if="isMobiles" :data="tableData" @sort-change="doSort" max-height="40vh" style="width:100vw;font-size:10px;">
                     <el-table-column prop="time" width="55" :label="t('openTime')"/>
                     <el-table-column sortable prop="no" :label="t('no')" width="85"/>
                     <el-table-column prop="reward" :label="t('reward')" width="180">
@@ -105,7 +115,7 @@
                     </el-table-column>
                     <el-table-column prop="decision" :label="t('singleDecision')" width="50"/>
                 </el-table>
-                <el-table v-else :data="tableData" max-height="50vh" style="width:auto;">
+                <el-table v-else :data="tableData" @sort-change="doSort" max-height="50vh" style="width:auto;">
                     <el-table-column prop="time" width="60" :label="t('openTime')"/>
                     <el-table-column sortable prop="no" :label="t('no')" width="100"/>
                     <el-table-column prop="reward" :label="t('reward')" width="570">
@@ -182,17 +192,21 @@ export default {
     /**
      * 
      */
-    console.log('load cache test deep')
+    console.log('load test 1')
     const { t } = useI18n()
     const store = useStore()
     const isMobiles = computed(() => {
         return store.state.isMobile
     })
+    const closeStatus = computed(() => {
+        return store.state.closeStatus
+    })
     const gameList = ref([
         {name:t('game1'),key:'bar'},
-        {name:t('game2'),key:'capsule'},
+        // {name:t('game2'),key:'capsule'},
         {name:t('game3'),key:'chest'},
     ])
+    const sortStatus = ref(false)
     const apiLoading = ref(false)
     const timer1 = ref(null)
     const dayData = ref(null)
@@ -262,7 +276,7 @@ export default {
                 })
             }
         }
-        
+        if(sortStatus.value) target.reverse()
         return target
     })
     const displayTitle = computed(() => {
@@ -402,6 +416,14 @@ export default {
         
     }
 
+    const doSort = (column) => {
+        if(column.order==="ascending"){
+            sortStatus.value = true
+        }else{
+            sortStatus.value = false
+        }
+    }
+
     return {
         drawResult,
         displayTitle,
@@ -421,6 +443,8 @@ export default {
         timePercentage,
         pageSizeCount,
         areaSumResult,
+        closeStatus,
+        doSort,
         ctrlGame,
         t,
         currentChange,

@@ -32,11 +32,6 @@ const routes = [
     component:boxView
   },
   {
-    path: '/allView',
-    name: 'allView',
-    component:allView
-  },
-  {
     path: '/about',
     name: 'about',
     // route level code-splitting

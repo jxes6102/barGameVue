@@ -10,7 +10,8 @@ export default createStore({
     todayrecord:[],
     allrecord:[],
     isMobile:false,
-    originTime:0
+    originTime:0,
+    closeStatus:false
   },
   getters: {
   },
@@ -33,6 +34,9 @@ export default createStore({
       }else{
         state.originTime = 300
       }
+    },
+    setClosestatus(state,value){
+      state.closeStatus = value
     }
   },
   actions: {
@@ -73,6 +77,12 @@ export default createStore({
     async getOriginTime(content,payload) {
       getTime().then((response) => {
         let date = new Date(response.data.time * 1000)
+        let hour = date.getHours()
+        if((hour>=0) && (hour<7)) {
+          content.commit('setClosestatus',true)
+        }else{
+          content.commit('setClosestatus',false)
+        }
         let second = 300 - (date.getMinutes()%5*60 + date.getSeconds())
         content.commit('setOriginTime',second)
       })
