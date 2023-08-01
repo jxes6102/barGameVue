@@ -27,7 +27,7 @@
                 </div>
             </div>
         </div>
-        <div class="w-[100vw] h-[85%] flex flex-wrap justify-center items-center max-w-[1000px] gap-y-2">
+        <div class="w-[100vw] h-auto md:h-[85%] flex flex-wrap justify-center items-center max-w-[1000px] md:gap-y-2">
             <div class="w-[100%] h-auto flex flex-wrap justify-center items-center gap-y-4 md:gap-y-2">
                 <div class="relative w-[100%] md:w-[50%] h-auto flex flex-wrap justify-center md:justify-center items-center gap-y-4 md:gap-y-2">
                     <div class="relative w-[100%] h-auto flex flex-wrap justify-center items-center gap-x-2">
