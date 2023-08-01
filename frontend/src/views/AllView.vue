@@ -182,7 +182,7 @@ export default {
     /**
      * 
      */
-    console.log('load cache test gg')
+    console.log('load cache test deep')
     const { t } = useI18n()
     const store = useStore()
     const isMobiles = computed(() => {
@@ -444,7 +444,7 @@ export default {
   background:radial-gradient(circle at 35% 25%,#51cdc9 0,#3ed3ce 20%,#27aba6 40%,#14938f 90%,#077874 95%,#015856 100%);
 }
 
-.dayPick::v-deep .el-input__wrapper{
+.dayPick:deep .el-input__wrapper{
     background-color:#fdecbd
 }
 </style>
