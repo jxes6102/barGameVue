@@ -9,10 +9,14 @@
             <div class="w-[100%] text-xs md:text-lg font-bold text-[red]">{{ displayTime }}</div>
         </div>
         <div class="relative w-[100vw] h-[100vw] md:w-[800px] md:h-[450px] md:top-[0px] bg-cover bg-repeat bg-[url('/src/assets/images/box_background_fix.png')] rounded-md md:rounded-xl">
-            <div class="absolute w-auto h-auto flex flex-wrap justify-center items-center">
+            <div v-if="isMobiles" class="absolute w-[100%] h-auto top-[10%] flex flex-wrap justify-center items-center z-[13]">
+                <div class="w-[100%] text-base font-bold text-[black]">{{ displayTitle }}</div>
+                <div class="w-[100%] text-xs font-bold text-[black]">{{ statistics }}</div>
+                <div class="w-[100%] text-xs font-bold text-[black]">{{ displayTime }}</div>
+            </div>
+            <div class="absolute w-[100%] h-auto top-[30%] md:top-0 flex flex-wrap justify-around items-center">
                 <div 
                     v-for="(item,index) in 10" :key="index"
-                    :class="'left-['+item*10+'px]'"
                     class="bg-[url('/src/assets/images/guan.png')] bg-contain bg-center bg-no-repeat w-[30px] h-[30px] md:w-[80px] md:h-[80px] z-[4] flex flex-wrap justify-center items-center">
                     <div v-if="upStatus" class="w-[100%] h-[100%] flex flex-col flex-wrap justify-center items-center">
                         <span
@@ -55,7 +59,7 @@
                 </div>
             </div>
             <!-- 滾輪 -->
-            <div class="absolute w-[100%] h-auto top-[15%] md:top-[20%] flex flex-wrap justify-center items-center gap-x-[5px] md:gap-x-[50px]">
+            <div class="absolute w-[100%] h-auto top-[40%] md:top-[20%] flex flex-wrap justify-center items-center gap-x-[5px] md:gap-x-[50px]">
                 <div 
                     :class="runBallStatus ? 'rotateStyle1' : ''" 
                     class="w-[140px] h-[140px] md:w-[280px] md:h-[280px] bg-[url('/src/assets/images/rotate.png')] bg-contain bg-center bg-no-repeat z-[4]"
@@ -69,7 +73,7 @@
       </div>
       <!-- 新歷史紀錄 -->
       <div class="w-[auto] h-[calc(100vh_-_100vw)] md:h-[50vh] flex flex-wrap justify-center items-center overflow-x-hidden z-[22]">
-        <SmallHistory :tableData="sortData" :tableHeight="'50vh'"></SmallHistory>
+        <SmallHistory :tableData="sortData" :tableHeight="'calc(100vh-100vw)'"></SmallHistory>
       </div>
       <!-- 回上頁 -->
       <Back></Back>
