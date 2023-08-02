@@ -229,9 +229,7 @@ export default {
       //   // startAnimation()
       //   // down()
       // },1500)
-      setTimeout(()=>{
-        pullbgm.value.play()
-      },1000)
+
     })
 
     onBeforeUnmount(() => {
