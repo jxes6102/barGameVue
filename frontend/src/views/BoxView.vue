@@ -8,13 +8,13 @@
             <div class="w-[100%] text-xs md:text-lg font-bold text-[red]">{{ statistics }}</div>
             <div class="w-[100%] text-xs md:text-lg font-bold text-[red]">{{ displayTime }}</div>
         </div>
-        <div class="relative w-[100vw] h-[100vw] md:w-[800px] md:h-[450px] md:top-[0px] bg-cover bg-repeat bg-[url('/src/assets/images/box_background_fix.png')] rounded-md md:rounded-xl">
+        <div class="relative w-[100vw] h-[100vw] md:w-[800px] md:h-[450px] md:top-[0px] bg-cover bg-repeat bg-[url('/src/assets/images/box_fix.png')] md:bg-[url('/src/assets/images/boxbackground.jpg')] rounded-md md:rounded-xl">
             <div v-if="isMobiles" class="absolute w-[100%] h-auto top-[10%] flex flex-wrap justify-center items-center z-[13]">
                 <div class="w-[100%] text-base font-bold text-[black]">{{ displayTitle }}</div>
                 <div class="w-[100%] text-xs font-bold text-[black]">{{ statistics }}</div>
                 <div class="w-[100%] text-xs font-bold text-[black]">{{ displayTime }}</div>
             </div>
-            <div class="absolute w-[100%] h-auto top-[30%] md:top-0 flex flex-wrap justify-around items-center">
+            <div class="absolute w-[100%] h-auto top-[calc(10%_+_60px)] md:top-0 flex flex-wrap justify-around items-center">
                 <div 
                     v-for="(item,index) in 10" :key="index"
                     class="bg-[url('/src/assets/images/guan.png')] bg-contain bg-center bg-no-repeat w-[30px] h-[30px] md:w-[80px] md:h-[80px] z-[4] flex flex-wrap justify-center items-center">

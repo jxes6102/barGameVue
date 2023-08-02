@@ -78,7 +78,7 @@
                 </div>
             </div>
             <div class="w-auto h-[60vh] md:h-[auto] flex flex-wrap justify-center items-center md:gap-y-2 min-h-[60vh]">
-                <div class="w-[100%] h-auto flex flex-wrap justify-center items-center gap-x-2">
+                <div class="relative w-[100%] h-auto flex flex-wrap justify-center items-center gap-x-2">
                     <div class="w-[100%] text-base md:text-xl font-extrabold text-red-500">{{ t('sumArea') }}</div>
                     <div 
                         v-for="(item,index) in areaSumResult" 
@@ -91,6 +91,10 @@
                         <div 
                             class="w-[22px] h-[22px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-[12px] md:text-[14px] text-white ball-color-4"
                         >{{ item.number }}</div>
+                    </div>
+                    <div v-if="closeStatus" class="absolute w-[100%] h-[100%] flex justify-center items-center">
+                        <div class="z-[3] text-xl font-bold text-red-600">停開中...</div>
+                        <div class="absolute bg-[#A6A6A6] w-[100%] h-[100%] opacity-70"></div>
                     </div>
                 </div>
                 <el-table v-if="isMobiles" :data="tableData" @sort-change="doSort" max-height="40vh" style="width:100vw;font-size:10px;">
