@@ -1,14 +1,14 @@
 <template>
     <div class="w-[100%] h-[100%] overflow-x-hidden overflow-y-auto flex flex-wrap justify-center items-start bg-[url('/src/assets/images/black_backGround.png')] bg-contain bg-center">
       <!-- 主畫面 -->
-      <div class="w-[100vw]  h-[50vh] md:h-[90vh] flex-col flex flex-wrap justify-center items-center">
+      <div class="w-[100vw] h-[100vw] md:h-[90vh] flex-col flex flex-wrap justify-center items-center">
         <!-- 開獎訊息 -->
-        <div class="w-[100%] h-auto flex flex-wrap justify-center items-center z-[13]">
+        <div v-if="!isMobiles" class="w-[100%] h-auto flex flex-wrap justify-center items-center z-[13]">
             <div class="w-[100%] text-base md:text-2xl font-bold text-[red]">{{ displayTitle }}</div>
             <div class="w-[100%] text-xs md:text-lg font-bold text-[red]">{{ statistics }}</div>
             <div class="w-[100%] text-xs md:text-lg font-bold text-[red]">{{ displayTime }}</div>
         </div>
-        <div class="relative w-[300px] h-[200px] md:w-[800px] md:h-[450px] top-[25px] md:top-[0px] bg-cover bg-no-repeat bg-[url('/src/assets/images/boxbackground.jpg')] rounded-md md:rounded-xl">
+        <div class="relative w-[100vw] h-[100vw] md:w-[800px] md:h-[450px] md:top-[0px] bg-cover bg-repeat bg-[url('/src/assets/images/box_background_fix.png')] rounded-md md:rounded-xl">
             <div class="absolute w-auto h-auto flex flex-wrap justify-center items-center">
                 <div 
                     v-for="(item,index) in 10" :key="index"
@@ -34,11 +34,11 @@
                     </div>
                 </div>
             </div>
-            <div class="absolute w-[100%] h-[100%] bottom-[0px] flex flex-wrap justify-center items-end">
+            <div class="absolute w-[100%] h-[100%] bottom-[5%] md:bottom-0 flex flex-wrap justify-center items-end">
                 <div v-if="runBallStatus" class="w-[100%] h-auto flex flex-wrap justify-center items-end">
                     <span
                         v-for="(item,index) in 80" :key="index"
-                        class="z-[2] w-[15px] h-[15px] md:w-[40px] md:h-[40px] rounded-[50%] font-bold text-[white] flex flex-wrap justify-center items-center text-[12px] md:text-lg ball-1"
+                        class="z-[2] w-[5vw] h-[5vw] md:w-[40px] md:h-[40px] rounded-[50%] font-bold text-[white] flex flex-wrap justify-center items-center text-[12px] md:text-lg ball-1"
                         :class="(!upStatus) || (otherBall.includes(item) && upStatus)  ? ('wieyi_'+item) : 'opacity-0'"
                     >
                         {{ item }}
@@ -47,7 +47,7 @@
                 <div v-else class="w-[100%] h-auto flex flex-wrap justify-center items-end">
                     <span
                         v-for="(item,index) in otherBall" :key="index"
-                        class="z-[2] w-[15px] h-[15px] md:w-[40px] md:h-[40px] rounded-[50%] font-bold text-[white] flex flex-wrap justify-center items-center text-[12px] md:text-lg ball-1"
+                        class="z-[2] w-[5vw] h-[5vw] md:w-[40px] md:h-[40px] rounded-[50%] font-bold text-[white] flex flex-wrap justify-center items-center text-[12px] md:text-lg ball-1"
                         :class="'diaol_' + item"
                     >
                         {{ item }}
@@ -68,7 +68,7 @@
         </div>
       </div>
       <!-- 新歷史紀錄 -->
-      <div class="w-[auto] h-[50vh] flex flex-wrap justify-center items-center overflow-x-hidden z-[22]">
+      <div class="w-[auto] h-[calc(100vh_-_100vw)] md:h-[50vh] flex flex-wrap justify-center items-center overflow-x-hidden z-[22]">
         <SmallHistory :tableData="sortData" :tableHeight="'50vh'"></SmallHistory>
       </div>
       <!-- 回上頁 -->
@@ -111,6 +111,9 @@ setup() {
     const runBallStatus = ref(false)
     const upStatus = ref(false)
     const historyData = ref([])
+    const isMobiles = computed(() => {
+        return store.state.isMobile
+    })
     const newData = computed(() => {
         if(!historyData.value) return {}
         return historyData.value[historyData.value.length - 1]
@@ -203,10 +206,10 @@ setup() {
             await pyCatchNum()
         } ), 3500)
 
-        // setTimeout(function (){
-        //     // openReward()
-        //     // runBallStatus.value = true
-        // },1500)
+        setTimeout(function (){
+            // openReward()
+            // runBallStatus.value = true
+        },1500)
         
     })
 
@@ -225,6 +228,7 @@ setup() {
             displayTitle,
             drawSpecial,
             statistics,
+            isMobiles,
             toStr,
         }
 

@@ -153,7 +153,7 @@
         <!-- 回上頁 -->
         <!-- <Back></Back> -->
         <load v-show="displayTitle === 0"></load>
-        <div v-if="openStatus" class="absolute w-full h-full flex flex-wrap justify-center items-center">
+        <!-- <div v-if="openStatus" class="absolute w-full h-full flex flex-wrap justify-center items-center">
             <div
                 @click="ctrlGame('')"
                 class="fixed w-full h-full left-0 top-0 bg-slate-800 z-[111] opacity-50 flex flex-wrap justify-center items-center"
@@ -161,7 +161,7 @@
             <div class="w-auto h-auto bg-[white] z-[122] flex flex-wrap justify-center items-center">
                 <component :is="openStatus" :allData="newData" :displayTitle="displayTitle" :displayTime="displayTime"></component>
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -174,9 +174,9 @@ import { useStore } from "vuex"
 import load from '@/components/load.vue'
 import { useI18n } from 'vue-i18n'
 import SmallHistory from '@/components/smallHistory.vue'
-import bar from '@/components/bar.vue'
-import capsule from '@/components/capsule.vue'
-import chest from '@/components/chest.vue'
+// import bar from '@/components/bar.vue'
+// import capsule from '@/components/capsule.vue'
+// import chest from '@/components/chest.vue'
 import { useRouter } from "vue-router"
 export default {
   name: 'allView',
@@ -184,15 +184,15 @@ export default {
     SmallHistory,
     Back,
     load,
-    bar,
-    capsule,
-    chest
+    // bar,
+    // capsule,
+    // chest
   },
   setup() {
     /**
      * 
      */
-    console.log('load test 1')
+    console.log('load test 2')
     const { t } = useI18n()
     const store = useStore()
     const isMobiles = computed(() => {
