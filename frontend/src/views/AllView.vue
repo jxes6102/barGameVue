@@ -77,7 +77,7 @@
                     </div>
                 </div>
             </div>
-            <div class="w-auto h-[60vh] md:h-[auto] flex flex-wrap justify-center items-center md:gap-y-2 min-h-[60vh]">
+            <div class="w-auto h-[auto] flex flex-wrap justify-center items-center gap-y-2 md:min-h-[60vh]">
                 <div class="relative w-[100%] h-auto flex flex-wrap justify-center items-center gap-x-2">
                     <div class="w-[100%] text-base md:text-xl font-extrabold text-red-500">{{ t('sumArea') }}</div>
                     <div 
@@ -202,7 +202,7 @@ export default {
     /**
      * 
      */
-    console.log('load test 7')
+    console.log('load test 8')
     const { t } = useI18n()
     const store = useStore()
     const isMobiles = computed(() => {
