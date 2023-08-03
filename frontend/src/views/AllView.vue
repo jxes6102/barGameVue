@@ -1,5 +1,5 @@
 <template>
-    <div class="w-[100vw] h-[100vh] overflow-x-hidden overflow-y-auto bg-[#fcfce5] flex flex-wrap justify-center items-center">
+    <div class="w-[100%] h-[100vh] overflow-x-hidden overflow-y-auto bg-[#fcfce5] flex flex-wrap justify-center items-center">
         <div class="relative w-[100%] h-[12%] md:h-[15%] bg-[#ffdf00] flex justify-center items-center">
             <img class="absolute left-1 w-[75px] h-[60px] md:w-[100px] md:h-[80px]" src="@/assets/images/lottery.png">
             <div class="text-base md:text-4xl text-white">{{ t("lotteryName") }}</div>
@@ -141,7 +141,7 @@
                     </el-table-column>
                     <el-table-column prop="decision" width="60" :label="t('singleDecision')"/>
                 </el-table>
-                <div class="w-[100%] h-auto flex flex-wrap justify-center items-center">
+                <!-- <div class="w-[100%] h-auto flex flex-wrap justify-center items-center">
                     <el-pagination
                         small
                         background
@@ -151,7 +151,7 @@
                         @current-change="currentChange"
                         :disabled="apiLoading"
                     />
-                </div>
+                </div> -->
             </div>
         </div>
         <!-- 回上頁 -->
@@ -202,7 +202,7 @@ export default {
     /**
      * 
      */
-    console.log('load test 4')
+    console.log('load test 7')
     const { t } = useI18n()
     const store = useStore()
     const isMobiles = computed(() => {
@@ -262,10 +262,11 @@ export default {
                 })
             }
             target.reverse()
-            target = target.slice((page.value)*100,(page.value+1)*100)
+            // target = target.slice((page.value)*100,(page.value+1)*100)
         }else {
             if(!historyData.value) return target
-            for(let item of historyData.value[page.value]){
+            // for(let item of historyData.value[page.value]){
+            for(let item of historyData.value){
                 let numArr = item.preDrawCode.split(',')
                 let singleCount = 0
                 for(let i = 0;i<numArr.length;i++){

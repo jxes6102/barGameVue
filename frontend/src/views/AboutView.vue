@@ -24,9 +24,10 @@
       <!-- <div>
         <input ref="inputType">
       </div> -->
-      <input id="myTextField" value="Text field." />
-      <div class="w-[100vw] h-[100vh] bg-[#6623ec] bg-[url('/src/assets/images/black_backGround.png')] bg-contain bg-center">
-        
+      <!-- <input id="myTextField" value="Text field." /> -->
+      <div class="w-[100vw] h-[100vh] bg-white">
+        <div v-html="strAns">
+        </div>
       </div>
     </div>
 </template>
@@ -143,8 +144,14 @@ export default {
     //   }, 2000)
     // }, 2000)
 
-    
-    
+    const str = ref('臺灣南投地方法院民事裁定 111年度司促字第7675號 聲 請 人 即債權人 固德資產管理顧問股份有限公司 法定代理人 王鈺喬 上列債權人聲請對債務人林祐霆發支付命令事件，本院裁定如下 ： 主 文 聲請駁回。 程序費用由債權人負擔。 理 由 一、按督促程序支付命令之送達，應依公示送達為之者，不得行 之，民事訴訟法第509條定有明文。又支付命令之聲請不合 於同法第508條至第511條之規定者，法院應以裁定駁回之， 同法第513條亦有明定。 二、本件債權人聲請對債務人林祐霆發支付命令，惟查債務')
+    const strRed = ref('林祐霆')
+    const strAns = computed(() => {
+      let pattern = new RegExp('('+strRed.value+')', 'gi')
+      let target = str.value
+      target = target.replace(pattern, '<span style="color:red">'+strRed.value+'</span>');
+      return target;
+    });
 
     const inputType = ref(true)
     // const inputType = ref(null)
@@ -202,7 +209,9 @@ export default {
         ggtest,
         checkStatus,
         checkItem,
-        inputType
+        inputType,
+        str,
+        strAns
     }
 
   }
@@ -215,5 +224,15 @@ export default {
   -webkit-backdrop-filter: blur( 14px );
   border-radius: 10px;
   border: 1px solid rgba( 255, 255, 255, 0.18 );
+}
+
+mark { 
+  background-color: white;
+  color: red;
+}
+
+.ggg{ 
+  background-color: white;
+  color: red;
 }
 </style>

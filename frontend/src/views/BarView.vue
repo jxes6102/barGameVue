@@ -322,7 +322,7 @@ export default {
 
 /*輪盤轉動動畫---start*/
 .is-play {
-  animation: resultPlay 3s infinite linear;
+  animation: resultPlay 8s infinite linear;
 }
 
 @keyframes resultPlay {

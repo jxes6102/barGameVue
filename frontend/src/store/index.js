@@ -104,12 +104,13 @@ export default createStore({
       await axios.get(url)
       .then((response) => {
         // handle success
-        let page = Math.floor((response.data.result.data.length/100) + 1)
-        let target = []
-        for(let i = 1;i<=page;i++){
-          target.push(response.data.result.data.slice((i-1)*100,i*100))
-        }
-        content.commit('setAllrecord',target)
+        // let page = Math.floor((response.data.result.data.length/100) + 1)
+        // let target = []
+        // for(let i = 1;i<=page;i++){
+        //   target.push(response.data.result.data.slice((i-1)*100,i*100))
+        // }
+        // content.commit('setAllrecord',target)
+        content.commit('setAllrecord',response.data.result.data)
       })
       .catch((error) => {
         // handle error
