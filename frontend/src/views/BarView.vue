@@ -1,7 +1,7 @@
 <template>
-  <div class="w-[100%] h-[100%] overflow-x-hidden overflow-y-auto flex flex-wrap justify-center items-center bg-[url('/src/assets/images/black_backGround.png')] bg-contain bg-center">
+  <div class="w-[100%] h-[100%] overflow-x-hidden overflow-y-auto flex flex-col flex-wrap justify-center items-center bg-[url('/src/assets/images/black_backGround.png')] bg-contain bg-center">
     <!-- 主畫面 -->
-    <div class="relative min-h-[320px] h-[auto] md:h-[90vh] w-[100vw] flex-col flex flex-wrap justify-center items-center">
+    <div class="relative min-h-[320px] h-[45vh] md:h-[90vh] w-[100vw] flex-col flex flex-wrap justify-center items-center">
       <!-- 訊息 -->
       <div class="relative w-[280px] md:w-[400px] h-auto flex flex-col flex-wrap justify-center items-center border border-solid border-red-800 rounded-md">
         <img class="absolute w-[50px] h-[50px] md:w-[70px] md:h-[70px] left-0" src="@/assets/images/finger-4.png" alt="">
@@ -54,9 +54,28 @@
         </Transition>
       </div>
     </div>
+    <div class="relative w-[90%] h-[auto] md:w-[auto] md:h-[auto] flex flex-wrap justify-center items-center mb-2 py-2 gap-x-2 border-2 border-solid border-red-800 rounded-md">
+          <div class="w-[100%] text-base md:text-xl font-extrabold text-red-500">{{ t('sumArea') }}</div>
+          <div 
+              v-for="(item,index) in areaSumResult" 
+              :key="index" 
+              class="w-auto flex flex-wrap justify-around items-center">
+              <div v-for="(thing,thingIndex) in item.title" :key="thing" class="w-auto flex flex-wrap justify-center items-center">
+                  <div class="w-[22px] h-[22px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-[12px] md:text-[14px] text-white ball-color-3">{{ thing }}</div>
+                  <div class="text-slate-100 font-black">{{(thingIndex !== item.title.length - 1) ? "+" : "="}}</div>
+              </div>
+              <div 
+                  class="w-[22px] h-[22px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-[12px] md:text-[14px] text-white ball-color-4"
+              >{{ item.number }}</div>
+          </div>
+          <div v-if="closeStatus" class="absolute w-[100%] h-[100%] flex justify-center items-center">
+              <div class="z-[3] text-xl font-bold text-red-600">{{t("stop")}}</div>
+              <div class="absolute bg-[#A6A6A6] w-[100%] h-[100%] opacity-70"></div>
+          </div>
+    </div>
     <!-- 新歷史紀錄 -->
-    <div class="w-[auto] h-[50vh] flex flex-wrap justify-center items-center">
-      <SmallHistory :tableData="sortData" :tableHeight="'50vh'"></SmallHistory>
+    <div class="w-[auto] h-[40vh] flex flex-wrap justify-center items-center">
+      <SmallHistory :tableData="sortData" :tableHeight="'40vh'"></SmallHistory>
     </div>
     <!-- 回上頁 -->
     <Back></Back>
@@ -67,13 +86,6 @@
     >
       <source  src="../assets/music/pullbgm.mp3" type="audio/mpeg">
     </audio>
-    <!-- <audio
-      loop
-      hidden="true"
-      ref="rollbgm"
-    >
-      <source  src="../assets/music/rollbgm.mp3" type="audio/mpeg">
-    </audio> -->
   </div>
 </template>
 <script>
@@ -114,7 +126,6 @@ export default {
     const downStatus = ref(false)
     const historyData = ref([])
     const pullbgm = ref(null)
-    // const rollbgm = ref(null)
     const newData = computed(() => {
       if(!historyData.value) return {}
       return historyData.value[historyData.value.length - 1]
@@ -146,10 +157,24 @@ export default {
         if(!historyData.value) return ''
         return t('rewardLen',{existing:(historyData.value?.length || 0),remain:203-(historyData.value?.length || 0)})
     })
+    const areaSumResult = computed(() => {
+        if(!newData.value?.reward) return []
+        let target = []
+        for(let i = 4;(i+2)<newData.value.reward.length;i+=3){
+            let sum = newData.value.reward.slice(i-1,i+2).reduce((accumulator, currentValue) => accumulator + parseInt(currentValue),0)
+            target.push({
+                title:[i,i+1,i+2],
+                number:sum
+            })
+        }
+        return target
+    })
+    const closeStatus = computed(() => {
+        return store.state.closeStatus
+    })
     // 監聽api改變後拉桿
     watch(newData, (newVal,oldVal)=>{
       if(oldVal){
-        // console.log(parseInt(newVal.no),parseInt(oldVal.no))
         if(parseInt(newVal.no) > parseInt(oldVal.no)) {
           down()
         }
@@ -165,7 +190,6 @@ export default {
             // setTimeout(()=>{
             //   downStatus.value = false
             // },1000)
-            // rollbgm.value.play()
         }
     })
     //pyapi拿獎項資料
@@ -183,18 +207,13 @@ export default {
           animationStatusArr.value[i] = false
           if(i==19){
             // historyItem.value.scrollTop = 0
-            // rollbgm.value.pause()
           }
         }, i*500, i)
       }
     }
     //拉手把動畫
     const down = () => {
-      // rollbgm.value.pause()
       pullbgm.value.play()
-      // setTimeout(()=>{
-      //   rollbgm.value.play()
-      // },1000)
       
       startAnimation()
       if(downStatus.value) return false
@@ -247,7 +266,9 @@ export default {
       displayTime,
       pullbgm,
       statistics,
-      // rollbgm,
+      areaSumResult,
+      closeStatus,
+      t,
       toStr,
     }
 
@@ -324,5 +345,11 @@ export default {
   100% {
     transform: translateY(0%)
   }
+}
+.ball-color-3{
+  background:radial-gradient(circle at 35% 25%,#fae771 0,#f7e35f 20%,#fce238 40%,#fbdd20 90%,#fcdc12 95%,#ffdf00 100%);
+}
+.ball-color-4{
+  background:radial-gradient(circle at 35% 25%,#51cdc9 0,#3ed3ce 20%,#27aba6 40%,#14938f 90%,#077874 95%,#015856 100%);
 }
 </style>

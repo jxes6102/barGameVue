@@ -20,5 +20,7 @@
     "game3":"開彩球",
     "specialNum":"特別號",
     "sumArea":"賓果各區加總值",
-    "lotteryName":"台灣5分賓果"
+    "lotteryName":"台灣5分賓果",
+    "stop":"停開中...",
+    "open":"開獎中..."
 }

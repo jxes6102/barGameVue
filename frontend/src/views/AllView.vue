@@ -44,11 +44,11 @@
                         >{{ item }}</div>
                     </div>
                     <div v-if="closeStatus" class="absolute w-[100%] h-[100%] flex justify-center items-center">
-                        <div class="z-[3] text-xl font-bold text-red-600">停開中...</div>
+                        <div class="z-[3] text-xl font-bold text-red-600">{{ t("stop") }}</div>
                         <div class="absolute bg-[#A6A6A6] w-[100%] h-[100%] opacity-70"></div>
                     </div>
                     <div v-else-if="!drawStatus" class="absolute w-[100%] h-[100%] flex justify-center items-center">
-                        <div class="z-[3] text-xl font-bold text-red-600">開獎中...</div>
+                        <div class="z-[3] text-xl font-bold text-red-600">{{ t("open")  }}</div>
                         <div class="absolute bg-[#A6A6A6] w-[100%] h-[100%] opacity-70"></div>
                     </div>
                 </div>
@@ -59,6 +59,10 @@
                             <el-progress status="warning" :percentage="timePercentage" :show-text="false" />
                         </div>
                         <div class="w-[auto] h-auto flex flex-wrap justify-center items-center font-extrabold text-sm md:text-base text-red-500">{{ displayTime }}</div>
+                        <div v-if="closeStatus" class="absolute w-[100%] h-[100%] flex justify-center items-center">
+                            <div class="z-[3] text-xl font-bold text-red-600">{{t("stop")}}</div>
+                            <div class="absolute bg-[#A6A6A6] w-[100%] h-[60%] opacity-70"></div>
+                        </div>
                     </div>
                     <div class="w-[100%] h-auto flex flex-wrap justify-center items-center gap-1">
                         <div
@@ -70,10 +74,6 @@
                             <el-icon size="20"><VideoPlay /></el-icon>
                             <div class="flex flex-wrap justify-center items-center text-base">{{ item.name }}</div>
                         </div>
-                    </div>
-                    <div v-if="closeStatus" class="absolute w-[100%] h-[100%] flex justify-center items-center">
-                        <div class="z-[3] text-xl font-bold text-red-600">停開中...</div>
-                        <div class="absolute bg-[#A6A6A6] w-[100%] h-[100%] opacity-70"></div>
                     </div>
                 </div>
             </div>
@@ -93,7 +93,7 @@
                         >{{ item.number }}</div>
                     </div>
                     <div v-if="closeStatus" class="absolute w-[100%] h-[100%] flex justify-center items-center">
-                        <div class="z-[3] text-xl font-bold text-red-600">停開中...</div>
+                        <div class="z-[3] text-xl font-bold text-red-600">{{t("stop")}}</div>
                         <div class="absolute bg-[#A6A6A6] w-[100%] h-[100%] opacity-70"></div>
                     </div>
                 </div>
@@ -166,6 +166,12 @@
                 <component :is="openStatus" :allData="newData" :displayTitle="displayTitle" :displayTime="displayTime"></component>
             </div>
         </div> -->
+        <audio
+            hidden="true"
+            ref="openbgm"
+            >
+            <source  src="../assets/music/openbgm.mp3" type="audio/mpeg">
+        </audio>
     </div>
 </template>
 
@@ -173,11 +179,11 @@
 /*eslint-disable*/
 // @ is an alias to /src
 import { ref,watch,computed,onMounted,onBeforeUnmount } from 'vue'
-import Back from '@/components/Back.vue'
 import { useStore } from "vuex"
 import load from '@/components/load.vue'
 import { useI18n } from 'vue-i18n'
 import SmallHistory from '@/components/smallHistory.vue'
+// import Back from '@/components/Back.vue'
 // import bar from '@/components/bar.vue'
 // import capsule from '@/components/capsule.vue'
 // import chest from '@/components/chest.vue'
@@ -186,8 +192,8 @@ export default {
   name: 'allView',
   components: {
     SmallHistory,
-    Back,
     load,
+    // Back,
     // bar,
     // capsule,
     // chest
@@ -196,7 +202,7 @@ export default {
     /**
      * 
      */
-    console.log('load test 2')
+    console.log('load test 4')
     const { t } = useI18n()
     const store = useStore()
     const isMobiles = computed(() => {
@@ -208,8 +214,9 @@ export default {
     const gameList = ref([
         {name:t('game1'),key:'bar'},
         // {name:t('game2'),key:'capsule'},
-        {name:t('game3'),key:'chest'},
+        // {name:t('game3'),key:'chest'},
     ])
+    const openbgm = ref(null)
     const sortStatus = ref(false)
     const apiLoading = ref(false)
     const timer1 = ref(null)
@@ -337,10 +344,8 @@ export default {
         let apiDate = (dayData.value.getMonth())+'-'+dayData.value.getDate()
         let nowDate = (new Date().getMonth())+'-'+(new Date().getDate())
         if((parseInt(newVal.no) > parseInt(oldVal.no)) && (apiDate===nowDate)) {
+            openbgm.value.play()
             drawStatus.value = true
-            setTimeout(()=>{
-                getHistory()
-            },25500)
         }
       }
     })
@@ -377,9 +382,8 @@ export default {
             await pyCatchNum()
         } ), 4500)
 
-        setTimeout(function (){
-            // console.log('newData',newData.value)
-        },1500)
+        // setTimeout(function (){
+        // },1500)
 
     })
 
@@ -448,6 +452,7 @@ export default {
         pageSizeCount,
         areaSumResult,
         closeStatus,
+        openbgm,
         doSort,
         ctrlGame,
         t,
