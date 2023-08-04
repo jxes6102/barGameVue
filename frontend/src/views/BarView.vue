@@ -68,10 +68,7 @@
                   class="w-[22px] h-[22px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-[12px] md:text-[14px] text-white ball-color-4"
               >{{ item.number }}</div>
           </div>
-          <div v-if="closeStatus" class="absolute w-[100%] h-[100%] flex justify-center items-center">
-              <div class="z-[3] text-xl font-bold text-red-600">{{t("stop")}}</div>
-              <div class="absolute bg-[#A6A6A6] w-[100%] h-[100%] opacity-70"></div>
-          </div>
+          <Block :closeStatus="closeStatus" :drawStatus="drawStatus" :type="'all'"></Block>
     </div>
     <!-- 新歷史紀錄 -->
     <div class="w-[auto] h-[40vh] flex flex-wrap justify-center items-center">
@@ -95,6 +92,7 @@ import { ref,computed,onMounted,onBeforeUnmount,watch } from 'vue'
 import Back from '@/components/Back.vue'
 import SmallHistory from '@/components/smallHistory.vue'
 import load from '@/components/load.vue'
+import Block from '@/components/Block.vue'
 import { useStore } from "vuex"
 import { useI18n } from 'vue-i18n'
 export default {
@@ -102,7 +100,8 @@ export default {
   components: {
     Back,
     SmallHistory,
-    load
+    load,
+    Block
   },
   setup() {
     /**
@@ -126,6 +125,7 @@ export default {
     const downStatus = ref(false)
     const historyData = ref([])
     const pullbgm = ref(null)
+    const drawStatus = ref(true)
     const newData = computed(() => {
       if(!historyData.value) return {}
       return historyData.value[historyData.value.length - 1]
@@ -176,6 +176,7 @@ export default {
     watch(newData, (newVal,oldVal)=>{
       if(oldVal){
         if(parseInt(newVal.no) > parseInt(oldVal.no)) {
+          drawStatus.value = true
           down()
         }
       }
@@ -183,6 +184,7 @@ export default {
     // 監聽剩餘秒數
     watch(nowSeconds, (newVal,oldVal)=>{
         if(newVal === 0){
+            drawStatus.value = false
             for(let i = 0;i<20;i++){
               animationStatusArr.value[i] = true
             }
@@ -268,6 +270,7 @@ export default {
       statistics,
       areaSumResult,
       closeStatus,
+      drawStatus,
       t,
       toStr,
     }

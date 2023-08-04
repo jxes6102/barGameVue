@@ -29,7 +29,7 @@
                 </div>
             </div>
         </div>
-        <div class="w-[100vw] h-auto md:h-[85%] flex flex-wrap justify-center items-center max-w-[1000px] md:gap-y-2">
+        <div class="w-[100vw] h-[88%] md:h-[85%] flex flex-col flex-wrap justify-start md:justify-center items-start md:items-center max-w-[1000px] gap-y-2">
             <div class="w-[100%] h-auto flex flex-wrap justify-center items-center gap-y-4 md:gap-y-2">
                 <div class="relative w-[100%] md:w-[50%] h-auto flex flex-wrap justify-center md:justify-center items-center gap-y-4 md:gap-y-2">
                     <div class="relative w-[100%] h-auto flex flex-wrap justify-center items-center gap-x-2">
@@ -43,14 +43,7 @@
                             class="w-[22px] h-[22px] md:w-[35px] md:h-[35px] rounded-[50%] flex justify-center items-center text-xs md:text-base font-bold text-white"
                         >{{ item }}</div>
                     </div>
-                    <div v-if="closeStatus" class="absolute w-[100%] h-[100%] flex justify-center items-center">
-                        <div class="z-[3] text-xl font-bold text-red-600">{{ t("stop") }}</div>
-                        <div class="absolute bg-[#A6A6A6] w-[100%] h-[100%] opacity-70"></div>
-                    </div>
-                    <div v-else-if="!drawStatus" class="absolute w-[100%] h-[100%] flex justify-center items-center">
-                        <div class="z-[3] text-xl font-bold text-red-600">{{ t("open")  }}</div>
-                        <div class="absolute bg-[#A6A6A6] w-[100%] h-[100%] opacity-70"></div>
-                    </div>
+                    <Block :closeStatus="closeStatus" :drawStatus="drawStatus" :type="'all'"></Block>
                 </div>
                 <div class="relative w-[100%] md:w-[50%] h-auto flex flex-wrap justify-center items-center gap-y-2">
                     <div class="w-[100%] h-auto flex flex-wrap justify-center items-center gap-x-2">
@@ -59,10 +52,7 @@
                             <el-progress status="warning" :percentage="timePercentage" :show-text="false" />
                         </div>
                         <div class="w-[auto] h-auto flex flex-wrap justify-center items-center font-extrabold text-sm md:text-base text-red-500">{{ displayTime }}</div>
-                        <div v-if="closeStatus" class="absolute w-[100%] h-[100%] flex justify-center items-center">
-                            <div class="z-[3] text-xl font-bold text-red-600">{{t("stop")}}</div>
-                            <div class="absolute bg-[#A6A6A6] w-[100%] h-[60%] opacity-70"></div>
-                        </div>
+                        <Block :closeStatus="closeStatus" :drawStatus="drawStatus" :type="'only'"></Block>
                     </div>
                     <div class="w-[100%] h-auto flex flex-wrap justify-center items-center gap-1">
                         <div
@@ -77,7 +67,7 @@
                     </div>
                 </div>
             </div>
-            <div class="w-auto h-[auto] flex flex-wrap justify-center items-center gap-y-2 md:min-h-[60vh]">
+            <div class="w-auto h-[auto] md:top-0 flex flex-wrap justify-center items-center gap-y-2 md:min-h-[60vh]">
                 <div class="relative w-[100%] h-auto flex flex-wrap justify-center items-center gap-x-2">
                     <div class="w-[100%] text-base md:text-xl font-extrabold text-red-500">{{ t('sumArea') }}</div>
                     <div 
@@ -92,12 +82,9 @@
                             class="w-[22px] h-[22px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-[12px] md:text-[14px] text-white ball-color-4"
                         >{{ item.number }}</div>
                     </div>
-                    <div v-if="closeStatus" class="absolute w-[100%] h-[100%] flex justify-center items-center">
-                        <div class="z-[3] text-xl font-bold text-red-600">{{t("stop")}}</div>
-                        <div class="absolute bg-[#A6A6A6] w-[100%] h-[100%] opacity-70"></div>
-                    </div>
+                    <Block :closeStatus="closeStatus" :drawStatus="drawStatus" :type="'all'"></Block>
                 </div>
-                <el-table v-if="isMobiles" :data="tableData" @sort-change="doSort" max-height="40vh" style="width:100vw;font-size:10px;">
+                <el-table v-if="isMobiles" :data="tableData" @sort-change="doSort" max-height="45vh" style="width:100vw;font-size:10px;">
                     <el-table-column prop="time" width="55" :label="t('openTime')"/>
                     <el-table-column sortable prop="no" :label="t('no')" width="85"/>
                     <el-table-column prop="reward" :label="t('reward')" width="180">
@@ -183,6 +170,7 @@ import { useStore } from "vuex"
 import load from '@/components/load.vue'
 import { useI18n } from 'vue-i18n'
 import SmallHistory from '@/components/smallHistory.vue'
+import Block from '@/components/Block.vue'
 // import Back from '@/components/Back.vue'
 // import bar from '@/components/bar.vue'
 // import capsule from '@/components/capsule.vue'
@@ -193,6 +181,7 @@ export default {
   components: {
     SmallHistory,
     load,
+    Block
     // Back,
     // bar,
     // capsule,
@@ -202,7 +191,7 @@ export default {
     /**
      * 
      */
-    console.log('load test 8')
+    console.log('load test 9')
     const { t } = useI18n()
     const store = useStore()
     const isMobiles = computed(() => {
