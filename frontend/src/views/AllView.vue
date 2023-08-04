@@ -84,7 +84,7 @@
                     </div>
                     <Block :closeStatus="closeStatus" :drawStatus="drawStatus" :type="'all'"></Block>
                 </div>
-                <el-table v-if="isMobiles" :data="tableData" @sort-change="doSort" max-height="45vh" style="width:100vw;font-size:10px;">
+                <el-table v-if="isMobiles" :data="tableData" @sort-change="doSort" max-height="40vh" style="width:100vw;font-size:10px;">
                     <el-table-column prop="time" width="55" :label="t('openTime')"/>
                     <el-table-column sortable prop="no" :label="t('no')" width="85"/>
                     <el-table-column prop="reward" :label="t('reward')" width="180">
