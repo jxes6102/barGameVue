@@ -29,7 +29,7 @@
                 </div>
             </div>
         </div>
-        <div class="w-[100vw] h-[88%] md:h-[85%] flex flex-col flex-wrap justify-start md:justify-center items-start md:items-center max-w-[1000px] gap-y-2">
+        <div class="w-[100vw] h-[88%] md:h-[85%] flex flex-col justify-start md:justify-center items-start md:items-center max-w-[1000px] gap-y-2">
             <div class="w-[100%] h-auto flex flex-wrap justify-center items-center gap-y-4 md:gap-y-2">
                 <div class="relative w-[100%] md:w-[50%] h-auto flex flex-wrap justify-center md:justify-center items-center gap-y-4 md:gap-y-2">
                     <div class="relative w-[100%] h-auto flex flex-wrap justify-center items-center gap-x-2">
@@ -84,7 +84,7 @@
                     </div>
                     <Block :closeStatus="closeStatus" :drawStatus="drawStatus" :type="'all'"></Block>
                 </div>
-                <el-table v-if="isMobiles" :data="tableData" @sort-change="doSort" max-height="40vh" style="width:100vw;font-size:10px;">
+                <el-table v-if="isMobiles" :data="tableData" @sort-change="doSort" max-height="45vh" style="width:100vw;font-size:10px;">
                     <el-table-column prop="time" width="55" :label="t('openTime')"/>
                     <el-table-column sortable prop="no" :label="t('no')" width="85"/>
                     <el-table-column prop="reward" :label="t('reward')" width="180">
@@ -191,7 +191,7 @@ export default {
     /**
      * 
      */
-    console.log('load test 9')
+    console.log('load test 11')
     const { t } = useI18n()
     const store = useStore()
     const isMobiles = computed(() => {
