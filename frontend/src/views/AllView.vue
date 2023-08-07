@@ -191,7 +191,7 @@ export default {
     /**
      * 
      */
-    console.log('load test 11')
+    console.log('load test 12')
     const { t } = useI18n()
     const store = useStore()
     const isMobiles = computed(() => {
