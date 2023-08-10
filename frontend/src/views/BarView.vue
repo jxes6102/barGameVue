@@ -77,12 +77,13 @@
     <!-- 回上頁 -->
     <Back></Back>
     <load v-show="!sortData.length"></load>
-    <!-- <audio
+    <audio
       hidden="true"
       ref="pullbgm"
+      autoplay
     >
       <source  src="../assets/music/pullbgm.mp3" type="audio/mpeg">
-    </audio> -->
+    </audio>
   </div>
 </template>
 <script>
@@ -124,9 +125,9 @@ export default {
     const timer1 = ref(null)
     const downStatus = ref(false)
     const historyData = ref([])
-    // const pullbgm = ref(null)
+    const pullbgm = ref(null)
     const drawStatus = ref(true)
-    let audio = new Audio(require("../assets/music/pullbgm.mp3"))
+    // let audio = new Audio(require("../assets/music/pullbgm.mp3"))
     const newData = computed(() => {
       if(!historyData.value) return {}
       return historyData.value[historyData.value.length - 1]
@@ -216,8 +217,8 @@ export default {
     }
     //拉手把動畫
     const down = () => {
-      // pullbgm.value.play()
-      audio.play()
+      pullbgm.value.play()
+      // audio.play()
       
       startAnimation()
       if(downStatus.value) return false
@@ -268,7 +269,7 @@ export default {
       sortData,
       displayTitle,
       displayTime,
-      // pullbgm,
+      pullbgm,
       statistics,
       areaSumResult,
       closeStatus,
