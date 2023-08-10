@@ -153,12 +153,12 @@
                 <component :is="openStatus" :allData="newData" :displayTitle="displayTitle" :displayTime="displayTime"></component>
             </div>
         </div> -->
-        <audio
+        <!-- <audio
             hidden="true"
             ref="openbgm"
             >
             <source  src="../assets/music/openbgm.mp3" type="audio/mpeg">
-        </audio>
+        </audio> -->
     </div>
 </template>
 
@@ -191,7 +191,7 @@ export default {
     /**
      * 
      */
-    console.log('load test 12')
+    console.log('load test 13')
     const { t } = useI18n()
     const store = useStore()
     const isMobiles = computed(() => {
@@ -205,13 +205,14 @@ export default {
         // {name:t('game2'),key:'capsule'},
         // {name:t('game3'),key:'chest'},
     ])
-    const openbgm = ref(null)
+    // const openbgm = ref(null)
     const sortStatus = ref(false)
     const apiLoading = ref(false)
     const timer1 = ref(null)
     const dayData = ref(null)
     const page = ref(0)
     const todayData = ref(null)
+    let audio = new Audio(require("../assets/music/openbgm.mp3"))
     const newData = computed(() => {
         if(!todayData.value) return {}
         return todayData.value[todayData.value.length-1]
@@ -334,7 +335,8 @@ export default {
         let apiDate = (dayData.value.getMonth())+'-'+dayData.value.getDate()
         let nowDate = (new Date().getMonth())+'-'+(new Date().getDate())
         if((parseInt(newVal.no) > parseInt(oldVal.no)) && (apiDate===nowDate)) {
-            openbgm.value.play()
+            // openbgm.value.play()
+            audio.play()
             drawStatus.value = true
         }
       }
@@ -442,7 +444,7 @@ export default {
         pageSizeCount,
         areaSumResult,
         closeStatus,
-        openbgm,
+        // openbgm,
         doSort,
         ctrlGame,
         t,
