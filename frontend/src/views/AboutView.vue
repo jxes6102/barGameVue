@@ -1,5 +1,5 @@
 <template>
-    <div class="w-[100vw] h-[100vh] bg-[#fcfce5] flex flex-wrap justify-center items-center">
+    <div id="simulate" class="w-[100vw] h-[100vh] bg-[#fcfce5] flex flex-col justify-center items-center gap-10">
       <!-- <div class="w-[250px] h-[250px] md:w-[650px] md:h-[550px] bg-no-repeat bg-cover bg-center bg-[url('/src/assets/images/slotbackground.png')]">
 
       </div> -->
@@ -25,10 +25,36 @@
         <input ref="inputType">
       </div> -->
       <!-- <input id="myTextField" value="Text field." /> -->
-      <div class="w-[100vw] h-[100vh] bg-white">
+      <!-- <div class="w-[100vw] h-[100vh] bg-white">
         <div v-html="strAns">
         </div>
+      </div> -->
+
+      <div class="">
+        <!-- <audio
+          controls
+          muted
+          autoplay
+          loop
+          ref="musicItem"
+        >
+          <source  src="../assets/music/pullbgm.mp3" type="audio/mpeg">
+        </audio> -->
+        <video 
+          ref="musicItem" 
+          controls
+          muted
+          autoplay
+          loop
+          class=""
+        >
+          <source :src="require('../assets/music/time.mp3')" type="audio/mpeg">
+        </video>
       </div>
+      <div class="w-auto h-auto p-[10px] bg-amber-300 rounded-md">
+        <button @click="playSound">dodo</button>
+      </div>
+      
     </div>
 </template>
 <script>
@@ -155,7 +181,27 @@ export default {
 
     const inputType = ref(true)
     // const inputType = ref(null)
+
+    const musicItem = ref(null)
+    const musicUrl = ref(require('../assets/music/openbgm.mp3'))
+
     onMounted(() => {
+      console.log('musicItem',musicItem.value)
+      // musicItem.value.play()
+      // setTimeout(function() {
+      //   musicItem.value.play()
+      // }, 0);
+      setTimeout(() => {
+        // document.getElementById('simulate').click()
+        // musicItem.value.muted = false
+        // musicItem.value.play()
+        
+      }, 2000)
+      // window.setInterval((() => {
+      //   playSound()
+      // } ), 2500)
+
+
       // console.log('inputType.value',inputType.value)
       
       // setTimeout(() => {
@@ -192,6 +238,21 @@ export default {
       //   }, 2000)
       // }, 2000)
     })
+
+    let playSoundStatus = false
+    const playSound = () => {
+      if(playSoundStatus) return false
+
+      playSoundStatus = true
+      musicItem.value.currentTime = 20
+      musicItem.value.muted = false
+      
+      setTimeout(() => {
+        musicItem.value.muted = true
+        playSoundStatus = false
+      }, 3000)
+      console.log('playSound')
+    }
     
     
     return {
@@ -211,7 +272,10 @@ export default {
         checkItem,
         inputType,
         str,
-        strAns
+        strAns,
+        musicUrl,
+        musicItem,
+        playSound
     }
 
   }
