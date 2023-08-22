@@ -6,7 +6,7 @@ export const TIMEOUT = 10000
 // https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=CWB-391D3550-2FAB-43F0-AA4D-06929689EB22
 const CONFIG = {
   // baseURL: 'http://127.0.0.1:5000',
-  // baseURL: 'https://ttlinblog.com',
+  baseURL: 'https://ttlinblog.com',
   timeout: TIMEOUT,
 }
 const instance = axios.create(CONFIG)

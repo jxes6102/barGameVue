@@ -80,7 +80,6 @@
     <audio
       hidden="true"
       ref="pullbgm"
-      autoplay
     >
       <source  src="../assets/music/pullbgm.mp3" type="audio/mpeg">
     </audio>
@@ -128,6 +127,9 @@ export default {
     const pullbgm = ref(null)
     const drawStatus = ref(true)
     // let audio = new Audio(require("../assets/music/pullbgm.mp3"))
+    const musicStatus = computed(() => {
+        return store.state.musicStatus
+    })
     const newData = computed(() => {
       if(!historyData.value) return {}
       return historyData.value[historyData.value.length - 1]
@@ -217,7 +219,9 @@ export default {
     }
     //拉手把動畫
     const down = () => {
-      pullbgm.value.play()
+      if(musicStatus.value) {
+        pullbgm.value.play()
+      }
       // audio.play()
       
       startAnimation()

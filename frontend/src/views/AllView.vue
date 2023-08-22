@@ -55,8 +55,9 @@
                         <Block :closeStatus="closeStatus" :drawStatus="drawStatus" :type="'only'"></Block>
                     </div>
                     <div class="w-[100%] h-auto flex flex-wrap justify-center items-center gap-1">
+                        <Music />
                         <div
-                            v-for="(item,index) in gameList" 
+                            v-for="(item,index) in gameList"
                             :key="index"
                             @click="ctrlGame(item.key)"
                             class="w-auto  bg-[#8ac6d1] px-1 py-1 rounded-[5px] flex flex-wrap justify-center items-center cursor-pointer hover:opacity-80"
@@ -156,7 +157,6 @@
         <audio
             hidden="true"
             ref="openbgm"
-            autoplay
             >
             <source  src="../assets/music/openbgm.mp3" type="audio/mpeg">
         </audio>
@@ -172,6 +172,7 @@ import load from '@/components/load.vue'
 import { useI18n } from 'vue-i18n'
 import SmallHistory from '@/components/smallHistory.vue'
 import Block from '@/components/Block.vue'
+import Music from '@/components/music.vue'
 // import Back from '@/components/Back.vue'
 // import bar from '@/components/bar.vue'
 // import capsule from '@/components/capsule.vue'
@@ -182,7 +183,8 @@ export default {
   components: {
     SmallHistory,
     load,
-    Block
+    Block,
+    Music,
     // Back,
     // bar,
     // capsule,
@@ -192,9 +194,12 @@ export default {
     /**
      * 
      */
-    console.log('load test 13')
+    console.log('load test 15')
     const { t } = useI18n()
     const store = useStore()
+    const musicStatus = computed(() => {
+        return store.state.musicStatus
+    })
     const isMobiles = computed(() => {
         return store.state.isMobile
     })
@@ -336,7 +341,9 @@ export default {
         let apiDate = (dayData.value.getMonth())+'-'+dayData.value.getDate()
         let nowDate = (new Date().getMonth())+'-'+(new Date().getDate())
         if((parseInt(newVal.no) > parseInt(oldVal.no)) && (apiDate===nowDate)) {
-            openbgm.value.play()
+            if(musicStatus.value) {
+                openbgm.value.play()
+            }
             // audio.play()
             drawStatus.value = true
         }
@@ -376,7 +383,7 @@ export default {
         } ), 4500)
 
         // setTimeout(function (){
-        // },1500)
+        // },5500)
 
     })
 

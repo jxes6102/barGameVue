@@ -11,7 +11,8 @@ export default createStore({
     allrecord:[],
     isMobile:false,
     originTime:0,
-    closeStatus:false
+    closeStatus:false,
+    musicStatus:false
   },
   getters: {
   },
@@ -37,7 +38,10 @@ export default createStore({
     },
     setClosestatus(state,value){
       state.closeStatus = value
-    }
+    },
+    setMusicStatus(state){
+      state.musicStatus = !state.musicStatus 
+    },
   },
   actions: {
     async pyGet(content,payload) {
