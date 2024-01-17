@@ -1,6 +1,6 @@
 import { createStore } from 'vuex'
 import axios from 'axios'
-import {getHistory,getTime} from '@/api/api'
+import {getTime} from '@/api/api'
 /*eslint-disable*/
 export default createStore({
   state: {
@@ -12,7 +12,8 @@ export default createStore({
     isMobile:false,
     originTime:0,
     closeStatus:false,
-    musicStatus:false
+    musicStatus:false,
+    dataTotal:0,
   },
   getters: {
   },
@@ -42,41 +43,104 @@ export default createStore({
     setMusicStatus(state){
       state.musicStatus = !state.musicStatus 
     },
+    setDataTotal(state,value){
+      state.dataTotal = value
+    },
   },
   actions: {
     async pyGet(content,payload) {
-      getHistory().then((response) => {
+      // "112043649": [
+      //   "09 15 17 18 24 34 36 37 38 45  53 55 59 62 68 69 72 74 75 76 ",
+      //   "24",
+      //   "\uff0d",
+      //   "\u548c",
+      //   "7:20"
+      // ],
+
+      //07:05~23:55
+      
+      let pageMax = 50
+      let url = 'https://api.taiwanlottery.com/TLCAPIWeB/Lottery/BingoResult'
+      url += '?openDate='+payload.date
+      url += '&pageNum='+payload.page
+      url += '&pageSize=' + pageMax
+      await axios.get(url)
+      .then((response) => {
         // handle success
-        let data = response.data
+        let data = response.data.content.bingoQueryResult
+        let count = response.data.content.totalSize
+
+        content.commit('setDataTotal',count)
         let target = []
         for(let key in data){
-            if(!data[key].length) continue
-            let toSC = data[key][3]
+            let toSC = data[key].oddEven
             if(toSC === '小單') toSC = payload.getText('result2')
             else if(toSC === '單') toSC = payload.getText('result1')
             else if(toSC === '小雙') toSC = payload.getText('result4')
             else if(toSC === '雙') toSC = payload.getText('result5')
             else if(toSC === '和') toSC = payload.getText('result3')
+
+            let time = count-((payload.page-1)*pageMax) - parseInt(key)
+            let min = time*5
+            let str = (((7+Math.floor(min/60)) < 10) ? '0'+ (7+Math.floor(min/60)) : (7+Math.floor(min/60)))
+            + ':' +
+            (((min%60) < 10) ? '0'+ (min%60) : (min%60))
+            
             target.push({
-                no:key,
-                reward:data[key][0].split(' ').filter((item) => item),
-                special:data[key][1],
-                sizeDecision:data[key][2],
-                singleDecision:toSC,
-                time:data[key][4]
+                no:data[key].drawTerm,
+                reward:data[key].openShowOrder,
+                rewardSort:data[key].bigShowOrder,
+                special:data[key].bullEye,
+                sizeDecision:'?',
+                // sizeDecision:data[key][2],
+                decision:toSC,
+                time:str
             })
+
+            content.commit('setTodayrecord',target)
         }
-        // console.log('target',target)
-        content.commit('setTodayrecord',target)
       })
-      .catch((error) => {
+      .catch(function (error) {
         // handle error
         console.log(error);
       })
-      .finally(()=> {
+      .finally(function () {
         // always executed
-        // console.log('always executed')
       });
+
+
+      // getHistory().then((response) => {
+      //   // handle success
+      //   let data = response.data
+      //   let target = []
+      //   for(let key in data){
+      //       if(!data[key].length) continue
+      //       let toSC = data[key][3]
+      //       if(toSC === '小單') toSC = payload.getText('result2')
+      //       else if(toSC === '單') toSC = payload.getText('result1')
+      //       else if(toSC === '小雙') toSC = payload.getText('result4')
+      //       else if(toSC === '雙') toSC = payload.getText('result5')
+      //       else if(toSC === '和') toSC = payload.getText('result3')
+      //       target.push({
+      //           no:key,
+      //           reward:data[key][0].split(' ').filter((item) => item),
+      //           special:data[key][1],
+      //           sizeDecision:data[key][2],
+      //           singleDecision:toSC,
+      //           time:data[key][4]
+      //       })
+      //   }
+      //   console.log('target',target)
+      //   content.commit('setTodayrecord',target)
+      // })
+      // .catch((error) => {
+      //   // handle error
+      //   console.log(error);
+      // })
+      // .finally(()=> {
+      //   // always executed
+      //   // console.log('always executed')
+      // });
     },
     async getOriginTime(content,payload) {
       getTime().then((response) => {

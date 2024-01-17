@@ -29,7 +29,7 @@
                 </div>
             </div>
         </div>
-        <div class="w-[100vw] h-[88%] md:h-[85%] flex flex-col justify-start md:justify-center items-start md:items-center max-w-[1000px] gap-y-2">
+        <div class="w-[100vw] h-[88%] md:h-[85%] flex flex-col justify-start items-start md:items-center max-w-[1000px] gap-y-2">
             <div class="w-[100%] h-auto flex flex-wrap justify-center items-center gap-y-4 md:gap-y-2">
                 <div class="relative w-[100%] md:w-[50%] h-auto flex flex-wrap justify-center md:justify-center items-center gap-y-4 md:gap-y-2">
                     <div class="relative w-[100%] h-auto flex flex-wrap justify-center items-center gap-x-2">
@@ -129,17 +129,18 @@
                     </el-table-column>
                     <el-table-column prop="decision" width="60" :label="t('singleDecision')"/>
                 </el-table>
-                <!-- <div class="w-[100%] h-auto flex flex-wrap justify-center items-center">
+                <div class="w-[100%] my-2 h-auto flex flex-wrap justify-center items-center">
                     <el-pagination
                         small
                         background
-                        :page-size="pageSizeCount"
+                        :page-size="50"
                         layout="prev, pager, next"
                         :total="tableTotal"
+                        :current-page="page"
                         @current-change="currentChange"
                         :disabled="apiLoading"
                     />
-                </div> -->
+                </div>
             </div>
         </div>
         <!-- 回上頁 -->
@@ -216,7 +217,7 @@ export default {
     const apiLoading = ref(false)
     const timer1 = ref(null)
     const dayData = ref(null)
-    const page = ref(0)
+    const page = ref(1)
     const todayData = ref(null)
     // let audio = new Audio(require("../assets/music/openbgm.mp3"))
     const newData = computed(() => {
@@ -242,48 +243,8 @@ export default {
     const historyData = ref(null)
     const tableData = computed(() => {
         let target = []
-        let choseDate = dayData.value.getMonth()+1+"/"+dayData.value.getDate()
-        let now = new Date()
-        let nowDate = now.getMonth()+1+"/"+now.getDate()
-        
-        if(choseDate===nowDate){
-            if(!todayData.value) return target
-            for(let item of todayData.value){
-                target.push({
-                    no:item.no,
-                    reward:item.reward,
-                    decision:item.singleDecision,
-                    time:item.time,
-                    special:item.special
-                })
-            }
-            target.reverse()
-            // target = target.slice((page.value)*100,(page.value+1)*100)
-        }else {
-            if(!historyData.value) return target
-            // for(let item of historyData.value[page.value]){
-            for(let item of historyData.value){
-                let numArr = item.preDrawCode.split(',')
-                let singleCount = 0
-                for(let i = 0;i<numArr.length;i++){
-                    if(numArr[i]%2 === 1) singleCount++
-                }
-                let font = ''
-                if(singleCount>=13) font = t('result1')
-                else if(singleCount>=11&&singleCount<13) font = t('result2')
-                else if(singleCount === 10) font = t('result3')
-                else if(singleCount>=8&&singleCount<10) font = t('result4')
-                else font = t('result5')
-
-                target.push({
-                    no:item.preDrawIssue,
-                    reward:numArr.slice(0,20),
-                    decision:font,
-                    time:item.preDrawTime.split(' ')[1].substr(0,5),
-                    special:numArr[numArr.length - 1]
-                })
-            }
-        }
+        if(!todayData.value) return target
+        target = todayData.value
         if(sortStatus.value) target.reverse()
         return target
     })
@@ -315,24 +276,7 @@ export default {
     })
     const drawStatus = ref(true)
     const tableTotal = computed(() => {
-        let choseDate = dayData.value.getMonth()+1+"/"+dayData.value.getDate()
-        let now = new Date()
-        let nowDate = now.getMonth()+1+"/"+now.getDate()
-        if(choseDate===nowDate){
-            return todayData.value?.length || 1
-        }else{
-            return historyData.value?.length || 1
-        }
-    })
-    const pageSizeCount = computed(()=>{
-        let choseDate = dayData.value.getMonth()+1+"/"+dayData.value.getDate()
-        let now = new Date()
-        let nowDate = now.getMonth()+1+"/"+now.getDate()
-        if(choseDate===nowDate){
-            return 100
-        }else{
-            return 1
-        }
+        return store.state.dataTotal
     })
     // 監聽api改變
     watch(newData, (newVal,oldVal)=>{
@@ -357,30 +301,49 @@ export default {
     })
     //監聽日期改變
     watch(dayData, async(newVal,oldVal)=>{
-        await getHistory()
+        // await getHistory()
+        page.value = 1
+        await pyCatchNum()
     })
     //pyapi拿今天獎項資料
     const pyCatchNum = async() => {
-        await store.dispatch('pyGet',{getText:t})
-        todayData.value = store.state.todayrecord
-    }
-    //拿除了今天獎項資料
-    const getHistory = async(nowpage = 1) => {
-        if(apiLoading.value) return false
+        if(apiLoading.value){
+            return false
+        }
         apiLoading.value = true
-        let date = dayData.value.getFullYear()+'-'+(dayData.value.getMonth()+1)+'-'+dayData.value.getDate()
-        // let startTime = dayData.value.getFullYear()+'-'+(dayData.value.getMonth()+1)+'-'+dayData.value.getDate()+'%2000:00:00'
-        // let endTime = dayData.value.getFullYear()+'-'+(dayData.value.getMonth()+1)+'-'+dayData.value.getDate()+'%2023:59:59'
-        await store.dispatch('getOtherHistory',{day:date})
-        page.value = 0
-        historyData.value = store.state.allrecord
+        // console.log('dayData.value',dayData.value)
+        // console.log('newVal',newVal.getFullYear(),newVal.getMonth()+1,newVal.getDate())
+        let dateStr = dayData.value.getFullYear() + '-' 
+        + (((dayData.value.getMonth()+1) < 10) ? '0' + (dayData.value.getMonth()+1) : (dayData.value.getMonth()+1))
+        + '-' + dayData.value.getDate()
+        
+        await store.dispatch('pyGet',{
+            getText:t,
+            date:dateStr,
+            page:page.value,
+        })
+
+        todayData.value = store.state.todayrecord
+
         apiLoading.value = false
     }
+    //拿除了今天獎項資料
+    // const getHistory = async(nowpage = 1) => {
+    //     if(apiLoading.value) return false
+    //     apiLoading.value = true
+    //     let date = dayData.value.getFullYear()+'-'+(dayData.value.getMonth()+1)+'-'+dayData.value.getDate()
+    //     // let startTime = dayData.value.getFullYear()+'-'+(dayData.value.getMonth()+1)+'-'+dayData.value.getDate()+'%2000:00:00'
+    //     // let endTime = dayData.value.getFullYear()+'-'+(dayData.value.getMonth()+1)+'-'+dayData.value.getDate()+'%2023:59:59'
+    //     await store.dispatch('getOtherHistory',{day:date})
+    //     page.value = 0
+    //     historyData.value = store.state.allrecord
+    //     apiLoading.value = false
+    // }
 
     onMounted(() => {
         timer1.value = window.setInterval((async() => {
             await pyCatchNum()
-        } ), 4500)
+        } ), 10000)
 
         // setTimeout(function (){
         // },5500)
@@ -396,12 +359,15 @@ export default {
         let date = new Date()
         date.setDate(date.getDate())
         dayData.value = date
+        
         pyCatchNum()
     }
     init()
 
     const currentChange = (value) => {
-        page.value = value - 1
+        // console.log('value',value)
+        page.value = value
+        pyCatchNum()
     }
 
     //設定選擇日期範圍
@@ -449,10 +415,10 @@ export default {
         tableTotal,
         statistics,
         timePercentage,
-        pageSizeCount,
         areaSumResult,
         closeStatus,
         openbgm,
+        page,
         doSort,
         ctrlGame,
         t,
