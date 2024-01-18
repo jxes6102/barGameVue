@@ -8,6 +8,7 @@
                 <div v-if="isMobiles" class="dayPick w-[auto] h-[auto] flex flex-wrap justify-center items-center">
                     <el-date-picker
                         v-model="dayData"
+                        popper-class="custom-date-picker"
                         type="date"
                         placeholder="選擇查詢日期"
                         :disabled-date="disabledDate"
@@ -261,10 +262,10 @@ export default {
         return newData.value.reward
     })
     const areaSumResult = computed(() => {
-        if(!newData.value?.reward) return []
+        if(!bingoLatest.value?.openShowOrder) return []
         let target = []
-        for(let i = 4;(i+2)<newData.value.reward.length;i+=3){
-            let sum = newData.value.reward.slice(i-1,i+2).reduce((accumulator, currentValue) => accumulator + parseInt(currentValue),0)
+        for(let i = 4;(i+2)<bingoLatest.value?.openShowOrder.length;i+=3){
+            let sum = bingoLatest.value?.openShowOrder.slice(i-1,i+2).reduce((accumulator, currentValue) => accumulator + parseInt(currentValue),0)
             target.push({
                 title:[i,i+1,i+2],
                 number:sum
