@@ -1,5 +1,5 @@
 <template>
-    <div class="w-[100%] h-[100vh] overflow-x-hidden overflow-y-auto bg-[#fcfce5] flex flex-wrap justify-center items-center">
+    <div class="w-[100%] h-[100vh] overflow-x-hidden overflow-y-auto bg-[#fcfce5] flex flex-wrap justify-center items-center pb-[15vh] md:pb-0">
         <div class="relative w-[100%] h-[12%] md:h-[15%] bg-[#ffdf00] flex justify-center items-center">
             <img class="absolute left-1 w-[75px] h-[60px] md:w-[100px] md:h-[80px]" src="@/assets/images/lottery.png">
             <div class="text-base md:text-4xl text-white">{{ t("lotteryName") }}</div>

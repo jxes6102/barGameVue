@@ -1,5 +1,5 @@
 <template>
-  <div class="w-[100%] h-[100%] overflow-x-hidden overflow-y-auto flex flex-col justify-center items-center bg-[url('/src/assets/images/black_backGround.png')] bg-contain bg-center">
+  <div class="w-[100%] h-[100%] overflow-x-hidden overflow-y-auto flex flex-col justify-center items-center bg-[url('/src/assets/images/black_backGround.png')] bg-contain bg-center pb-[15vh] md:pb-0">
     <!-- 主畫面 -->
     <div class="relative min-h-[320px] h-[45vh] md:h-[auto] w-[100vw] my-1 md:my-2 flex flex-col justify-center items-center">
       <!-- 訊息 -->
