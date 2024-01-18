@@ -200,7 +200,7 @@ export default createStore({
       await axios.get(url)
       .then((response) => {
         // handle success
-        console.log('response',response.data.content.lotteryBingoLatestPost)
+        //console.log('response',response.data.content.lotteryBingoLatestPost)
         content.commit('setBingoLatest',response.data.content.lotteryBingoLatestPost)
       })
       .catch((error) => {
