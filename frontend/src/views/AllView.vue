@@ -11,7 +11,7 @@
                         type="date"
                         placeholder="選擇查詢日期"
                         :disabled-date="disabledDate"
-                        :disabled="apiLoading"
+                        :disabled="false"
                         :editable="false"
                         style="width: 110px;font-size: 12px;"
                     />
@@ -22,7 +22,7 @@
                         type="date"
                         placeholder="選擇查詢日期"
                         :disabled-date="disabledDate"
-                        :disabled="apiLoading"
+                        :disabled="false"
                         :editable="false"
                         style="width: 170px;font-size: 16px;"
                     />
@@ -38,8 +38,8 @@
                     </div>
                     <div class="w-[250px] md:w-[380px] h-auto flex flex-wrap justify-center md:justify-center items-center gap-[2px]">
                         <div 
-                            v-for="(item,index) in drawResult" :key="index"
-                            :class="(item===newData.special) ? 'ball-color-2' : 'ball-color-1'"
+                            v-for="(item,index) in bingoLatest.openShowOrder" :key="index"
+                            :class="(item===bingoLatest.prizeNum.bullEye) ? 'ball-color-2' : 'ball-color-1'"
                             class="w-[22px] h-[22px] md:w-[35px] md:h-[35px] rounded-[50%] flex justify-center items-center text-xs md:text-base font-bold text-white"
                         >{{ item }}</div>
                     </div>
@@ -138,7 +138,7 @@
                         :total="tableTotal"
                         :current-page="page"
                         @current-change="currentChange"
-                        :disabled="apiLoading"
+                        :disabled="false"
                     />
                 </div>
             </div>
@@ -222,7 +222,7 @@ export default {
     // let audio = new Audio(require("../assets/music/openbgm.mp3"))
     const newData = computed(() => {
         if(!todayData.value) return {}
-        return todayData.value[todayData.value.length-1]
+        return todayData.value[0]
     })
     const drawResult = computed(() => {
         if(!newData.value?.reward) return []
@@ -249,8 +249,8 @@ export default {
         return target
     })
     const displayTitle = computed(() => {
-        if(!newData.value?.no) return 0
-        return (newData.value.no) + t('title') 
+        if(!bingoLatest.value?.drawTerm) return 0
+        return (bingoLatest.value.drawTerm) + t('title') 
     })
     const statistics = computed(() => {
         if(!tableData.value) return ''
@@ -259,7 +259,7 @@ export default {
         let nowDate = now.getMonth()+1+"/"+now.getDate()
         
         if(choseDate===nowDate){
-            return t('rewardLen',{existing:(todayData.value?.length || 0),remain:203-(todayData.value?.length || 0)})
+            return t('rewardLen',{existing:tableTotal.value,remain:203-tableTotal.value})
         }
 
         return ''
@@ -278,13 +278,17 @@ export default {
     const tableTotal = computed(() => {
         return store.state.dataTotal
     })
+    const bingoLatest = computed(() => {
+        return store.state.bingoLatest
+    })
     // 監聽api改變
-    watch(newData, (newVal,oldVal)=>{
+    watch(newData, async(newVal,oldVal)=>{
       if(oldVal){
         if(!newVal?.no || !oldVal.no) return false
         let apiDate = (dayData.value.getMonth())+'-'+dayData.value.getDate()
         let nowDate = (new Date().getMonth())+'-'+(new Date().getDate())
         if((parseInt(newVal.no) > parseInt(oldVal.no)) && (apiDate===nowDate)) {
+            await getLatest()
             if(musicStatus.value) {
                 openbgm.value.play()
             }
@@ -305,6 +309,9 @@ export default {
         page.value = 1
         await pyCatchNum()
     })
+    const getLatest = async() => {
+        await store.dispatch('getLatest')
+    }
     //pyapi拿今天獎項資料
     const pyCatchNum = async() => {
         if(apiLoading.value){
@@ -322,9 +329,9 @@ export default {
             date:dateStr,
             page:page.value,
         })
-
+        
         todayData.value = store.state.todayrecord
-
+        // console.log('todayData.value',todayData.value)
         apiLoading.value = false
     }
     //拿除了今天獎項資料
@@ -361,6 +368,7 @@ export default {
         dayData.value = date
         
         pyCatchNum()
+        getLatest()
     }
     init()
 
@@ -419,6 +427,7 @@ export default {
         closeStatus,
         openbgm,
         page,
+        bingoLatest,
         doSort,
         ctrlGame,
         t,

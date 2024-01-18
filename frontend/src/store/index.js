@@ -14,6 +14,8 @@ export default createStore({
     closeStatus:false,
     musicStatus:false,
     dataTotal:0,
+    bingoLatest:{},
+    bingoTotal:0
   },
   getters: {
   },
@@ -46,6 +48,9 @@ export default createStore({
     setDataTotal(state,value){
       state.dataTotal = value
     },
+    setBingoLatest(state,value){
+      state.bingoLatest = value
+    }
   },
   actions: {
     async pyGet(content,payload) {
@@ -69,7 +74,7 @@ export default createStore({
         // handle success
         let data = response.data.content.bingoQueryResult
         let count = response.data.content.totalSize
-
+        // console.log('response',response.data.content)
         content.commit('setDataTotal',count)
         let target = []
         for(let key in data){
@@ -83,8 +88,7 @@ export default createStore({
             let time = count-((payload.page-1)*pageMax) - parseInt(key)
             let min = time*5
             let str = (((7+Math.floor(min/60)) < 10) ? '0'+ (7+Math.floor(min/60)) : (7+Math.floor(min/60)))
-            + ':' +
-            (((min%60) < 10) ? '0'+ (min%60) : (min%60))
+            + ':' + (((min%60) < 10) ? '0'+ (min%60) : (min%60))
             
             target.push({
                 no:data[key].drawTerm,
@@ -189,7 +193,27 @@ export default createStore({
         // console.log('always executed')
       });
     },
+    async getLatest(content,payload) {
+      // console.log('payload',payload)
+      let url = 'https://api.taiwanlottery.com/TLCAPIWeB/Lottery/LatestBingoResult'
+
+      await axios.get(url)
+      .then((response) => {
+        // handle success
+        console.log('response',response.data.content.lotteryBingoLatestPost)
+        content.commit('setBingoLatest',response.data.content.lotteryBingoLatestPost)
+      })
+      .catch((error) => {
+        // handle error
+        console.log(error);
+      })
+      .finally(()=> {
+        // always executed
+        // console.log('always executed')
+      });
+    },
   },
+  
   modules: {
   }
 })
