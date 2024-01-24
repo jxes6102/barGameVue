@@ -1,9 +1,9 @@
 <template>
-  <div class="w-[100%] h-[100%] overflow-x-hidden overflow-y-auto flex flex-col flex-wrap justify-center items-center bg-[url('/src/assets/images/black_backGround.png')] bg-contain bg-center">
+  <div class="w-[100%] h-[100%] overflow-x-hidden overflow-y-auto flex flex-col justify-center items-center bg-[url('/src/assets/images/black_backGround.png')] bg-contain bg-center pb-[15vh] md:pb-0">
     <!-- 主畫面 -->
-    <div class="relative min-h-[320px] h-[45vh] md:h-[90vh] w-[100vw] flex-col flex flex-wrap justify-center items-center">
+    <div class="relative min-h-[320px] h-[45vh] md:h-[auto] w-[100vw] my-1 md:my-2 flex flex-col justify-center items-center">
       <!-- 訊息 -->
-      <div class="relative w-[280px] md:w-[400px] h-auto flex flex-col flex-wrap justify-center items-center border border-solid border-red-800 rounded-md">
+      <div class="relative w-[280px] md:w-[400px] h-auto flex flex-col justify-center items-center border border-solid border-red-800 rounded-md">
         <img class="absolute w-[50px] h-[50px] md:w-[70px] md:h-[70px] left-0" src="@/assets/images/finger-4.png" alt="">
         <img class="absolute w-[50px] h-[50px] md:w-[70px] md:h-[70px] right-0" src="@/assets/images/finger-3.png" alt="">
         <div class="w-auto h-auto text-lg font-bold text-red-500">{{ displayTitle }}</div>
@@ -54,7 +54,7 @@
         </Transition>
       </div>
     </div>
-    <div class="relative w-[90%] h-[auto] md:w-[auto] md:h-[auto] flex flex-wrap justify-center items-center mb-2 py-2 gap-x-2 border-2 border-solid border-red-800 rounded-md">
+    <div v-if="!sortStatus" class="relative w-[90%] h-[auto] md:w-[auto] md:h-[auto] flex flex-wrap justify-center items-center mb-2 py-2 gap-x-2 border-2 border-solid border-red-800 rounded-md">
           <div class="w-[100%] text-base md:text-xl font-extrabold text-red-500">{{ t('sumArea') }}</div>
           <div 
               v-for="(item,index) in areaSumResult" 
@@ -72,7 +72,19 @@
     </div>
     <!-- 新歷史紀錄 -->
     <div class="w-[auto] h-[40vh] flex flex-wrap justify-center items-center">
-      <SmallHistory :tableData="sortData" :tableHeight="'40vh'"></SmallHistory>
+      <SmallHistory :tableData="sortData" :tableHeight="'40vh'" @sortEvent="getSort"></SmallHistory>
+    </div>
+    <div class="w-[100%] my-2 h-auto flex flex-wrap justify-center items-center">
+      <el-pagination
+          small
+          background
+          :page-size="50"
+          layout="prev, pager, next"
+          :total="tableTotal"
+          :current-page="page"
+          @current-change="currentChange"
+          :disabled="false"
+      />
     </div>
     <!-- 回上頁 -->
     <Back></Back>
@@ -125,18 +137,22 @@ export default {
     const downStatus = ref(false)
     const historyData = ref([])
     const pullbgm = ref(null)
+    const page = ref(1)
     const drawStatus = ref(true)
     // let audio = new Audio(require("../assets/music/pullbgm.mp3"))
+    const bingoLatest = computed(() => {
+        return store.state.bingoLatest
+    })
     const musicStatus = computed(() => {
         return store.state.musicStatus
     })
     const newData = computed(() => {
       if(!historyData.value) return {}
-      return historyData.value[historyData.value.length - 1]
+      return historyData.value[0]
     })
     const drawResult = computed(() => {
-      if(!newData.value) return []
-      return newData.value.reward.map((item) => parseInt(item))
+      if(!bingoLatest.value?.openShowOrder) return []
+      return bingoLatest.value?.openShowOrder.map((item) => parseInt(item))
     })
     const specialPosition = computed(() => {
       if(!newData.value) return -1
@@ -144,11 +160,14 @@ export default {
     })
     const sortData = computed(() => {
       if(!historyData.value) return []
-      return JSON.parse(JSON.stringify(historyData.value)).reverse()
+      return JSON.parse(JSON.stringify(historyData.value))
+    })
+    const tableTotal = computed(() => {
+        return store.state.dataTotal
     })
     const displayTitle = computed(() => {
-        if(!newData.value?.no) return 0
-        return (parseInt(newData.value.no)) + t('title')
+      if(!bingoLatest.value?.drawTerm) return ''
+      return (bingoLatest.value.drawTerm) + t('title') 
     })
     const nowSeconds = computed(() => { 
         return store.state.originTime
@@ -159,13 +178,13 @@ export default {
     })
     const statistics = computed(() => {
         if(!historyData.value) return ''
-        return t('rewardLen',{existing:(historyData.value?.length || 0),remain:203-(historyData.value?.length || 0)})
+        return t('rewardLen',{existing:tableTotal.value,remain:203-tableTotal.value})
     })
     const areaSumResult = computed(() => {
-        if(!newData.value?.reward) return []
+        if(!bingoLatest.value?.openShowOrder) return []
         let target = []
-        for(let i = 4;(i+2)<newData.value.reward.length;i+=3){
-            let sum = newData.value.reward.slice(i-1,i+2).reduce((accumulator, currentValue) => accumulator + parseInt(currentValue),0)
+        for(let i = 4;(i+2)<bingoLatest.value?.openShowOrder.length;i+=3){
+            let sum = bingoLatest.value?.openShowOrder.slice(i-1,i+2).reduce((accumulator, currentValue) => accumulator + parseInt(currentValue),0)
             target.push({
                 title:[i,i+1,i+2],
                 number:sum
@@ -176,10 +195,15 @@ export default {
     const closeStatus = computed(() => {
         return store.state.closeStatus
     })
+    const today = computed(() => {
+        let now = new Date()
+        let nowDate = now.getFullYear() + "-" + (now.getMonth()+1)+"-"+now.getDate()
+        return nowDate
+    })
     // 監聽api改變後拉桿
     watch(newData, (newVal,oldVal)=>{
       if(oldVal){
-        if(parseInt(newVal.no) > parseInt(oldVal.no)) {
+        if((parseInt(newVal.no) > parseInt(oldVal.no)) && ((parseInt(newVal.no) - parseInt(oldVal.no)) == 1)) {
           drawStatus.value = true
           down()
         }
@@ -198,9 +222,18 @@ export default {
             // },1000)
         }
     })
+    const getLatest = async() => {
+        await store.dispatch('getLatest')
+    }
     //pyapi拿獎項資料
     const pyCatchNum = async() => {
-      await store.dispatch('pyGet',{getText:t})
+
+      await store.dispatch('pyGet',{
+          getText:t,
+          date:today.value,
+          page:page.value,
+      })
+
       historyData.value = store.state.todayrecord
     }
     //開獎動畫
@@ -235,10 +268,16 @@ export default {
     const toStr = (val) => {
       return val.join(' ')
     }
+    const currentChange = (value) => {
+        // console.log('value',value)
+        page.value = value
+        pyCatchNum()
+    }
     //初始動作
     const init = () => {
       
       pyCatchNum()
+      getLatest()
       
       for(let i = 0;i<20;i++){
         animationStatusArr.value.push(false)
@@ -248,10 +287,16 @@ export default {
 
     init()
 
+    const sortStatus = ref(false)
+    const getSort = (value) => {
+      sortStatus.value = value
+    }
+
     onMounted(() => {
       timer1.value = window.setInterval((async() => {
         await pyCatchNum()
-      } ), 3500)
+        await getLatest()
+      } ), 10000)
 
       // setTimeout(()=>{
       //   // startAnimation()
@@ -278,6 +323,11 @@ export default {
       areaSumResult,
       closeStatus,
       drawStatus,
+      page,
+      tableTotal,
+      sortStatus,
+      getSort,
+      currentChange,
       t,
       toStr,
     }

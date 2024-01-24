@@ -2,13 +2,34 @@
     <el-table v-if="isMobiles" :data="sortData" @sort-change="doSort" :max-height="tableHeights" style="width:100vw;font-size:10px;">
         <el-table-column prop="time" :label="t('openTime')" width="55"/>  
         <el-table-column sortable prop="no" :label="t('no')" width="85"/>
-        <el-table-column prop="reward" :label="t('reward')" width="180">
+        <el-table-column prop="reward" width="180">
+          <template #header>
+              <div class="flex flex-wrap justify-start items-center">
+                  <div>{{t('reward')}}</div>
+                  <div class="mx-[1px]">
+                    <button @click="doSort"
+                        :class="sortStatus ? 'bg-yellow-400' : 'bg-gray-100'"
+                        class="transition-all mx-[1px] px-1 rounded text-gray-400">{{t('sizeSort')}}</button>
+                    <button @click="disableSort"
+                        :class="!sortStatus ? 'bg-yellow-400' : 'bg-gray-100'"
+                        class="transition-all mx-[1px] px-1 rounded text-gray-400">{{t('openSort')}}</button>
+                  </div>
+              </div>
+          </template>
           <template #default="scope">
             <div class="flex flex-wrap justify-start items-center gap-x-[0.5px]">
-              <div
-                v-for="(item,index) in scope.row.reward" :key="index"
-                class="w-[15px] h-[15px] rounded-[50%] flex justify-center items-center font-bold text-[12px] text-[white] ball-color-1"
-              >{{ item }}</div>
+              <template v-if="sortStatus">
+                  <div
+                    v-for="(item,index) in scope.row.rewardSort" :key="index"
+                    class="w-[15px] h-[15px] rounded-[50%] flex justify-center items-center font-bold text-[12px] text-[white] ball-color-1"
+                  >{{ item }}</div>
+              </template>
+              <template v-else>
+                <div
+                  v-for="(item,index) in scope.row.reward" :key="index"
+                  class="w-[15px] h-[15px] rounded-[50%] flex justify-center items-center font-bold text-[12px] text-[white] ball-color-1"
+                >{{ item }}</div>
+              </template>
             </div>
           </template>
         </el-table-column>
@@ -19,18 +40,39 @@
                 </div>
             </template>
         </el-table-column>
-        <el-table-column prop="singleDecision" :label="t('singleDecision')" width="50"/>
+        <el-table-column prop="decision" :label="t('singleDecision')" width="50"/>
     </el-table>
     <el-table v-else :data="sortData" @sort-change="doSort" :max-height="tableHeights" style="width:auto;">
         <el-table-column prop="time" :label="t('openTime')" width="70"/>
         <el-table-column sortable prop="no" :label="t('no')" width="100"/>
-        <el-table-column prop="reward" :label="t('reward')" width="570">
+        <el-table-column prop="reward" width="570">
+          <template #header>
+            <div class="flex flex-wrap justify-start items-center">
+                <div>{{t('reward')}}</div>
+                <div class="mx-1">
+                  <button @click="doSort"
+                      :class="sortStatus ? 'bg-yellow-400' : 'bg-gray-100'"
+                      class="transition-all mx-1 px-1 rounded text-gray-400">{{t('sizeSort')}}</button>
+                  <button @click="disableSort"
+                      :class="!sortStatus ? 'bg-yellow-400' : 'bg-gray-100'"
+                      class="transition-all mx-1 px-1 rounded text-gray-400">{{t('openSort')}}</button>
+                </div>
+            </div>
+          </template>
           <template #default="scope">
-            <div class="flex flex-wrap justify-start items-center gap-x-0.5">
-              <div 
-                v-for="(item,index) in scope.row.reward" :key="index"
-                class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-[white] ball-color-1"
-              >{{ item }}</div>
+            <div class="flex flex-wrap justify-start items-center gap-x-0.5"> 
+              <template v-if="sortStatus">
+                  <div 
+                    v-for="(item,index) in scope.row.rewardSort" :key="index"
+                    class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-[white] ball-color-1"
+                  >{{ item }}</div>
+              </template>
+              <template v-else>
+                <div 
+                  v-for="(item,index) in scope.row.reward" :key="index"
+                  class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-[white] ball-color-1"
+                >{{ item }}</div>
+              </template>
             </div>
           </template>
         </el-table-column>
@@ -41,7 +83,7 @@
                 </div>
             </template>
         </el-table-column>
-        <el-table-column prop="singleDecision" :label="t('singleDecision')" width="60"/>
+        <el-table-column prop="decision" :label="t('singleDecision')" width="60"/>
     </el-table>
 </template>
 <script>
@@ -51,6 +93,7 @@ import { ref,computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 export default {
   components: {},
+  emits: ['sortEvent'],
   props: {
     tableData: {
         type: Array,
@@ -63,7 +106,7 @@ export default {
         default: '25vh'
     }
   },
-  setup(props) {
+  setup(props, { emit }) {
     const { t } = useI18n()
     const store = useStore()
     const sortStatus = ref(false)
@@ -75,20 +118,23 @@ export default {
     });
     const sortData = computed(() => {
         let target = tableDatas.value
-        if(sortStatus.value) {
-          target.reverse()
-        }
+        // if(sortStatus.value) {
+        //   target.reverse()
+        // }
         return target
     });
     const tableHeights = computed(() => {
         return props.tableHeight
     });
-    const doSort = (column) => {
-        if(column.order==="ascending"){
-            sortStatus.value = true
-        }else{
-            sortStatus.value = false
-        }
+
+    const doSort = () => {
+        sortStatus.value = true
+        emit('sortEvent',sortStatus.value)
+    }
+
+    const disableSort = () => {
+        sortStatus.value = false
+        emit('sortEvent',sortStatus.value)
     }
 
     return {
@@ -96,7 +142,9 @@ export default {
         tableDatas,
         tableHeights,
         sortData,
+        sortStatus,
         doSort,
+        disableSort,
         t
     }
 

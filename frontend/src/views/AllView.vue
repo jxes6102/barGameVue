@@ -1,5 +1,5 @@
 <template>
-    <div class="w-[100%] h-[100vh] overflow-x-hidden overflow-y-auto bg-[#fcfce5] flex flex-wrap justify-center items-center">
+    <div class="w-[100%] h-[100vh] overflow-x-hidden overflow-y-auto bg-[#fcfce5] flex flex-wrap justify-center items-center pb-[15vh] md:pb-0">
         <div class="relative w-[100%] h-[12%] md:h-[15%] bg-[#ffdf00] flex justify-center items-center">
             <img class="absolute left-1 w-[75px] h-[60px] md:w-[100px] md:h-[80px]" src="@/assets/images/lottery.png">
             <div class="text-base md:text-4xl text-white">{{ t("lotteryName") }}</div>
@@ -8,10 +8,11 @@
                 <div v-if="isMobiles" class="dayPick w-[auto] h-[auto] flex flex-wrap justify-center items-center">
                     <el-date-picker
                         v-model="dayData"
+                        popper-class="custom-date-picker"
                         type="date"
                         placeholder="選擇查詢日期"
                         :disabled-date="disabledDate"
-                        :disabled="apiLoading"
+                        :disabled="false"
                         :editable="false"
                         style="width: 110px;font-size: 12px;"
                     />
@@ -22,14 +23,14 @@
                         type="date"
                         placeholder="選擇查詢日期"
                         :disabled-date="disabledDate"
-                        :disabled="apiLoading"
+                        :disabled="false"
                         :editable="false"
                         style="width: 170px;font-size: 16px;"
                     />
                 </div>
             </div>
         </div>
-        <div class="w-[100vw] h-[88%] md:h-[85%] flex flex-col justify-start md:justify-center items-start md:items-center max-w-[1000px] gap-y-2">
+        <div class="w-[100vw] h-[88%] md:h-[85%] flex flex-col justify-start items-start md:items-center max-w-[1000px] gap-y-2">
             <div class="w-[100%] h-auto flex flex-wrap justify-center items-center gap-y-4 md:gap-y-2">
                 <div class="relative w-[100%] md:w-[50%] h-auto flex flex-wrap justify-center md:justify-center items-center gap-y-4 md:gap-y-2">
                     <div class="relative w-[100%] h-auto flex flex-wrap justify-center items-center gap-x-2">
@@ -38,8 +39,8 @@
                     </div>
                     <div class="w-[250px] md:w-[380px] h-auto flex flex-wrap justify-center md:justify-center items-center gap-[2px]">
                         <div 
-                            v-for="(item,index) in drawResult" :key="index"
-                            :class="(item===newData.special) ? 'ball-color-2' : 'ball-color-1'"
+                            v-for="(item,index) in bingoLatest.openShowOrder" :key="index"
+                            :class="(item===bingoLatest.prizeNum.bullEye) ? 'ball-color-2' : 'ball-color-1'"
                             class="w-[22px] h-[22px] md:w-[35px] md:h-[35px] rounded-[50%] flex justify-center items-center text-xs md:text-base font-bold text-white"
                         >{{ item }}</div>
                     </div>
@@ -69,7 +70,7 @@
                 </div>
             </div>
             <div class="w-auto h-[auto] md:top-0 flex flex-wrap justify-center items-center gap-y-2 md:min-h-[60vh]">
-                <div class="relative w-[100%] h-auto flex flex-wrap justify-center items-center gap-x-2">
+                <div v-if="!sortStatus" class="relative w-[100%] h-auto flex flex-wrap justify-center items-center gap-x-2">
                     <div class="w-[100%] text-base md:text-xl font-extrabold text-red-500">{{ t('sumArea') }}</div>
                     <div 
                         v-for="(item,index) in areaSumResult" 
@@ -85,16 +86,37 @@
                     </div>
                     <Block :closeStatus="closeStatus" :drawStatus="drawStatus" :type="'all'"></Block>
                 </div>
-                <el-table v-if="isMobiles" :data="tableData" @sort-change="doSort" max-height="45vh" style="width:100vw;font-size:10px;">
+                <el-table v-if="isMobiles" :data="tableData" max-height="45vh" style="width:100vw;font-size:10px;">
                     <el-table-column prop="time" width="55" :label="t('openTime')"/>
                     <el-table-column sortable prop="no" :label="t('no')" width="85"/>
-                    <el-table-column prop="reward" :label="t('reward')" width="180">
+                    <el-table-column prop="reward" width="180">
+                        <template #header>
+                            <div class="flex flex-wrap justify-start items-center">
+                                <div>{{t('reward')}}</div>
+                                <div class="mx-[1px]">
+                                    <button @click="doSort"
+                                        :class="sortStatus ? 'bg-yellow-400' : 'bg-gray-100'"
+                                        class="transition-all mx-[1px] px-1 rounded text-gray-400">{{t('sizeSort')}}</button>
+                                    <button @click="disableSort"
+                                        :class="!sortStatus ? 'bg-yellow-400' : 'bg-gray-100'"
+                                        class="transition-all mx-[1px] px-1 rounded text-gray-400">{{t('openSort')}}</button>
+                                </div>
+                            </div>
+                        </template>
                         <template #default="scope">
                             <div class="flex flex-wrap justify-start items-center gap-x-[0.5px]">
-                                <div 
-                                    v-for="(item,index) in scope.row.reward" :key="index"
-                                    class="w-[15px] h-[15px] rounded-[50%] flex justify-center items-center font-bold text-[12px] text-white ball-color-1"
-                                >{{ item }}</div>
+                                <template v-if="sortStatus">
+                                    <div 
+                                        v-for="(item,index) in scope.row.rewardSort" :key="index"
+                                        class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-white ball-color-1"
+                                    >{{ item }}</div>
+                                </template>
+                                <template v-else>
+                                    <div 
+                                        v-for="(item,index) in scope.row.reward" :key="index"
+                                        class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-white ball-color-1"
+                                    >{{ item }}</div>
+                                </template>
                             </div>
                         </template>
                     </el-table-column>
@@ -107,16 +129,37 @@
                     </el-table-column>
                     <el-table-column prop="decision" :label="t('singleDecision')" width="50"/>
                 </el-table>
-                <el-table v-else :data="tableData" @sort-change="doSort" max-height="50vh" style="width:auto;">
+                <el-table v-else :data="tableData" max-height="50vh" style="width:auto;">
                     <el-table-column prop="time" width="60" :label="t('openTime')"/>
                     <el-table-column sortable prop="no" :label="t('no')" width="100"/>
-                    <el-table-column prop="reward" :label="t('reward')" width="570">
+                    <el-table-column prop="reward" width="570">
+                        <template #header>
+                            <div class="flex flex-wrap justify-start items-center">
+                                <div>{{t('reward')}}</div>
+                                <div class="mx-1">
+                                    <button @click="doSort"
+                                        :class="sortStatus ? 'bg-yellow-400' : 'bg-gray-100'"
+                                        class="transition-all mx-1 px-1 rounded text-gray-400">{{t('sizeSort')}}</button>
+                                    <button @click="disableSort"
+                                        :class="!sortStatus ? 'bg-yellow-400' : 'bg-gray-100'"
+                                        class="transition-all mx-1 px-1 rounded text-gray-400">{{t('openSort')}}</button>
+                                </div>
+                            </div>
+                        </template>
                         <template #default="scope">
                             <div class="flex flex-wrap justify-start items-center gap-x-0.5">
-                                <div 
-                                    v-for="(item,index) in scope.row.reward" :key="index"
-                                    class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-white ball-color-1"
-                                >{{ item }}</div>
+                                <template v-if="sortStatus">
+                                    <div 
+                                        v-for="(item,index) in scope.row.rewardSort" :key="index"
+                                        class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-white ball-color-1"
+                                    >{{ item }}</div>
+                                </template>
+                                <template v-else>
+                                    <div 
+                                        v-for="(item,index) in scope.row.reward" :key="index"
+                                        class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-white ball-color-1"
+                                    >{{ item }}</div>
+                                </template>
                             </div>
                         </template>
                     </el-table-column>
@@ -129,17 +172,18 @@
                     </el-table-column>
                     <el-table-column prop="decision" width="60" :label="t('singleDecision')"/>
                 </el-table>
-                <!-- <div class="w-[100%] h-auto flex flex-wrap justify-center items-center">
+                <div class="w-[100%] my-2 h-auto flex flex-wrap justify-center items-center">
                     <el-pagination
                         small
                         background
-                        :page-size="pageSizeCount"
+                        :page-size="50"
                         layout="prev, pager, next"
                         :total="tableTotal"
+                        :current-page="page"
                         @current-change="currentChange"
-                        :disabled="apiLoading"
+                        :disabled="false"
                     />
-                </div> -->
+                </div>
             </div>
         </div>
         <!-- 回上頁 -->
@@ -170,9 +214,9 @@ import { ref,watch,computed,onMounted,onBeforeUnmount } from 'vue'
 import { useStore } from "vuex"
 import load from '@/components/load.vue'
 import { useI18n } from 'vue-i18n'
-import SmallHistory from '@/components/smallHistory.vue'
 import Block from '@/components/Block.vue'
 import Music from '@/components/music.vue'
+// import SmallHistory from '@/components/smallHistory.vue'
 // import Back from '@/components/Back.vue'
 // import bar from '@/components/bar.vue'
 // import capsule from '@/components/capsule.vue'
@@ -181,10 +225,10 @@ import { useRouter } from "vue-router"
 export default {
   name: 'allView',
   components: {
-    SmallHistory,
     load,
     Block,
     Music,
+    // SmallHistory,
     // Back,
     // bar,
     // capsule,
@@ -216,22 +260,22 @@ export default {
     const apiLoading = ref(false)
     const timer1 = ref(null)
     const dayData = ref(null)
-    const page = ref(0)
+    const page = ref(1)
     const todayData = ref(null)
     // let audio = new Audio(require("../assets/music/openbgm.mp3"))
     const newData = computed(() => {
         if(!todayData.value) return {}
-        return todayData.value[todayData.value.length-1]
+        return todayData.value[0]
     })
-    const drawResult = computed(() => {
-        if(!newData.value?.reward) return []
-        return newData.value.reward
-    })
+    // const drawResult = computed(() => {
+    //     if(!newData.value?.reward) return []
+    //     return newData.value.reward
+    // })
     const areaSumResult = computed(() => {
-        if(!newData.value?.reward) return []
+        if(!bingoLatest.value?.openShowOrder) return []
         let target = []
-        for(let i = 4;(i+2)<newData.value.reward.length;i+=3){
-            let sum = newData.value.reward.slice(i-1,i+2).reduce((accumulator, currentValue) => accumulator + parseInt(currentValue),0)
+        for(let i = 4;(i+2)<bingoLatest.value?.openShowOrder.length;i+=3){
+            let sum = bingoLatest.value?.openShowOrder.slice(i-1,i+2).reduce((accumulator, currentValue) => accumulator + parseInt(currentValue),0)
             target.push({
                 title:[i,i+1,i+2],
                 number:sum
@@ -242,66 +286,29 @@ export default {
     const historyData = ref(null)
     const tableData = computed(() => {
         let target = []
-        let choseDate = dayData.value.getMonth()+1+"/"+dayData.value.getDate()
-        let now = new Date()
-        let nowDate = now.getMonth()+1+"/"+now.getDate()
-        
-        if(choseDate===nowDate){
-            if(!todayData.value) return target
-            for(let item of todayData.value){
-                target.push({
-                    no:item.no,
-                    reward:item.reward,
-                    decision:item.singleDecision,
-                    time:item.time,
-                    special:item.special
-                })
-            }
-            target.reverse()
-            // target = target.slice((page.value)*100,(page.value+1)*100)
-        }else {
-            if(!historyData.value) return target
-            // for(let item of historyData.value[page.value]){
-            for(let item of historyData.value){
-                let numArr = item.preDrawCode.split(',')
-                let singleCount = 0
-                for(let i = 0;i<numArr.length;i++){
-                    if(numArr[i]%2 === 1) singleCount++
-                }
-                let font = ''
-                if(singleCount>=13) font = t('result1')
-                else if(singleCount>=11&&singleCount<13) font = t('result2')
-                else if(singleCount === 10) font = t('result3')
-                else if(singleCount>=8&&singleCount<10) font = t('result4')
-                else font = t('result5')
-
-                target.push({
-                    no:item.preDrawIssue,
-                    reward:numArr.slice(0,20),
-                    decision:font,
-                    time:item.preDrawTime.split(' ')[1].substr(0,5),
-                    special:numArr[numArr.length - 1]
-                })
-            }
-        }
-        if(sortStatus.value) target.reverse()
+        if(!todayData.value) return target
+        target = todayData.value
+        // if(sortStatus.value) target.reverse()
         return target
     })
     const displayTitle = computed(() => {
-        if(!newData.value?.no) return 0
-        return (newData.value.no) + t('title') 
+        if(!bingoLatest.value?.drawTerm) return 0
+        return (bingoLatest.value.drawTerm) + t('title') 
     })
     const statistics = computed(() => {
         if(!tableData.value) return ''
-        let choseDate = dayData.value.getMonth()+1+"/"+dayData.value.getDate()
-        let now = new Date()
-        let nowDate = now.getMonth()+1+"/"+now.getDate()
-        
-        if(choseDate===nowDate){
-            return t('rewardLen',{existing:(todayData.value?.length || 0),remain:203-(todayData.value?.length || 0)})
+
+        if(isToday.value){
+            return t('rewardLen',{existing:tableTotal.value,remain:203-tableTotal.value})
         }
 
         return ''
+    })
+    const isToday = computed(() => {
+        let choseDate = dayData.value.getMonth()+1+"/"+dayData.value.getDate()
+        let now = new Date()
+        let nowDate = now.getMonth()+1+"/"+now.getDate()
+        return (choseDate===nowDate)
     })
     const nowSeconds = computed(() => { 
         return store.state.originTime
@@ -315,32 +322,17 @@ export default {
     })
     const drawStatus = ref(true)
     const tableTotal = computed(() => {
-        let choseDate = dayData.value.getMonth()+1+"/"+dayData.value.getDate()
-        let now = new Date()
-        let nowDate = now.getMonth()+1+"/"+now.getDate()
-        if(choseDate===nowDate){
-            return todayData.value?.length || 1
-        }else{
-            return historyData.value?.length || 1
-        }
+        return store.state.dataTotal
     })
-    const pageSizeCount = computed(()=>{
-        let choseDate = dayData.value.getMonth()+1+"/"+dayData.value.getDate()
-        let now = new Date()
-        let nowDate = now.getMonth()+1+"/"+now.getDate()
-        if(choseDate===nowDate){
-            return 100
-        }else{
-            return 1
-        }
+    const bingoLatest = computed(() => {
+        return store.state.bingoLatest
     })
     // 監聽api改變
-    watch(newData, (newVal,oldVal)=>{
+    watch(newData, async(newVal,oldVal)=>{
       if(oldVal){
         if(!newVal?.no || !oldVal.no) return false
-        let apiDate = (dayData.value.getMonth())+'-'+dayData.value.getDate()
-        let nowDate = (new Date().getMonth())+'-'+(new Date().getDate())
-        if((parseInt(newVal.no) > parseInt(oldVal.no)) && (apiDate===nowDate)) {
+        if((parseInt(newVal.no) > parseInt(oldVal.no)) && (isToday.value)) {
+            await getLatest()
             if(musicStatus.value) {
                 openbgm.value.play()
             }
@@ -357,30 +349,56 @@ export default {
     })
     //監聽日期改變
     watch(dayData, async(newVal,oldVal)=>{
-        await getHistory()
+        // await getHistory()
+        page.value = 1
+        await pyCatchNum()
     })
+    const getLatest = async() => {
+        await store.dispatch('getLatest')
+    }
     //pyapi拿今天獎項資料
     const pyCatchNum = async() => {
-        await store.dispatch('pyGet',{getText:t})
-        todayData.value = store.state.todayrecord
-    }
-    //拿除了今天獎項資料
-    const getHistory = async(nowpage = 1) => {
-        if(apiLoading.value) return false
+        if(apiLoading.value){
+            return false
+        }
         apiLoading.value = true
-        let date = dayData.value.getFullYear()+'-'+(dayData.value.getMonth()+1)+'-'+dayData.value.getDate()
-        // let startTime = dayData.value.getFullYear()+'-'+(dayData.value.getMonth()+1)+'-'+dayData.value.getDate()+'%2000:00:00'
-        // let endTime = dayData.value.getFullYear()+'-'+(dayData.value.getMonth()+1)+'-'+dayData.value.getDate()+'%2023:59:59'
-        await store.dispatch('getOtherHistory',{day:date})
-        page.value = 0
-        historyData.value = store.state.allrecord
+        // console.log('dayData.value',dayData.value)
+        // console.log('newVal',newVal.getFullYear(),newVal.getMonth()+1,newVal.getDate())
+        let dateStr = dayData.value.getFullYear() + '-' 
+        + (((dayData.value.getMonth()+1) < 10) ? '0' + (dayData.value.getMonth()+1) : (dayData.value.getMonth()+1))
+        + '-' + dayData.value.getDate()
+        
+        await store.dispatch('pyGet',{
+            getText:t,
+            date:dateStr,
+            page:page.value,
+        })
+        
+        todayData.value = store.state.todayrecord
+        // console.log('todayData.value',todayData.value)
         apiLoading.value = false
     }
+    //拿除了今天獎項資料
+    // const getHistory = async(nowpage = 1) => {
+    //     if(apiLoading.value) return false
+    //     apiLoading.value = true
+    //     let date = dayData.value.getFullYear()+'-'+(dayData.value.getMonth()+1)+'-'+dayData.value.getDate()
+    //     // let startTime = dayData.value.getFullYear()+'-'+(dayData.value.getMonth()+1)+'-'+dayData.value.getDate()+'%2000:00:00'
+    //     // let endTime = dayData.value.getFullYear()+'-'+(dayData.value.getMonth()+1)+'-'+dayData.value.getDate()+'%2023:59:59'
+    //     await store.dispatch('getOtherHistory',{day:date})
+    //     page.value = 0
+    //     historyData.value = store.state.allrecord
+    //     apiLoading.value = false
+    // }
 
     onMounted(() => {
         timer1.value = window.setInterval((async() => {
-            await pyCatchNum()
-        } ), 4500)
+            if(isToday.value){
+                await pyCatchNum()
+            }else{
+                await getLatest()
+            }
+        } ), 10000)
 
         // setTimeout(function (){
         // },5500)
@@ -396,12 +414,16 @@ export default {
         let date = new Date()
         date.setDate(date.getDate())
         dayData.value = date
+        
         pyCatchNum()
+        getLatest()
     }
     init()
 
     const currentChange = (value) => {
-        page.value = value - 1
+        // console.log('value',value)
+        page.value = value
+        pyCatchNum()
     }
 
     //設定選擇日期範圍
@@ -410,7 +432,7 @@ export default {
     }
 
     const orderStatus = ref(false)
-    const openStatus = ref()
+    const openStatus = ref('')
     const router = useRouter();
     const ctrlGame = (name) => {
         // openStatus.value = name
@@ -424,35 +446,33 @@ export default {
         
     }
 
-    const doSort = (column) => {
-        if(column.order==="ascending"){
-            sortStatus.value = true
-        }else{
-            sortStatus.value = false
-        }
+    const doSort = () => {
+        sortStatus.value = true
+    }
+
+    const disableSort = () => {
+        sortStatus.value = false
     }
 
     return {
-        drawResult,
         displayTitle,
         displayTime,
         isMobiles,
         apiLoading,
         dayData,
-        historyData,
-        orderStatus,
         tableData,
         gameList,
-        openStatus,
-        newData,
         drawStatus,
         tableTotal,
         statistics,
         timePercentage,
-        pageSizeCount,
         areaSumResult,
         closeStatus,
         openbgm,
+        page,
+        bingoLatest,
+        sortStatus,
+        disableSort,
         doSort,
         ctrlGame,
         t,

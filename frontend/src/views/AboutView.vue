@@ -70,6 +70,33 @@ export default {
   components: {
   },
   setup() {
+    // 10 20 50
+    // axios.get('https://api.taiwanlottery.com/TLCAPIWeB/Lottery/BingoResult?openDate=2024-01-17&pageNum=1&pageSize=50')
+    // .then(function (response) {
+    // // handle success
+    // console.log(response);
+    // })
+    // .catch(function (error) {
+    // // handle error
+    // console.log(error);
+    // })
+    // .finally(function () {
+    // // always executed
+    // });
+
+    // axios.get('https://api.taiwanlottery.com/TLCAPIWeB/Lottery/LatestBingoResult')
+    // .then(function (response) {
+    // // handle success
+    // console.log(response);
+    // })
+    // .catch(function (error) {
+    // // handle error
+    // console.log(error);
+    // })
+    // .finally(function () {
+    // // always executed
+    // });
+
     console.log('123qweasdzxc')
     const { t,locale } = useI18n()
     const strColor = ref('red')
