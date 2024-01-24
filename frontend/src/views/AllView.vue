@@ -94,8 +94,12 @@
                             <div class="flex flex-wrap justify-start items-center">
                                 <div>{{t('reward')}}</div>
                                 <div class="mx-[1px]">
-                                    <button @click="doSort" class="bg-orange-500 mx-[1px] px-1 rounded text-white">{{t('sizeSort')}}</button>
-                                    <button @click="disableSort" class="bg-orange-500 mx-[1px] px-1 rounded text-white">{{t('openSort')}}</button>
+                                    <button @click="doSort"
+                                        :class="sortStatus ? 'bg-yellow-400' : 'bg-gray-100'"
+                                        class="transition-all mx-[1px] px-1 rounded text-gray-400">{{t('sizeSort')}}</button>
+                                    <button @click="disableSort"
+                                        :class="!sortStatus ? 'bg-yellow-400' : 'bg-gray-100'"
+                                        class="transition-all mx-[1px] px-1 rounded text-gray-400">{{t('openSort')}}</button>
                                 </div>
                             </div>
                         </template>
@@ -133,8 +137,12 @@
                             <div class="flex flex-wrap justify-start items-center">
                                 <div>{{t('reward')}}</div>
                                 <div class="mx-1">
-                                    <button @click="doSort" class="bg-orange-500 mx-1 px-1 rounded text-white">{{t('sizeSort')}}</button>
-                                    <button @click="disableSort" class="bg-orange-500 mx-1 px-1 rounded text-white">{{t('openSort')}}</button>
+                                    <button @click="doSort"
+                                        :class="sortStatus ? 'bg-yellow-400' : 'bg-gray-100'"
+                                        class="transition-all mx-1 px-1 rounded text-gray-400">{{t('sizeSort')}}</button>
+                                    <button @click="disableSort"
+                                        :class="!sortStatus ? 'bg-yellow-400' : 'bg-gray-100'"
+                                        class="transition-all mx-1 px-1 rounded text-gray-400">{{t('openSort')}}</button>
                                 </div>
                             </div>
                         </template>
