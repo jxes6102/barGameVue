@@ -23,5 +23,7 @@
     "lotteryName":"台灣5分賓果",
     "stop":"停開中...",
     "open":"開獎中...",
-    "music":"開獎音效"
+    "music":"開獎音效",
+    "sizeSort":"大小順序",
+    "openSort":"開出順序"
 }

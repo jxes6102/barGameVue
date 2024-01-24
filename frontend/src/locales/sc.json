@@ -23,5 +23,7 @@
     "lotteryName":"台湾5分宾果",
     "stop":"停开中...",
     "open":"开奖中...",
-    "music":"开奖音效"
+    "music":"开奖音效",
+    "sizeSort":"大小順序",
+    "openSort":"开出顺序"
 }

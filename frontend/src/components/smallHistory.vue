@@ -6,8 +6,9 @@
           <template #header>
               <div class="flex flex-wrap justify-start items-center">
                   <div>{{t('reward')}}</div>
-                  <div class="mx-1">
-                      <button @click="doSort" class="bg-orange-500 px-1 rounded text-white">排序切換</button>
+                  <div class="mx-[1px]">
+                    <button @click="doSort" class="bg-orange-500 mx-[1px] px-1 rounded text-white">{{t('sizeSort')}}</button>
+                    <button @click="disableSort" class="bg-orange-500 mx-[1px] px-1 rounded text-white">{{t('openSort')}}</button>
                   </div>
               </div>
           </template>
@@ -45,7 +46,8 @@
             <div class="flex flex-wrap justify-start items-center">
                 <div>{{t('reward')}}</div>
                 <div class="mx-1">
-                    <button @click="doSort" class="bg-orange-500 px-1 rounded text-white">排序切換</button>
+                  <button @click="doSort" class="bg-orange-500 mx-1 px-1 rounded text-white">{{t('sizeSort')}}</button>
+                  <button @click="disableSort" class="bg-orange-500 mx-1 px-1 rounded text-white">{{t('openSort')}}</button>
                 </div>
             </div>
           </template>
@@ -83,6 +85,7 @@ import { ref,computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 export default {
   components: {},
+  emits: ['sortEvent'],
   props: {
     tableData: {
         type: Array,
@@ -95,7 +98,7 @@ export default {
         default: '25vh'
     }
   },
-  setup(props) {
+  setup(props, { emit }) {
     const { t } = useI18n()
     const store = useStore()
     const sortStatus = ref(false)
@@ -115,8 +118,15 @@ export default {
     const tableHeights = computed(() => {
         return props.tableHeight
     });
+
     const doSort = () => {
-      sortStatus.value = !sortStatus.value
+        sortStatus.value = true
+        emit('sortEvent',sortStatus.value)
+    }
+
+    const disableSort = () => {
+        sortStatus.value = false
+        emit('sortEvent',sortStatus.value)
     }
 
     return {
@@ -126,6 +136,7 @@ export default {
         sortData,
         sortStatus,
         doSort,
+        disableSort,
         t
     }
 

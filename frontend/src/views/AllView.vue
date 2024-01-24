@@ -70,7 +70,7 @@
                 </div>
             </div>
             <div class="w-auto h-[auto] md:top-0 flex flex-wrap justify-center items-center gap-y-2 md:min-h-[60vh]">
-                <div class="relative w-[100%] h-auto flex flex-wrap justify-center items-center gap-x-2">
+                <div v-if="!sortStatus" class="relative w-[100%] h-auto flex flex-wrap justify-center items-center gap-x-2">
                     <div class="w-[100%] text-base md:text-xl font-extrabold text-red-500">{{ t('sumArea') }}</div>
                     <div 
                         v-for="(item,index) in areaSumResult" 
@@ -93,8 +93,9 @@
                         <template #header>
                             <div class="flex flex-wrap justify-start items-center">
                                 <div>{{t('reward')}}</div>
-                                <div class="mx-1">
-                                    <button @click="doSort" class="bg-orange-500 px-1 rounded text-white">排序切換</button>
+                                <div class="mx-[1px]">
+                                    <button @click="doSort" class="bg-orange-500 mx-[1px] px-1 rounded text-white">{{t('sizeSort')}}</button>
+                                    <button @click="disableSort" class="bg-orange-500 mx-[1px] px-1 rounded text-white">{{t('openSort')}}</button>
                                 </div>
                             </div>
                         </template>
@@ -132,7 +133,8 @@
                             <div class="flex flex-wrap justify-start items-center">
                                 <div>{{t('reward')}}</div>
                                 <div class="mx-1">
-                                    <button @click="doSort" class="bg-orange-500 px-1 rounded text-white">排序切換</button>
+                                    <button @click="doSort" class="bg-orange-500 mx-1 px-1 rounded text-white">{{t('sizeSort')}}</button>
+                                    <button @click="disableSort" class="bg-orange-500 mx-1 px-1 rounded text-white">{{t('openSort')}}</button>
                                 </div>
                             </div>
                         </template>
@@ -204,9 +206,9 @@ import { ref,watch,computed,onMounted,onBeforeUnmount } from 'vue'
 import { useStore } from "vuex"
 import load from '@/components/load.vue'
 import { useI18n } from 'vue-i18n'
-import SmallHistory from '@/components/smallHistory.vue'
 import Block from '@/components/Block.vue'
 import Music from '@/components/music.vue'
+// import SmallHistory from '@/components/smallHistory.vue'
 // import Back from '@/components/Back.vue'
 // import bar from '@/components/bar.vue'
 // import capsule from '@/components/capsule.vue'
@@ -215,10 +217,10 @@ import { useRouter } from "vue-router"
 export default {
   name: 'allView',
   components: {
-    SmallHistory,
     load,
     Block,
     Music,
+    // SmallHistory,
     // Back,
     // bar,
     // capsule,
@@ -257,10 +259,10 @@ export default {
         if(!todayData.value) return {}
         return todayData.value[0]
     })
-    const drawResult = computed(() => {
-        if(!newData.value?.reward) return []
-        return newData.value.reward
-    })
+    // const drawResult = computed(() => {
+    //     if(!newData.value?.reward) return []
+    //     return newData.value.reward
+    // })
     const areaSumResult = computed(() => {
         if(!bingoLatest.value?.openShowOrder) return []
         let target = []
@@ -437,7 +439,11 @@ export default {
     }
 
     const doSort = () => {
-        sortStatus.value = !sortStatus.value
+        sortStatus.value = true
+    }
+
+    const disableSort = () => {
+        sortStatus.value = false
     }
 
     return {
@@ -458,6 +464,7 @@ export default {
         page,
         bingoLatest,
         sortStatus,
+        disableSort,
         doSort,
         ctrlGame,
         t,

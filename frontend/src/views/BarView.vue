@@ -54,7 +54,7 @@
         </Transition>
       </div>
     </div>
-    <div class="relative w-[90%] h-[auto] md:w-[auto] md:h-[auto] flex flex-wrap justify-center items-center mb-2 py-2 gap-x-2 border-2 border-solid border-red-800 rounded-md">
+    <div v-if="!sortStatus" class="relative w-[90%] h-[auto] md:w-[auto] md:h-[auto] flex flex-wrap justify-center items-center mb-2 py-2 gap-x-2 border-2 border-solid border-red-800 rounded-md">
           <div class="w-[100%] text-base md:text-xl font-extrabold text-red-500">{{ t('sumArea') }}</div>
           <div 
               v-for="(item,index) in areaSumResult" 
@@ -72,7 +72,7 @@
     </div>
     <!-- 新歷史紀錄 -->
     <div class="w-[auto] h-[40vh] flex flex-wrap justify-center items-center">
-      <SmallHistory :tableData="sortData" :tableHeight="'40vh'"></SmallHistory>
+      <SmallHistory :tableData="sortData" :tableHeight="'40vh'" @sortEvent="getSort"></SmallHistory>
     </div>
     <div class="w-[100%] my-2 h-auto flex flex-wrap justify-center items-center">
       <el-pagination
@@ -287,6 +287,11 @@ export default {
 
     init()
 
+    const sortStatus = ref(false)
+    const getSort = (value) => {
+      sortStatus.value = value
+    }
+
     onMounted(() => {
       timer1.value = window.setInterval((async() => {
         await pyCatchNum()
@@ -320,6 +325,8 @@ export default {
       drawStatus,
       page,
       tableTotal,
+      sortStatus,
+      getSort,
       currentChange,
       t,
       toStr,
