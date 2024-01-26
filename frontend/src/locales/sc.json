@@ -25,5 +25,7 @@
     "open":"开奖中...",
     "music":"开奖音效",
     "sizeSort":"大小順序",
-    "openSort":"开出顺序"
+    "openSort":"开出顺序",
+    "sum":"加总",
+    "position":"位置"
 }

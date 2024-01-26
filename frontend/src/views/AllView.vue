@@ -61,7 +61,7 @@
                             v-for="(item,index) in gameList"
                             :key="index"
                             @click="ctrlGame(item.key)"
-                            class="w-auto  bg-[#8ac6d1] px-1 py-1 rounded-[5px] flex flex-wrap justify-center items-center cursor-pointer hover:opacity-80"
+                            class="w-auto bg-[#8ac6d1] px-1 py-1 rounded-[5px] flex flex-wrap justify-center items-center cursor-pointer hover:opacity-80"
                         >
                             <el-icon size="20"><VideoPlay /></el-icon>
                             <div class="flex flex-wrap justify-center items-center text-base">{{ item.name }}</div>
@@ -70,7 +70,7 @@
                 </div>
             </div>
             <div class="w-auto h-[auto] md:top-0 flex flex-wrap justify-center items-center gap-y-2 md:min-h-[60vh]">
-                <div v-if="sortStatus" class="relative w-[100%] h-auto flex flex-wrap justify-center items-center gap-x-2">
+                <div class="relative w-[100%] h-auto flex flex-wrap justify-center items-center gap-x-2">
                     <div class="w-[100%] text-base md:text-xl font-extrabold text-red-500">{{ t('sumArea') }}</div>
                     <div 
                         v-for="(item,index) in areaSumResult" 
@@ -132,45 +132,76 @@
                 <el-table v-else :data="tableData" max-height="50vh" style="width:auto;">
                     <el-table-column prop="time" width="60" :label="t('openTime')"/>
                     <el-table-column sortable prop="no" :label="t('no')" width="100"/>
-                    <el-table-column prop="reward" width="570">
+                    <el-table-column prop="reward" :width="((mode == 1) || (mode == 2)) ? 570 : 700">
                         <template #header>
                             <div class="flex flex-wrap justify-start items-center">
                                 <div>{{t('reward')}}</div>
                                 <div class="mx-1">
                                     <button @click="doSort"
-                                        :class="sortStatus ? 'bg-yellow-400 text-white' : 'bg-gray-100 text-gray-400'"
+                                        :class="mode == 1 ? 'bg-yellow-400 text-white' : 'bg-gray-100 text-gray-400'"
                                         class="transition-all mx-1 px-1 rounded">{{t('sizeSort')}}</button>
                                     <button @click="disableSort"
-                                        :class="!sortStatus ? 'bg-yellow-400 text-white' : 'bg-gray-100 text-gray-400'"
+                                        :class="mode == 2 ? 'bg-yellow-400 text-white' : 'bg-gray-100 text-gray-400'"
                                         class="transition-all mx-1 px-1 rounded">{{t('openSort')}}</button>
+                                    <button @click="sumSort"
+                                        :class="mode == 3 ? 'bg-yellow-400 text-white' : 'bg-gray-100 text-gray-400'"
+                                        class="transition-all mx-1 px-1 rounded">{{t('sum')}}</button>
+                                    <button @click="seatSort"
+                                        :class="mode == 4 ? 'bg-yellow-400 text-white' : 'bg-gray-100 text-gray-400'"
+                                        class="transition-all mx-1 px-1 rounded">{{t('position')}}</button>
                                 </div>
                             </div>
                         </template>
                         <template #default="scope">
                             <div class="flex flex-wrap justify-start items-center gap-x-0.5">
-                                <template v-if="sortStatus">
+                                <template v-if="mode == 1">
                                     <div 
                                         v-for="(item,index) in scope.row.rewardSort" :key="index"
                                         class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-white ball-color-1"
                                     >{{ item }}</div>
                                 </template>
-                                <template v-else>
+                                <template v-else-if="mode == 2">
                                     <div 
                                         v-for="(item,index) in scope.row.reward" :key="index"
                                         class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-white ball-color-1"
                                     >{{ item }}</div>
                                 </template>
+                                <template v-else-if="mode == 3">
+                                    <div 
+                                        v-for="(item,index) in scope.row.areaSum"
+                                            :key="index" 
+                                            class="w-auto m-[1px] flex flex-wrap justify-around items-center">
+                                            <div v-for="(thing,thingIndex) in item.title" :key="thing" class="w-auto flex flex-wrap justify-center items-center">
+                                                <div class="w-[22px] h-[22px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-white ball-color-3">{{ thing }}</div>
+                                                <div class="font-black">{{(thingIndex !== item.title.length - 1) ? "+" : "="}}</div>
+                                            </div>
+                                        <div 
+                                            class="w-[22px] h-[22px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-white ball-color-4"
+                                        >{{ item.number }}</div>
+                                    </div>
+                                </template>
+                                <template v-else-if="mode == 4">
+                                    <div 
+                                        v-for="(item,index) in scope.row.seatRank"
+                                        :key="index"
+                                        class="w-auto m-1 flex flex-wrap justify-around items-center">
+                                        <div class="w-auto m-1 flex flex-wrap justify-around items-center">
+                                            <div class="p-[2px] rounded-md bg-[#ff8c00] text-white">{{ '第'+(index+1)+'名' }}</div>
+                                            <div class="p-[2px] rounded-md text-black">{{ item.position }}</div>
+                                        </div>
+                                    </div>
+                                </template>
                             </div>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="special" width="70" :label="t('specialNum')">
+                    <el-table-column v-if="(mode == 1) || (mode == 2)" prop="special" width="70" :label="t('specialNum')">
                         <template #default="scope">
                             <div class="flex flex-wrap justify-center items-center gap-x-0.5">
                                 <div class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-white ball-color-2">{{ scope.row.special }}</div>
                             </div>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="decision" width="60" :label="t('singleDecision')"/>
+                    <el-table-column v-if="(mode == 1) || (mode == 2)" prop="decision" width="60" :label="t('singleDecision')"/>
                 </el-table>
                 <div class="w-[100%] my-2 h-auto flex flex-wrap justify-center items-center">
                     <el-pagination
@@ -288,7 +319,11 @@ export default {
         let target = []
         if(!todayData.value) return target
         target = todayData.value
-        // if(sortStatus.value) target.reverse()
+        for(let i = 0;i<target.length;i++){
+            target[i].areaSum = dealSum(target[i].rewardSort)
+            target[i].seatRank = dealSeat(target[i].reward)
+        }
+
         return target
     })
     const displayTitle = computed(() => {
@@ -445,13 +480,65 @@ export default {
         }
         
     }
-
+    /*
+    *1大小 2開獎 3加總 4位置排名 
+    */
+    const mode = ref(1)
     const doSort = () => {
+        mode.value = 1
         sortStatus.value = true
     }
 
     const disableSort = () => {
+        mode.value = 2
         sortStatus.value = false
+    }
+
+    const sumSort = () => {
+        mode.value = 3
+        // console.log('sumSort')
+    }
+
+    const seatSort = () => {
+        mode.value = 4
+        // console.log('seatSort')
+    }
+
+    const dealSum = (arr) => {
+        // console.log('arr',arr)
+        let temp = arr.map((item)=>parseInt(item))
+        let target = []
+        
+        for(let i = 4;(i+2)<temp.length;i+=3){
+            let sum = temp.slice(i-1,i+2).reduce((accumulator, currentValue) => accumulator + currentValue,0)
+            target.push({
+                title:[i,i+1,i+2],
+                number:sum
+            })
+        }
+
+        return target
+    }
+
+    const dealSeat = (arr) => {
+        let temp = arr.map((item)=>parseInt(item))
+        let target = []
+        for(let i = 0;i<10;i++){
+            target.push({
+                position:i+1,
+                sum:temp[i]+temp[19-i],
+                ball:temp[i]
+            })
+        }
+        
+        target.sort((a,b)=>{
+            if(b.sum == a.sum){
+                return b.ball-a.ball
+            }else{
+                return b.sum-a.sum
+            }
+        })
+        return target
     }
 
     return {
@@ -472,6 +559,9 @@ export default {
         page,
         bingoLatest,
         sortStatus,
+        mode,
+        seatSort,
+        sumSort,
         disableSort,
         doSort,
         ctrlGame,

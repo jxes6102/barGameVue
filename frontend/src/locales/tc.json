@@ -25,5 +25,7 @@
     "open":"開獎中...",
     "music":"開獎音效",
     "sizeSort":"大小順序",
-    "openSort":"開出順序"
+    "openSort":"開出順序",
+    "sum":"加總",
+    "position":"位置"
 }
