@@ -70,7 +70,7 @@
                 </div>
             </div>
             <div class="w-auto h-[auto] md:top-0 flex flex-wrap justify-center items-center gap-y-2 md:min-h-[60vh]">
-                <div class="relative w-[100%] h-auto flex flex-wrap justify-center items-center gap-x-2">
+                <!-- <div class="relative w-[100%] h-auto flex flex-wrap justify-center items-center gap-x-2">
                     <div class="w-[100%] text-base md:text-xl font-extrabold text-red-500">{{ t('sumArea') }}</div>
                     <div 
                         v-for="(item,index) in areaSumResult" 
@@ -85,51 +85,82 @@
                         >{{ item.number }}</div>
                     </div>
                     <Block :closeStatus="closeStatus" :drawStatus="drawStatus" :type="'all'"></Block>
-                </div>
+                </div> -->
                 <el-table v-if="isMobiles" :data="tableData" max-height="45vh" style="width:100vw;font-size:10px;">
                     <el-table-column prop="time" width="55" :label="t('openTime')"/>
                     <el-table-column sortable prop="no" :label="t('no')" width="85"/>
-                    <el-table-column prop="reward" width="180">
+                    <el-table-column prop="reward" width="260">
                         <template #header>
                             <div class="flex flex-wrap justify-start items-center">
                                 <div>{{t('reward')}}</div>
-                                <div class="mx-[1px]">
+                                <div class="mx-1">
                                     <button @click="doSort"
-                                        :class="sortStatus ? 'bg-yellow-400 text-white' : 'bg-gray-100 text-gray-400'"
-                                        class="transition-all mx-[1px] px-1 rounded">{{t('sizeSort')}}</button>
+                                        :class="mode == 1 ? 'bg-yellow-400 text-white' : 'bg-gray-100 text-gray-400'"
+                                        class="transition-all mx-1 px-1 rounded">{{t('sizeSort')}}</button>
                                     <button @click="disableSort"
-                                        :class="!sortStatus ? 'bg-yellow-400 text-white' : 'bg-gray-100 text-gray-400'"
-                                        class="transition-all mx-[1px] px-1 rounded">{{t('openSort')}}</button>
+                                        :class="mode == 2 ? 'bg-yellow-400 text-white' : 'bg-gray-100 text-gray-400'"
+                                        class="transition-all mx-1 px-1 rounded">{{t('openSort')}}</button>
+                                    <button @click="sumSort"
+                                        :class="mode == 3 ? 'bg-yellow-400 text-white' : 'bg-gray-100 text-gray-400'"
+                                        class="transition-all mx-1 px-1 rounded">{{t('sum')}}</button>
+                                    <button @click="seatSort"
+                                        :class="mode == 4 ? 'bg-yellow-400 text-white' : 'bg-gray-100 text-gray-400'"
+                                        class="transition-all mx-1 px-1 rounded">{{t('position')}}</button>
                                 </div>
                             </div>
                         </template>
                         <template #default="scope">
                             <div class="flex flex-wrap justify-start items-center gap-x-[0.5px]">
-                                <template v-if="sortStatus">
+                                <template v-if="mode == 1">
                                     <div 
                                         v-for="(item,index) in scope.row.rewardSort" :key="index"
                                         class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-white ball-color-1"
                                     >{{ item }}</div>
                                 </template>
-                                <template v-else>
+                                <template v-else-if="mode == 2">
                                     <div 
                                         v-for="(item,index) in scope.row.reward" :key="index"
                                         class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-white ball-color-1"
                                     >{{ item }}</div>
                                 </template>
+                                <template v-else-if="mode == 3">
+                                    <div 
+                                        v-for="(item,index) in scope.row.areaSum"
+                                            :key="index" 
+                                            class="w-auto m-[1px] flex flex-wrap justify-around items-center">
+                                            <div v-for="(thing,thingIndex) in item.title" :key="thing" class="w-auto flex flex-wrap justify-center items-center">
+                                                <div class="w-[22px] h-[22px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-white ball-color-3">{{ thing }}</div>
+                                                <div class="font-black">{{(thingIndex !== item.title.length - 1) ? "+" : "="}}</div>
+                                            </div>
+                                        <div 
+                                            class="w-[22px] h-[22px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-white ball-color-4"
+                                        >{{ item.number }}</div>
+                                    </div>
+                                </template>
+                                <template v-else-if="mode == 4">
+                                    <div 
+                                        v-for="(item,index) in scope.row.seatRank"
+                                        :key="index"
+                                        class="w-auto m-[1px] flex flex-wrap justify-around items-center">
+                                        <div class="w-auto m-[1px] flex flex-wrap justify-around items-center">
+                                            <div class="p-[2px] rounded-md bg-[#ff8c00] text-white">{{ '第'+(index+1)+'名' }}</div>
+                                            <div class="p-[2px] rounded-md text-black">{{ item.position }}</div>
+                                        </div>
+                                    </div>
+                                </template>
                             </div>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="special" width="60" :label="t('specialNum')">
+                    <el-table-column v-if="(mode == 1) || (mode == 2)" prop="special" width="60" :label="t('specialNum')">
                         <template #default="scope">
                             <div class="flex flex-wrap justify-center items-center gap-x-0.5">
                                 <div class="w-[20px] h-[20px] rounded-[50%] flex justify-center items-center font-bold text-white ball-color-2">{{ scope.row.special }}</div>
                             </div>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="decision" :label="t('singleDecision')" width="50"/>
+                    <el-table-column v-if="(mode == 1) || (mode == 2)" prop="decision" :label="t('singleDecision')" width="50"/>
                 </el-table>
-                <el-table v-else :data="tableData" max-height="50vh" style="width:auto;">
+                <el-table v-else :data="tableData" max-height="60vh" style="width:auto;">
                     <el-table-column prop="time" width="60" :label="t('openTime')"/>
                     <el-table-column sortable prop="no" :label="t('no')" width="100"/>
                     <el-table-column prop="reward" :width="((mode == 1) || (mode == 2)) ? 570 : 700">
