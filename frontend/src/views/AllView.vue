@@ -78,13 +78,13 @@
                         <div 
                             v-for="(item,index) in areaSumResult" 
                             :key="index" 
-                            class="w-auto flex flex-wrap justify-around items-center">
+                            class="w-auto my-1 flex flex-wrap justify-around items-center">
                             <div v-for="(thing,thingIndex) in item.title" :key="thing" class="w-auto flex flex-wrap justify-center items-center">
-                                <div class="w-[22px] h-[22px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-[12px] md:text-[14px] text-white ball-color-3">{{ thing }}</div>
+                                <div class="w-[25px] h-[25px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-[12px] md:text-[14px] text-white ball-color-3">{{ thing }}</div>
                                 <div class="font-black">{{(thingIndex !== item.title.length - 1) ? "+" : "="}}</div>
                             </div>
                             <div 
-                                class="w-[22px] h-[22px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-[12px] md:text-[14px] text-white ball-color-4"
+                                class="w-[25px] h-[25px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-[12px] md:text-[14px] text-white ball-color-4"
                             >{{ item.number }}</div>
                         </div>
                     </template>
@@ -111,7 +111,7 @@
                                         'position-color-9' : item.position == 9,
                                         'position-color-10' : item.position == 10,
                                     }"
-                                    class="w-[28px] h-[28px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-white">{{ item.sum }}</div>
+                                    class="w-[28px] h-[28px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-white text-[12px] md:text-[14px]">{{ item.sum }}</div>
                             </div>
                         </div>
                     </template>
