@@ -2,7 +2,7 @@
     <el-table v-if="isMobiles" :data="sortData" @sort-change="doSort" :max-height="tableHeights" style="width:100vw;font-size:10px;">
         <el-table-column prop="time" :label="t('openTime')" width="55"/>  
         <el-table-column sortable prop="no" :label="t('no')" width="85"/>
-        <el-table-column prop="reward" width="300">
+        <el-table-column prop="reward" width="320">
           <template #header>
               <div class="flex flex-wrap justify-start items-center">
                   <div>{{t('reward')}}</div>
@@ -27,13 +27,15 @@
                 <template v-if="mode == 1">
                     <div 
                         v-for="(item,index) in scope.row.rewardSort" :key="index"
-                        class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-white ball-color-1"
+                        :class="(item == scope.row.special) ? 'ball-color-2' : 'ball-color-1'"
+                        class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-white"
                     >{{ item }}</div>
                 </template>
                 <template v-else-if="mode == 2">
                     <div 
                         v-for="(item,index) in scope.row.reward" :key="index"
-                        class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-white ball-color-1"
+                        :class="(item == scope.row.special) ? 'ball-color-2' : 'ball-color-1'"
+                        class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-white"
                     >{{ item }}</div>
                 </template>
                 <template v-else-if="mode == 3">
@@ -76,19 +78,19 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column v-if="(mode == 1) || (mode == 2)" prop="special" width="60" :label="t('specialNum')">
+        <!-- <el-table-column v-if="(mode == 1) || (mode == 2)" prop="special" width="60" :label="t('specialNum')">
             <template #default="scope">
                 <div class="flex flex-wrap justify-center items-center gap-x-0.5">
                     <div class="w-[20px] h-[20px] rounded-[50%] flex justify-center items-center font-bold text-white ball-color-2">{{ scope.row.special }}</div>
                 </div>
             </template>
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column v-if="(mode == 1) || (mode == 2)" prop="decision" :label="t('singleDecision')" width="50"/>
     </el-table>
     <el-table v-else :data="sortData" @sort-change="doSort" :max-height="tableHeights" style="width:auto;">
         <el-table-column prop="time" :label="t('openTime')" width="70"/>
         <el-table-column sortable prop="no" :label="t('no')" width="100"/>
-        <el-table-column prop="reward" :width="((mode == 1) || (mode == 2)) ? 570 : 700">
+        <el-table-column prop="reward" :width="((mode == 1) || (mode == 2)) ? 640 : 700">
           <template #header>
             <div class="flex flex-wrap justify-start items-center">
                 <div>{{t('reward')}}</div>
@@ -113,13 +115,15 @@
                 <template v-if="mode == 1">
                     <div 
                         v-for="(item,index) in scope.row.rewardSort" :key="index"
-                        class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-white ball-color-1"
+                        :class="(item == scope.row.special) ? 'ball-color-2' : 'ball-color-1'"
+                        class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-white"
                     >{{ item }}</div>
                 </template>
                 <template v-else-if="mode == 2">
                     <div 
                         v-for="(item,index) in scope.row.reward" :key="index"
-                        class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-white ball-color-1"
+                        :class="(item == scope.row.special) ? 'ball-color-2' : 'ball-color-1'"
+                        class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-white"
                     >{{ item }}</div>
                 </template>
                 <template v-else-if="mode == 3">
@@ -162,13 +166,13 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column v-if="(mode == 1) || (mode == 2)" prop="special" width="70" :label="t('specialNum')">
+        <!-- <el-table-column v-if="(mode == 1) || (mode == 2)" prop="special" width="70" :label="t('specialNum')">
             <template #default="scope">
                 <div class="flex flex-wrap justify-center items-center gap-x-0.5">
                     <div class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-white ball-color-2">{{ scope.row.special }}</div>
                 </div>
             </template>
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column v-if="(mode == 1) || (mode == 2)" prop="decision" :label="t('singleDecision')" width="60"/>
     </el-table>
 </template>

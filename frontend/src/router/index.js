@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Bar from '../views/BarView.vue'
-import Newcapsule from '../views/NewCapsule.vue'
-import boxView from '../views/BoxView.vue'
+// import Newcapsule from '../views/NewCapsule.vue'
+// import boxView from '../views/BoxView.vue'
 import allView from '../views/AllView.vue'
 
 const routes = [
@@ -10,29 +10,29 @@ const routes = [
     name: 'home',
     component: allView
   },
-  {
-    path: '/capsule',
-    name: 'capsule',
-    component:Newcapsule
-  },
+  // {
+  //   path: '/capsule',
+  //   name: 'capsule',
+  //   component:Newcapsule
+  // },
   {
     path: '/bar',
     name: 'bar',
     component:Bar
   },
-  {
-    path: '/boxView',
-    name: 'boxView',
-    component:boxView
-  },
-  {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  },
+  // {
+  //   path: '/boxView',
+  //   name: 'boxView',
+  //   component:boxView
+  // },
+  // {
+  //   path: '/about',
+  //   name: 'about',
+  //   // route level code-splitting
+  //   // this generates a separate chunk (about.[hash].js) for this route
+  //   // which is lazy-loaded when the route is visited.
+  //   component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+  // },
   {
     // todo notfound component
     path: '/:catchAll(.*)',

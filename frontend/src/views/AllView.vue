@@ -1,7 +1,7 @@
 <template>
     <div class="w-[100%] h-[100vh] overflow-x-hidden overflow-y-auto bg-[#fcfce5] flex flex-wrap justify-center items-center pb-[15vh] md:pb-0">
         <div class="relative w-[100%] h-[12%] md:h-[15%] bg-[#ffdf00] flex justify-center items-center">
-            <img class="absolute left-1 w-[75px] h-[60px] md:w-[100px] md:h-[80px]" src="@/assets/images/lottery.png">
+            <img class="absolute left-1 w-[60px] h-[60px] md:w-[100px] md:h-[100px]" src="@/assets/images/lottery-2.png">
             <div class="text-base md:text-4xl text-white">{{ t("lotteryName") }}</div>
             <div class="absolute right-0 md:right-[10vw] w-[auto] h-auto flex flex-wrap justify-center items-center">
                 <!-- <div class="w-[auto] h-[auto]">{{t('choseDay')}} </div> -->
@@ -120,7 +120,7 @@
                 <el-table v-if="isMobiles" :data="tableData" max-height="45vh" style="width:100vw;font-size:10px;">
                     <el-table-column prop="time" width="55" :label="t('openTime')"/>
                     <el-table-column sortable prop="no" :label="t('no')" width="85"/>
-                    <el-table-column prop="reward" width="300">
+                    <el-table-column prop="reward" width="320">
                         <template #header>
                             <div class="flex flex-wrap justify-start items-center">
                                 <div>{{t('reward')}}</div>
@@ -145,13 +145,15 @@
                                 <template v-if="mode == 1">
                                     <div 
                                         v-for="(item,index) in scope.row.rewardSort" :key="index"
-                                        class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-white ball-color-1"
+                                        :class="(item == scope.row.special) ? 'ball-color-2' : 'ball-color-1'"
+                                        class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-white"
                                     >{{ item }}</div>
                                 </template>
                                 <template v-else-if="mode == 2">
                                     <div 
                                         v-for="(item,index) in scope.row.reward" :key="index"
-                                        class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-white ball-color-1"
+                                        :class="(item == scope.row.special) ? 'ball-color-2' : 'ball-color-1'"
+                                        class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-white"
                                     >{{ item }}</div>
                                 </template>
                                 <template v-else-if="mode == 3">
@@ -194,19 +196,19 @@
                             </div>
                         </template>
                     </el-table-column>
-                    <el-table-column v-if="(mode == 1) || (mode == 2)" prop="special" width="60" :label="t('specialNum')">
+                    <!-- <el-table-column v-if="(mode == 1) || (mode == 2)" prop="special" width="60" :label="t('specialNum')">
                         <template #default="scope">
                             <div class="flex flex-wrap justify-center items-center gap-x-0.5">
                                 <div class="w-[20px] h-[20px] rounded-[50%] flex justify-center items-center font-bold text-white ball-color-2">{{ scope.row.special }}</div>
                             </div>
                         </template>
-                    </el-table-column>
+                    </el-table-column> -->
                     <el-table-column v-if="(mode == 1) || (mode == 2)" prop="decision" :label="t('singleDecision')" width="50"/>
                 </el-table>
                 <el-table v-else :data="tableData" max-height="60vh" style="width:auto;">
                     <el-table-column prop="time" width="60" :label="t('openTime')"/>
                     <el-table-column sortable prop="no" :label="t('no')" width="100"/>
-                    <el-table-column prop="reward" :width="((mode == 1) || (mode == 2)) ? 570 : 700">
+                    <el-table-column prop="reward" :width="((mode == 1) || (mode == 2)) ? 640 : 700">
                         <template #header>
                             <div class="flex flex-wrap justify-start items-center">
                                 <div>{{t('reward')}}</div>
@@ -231,13 +233,15 @@
                                 <template v-if="mode == 1">
                                     <div 
                                         v-for="(item,index) in scope.row.rewardSort" :key="index"
-                                        class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-white ball-color-1"
+                                        :class="(item == scope.row.special) ? 'ball-color-2' : 'ball-color-1'"
+                                        class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-white"
                                     >{{ item }}</div>
                                 </template>
                                 <template v-else-if="mode == 2">
                                     <div 
                                         v-for="(item,index) in scope.row.reward" :key="index"
-                                        class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-white ball-color-1"
+                                        :class="(item == scope.row.special) ? 'ball-color-2' : 'ball-color-1'"
+                                        class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-white"
                                     >{{ item }}</div>
                                 </template>
                                 <template v-else-if="mode == 3">
@@ -280,13 +284,13 @@
                             </div>
                         </template>
                     </el-table-column>
-                    <el-table-column v-if="(mode == 1) || (mode == 2)" prop="special" width="70" :label="t('specialNum')">
+                    <!-- <el-table-column v-if="(mode == 1) || (mode == 2)" prop="special" width="70" :label="t('specialNum')">
                         <template #default="scope">
                             <div class="flex flex-wrap justify-center items-center gap-x-0.5">
                                 <div class="w-[25px] h-[25px] rounded-[50%] flex justify-center items-center font-bold text-white ball-color-2">{{ scope.row.special }}</div>
                             </div>
                         </template>
-                    </el-table-column>
+                    </el-table-column> -->
                     <el-table-column v-if="(mode == 1) || (mode == 2)" prop="decision" width="60" :label="t('singleDecision')"/>
                 </el-table>
                 <div class="w-[100%] my-2 h-auto flex flex-wrap justify-center items-center">
@@ -308,15 +312,6 @@
         <!-- 回上頁 -->
         <!-- <Back></Back> -->
         <load v-show="displayTitle === 0"></load>
-        <!-- <div v-if="openStatus" class="absolute w-full h-full flex flex-wrap justify-center items-center">
-            <div
-                @click="ctrlGame('')"
-                class="fixed w-full h-full left-0 top-0 bg-slate-800 z-[111] opacity-50 flex flex-wrap justify-center items-center"
-            ></div>
-            <div class="w-auto h-auto bg-[white] z-[122] flex flex-wrap justify-center items-center">
-                <component :is="openStatus" :allData="newData" :displayTitle="displayTitle" :displayTime="displayTime"></component>
-            </div>
-        </div> -->
         <audio
             hidden="true"
             ref="openbgm"
@@ -336,12 +331,6 @@ import { useI18n } from 'vue-i18n'
 import Block from '@/components/Block.vue'
 import Music from '@/components/music.vue'
 // import advertisement from '@/components/advertisement.vue'
-
-// import SmallHistory from '@/components/smallHistory.vue'
-// import Back from '@/components/Back.vue'
-// import bar from '@/components/bar.vue'
-// import capsule from '@/components/capsule.vue'
-// import chest from '@/components/chest.vue'
 import { useRouter } from "vue-router"
 export default {
   name: 'allView',
@@ -350,11 +339,6 @@ export default {
     Block,
     Music,
     // advertisement,
-    // SmallHistory,
-    // Back,
-    // bar,
-    // capsule,
-    // chest
   },
   setup() {
     /**
