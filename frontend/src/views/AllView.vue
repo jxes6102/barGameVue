@@ -302,7 +302,7 @@
                     />
                 </div>
             </div>
-            <advertisement></advertisement>
+            <!-- <advertisement></advertisement> -->
         </div>
         
         <!-- 回上頁 -->
@@ -335,7 +335,7 @@ import load from '@/components/load.vue'
 import { useI18n } from 'vue-i18n'
 import Block from '@/components/Block.vue'
 import Music from '@/components/music.vue'
-import advertisement from '@/components/advertisement.vue'
+// import advertisement from '@/components/advertisement.vue'
 
 // import SmallHistory from '@/components/smallHistory.vue'
 // import Back from '@/components/Back.vue'
@@ -349,7 +349,7 @@ export default {
     load,
     Block,
     Music,
-    advertisement
+    // advertisement,
     // SmallHistory,
     // Back,
     // bar,
@@ -378,7 +378,6 @@ export default {
         // {name:t('game3'),key:'chest'},
     ])
     const openbgm = ref(null)
-    const sortStatus = ref(false)
     const apiLoading = ref(false)
     const timer1 = ref(null)
     const dayData = ref(null)
@@ -558,12 +557,10 @@ export default {
     const mode = ref(1)
     const doSort = () => {
         mode.value = 1
-        sortStatus.value = true
     }
 
     const disableSort = () => {
         mode.value = 2
-        sortStatus.value = false
     }
 
     const sumSort = () => {
@@ -577,7 +574,6 @@ export default {
     }
 
     const dealSum = (arr) => {
-        // console.log('arr',arr)
         let temp = arr.map((item)=>parseInt(item))
         let target = []
         
@@ -631,7 +627,6 @@ export default {
         openbgm,
         page,
         bingoLatest,
-        sortStatus,
         mode,
         areaSortSumResult,
         seatSort,
@@ -648,62 +643,6 @@ export default {
 }
 </script>
 <style scoped>
-.ball-color-1{
-  background:radial-gradient(circle at 35% 25%,#9b98f5 0,#716ddd 20%,#4743d0 40%,#1f19bf 90%,#302bc4 95%,#4743d0 100%);
-}
-.ball-color-2{
-  background:radial-gradient(circle at 35% 25%,#f67b7b 0,#df5d5d 20%,#e14d4d 40%,#bb1919 90%,#d32f2f 95%,#e14d4d 100%);
-}
-.ball-color-3{
-  background:radial-gradient(circle at 35% 25%,#fae771 0,#f7e35f 20%,#fce238 40%,#fbdd20 90%,#fcdc12 95%,#ffdf00 100%);
-}
-.ball-color-4{
-  background:radial-gradient(circle at 35% 25%,#51cdc9 0,#3ed3ce 20%,#27aba6 40%,#14938f 90%,#077874 95%,#015856 100%);
-}
-
-.ball-color-5{
-    background:radial-gradient(circle at 35% 25%,#d7e0ed 0,#cad7e8 20%,#afc1d5 40%,#afbdd1 90%,#a0afc4 95%,#93a3b8 100%);
-}
-
-.position-color-1{
-    background:radial-gradient(circle at 35% 25%,#f0eac7 0,#faeeaa 20%,#fce76e 40%,#fcde37 90%,#eccd1e 95%,#FFD700 100%);
-}
-
-.position-color-2{
-    background:radial-gradient(circle at 35% 25%,#abcdf0 0,#84bcf4 20%,#5ca9f6 40%,#439cf5 90%,#3495f5 95%,#1c87f1 100%);
-}
-
-.position-color-3{
-    background:radial-gradient(circle at 35% 25%,#b4bec6 0,#96aec2 20%,#809fb9 40%,#7ea2bf 90%,#6191b9 95%,#4d89b9 100%);
-}
-
-.position-color-4{
-    background:radial-gradient(circle at 35% 25%,#fcedda 0,#f7c78d 20%,#f4b05d 40%,#f7a541 90%,#fc971b 95%,#FF8C00 100%);
-}
-.position-color-5{
-    background:radial-gradient(circle at 35% 25%,#b5ddf7 0,#87CEFA 20%,#8dcff8 40%,#69bff5 90%,#45b4f9 95%,#1fa4f7 100%);
-}
-
-.position-color-6{
-    background:radial-gradient(circle at 35% 25%,#9494a6 0,#73739f 20%,#5959a3 40%,#2d2d98 90%,#00008B 95%,#101090 100%);
-}
-
-.position-color-7{
-    background:radial-gradient(circle at 35% 25%,#c2c1c1 0,#bbbbbb 20%,#b4b3b3 40%,#898989 90%,#525252 95%,#202020 100%);
-}
-
-.position-color-8{
-    background:radial-gradient(circle at 35% 25%,#e3bcd5 0,#b980a4 20%,#bc699e 40%,#b8478e 90%,#c2288a 95%,#C71585 100%);
-}
-
-.position-color-9{
-    background:radial-gradient(circle at 35% 25%,#ebd0bd 0,#dbb092 20%,#cb8e62 40%,#a9754f 90%,#97582a 95%,#8B4513 100%);
-}
-
-.position-color-10{
-    background:radial-gradient(circle at 35% 25%,#b0f9d1 0,#7ccfa2 20%,#5fc58d 40%,#3CB371 90%,#21bd67 95%,#02aa4e 100%);
-}
-
 .dayPick:deep .el-input__wrapper{
     background-color:#fdecbd
 }

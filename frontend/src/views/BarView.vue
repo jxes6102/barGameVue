@@ -54,25 +54,56 @@
         </Transition>
       </div>
     </div>
-    <div v-if="sortStatus" class="relative w-[90%] h-[auto] md:w-[auto] md:h-[auto] flex flex-wrap justify-center items-center mb-2 py-2 gap-x-2 border-2 border-solid border-red-800 rounded-md">
-          <div class="w-[100%] text-base md:text-xl font-extrabold text-red-500">{{ t('sumArea') }}</div>
-          <div 
-              v-for="(item,index) in areaSumResult" 
-              :key="index" 
-              class="w-auto flex flex-wrap justify-around items-center">
-              <div v-for="(thing,thingIndex) in item.title" :key="thing" class="w-auto flex flex-wrap justify-center items-center">
-                  <div class="w-[22px] h-[22px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-[12px] md:text-[14px] text-white ball-color-3">{{ thing }}</div>
-                  <div class="text-slate-100 font-black">{{(thingIndex !== item.title.length - 1) ? "+" : "="}}</div>
-              </div>
-              <div 
-                  class="w-[22px] h-[22px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-[12px] md:text-[14px] text-white ball-color-4"
-              >{{ item.number }}</div>
+    <div class="relative w-[90%] h-[auto] md:w-[auto] md:h-[auto] flex flex-wrap justify-center items-center mb-2 py-2 gap-x-2 border-2 border-solid border-red-800 rounded-md">
+          <div class="w-[100%] text-base md:text-xl font-extrabold text-red-500">
+              {{ ((mode == 1) || (mode == 3)) ? t('sumArea') : t('sumSortArea') }}
           </div>
+          <template v-if="((mode == 1) || (mode == 3))">
+              <div 
+                  v-for="(item,index) in areaSumResult" 
+                  :key="index" 
+                  class="w-auto my-1 flex flex-wrap justify-around items-center">
+                  <div v-for="(thing,thingIndex) in item.title" :key="thing" class="w-auto flex flex-wrap justify-center items-center">
+                      <div class="w-[25px] h-[25px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-[12px] md:text-[14px] text-white ball-color-3">{{ thing }}</div>
+                      <div class="font-black text-white">{{(thingIndex !== item.title.length - 1) ? "+" : "="}}</div>
+                  </div>
+                  <div 
+                      class="w-[25px] h-[25px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-[12px] md:text-[14px] text-white ball-color-4"
+                  >{{ item.number }}</div>
+              </div>
+          </template>
+          <template v-else>
+              <div 
+                  v-for="(item,index) in areaSortSumResult"
+                  :key="index"
+                  class="w-auto m-1 flex flex-wrap justify-around items-center">
+                  <div class="w-auto flex flex-wrap justify-around items-center">
+                      <div class="w-[28px] h-[28px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-[12px] md:text-[14px] text-white ball-color-5">{{ (index+1) }}</div>
+                      <div class="font-black text-white">+</div>
+                      <div class="w-[28px] h-[28px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-[12px] md:text-[14px] text-white ball-color-5">{{ (20-index) }}</div>
+                      <div class="font-black text-white">=</div>
+                      <div
+                          :class="{
+                              'position-color-1' : item.position == 1,
+                              'position-color-2' : item.position == 2,
+                              'position-color-3' : item.position == 3,
+                              'position-color-4' : item.position == 4,
+                              'position-color-5' : item.position == 5,
+                              'position-color-6' : item.position == 6,
+                              'position-color-7' : item.position == 7,
+                              'position-color-8' : item.position == 8,
+                              'position-color-9' : item.position == 9,
+                              'position-color-10' : item.position == 10,
+                          }"
+                          class="w-[28px] h-[28px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-white text-[12px] md:text-[14px]">{{ item.sum }}</div>
+                  </div>
+              </div>
+          </template>
           <Block :closeStatus="closeStatus" :drawStatus="drawStatus" :type="'all'"></Block>
     </div>
     <!-- 新歷史紀錄 -->
-    <div class="w-[auto] h-[40vh] flex flex-wrap justify-center items-center">
-      <SmallHistory :tableData="sortData" :tableHeight="'40vh'" @sortEvent="getSort"></SmallHistory>
+    <div class="w-[auto] h-[50vh] flex flex-wrap justify-center items-center">
+      <SmallHistory :tableData="sortData" :tableHeight="'50vh'" @sortEvent="getSort"></SmallHistory>
     </div>
     <div class="w-[100%] my-2 h-auto flex flex-wrap justify-center items-center">
       <el-pagination
@@ -159,8 +190,14 @@ export default {
       return newData.value.reward.indexOf(newData.value.special)
     })
     const sortData = computed(() => {
-      if(!historyData.value) return []
-      return JSON.parse(JSON.stringify(historyData.value))
+      let target = []
+      if(!historyData.value) return target
+      target = historyData.value
+      for(let i = 0;i<target.length;i++){
+          target[i].areaSum = dealSum(target[i].rewardSort)
+          target[i].seatRank = dealSeat(target[i].reward)
+      }
+      return target
     })
     const tableTotal = computed(() => {
         return store.state.dataTotal
@@ -181,15 +218,16 @@ export default {
         return t('rewardLen',{existing:tableTotal.value,remain:203-tableTotal.value})
     })
     const areaSumResult = computed(() => {
+        if(!bingoLatest.value?.bigShowOrder) return []
+        let target = dealSum(bingoLatest.value?.bigShowOrder)
+        return target
+    })
+    const areaSortSumResult = computed(() => {
         if(!bingoLatest.value?.openShowOrder) return []
-        let target = []
-        for(let i = 4;(i+2)<bingoLatest.value?.openShowOrder.length;i+=3){
-            let sum = bingoLatest.value?.openShowOrder.slice(i-1,i+2).reduce((accumulator, currentValue) => accumulator + parseInt(currentValue),0)
-            target.push({
-                title:[i,i+1,i+2],
-                number:sum
-            })
-        }
+        let target = dealSeat(bingoLatest.value?.openShowOrder)
+        target.sort((a,b)=> {
+            return a.position - b.position
+        })
         return target
     })
     const closeStatus = computed(() => {
@@ -287,9 +325,46 @@ export default {
 
     init()
 
-    const sortStatus = ref(false)
+    const mode = ref(false)
     const getSort = (value) => {
-      sortStatus.value = value
+      mode.value = value
+    }
+
+    const dealSum = (arr) => {
+        let temp = arr.map((item)=>parseInt(item))
+        let target = []
+        
+        for(let i = 4;(i+2)<temp.length;i+=3){
+            let sum = temp.slice(i-1,i+2).reduce((accumulator, currentValue) => accumulator + currentValue,0)
+            target.push({
+                title:[i,i+1,i+2],
+                number:sum
+            })
+        }
+
+        return target
+    }
+
+    const dealSeat = (arr) => {
+        let temp = arr.map((item)=>parseInt(item))
+        let target = []
+        for(let i = 0;i<10;i++){
+            target.push({
+                position:i+1,
+                sum:temp[i]+temp[19-i],
+                ball:temp[i]
+            })
+        }
+        
+        target.sort((a,b)=>{
+            if(b.sum == a.sum){
+                return b.ball-a.ball
+            }else{
+                return b.sum-a.sum
+            }
+        })
+
+        return target
     }
 
     onMounted(() => {
@@ -325,7 +400,8 @@ export default {
       drawStatus,
       page,
       tableTotal,
-      sortStatus,
+      mode,
+      areaSortSumResult,
       getSort,
       currentChange,
       t,
@@ -405,11 +481,5 @@ export default {
   100% {
     transform: translateY(0%)
   }
-}
-.ball-color-3{
-  background:radial-gradient(circle at 35% 25%,#fae771 0,#f7e35f 20%,#fce238 40%,#fbdd20 90%,#fcdc12 95%,#ffdf00 100%);
-}
-.ball-color-4{
-  background:radial-gradient(circle at 35% 25%,#51cdc9 0,#3ed3ce 20%,#27aba6 40%,#14938f 90%,#077874 95%,#015856 100%);
 }
 </style>
