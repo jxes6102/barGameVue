@@ -70,26 +70,55 @@
                 </div>
             </div>
             <div class="w-auto h-[auto] md:top-0 flex flex-wrap justify-center items-center gap-y-2 md:min-h-[60vh]">
-                <!-- <div class="relative w-[100%] h-auto flex flex-wrap justify-center items-center gap-x-2">
-                    <div class="w-[100%] text-base md:text-xl font-extrabold text-red-500">{{ t('sumArea') }}</div>
-                    <div 
-                        v-for="(item,index) in areaSumResult" 
-                        :key="index" 
-                        class="w-auto flex flex-wrap justify-around items-center">
-                        <div v-for="(thing,thingIndex) in item.title" :key="thing" class="w-auto flex flex-wrap justify-center items-center">
-                            <div class="w-[22px] h-[22px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-[12px] md:text-[14px] text-white ball-color-3">{{ thing }}</div>
-                            <div class="font-black">{{(thingIndex !== item.title.length - 1) ? "+" : "="}}</div>
-                        </div>
-                        <div 
-                            class="w-[22px] h-[22px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-[12px] md:text-[14px] text-white ball-color-4"
-                        >{{ item.number }}</div>
+                <div class="relative w-[100%] h-auto my-2 flex flex-wrap justify-center items-center gap-x-2">
+                    <div class="w-[100%] text-base md:text-xl font-extrabold text-red-500">
+                        {{ ((mode == 1) || (mode == 3)) ? t('sumArea') : t('sumSortArea') }}
                     </div>
+                    <template v-if="((mode == 1) || (mode == 3))">
+                        <div 
+                            v-for="(item,index) in areaSumResult" 
+                            :key="index" 
+                            class="w-auto flex flex-wrap justify-around items-center">
+                            <div v-for="(thing,thingIndex) in item.title" :key="thing" class="w-auto flex flex-wrap justify-center items-center">
+                                <div class="w-[22px] h-[22px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-[12px] md:text-[14px] text-white ball-color-3">{{ thing }}</div>
+                                <div class="font-black">{{(thingIndex !== item.title.length - 1) ? "+" : "="}}</div>
+                            </div>
+                            <div 
+                                class="w-[22px] h-[22px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-[12px] md:text-[14px] text-white ball-color-4"
+                            >{{ item.number }}</div>
+                        </div>
+                    </template>
+                    <template v-else>
+                        <div 
+                            v-for="(item,index) in areaSortSumResult"
+                            :key="index"
+                            class="w-auto m-1 flex flex-wrap justify-around items-center">
+                            <div class="w-auto flex flex-wrap justify-around items-center">
+                                <div>{{(index+1) + '-' + (20-index)}}</div>
+                                <div
+                                    :class="{
+                                        'position-color-1' : item.position == 1,
+                                        'position-color-2' : item.position == 2,
+                                        'position-color-3' : item.position == 3,
+                                        'position-color-4' : item.position == 4,
+                                        'position-color-5' : item.position == 5,
+                                        'position-color-6' : item.position == 6,
+                                        'position-color-7' : item.position == 7,
+                                        'position-color-8' : item.position == 8,
+                                        'position-color-9' : item.position == 9,
+                                        'position-color-10' : item.position == 10,
+                                    }"
+                                    class="w-[22px] h-[22px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-white">{{ item.position }}</div>
+                            </div>
+                        </div>
+                    </template>
+                    
                     <Block :closeStatus="closeStatus" :drawStatus="drawStatus" :type="'all'"></Block>
-                </div> -->
+                </div>
                 <el-table v-if="isMobiles" :data="tableData" max-height="45vh" style="width:100vw;font-size:10px;">
                     <el-table-column prop="time" width="55" :label="t('openTime')"/>
                     <el-table-column sortable prop="no" :label="t('no')" width="85"/>
-                    <el-table-column prop="reward" width="260">
+                    <el-table-column prop="reward" width="300">
                         <template #header>
                             <div class="flex flex-wrap justify-start items-center">
                                 <div>{{t('reward')}}</div>
@@ -141,10 +170,22 @@
                                     <div 
                                         v-for="(item,index) in scope.row.seatRank"
                                         :key="index"
-                                        class="w-auto m-[1px] flex flex-wrap justify-around items-center">
-                                        <div class="w-auto m-[1px] flex flex-wrap justify-around items-center">
-                                            <div class="p-[2px] rounded-md bg-[#ff8c00] text-white">{{ '第'+(index+1)+'名' }}</div>
-                                            <div class="p-[2px] rounded-md text-black">{{ item.position }}</div>
+                                        class="w-auto m-1 flex flex-wrap justify-around items-center">
+                                        <div class="w-auto flex flex-wrap justify-around items-center">
+                                            <div
+                                                :class="{
+                                                    'position-color-1' : item.position == 1,
+                                                    'position-color-2' : item.position == 2,
+                                                    'position-color-3' : item.position == 3,
+                                                    'position-color-4' : item.position == 4,
+                                                    'position-color-5' : item.position == 5,
+                                                    'position-color-6' : item.position == 6,
+                                                    'position-color-7' : item.position == 7,
+                                                    'position-color-8' : item.position == 8,
+                                                    'position-color-9' : item.position == 9,
+                                                    'position-color-10' : item.position == 10,
+                                                }"
+                                                class="w-[22px] h-[22px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-white">{{ item.position }}</div>
                                         </div>
                                     </div>
                                 </template>
@@ -216,9 +257,21 @@
                                         v-for="(item,index) in scope.row.seatRank"
                                         :key="index"
                                         class="w-auto m-1 flex flex-wrap justify-around items-center">
-                                        <div class="w-auto m-1 flex flex-wrap justify-around items-center">
-                                            <div class="p-[2px] rounded-md bg-[#ff8c00] text-white">{{ '第'+(index+1)+'名' }}</div>
-                                            <div class="p-[2px] rounded-md text-black">{{ item.position }}</div>
+                                        <div class="w-auto flex flex-wrap justify-around items-center">
+                                            <div 
+                                                :class="{
+                                                    'position-color-1' : item.position == 1,
+                                                    'position-color-2' : item.position == 2,
+                                                    'position-color-3' : item.position == 3,
+                                                    'position-color-4' : item.position == 4,
+                                                    'position-color-5' : item.position == 5,
+                                                    'position-color-6' : item.position == 6,
+                                                    'position-color-7' : item.position == 7,
+                                                    'position-color-8' : item.position == 8,
+                                                    'position-color-9' : item.position == 9,
+                                                    'position-color-10' : item.position == 10,
+                                                }"
+                                                class="w-[22px] h-[22px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-white">{{ item.position }}</div>
                                         </div>
                                     </div>
                                 </template>
@@ -334,15 +387,13 @@ export default {
     //     return newData.value.reward
     // })
     const areaSumResult = computed(() => {
+        if(!bingoLatest.value?.bigShowOrder) return []
+        let target = dealSum(bingoLatest.value?.bigShowOrder)
+        return target
+    })
+    const areaSortSumResult = computed(() => {
         if(!bingoLatest.value?.openShowOrder) return []
-        let target = []
-        for(let i = 4;(i+2)<bingoLatest.value?.openShowOrder.length;i+=3){
-            let sum = bingoLatest.value?.openShowOrder.slice(i-1,i+2).reduce((accumulator, currentValue) => accumulator + parseInt(currentValue),0)
-            target.push({
-                title:[i,i+1,i+2],
-                number:sum
-            })
-        }
+        let target = dealSeat(bingoLatest.value?.openShowOrder)
         return target
     })
     const historyData = ref(null)
@@ -512,7 +563,7 @@ export default {
         
     }
     /*
-    *1大小 2開獎 3加總 4位置排名 
+    *1大小 2開獎 3大小加總 4位置加總
     */
     const mode = ref(1)
     const doSort = () => {
@@ -569,6 +620,8 @@ export default {
                 return b.sum-a.sum
             }
         })
+
+        // console.log('target',target)
         return target
     }
 
@@ -591,6 +644,7 @@ export default {
         bingoLatest,
         sortStatus,
         mode,
+        areaSortSumResult,
         seatSort,
         sumSort,
         disableSort,
@@ -616,6 +670,45 @@ export default {
 }
 .ball-color-4{
   background:radial-gradient(circle at 35% 25%,#51cdc9 0,#3ed3ce 20%,#27aba6 40%,#14938f 90%,#077874 95%,#015856 100%);
+}
+
+.position-color-1{
+    background:radial-gradient(circle at 35% 25%,#f0eac7 0,#faeeaa 20%,#fce76e 40%,#fcde37 90%,#eccd1e 95%,#FFD700 100%);
+}
+
+.position-color-2{
+    background:radial-gradient(circle at 35% 25%,#abcdf0 0,#84bcf4 20%,#5ca9f6 40%,#439cf5 90%,#3495f5 95%,#1c87f1 100%);
+}
+
+.position-color-3{
+    background:radial-gradient(circle at 35% 25%,#b4bec6 0,#96aec2 20%,#809fb9 40%,#7ea2bf 90%,#6191b9 95%,#4d89b9 100%);
+}
+
+.position-color-4{
+    background:radial-gradient(circle at 35% 25%,#fcedda 0,#f7c78d 20%,#f4b05d 40%,#f7a541 90%,#fc971b 95%,#FF8C00 100%);
+}
+.position-color-5{
+    background:radial-gradient(circle at 35% 25%,#b5ddf7 0,#87CEFA 20%,#8dcff8 40%,#69bff5 90%,#45b4f9 95%,#1fa4f7 100%);
+}
+
+.position-color-6{
+    background:radial-gradient(circle at 35% 25%,#9494a6 0,#73739f 20%,#5959a3 40%,#2d2d98 90%,#00008B 95%,#101090 100%);
+}
+
+.position-color-7{
+    background:radial-gradient(circle at 35% 25%,#c2c1c1 0,#bbbbbb 20%,#b4b3b3 40%,#898989 90%,#525252 95%,#202020 100%);
+}
+
+.position-color-8{
+    background:radial-gradient(circle at 35% 25%,#e3bcd5 0,#b980a4 20%,#bc699e 40%,#b8478e 90%,#c2288a 95%,#C71585 100%);
+}
+
+.position-color-9{
+    background:radial-gradient(circle at 35% 25%,#ebd0bd 0,#dbb092 20%,#cb8e62 40%,#a9754f 90%,#97582a 95%,#8B4513 100%);
+}
+
+.position-color-10{
+    background:radial-gradient(circle at 35% 25%,#b0f9d1 0,#7ccfa2 20%,#5fc58d 40%,#3CB371 90%,#21bd67 95%,#02aa4e 100%);
 }
 
 .dayPick:deep .el-input__wrapper{

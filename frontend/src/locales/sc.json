@@ -19,13 +19,14 @@
     "game2":"摇彩机",
     "game3":"开彩球",
     "specialNum":"特别号",
-    "sumArea":"宾果各区加总值",
+    "sumArea":"宾果各区大小加总值",
+    "sumSortArea":"宾果各区顺序加总值",
     "lotteryName":"台湾5分宾果",
     "stop":"停开中...",
     "open":"开奖中...",
     "music":"开奖音效",
     "sizeSort":"大小順序",
     "openSort":"开出顺序",
-    "sum":"加总",
-    "position":"位置"
+    "sum":"大小加总",
+    "position":"顺序加总"
 }
