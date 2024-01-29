@@ -30,7 +30,7 @@
                 </div>
             </div>
         </div>
-        <div class="w-[100vw] h-[88%] md:h-[85%] flex flex-col justify-start items-start md:items-center max-w-[1000px] gap-y-2">
+        <div class="w-[100vw] h-full flex flex-col justify-start items-start md:items-center max-w-[1000px] gap-y-2">
             <div class="w-[100%] h-auto flex flex-wrap justify-center items-center gap-y-4 md:gap-y-2">
                 <div class="relative w-[100%] md:w-[50%] h-auto flex flex-wrap justify-center md:justify-center items-center gap-y-4 md:gap-y-2">
                     <div class="relative w-[100%] h-auto flex flex-wrap justify-center items-center gap-x-2">
@@ -69,7 +69,7 @@
                     </div>
                 </div>
             </div>
-            <div class="w-auto h-[auto] md:top-0 flex flex-wrap justify-center items-center gap-y-2 md:min-h-[60vh]">
+            <div class="w-auto h-[auto] md:top-0 flex flex-wrap justify-center items-center gap-y-2">
                 <div class="relative w-[100%] h-auto my-2 flex flex-wrap justify-center items-center gap-x-2">
                     <div class="w-[100%] text-base md:text-xl font-extrabold text-red-500">
                         {{ ((mode == 1) || (mode == 3)) ? t('sumArea') : t('sumSortArea') }}
@@ -94,7 +94,10 @@
                             :key="index"
                             class="w-auto m-1 flex flex-wrap justify-around items-center">
                             <div class="w-auto flex flex-wrap justify-around items-center">
-                                <div>{{(index+1) + '-' + (20-index)}}</div>
+                                <div class="w-[28px] h-[28px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-[12px] md:text-[14px] text-white ball-color-5">{{ (index+1) }}</div>
+                                <div class="font-black">+</div>
+                                <div class="w-[28px] h-[28px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-[12px] md:text-[14px] text-white ball-color-5">{{ (20-index) }}</div>
+                                <div class="font-black">=</div>
                                 <div
                                     :class="{
                                         'position-color-1' : item.position == 1,
@@ -108,11 +111,10 @@
                                         'position-color-9' : item.position == 9,
                                         'position-color-10' : item.position == 10,
                                     }"
-                                    class="w-[22px] h-[22px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-white">{{ item.position }}</div>
+                                    class="w-[28px] h-[28px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-white">{{ item.sum }}</div>
                             </div>
                         </div>
                     </template>
-                    
                     <Block :closeStatus="closeStatus" :drawStatus="drawStatus" :type="'all'"></Block>
                 </div>
                 <el-table v-if="isMobiles" :data="tableData" max-height="45vh" style="width:100vw;font-size:10px;">
@@ -300,7 +302,9 @@
                     />
                 </div>
             </div>
+            <advertisement></advertisement>
         </div>
+        
         <!-- 回上頁 -->
         <!-- <Back></Back> -->
         <load v-show="displayTitle === 0"></load>
@@ -331,6 +335,8 @@ import load from '@/components/load.vue'
 import { useI18n } from 'vue-i18n'
 import Block from '@/components/Block.vue'
 import Music from '@/components/music.vue'
+import advertisement from '@/components/advertisement.vue'
+
 // import SmallHistory from '@/components/smallHistory.vue'
 // import Back from '@/components/Back.vue'
 // import bar from '@/components/bar.vue'
@@ -343,6 +349,7 @@ export default {
     load,
     Block,
     Music,
+    advertisement
     // SmallHistory,
     // Back,
     // bar,
@@ -382,10 +389,6 @@ export default {
         if(!todayData.value) return {}
         return todayData.value[0]
     })
-    // const drawResult = computed(() => {
-    //     if(!newData.value?.reward) return []
-    //     return newData.value.reward
-    // })
     const areaSumResult = computed(() => {
         if(!bingoLatest.value?.bigShowOrder) return []
         let target = dealSum(bingoLatest.value?.bigShowOrder)
@@ -394,9 +397,11 @@ export default {
     const areaSortSumResult = computed(() => {
         if(!bingoLatest.value?.openShowOrder) return []
         let target = dealSeat(bingoLatest.value?.openShowOrder)
+        target.sort((a,b)=> {
+            return a.position - b.position
+        })
         return target
     })
-    const historyData = ref(null)
     const tableData = computed(() => {
         let target = []
         if(!todayData.value) return target
@@ -466,7 +471,6 @@ export default {
     })
     //監聽日期改變
     watch(dayData, async(newVal,oldVal)=>{
-        // await getHistory()
         page.value = 1
         await pyCatchNum()
     })
@@ -495,18 +499,6 @@ export default {
         // console.log('todayData.value',todayData.value)
         apiLoading.value = false
     }
-    //拿除了今天獎項資料
-    // const getHistory = async(nowpage = 1) => {
-    //     if(apiLoading.value) return false
-    //     apiLoading.value = true
-    //     let date = dayData.value.getFullYear()+'-'+(dayData.value.getMonth()+1)+'-'+dayData.value.getDate()
-    //     // let startTime = dayData.value.getFullYear()+'-'+(dayData.value.getMonth()+1)+'-'+dayData.value.getDate()+'%2000:00:00'
-    //     // let endTime = dayData.value.getFullYear()+'-'+(dayData.value.getMonth()+1)+'-'+dayData.value.getDate()+'%2023:59:59'
-    //     await store.dispatch('getOtherHistory',{day:date})
-    //     page.value = 0
-    //     historyData.value = store.state.allrecord
-    //     apiLoading.value = false
-    // }
 
     onMounted(() => {
         timer1.value = window.setInterval((async() => {
@@ -548,8 +540,6 @@ export default {
         return (time.getTime() > Date.now()) || (time.getTime() < (Date.now() - 2592000000))
     }
 
-    const orderStatus = ref(false)
-    const openStatus = ref('')
     const router = useRouter();
     const ctrlGame = (name) => {
         // openStatus.value = name
@@ -621,7 +611,6 @@ export default {
             }
         })
 
-        // console.log('target',target)
         return target
     }
 
@@ -670,6 +659,10 @@ export default {
 }
 .ball-color-4{
   background:radial-gradient(circle at 35% 25%,#51cdc9 0,#3ed3ce 20%,#27aba6 40%,#14938f 90%,#077874 95%,#015856 100%);
+}
+
+.ball-color-5{
+    background:radial-gradient(circle at 35% 25%,#d7e0ed 0,#cad7e8 20%,#afc1d5 40%,#afbdd1 90%,#a0afc4 95%,#93a3b8 100%);
 }
 
 .position-color-1{
