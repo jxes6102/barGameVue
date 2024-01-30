@@ -1,7 +1,7 @@
 <template>
     <el-table v-if="isMobiles" :data="sortData" @sort-change="doSort" :max-height="tableHeights" style="width:100vw;font-size:10px;">
-        <el-table-column prop="time" :label="t('openTime')" width="55"/>  
-        <el-table-column sortable prop="no" :label="t('no')" width="85"/>
+        <el-table-column prop="time" :label="t('openTime')" width="40"/>  
+        <el-table-column sortable prop="no" :label="t('no')" width="60"/>
         <el-table-column prop="reward" width="320">
           <template #header>
               <div class="flex flex-wrap justify-start items-center">
@@ -88,9 +88,9 @@
         <!-- <el-table-column v-if="(mode == 1) || (mode == 2)" prop="decision" :label="t('singleDecision')" width="50"/> -->
     </el-table>
     <el-table v-else :data="sortData" @sort-change="doSort" :max-height="tableHeights" style="width:auto;">
-        <el-table-column prop="time" :label="t('openTime')" width="70"/>
-        <el-table-column sortable prop="no" :label="t('no')" width="100"/>
-        <el-table-column prop="reward" width="700">
+        <el-table-column prop="time" :label="t('openTime')" width="50"/>
+        <el-table-column sortable prop="no" :label="t('no')" width="80"/>
+        <el-table-column prop="reward" width="670">
           <template #header>
             <div class="flex flex-wrap justify-start items-center">
                 <div>{{t('reward')}}</div>
@@ -173,7 +173,7 @@
                 </div>
             </template>
         </el-table-column> -->
-        <el-table-column v-if="(mode == 1) || (mode == 2)" prop="decision" :label="t('singleDecision')" width="60"/>
+        <!-- <el-table-column v-if="(mode == 1) || (mode == 2)" prop="decision" :label="t('singleDecision')" width="60"/> -->
     </el-table>
 </template>
 <script>

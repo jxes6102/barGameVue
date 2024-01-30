@@ -121,8 +121,8 @@
                     <Block :closeStatus="closeStatus" :drawStatus="drawStatus" :type="'all'"></Block>
                 </div>
                 <el-table v-if="isMobiles" :data="tableData" max-height="45vh" style="width:100vw;font-size:10px;">
-                    <el-table-column prop="time" width="55" :label="t('openTime')"/>
-                    <el-table-column sortable prop="no" :label="t('no')" width="85"/>
+                    <el-table-column prop="time" width="40" :label="t('openTime')"/>
+                    <el-table-column sortable prop="no" :label="t('no')" width="60"/>
                     <el-table-column prop="reward" width="320">
                         <template #header>
                             <div class="flex flex-wrap justify-start items-center">
@@ -209,9 +209,9 @@
                     <!-- <el-table-column v-if="(mode == 1) || (mode == 2)" prop="decision" :label="t('singleDecision')" width="50"/> -->
                 </el-table>
                 <el-table v-else :data="tableData" max-height="60vh" style="width:auto;">
-                    <el-table-column prop="time" width="60" :label="t('openTime')"/>
-                    <el-table-column sortable prop="no" :label="t('no')" width="100"/>
-                    <el-table-column prop="reward" width="700">
+                    <el-table-column prop="time" width="50" :label="t('openTime')"/>
+                    <el-table-column sortable prop="no" :label="t('no')" width="80"/>
+                    <el-table-column prop="reward" width="670">
                         <template #header>
                             <div class="flex flex-wrap justify-start items-center">
                                 <div>{{t('reward')}}</div>

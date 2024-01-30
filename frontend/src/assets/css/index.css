@@ -8,6 +8,10 @@
     }
 }
 
+.cell{
+    padding: 0px 4px !important;
+}
+
 .ball-color-1{
     background:radial-gradient(circle at 35% 25%,#9b98f5 0,#716ddd 20%,#4743d0 40%,#1f19bf 90%,#302bc4 95%,#4743d0 100%);
 }
