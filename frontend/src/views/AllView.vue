@@ -1,8 +1,11 @@
 <template>
-    <div class="w-[100%] h-[100vh] overflow-x-hidden overflow-y-auto bg-[#fcfce5] flex flex-wrap justify-center items-center pb-[15vh] md:pb-0">
-        <div class="relative w-[100%] h-[12%] md:h-[15%] bg-[#ffdf00] flex justify-center items-center">
-            <img class="absolute left-1 w-[60px] h-[60px] md:w-[100px] md:h-[100px]" src="@/assets/images/lottery-2.png">
-            <div class="text-base md:text-4xl text-white">{{ t("lotteryName") }}</div>
+    <div class="w-[100%] h-full overflow-x-hidden overflow-y-auto bg-[#fcfce5] flex flex-wrap justify-center items-center pb-[15vh] md:pb-0">
+        <div class="relative w-[100%] h-[12vh] md:h-[15vh] bg-[#ffdf00] flex justify-center items-center">
+            <img class="absolute left-1 w-[12vh] h-[12vh] md:w-[15vh] md:h-[15vh]" src="@/assets/images/lottery-3.png">
+            <div class="flex flex-col justify-center items-center">
+                <div class="text-base md:text-4xl text-white">{{ t("lotteryName") }}</div>
+                <div class="text-xs md:text-2xl text-red-700">{{ t("lotteryTitle") }}</div>
+            </div>
             <div class="absolute right-0 md:right-[10vw] w-[auto] h-auto flex flex-wrap justify-center items-center">
                 <!-- <div class="w-[auto] h-[auto]">{{t('choseDay')}} </div> -->
                 <div v-if="isMobiles" class="dayPick w-[auto] h-[auto] flex flex-wrap justify-center items-center">
@@ -203,12 +206,12 @@
                             </div>
                         </template>
                     </el-table-column> -->
-                    <el-table-column v-if="(mode == 1) || (mode == 2)" prop="decision" :label="t('singleDecision')" width="50"/>
+                    <!-- <el-table-column v-if="(mode == 1) || (mode == 2)" prop="decision" :label="t('singleDecision')" width="50"/> -->
                 </el-table>
                 <el-table v-else :data="tableData" max-height="60vh" style="width:auto;">
                     <el-table-column prop="time" width="60" :label="t('openTime')"/>
                     <el-table-column sortable prop="no" :label="t('no')" width="100"/>
-                    <el-table-column prop="reward" :width="((mode == 1) || (mode == 2)) ? 640 : 700">
+                    <el-table-column prop="reward" width="700">
                         <template #header>
                             <div class="flex flex-wrap justify-start items-center">
                                 <div>{{t('reward')}}</div>
@@ -291,7 +294,7 @@
                             </div>
                         </template>
                     </el-table-column> -->
-                    <el-table-column v-if="(mode == 1) || (mode == 2)" prop="decision" width="60" :label="t('singleDecision')"/>
+                    <!-- <el-table-column v-if="(mode == 1) || (mode == 2)" prop="decision" width="60" :label="t('singleDecision')"/> -->
                 </el-table>
                 <div class="w-[100%] my-2 h-auto flex flex-wrap justify-center items-center">
                     <el-pagination
