@@ -309,11 +309,12 @@
                     />
                 </div>
             </div>
-            <!-- <advertisement></advertisement> -->
+            <advertisement></advertisement>
         </div>
         
         <!-- 回上頁 -->
         <!-- <Back></Back> -->
+        <linkView></linkView>
         <load v-show="displayTitle === 0"></load>
         <audio
             hidden="true"
@@ -333,7 +334,8 @@ import load from '@/components/load.vue'
 import { useI18n } from 'vue-i18n'
 import Block from '@/components/Block.vue'
 import Music from '@/components/music.vue'
-// import advertisement from '@/components/advertisement.vue'
+import advertisement from '@/components/advertisement.vue'
+import linkView from '@/components/linkView.vue'
 import { useRouter } from "vue-router"
 export default {
   name: 'allView',
@@ -341,7 +343,8 @@ export default {
     load,
     Block,
     Music,
-    // advertisement,
+    advertisement,
+    linkView,
   },
   setup() {
     /**
