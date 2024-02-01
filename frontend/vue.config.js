@@ -1,4 +1,5 @@
 const { defineConfig } = require('@vue/cli-service')
+const ver = new Date().getTime() + '-1.0.0.0'
 module.exports = defineConfig({
   transpileDependencies: true,
   publicPath: './',
@@ -24,6 +25,18 @@ module.exports = defineConfig({
       runtimeOnly: false,
       compositionOnly: false,
       fullInstall: true
+    }
+  },
+  configureWebpack: {
+    output: {
+      filename: `js/[name].[chunkhash].${ver}.js`,
+      chunkFilename: `js/[id].[chunkhash].${ver}.js`,
+    }
+  },
+  css: {
+    extract: {
+      filename: `css/[name].[chunkhash].${ver}.css`,
+      chunkFilename: `css/[id].[chunkhash].${ver}.css`,
     }
   }
 })
