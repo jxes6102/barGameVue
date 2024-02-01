@@ -1,9 +1,13 @@
 <template>
-    <div>
+    <div v-if="allStatus">
         <div
             @click="open"
-            class="fixed bg-white top-[30%] md:top-[20%] right-0 m-1 md:m-2 w-[60px] h-[60px] md:w-[100px] md:h-[100px] z-[50] flex flex-wrap justify-center items-center">
-            <div class="text-lg text-gray-400 font-bold">加入</div>
+            class="fixed bg-white top-[30%] md:top-[20%] right-0 m-1 md:m-2 w-[60px] h-[60px] md:w-[100px] md:h-[100px] z-[50] flex flex-wrap justify-center items-center cursor-pointer">
+            <!-- <div class="text-lg text-gray-400 font-bold">font</div> -->
+            <img class="w-full h-full" src="@/assets/images/chat-1.png" alt="">
+            <div @click.stop="closeAll" class="absolute w-auto h-auto m-[2px] md:m-1 top-0 right-0 cursor-pointer">
+                <el-icon :size="isMobiles ? 20 : 30" color="#F0FFFF"><Close /></el-icon>
+            </div>
         </div>
         <Teleport to="body">
             <div
@@ -21,16 +25,22 @@
 <script>
 // @ is an alias to /src
 // import { useRouter } from "vue-router";
-import { ref } from 'vue'
+import { ref,computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useStore } from "vuex"
 export default {
     name: 'linkView',
     components: {
     },
     setup() {
          // const router = useRouter()
+        const store = useStore()
+        const isMobiles = computed(() => {
+            return store.state.isMobile
+        })
         const { t } = useI18n()
         const status = ref(false)
+        const allStatus = ref(true)
         const open = () => {
             status.value = true
         }
@@ -40,10 +50,17 @@ export default {
         const link = () => {
             window.open('https://www.google.com.tw/')
         }
-    
+
+        const closeAll = () => {
+            allStatus.value = false
+        }
+
         return {
             t,
             status,
+            allStatus,
+            isMobiles,
+            closeAll,
             open,
             close,
             link
