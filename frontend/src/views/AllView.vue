@@ -50,13 +50,13 @@
                     <Block :closeStatus="closeStatus" :drawStatus="drawStatus" :type="'all'"></Block>
                 </div>
                 <div class="relative w-[100%] md:w-[50%] h-auto flex flex-wrap justify-center items-center gap-y-2">
-                    <div class="w-[100%] h-auto flex flex-wrap justify-center items-center gap-x-2">
+                    <div class="relative w-[100%] h-auto flex flex-wrap justify-center items-center gap-x-2">
                         <div class="w-auto h-auto flex flex-wrap justify-center items-center font-extrabold text-sm md:text-xl text-red-500">{{ t('time') }}</div>
                         <div class="w-[30%] md:w-[50%] px-2">
                             <el-progress status="warning" :percentage="timePercentage" :show-text="false" />
                         </div>
                         <div class="w-[auto] h-auto flex flex-wrap justify-center items-center font-extrabold text-sm md:text-base text-red-500">{{ displayTime }}</div>
-                        <Block :closeStatus="closeStatus" :drawStatus="drawStatus" :type="'only'"></Block>
+                        <!-- <Block :closeStatus="closeStatus" :drawStatus="drawStatus" :type="'only'"></Block> -->
                     </div>
                     <div class="w-[100%] h-auto flex flex-wrap justify-center items-center gap-1">
                         <Music />
