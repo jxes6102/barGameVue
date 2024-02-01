@@ -5,8 +5,8 @@
             @click="link"
             class="fixed bottom-0 w-[100vw] h-[auto] flex flex-wrap justify-center items-center z-[222]">
             <div
-                class="w-[100vw] h-[15vh] bg-[white] flex flex-wrap justify-center items-center">
-                <img class="w-full h-full" src="@/assets/images/ad-1.png" alt="">
+                class="w-[100vw] h-[20vh] md:h-[20vh] bg-[white] flex flex-wrap justify-center items-center">
+                <img class="w-full h-full" src="@/assets/images/ad-2.png" alt="">
                 <!-- <div class="text-2xl text-gray-500 font-extrabold">{{t('advertisement')}}</div> -->
             </div>
             <div @click.stop="close" class="absolute w-auto h-auto top-0 right-0 cursor-pointer">
@@ -32,7 +32,7 @@ export default {
             return store.state.isMobile
         })
         const { t } = useI18n()
-        const url = ref('https://tw.yahoo.com/')
+        const url = ref('https://mx2.vip/shouye/118.html')
         const link = () => {
             window.open(url.value)
         }
