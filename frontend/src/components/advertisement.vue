@@ -9,8 +9,8 @@
                 <img class="w-full h-full" src="@/assets/images/ad-1.png" alt="">
                 <!-- <div class="text-2xl text-gray-500 font-extrabold">{{t('advertisement')}}</div> -->
             </div>
-            <div @click.stop="close" class="absolute w-auto h-auto m-[2px] md:m-1 top-0 right-0 cursor-pointer">
-                <el-icon :size="isMobiles ? 40 : 50" color="#F0FFFF"><Close /></el-icon>
+            <div @click.stop="close" class="absolute w-auto h-auto top-0 right-0 cursor-pointer">
+                <el-icon :size="isMobiles ? 30 : 40" color="#F0FFFF"><Close /></el-icon>
             </div>
         </div>
     </div>
