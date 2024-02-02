@@ -5,17 +5,17 @@
             class="fixed top-[30%] md:top-[20%] right-0 w-[60px] h-[60px] md:w-[100px] md:h-[100px] z-[50] flex flex-wrap justify-center items-center cursor-pointer">
             <!-- <div class="text-lg text-gray-400 font-bold">font</div> -->
             <img class="w-full h-full" src="@/assets/images/ad-4.png" alt="">
-            <div @click.stop="closeAll" class="absolute w-auto h-auto top-0 right-0 cursor-pointer">
-                <el-icon :size="isMobiles ? 20 : 25" color="#ffffff"><Close /></el-icon>
-            </div>
         </div>
         <Teleport to="body">
             <div
                 @click.self="close" 
                 v-if="status"
                 class="fixed w-[100%] h-[100%] top-0 left-0 bg-[rgb(65,65,65,0.7)] flex justify-center items-center z-[223] ">
-                <div v-if="isImgLoad" class="w-auto h-auto bg-white z-[224]">
+                <div v-if="isImgLoad" class="relative w-auto h-auto bg-white z-[224]">
                     <img :style="styleObject" src="@/assets/images/ad-5.png" alt="">
+                    <div @click.stop="close" class="absolute w-auto h-auto top-0 right-0 cursor-pointer">
+                        <el-icon :size="isMobiles ? 20 : 25" color="#ffffff"><Close /></el-icon>
+                    </div>
                 </div>
             </div>
         </Teleport>
