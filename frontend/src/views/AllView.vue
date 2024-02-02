@@ -58,7 +58,7 @@
                         <div class="w-[auto] h-auto flex flex-wrap justify-center items-center font-extrabold text-sm md:text-base text-red-500">{{ displayTime }}</div>
                         <!-- <Block :closeStatus="closeStatus" :drawStatus="drawStatus" :type="'only'"></Block> -->
                     </div>
-                    <div class="w-[100%] h-auto flex flex-wrap justify-center items-center gap-1">
+                    <!-- <div class="w-[100%] h-auto flex flex-wrap justify-center items-center gap-1">
                         <Music />
                         <div
                             v-for="(item,index) in gameList"
@@ -69,7 +69,7 @@
                             <el-icon size="20"><VideoPlay /></el-icon>
                             <div class="flex flex-wrap justify-center items-center text-base">{{ item.name }}</div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="w-auto h-[auto] md:top-0 flex flex-wrap justify-center items-center gap-y-2">

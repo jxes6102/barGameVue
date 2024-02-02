@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import Bar from '../views/BarView.vue'
+// import Bar from '../views/BarView.vue'
 // import Newcapsule from '../views/NewCapsule.vue'
 // import boxView from '../views/BoxView.vue'
 import allView from '../views/AllView.vue'
@@ -15,11 +15,11 @@ const routes = [
   //   name: 'capsule',
   //   component:Newcapsule
   // },
-  {
-    path: '/bar',
-    name: 'bar',
-    component:Bar
-  },
+  // {
+  //   path: '/bar',
+  //   name: 'bar',
+  //   component:Bar
+  // },
   // {
   //   path: '/boxView',
   //   name: 'boxView',
