@@ -2,7 +2,7 @@
     <div v-if="allStatus">
         <div
             @click="open"
-            class="fixed top-[30%] md:top-[20%] right-0 w-[60px] h-[60px] md:w-[100px] md:h-[100px] z-[50] flex flex-wrap justify-center items-center cursor-pointer">
+            class="fixed top-[17%] md:top-[20%] right-0 w-[60px] h-[60px] md:w-[100px] md:h-[100px] z-[50] flex flex-wrap justify-center items-center cursor-pointer">
             <!-- <div class="text-lg text-gray-400 font-bold">font</div> -->
             <img class="w-full h-full" src="@/assets/images/ad-4.png" alt="">
         </div>
