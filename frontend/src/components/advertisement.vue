@@ -2,10 +2,12 @@
     <div v-if="status" class="w-[100vw] h-auto">
         <div class="w-full h-[10vh] md:h-[20vh]"></div>
         <div
+            v-if="isImgLoad"
             @click="link"
-            class="fixed bottom-0 w-[100vw] h-[auto] flex flex-wrap justify-center items-center z-[222]">
+            class="fixed left-1/2 -translate-x-1/2 bottom-0 w-[auto] h-[auto] flex flex-wrap justify-center items-center z-[222]">
             <div
-                class="w-[100vw] h-[20vh] md:h-[20vh] bg-[white] flex flex-wrap justify-center items-center">
+                class="bg-white flex flex-wrap justify-center items-center cursor-pointer"
+                :style="styleObject">
                 <img class="w-full h-full" src="@/assets/images/ad-2.png" alt="">
                 <!-- <div class="text-2xl text-gray-500 font-extrabold">{{t('advertisement')}}</div> -->
             </div>
@@ -40,13 +42,38 @@ export default {
         const close = () => {
             status.value = false
         }
+        
+        const isImgLoad = ref(false)
+        const styleObject = ref({
+            width: '',
+            height: ''
+        })
+        const onImageLoaded = () => {
+            let image = new Image()
+
+            image.src = require('@/assets/images/ad-2.png');
+
+            image.onload = () => {
+                let countHeight = 20
+                let countWidth = countHeight*(image.width/image.height).toFixed(2)
+                // console.log(`the image dimensions are ${image.width}x${image.height}`);
+                // console.log('image',countHeught)
+                styleObject.value.height = countHeight+'vh'
+                styleObject.value.width = countWidth+'vh'
+                isImgLoad.value = true
+            };
+
+        }
+        onImageLoaded()
 
         return {
             isMobiles,
             status,
+            styleObject,
+            isImgLoad,
             t,
             link,
-            close
+            close,
         }
 
     }

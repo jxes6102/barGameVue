@@ -12,10 +12,10 @@
         <Teleport to="body">
             <div
                 @click.self="close" 
-                v-if="status" 
+                v-if="status"
                 class="fixed w-[100%] h-[100%] top-0 left-0 bg-[rgb(65,65,65,0.7)] flex justify-center items-center z-[223] ">
-                <div @click="link" class="w-auto h-auto bg-white z-[224]">
-                    <img class="w-[70vw] h-[70vw] md:w-[40vw] md:h-[40vw]" src="@/assets/images/qrcode-generator.png" alt="">
+                <div v-if="isImgLoad" class="w-auto h-auto bg-white z-[224]">
+                    <img :style="styleObject" src="@/assets/images/ad-5.png" alt="">
                 </div>
             </div>
         </Teleport>
@@ -47,23 +47,55 @@ export default {
         const close = () => {
             status.value = false
         }
-        const link = () => {
-            window.open('https://mx2.vip/shouye/118.html')
-        }
+        // const link = () => {
+        //     window.open('https://mx2.vip/shouye/118.html')
+        // }
 
         const closeAll = () => {
             allStatus.value = false
         }
+
+        const isImgLoad = ref(false)
+        const styleObject = ref({
+            width: '',
+            height: ''
+        })
+        const onImageLoaded = () => {
+            let image = new Image()
+
+            image.src = require('@/assets/images/ad-5.png');
+
+            image.onload = () => {
+                if(isMobiles.value){
+                    let countWidth = 100
+                    let countHeight = countWidth*(image.height/image.width).toFixed(2)
+                    styleObject.value.height = countHeight+'vw'
+                    styleObject.value.width = countWidth+'vw'
+                    isImgLoad.value = true
+                }else{
+                    let countHeight = 100
+                    let countWidth = countHeight*(image.width/image.height).toFixed(2)
+                    
+                    styleObject.value.height = countHeight+'vh'
+                    styleObject.value.width = countWidth+'vh'
+                    isImgLoad.value = true
+                }
+                
+            };
+
+        }
+        onImageLoaded()
 
         return {
             t,
             status,
             allStatus,
             isMobiles,
+            styleObject,
+            isImgLoad,
             closeAll,
             open,
             close,
-            link
         }
 
     }
