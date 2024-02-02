@@ -54,14 +54,21 @@ export default {
             image.src = require('@/assets/images/ad-2.png');
 
             image.onload = () => {
-                let countHeight = 20
-                let countWidth = countHeight*(image.width/image.height).toFixed(2)
-                // console.log(`the image dimensions are ${image.width}x${image.height}`);
-                // console.log('image',countHeught)
-                styleObject.value.height = countHeight+'vh'
-                styleObject.value.width = countWidth+'vh'
+                if(isMobiles.value){
+                    let countWidth = 100
+                    // let countHeight = countWidth*(image.height/image.width).toFixed(2)
+                    styleObject.value.height = 25+'vh'
+                    styleObject.value.width = countWidth+'vw'
+                }else{
+                    // let countHeight = 80
+                    // let countWidth = countHeight*(image.width/image.height).toFixed(2)
+                    let countWidth = 70
+                    styleObject.value.height = 20+'vh'
+                    styleObject.value.width = countWidth+'vw'
+                }
                 isImgLoad.value = true
             };
+            
 
         }
         onImageLoaded()

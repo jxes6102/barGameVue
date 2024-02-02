@@ -67,20 +67,19 @@ export default {
 
             image.onload = () => {
                 if(isMobiles.value){
-                    let countWidth = 100
+                    let countWidth = 80
                     let countHeight = countWidth*(image.height/image.width).toFixed(2)
                     styleObject.value.height = countHeight+'vw'
                     styleObject.value.width = countWidth+'vw'
-                    isImgLoad.value = true
                 }else{
-                    let countHeight = 100
+                    let countHeight = 80
                     let countWidth = countHeight*(image.width/image.height).toFixed(2)
                     
                     styleObject.value.height = countHeight+'vh'
                     styleObject.value.width = countWidth+'vh'
-                    isImgLoad.value = true
                 }
-                
+
+                isImgLoad.value = true
             };
 
         }
