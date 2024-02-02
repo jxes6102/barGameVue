@@ -73,7 +73,7 @@
                 </div>
             </div>
             <div class="w-auto h-[auto] md:top-0 flex flex-wrap justify-center items-center gap-y-2">
-                <div class="relative w-[100%] h-auto my-2 flex flex-wrap justify-center items-center gap-x-2">
+                <div v-if="((mode == 3) || (mode == 4))" class="relative w-[100%] h-auto my-2 flex flex-wrap justify-center items-center gap-x-2">
                     <div class="w-[100%] text-base md:text-xl font-extrabold text-red-500">
                         {{ ((mode == 1) || (mode == 3)) ? t('sumArea') : t('sumSortArea') }}
                     </div>
