@@ -1,6 +1,6 @@
 <template>
     <div v-if="status" class="w-[100vw] h-auto">
-        <div class="w-full h-[10vh] md:h-[20vh]"></div>
+        <div class="w-full h-[5vh] md:h-[20vh]"></div>
         <div
             v-if="isImgLoad"
             @click="link"
@@ -11,9 +11,9 @@
                 <img class="w-full h-full" src="@/assets/images/ad-2.png" alt="">
                 <!-- <div class="text-2xl text-gray-500 font-extrabold">{{t('advertisement')}}</div> -->
             </div>
-            <div @click.stop="close" class="absolute w-auto h-auto top-0 right-0 cursor-pointer">
+            <!-- <div @click.stop="close" class="absolute w-auto h-auto top-0 right-0 cursor-pointer">
                 <el-icon :size="isMobiles ? 30 : 40" color="#F0FFFF"><Close /></el-icon>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>
@@ -57,12 +57,11 @@ export default {
                 if(isMobiles.value){
                     let countWidth = 100
                     // let countHeight = countWidth*(image.height/image.width).toFixed(2)
-                    styleObject.value.height = 25+'vh'
+                    styleObject.value.height = 15+'vh'
                     styleObject.value.width = countWidth+'vw'
                 }else{
-                    // let countHeight = 80
-                    // let countWidth = countHeight*(image.width/image.height).toFixed(2)
-                    let countWidth = 70
+                    let countWidth = 80
+                    // let countHeight = countWidth*(image.height/image.width).toFixed(2)
                     styleObject.value.height = 20+'vh'
                     styleObject.value.width = countWidth+'vw'
                 }
