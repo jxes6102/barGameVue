@@ -1,6 +1,6 @@
 import { createStore } from 'vuex'
 import axios from 'axios'
-import {getTime} from '@/api/api'
+// import {getTime} from '@/api/api'
 /*eslint-disable*/
 export default createStore({
   state: {
@@ -65,7 +65,7 @@ export default createStore({
       //07:05~23:55
       
       let pageMax = 50
-      let url = 'https://api.taiwanlottery.com/TLCAPIWeB/Lottery/BingoResult'
+      let url = '/taiwanlottery/TLCAPIWeB/Lottery/BingoResult'
       url += '?openDate='+payload.date
       url += '&pageNum='+payload.page
       url += '&pageSize=' + pageMax
@@ -147,7 +147,7 @@ export default createStore({
       // });
     },
     async getOriginTime(content,payload) {
-      getTime().then((response) => {
+      await axios.get('https://ttlinblog.com/api/getTime').then((response) => {
         let date = new Date(response.data.time * 1000)
         let hour = date.getHours()
         if((hour>=0) && (hour<7)) {
@@ -166,36 +166,56 @@ export default createStore({
         // always executed
         // console.log('always executed')
       });
-    },
-    async getOtherHistory(content,payload) {
-      // console.log('payload',payload)
-      let url = 'https://api.api68.com/LuckTwenty/getBaseLuckTwentyList.do'
-      url+='?lotCode=10047'
-      url+='&date='+payload.day
 
-      await axios.get(url)
-      .then((response) => {
-        // handle success
-        // let page = Math.floor((response.data.result.data.length/100) + 1)
-        // let target = []
-        // for(let i = 1;i<=page;i++){
-        //   target.push(response.data.result.data.slice((i-1)*100,i*100))
-        // }
-        // content.commit('setAllrecord',target)
-        content.commit('setAllrecord',response.data.result.data)
-      })
-      .catch((error) => {
-        // handle error
-        console.log(error);
-      })
-      .finally(()=> {
-        // always executed
-        // console.log('always executed')
-      });
+      // getTime().then((response) => {
+      //   let date = new Date(response.data.time * 1000)
+      //   let hour = date.getHours()
+      //   if((hour>=0) && (hour<7)) {
+      //     content.commit('setClosestatus',true)
+      //   }else{
+      //     content.commit('setClosestatus',false)
+      //   }
+      //   let second = 300 - (date.getMinutes()%5*60 + date.getSeconds())
+      //   content.commit('setOriginTime',second)
+      // })
+      // .catch((error) => {
+      //   // handle error
+      //   console.log(error);
+      // })
+      // .finally(()=> {
+      //   // always executed
+      //   // console.log('always executed')
+      // });
     },
+    // async getOtherHistory(content,payload) {
+    //   // console.log('payload',payload)
+    //   let url = 'https://api.api68.com/LuckTwenty/getBaseLuckTwentyList.do'
+    //   url+='?lotCode=10047'
+    //   url+='&date='+payload.day
+
+    //   await axios.get(url)
+    //   .then((response) => {
+    //     // handle success
+    //     // let page = Math.floor((response.data.result.data.length/100) + 1)
+    //     // let target = []
+    //     // for(let i = 1;i<=page;i++){
+    //     //   target.push(response.data.result.data.slice((i-1)*100,i*100))
+    //     // }
+    //     // content.commit('setAllrecord',target)
+    //     content.commit('setAllrecord',response.data.result.data)
+    //   })
+    //   .catch((error) => {
+    //     // handle error
+    //     console.log(error);
+    //   })
+    //   .finally(()=> {
+    //     // always executed
+    //     // console.log('always executed')
+    //   });
+    // },
     async getLatest(content,payload) {
       // console.log('payload',payload)
-      let url = 'https://api.taiwanlottery.com/TLCAPIWeB/Lottery/LatestBingoResult'
+      let url = '/taiwanlottery/TLCAPIWeB/Lottery/LatestBingoResult'
 
       await axios.get(url)
       .then((response) => {

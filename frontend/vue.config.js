@@ -7,13 +7,28 @@ module.exports = defineConfig({
   lintOnSave: false,
   devServer: {
     proxy: {
-      '/api': {
-        target: 'https://ttlinblog.com/',
-        changeOrigin: true,
-        pathRewrite: {
-          '^/api': '/api'
-        }
-      }
+        '/apiv2': {
+            target: 'https://ttlinblog.com/apiv2/',
+            changeOrigin: true,
+            pathRewrite: {
+              '^/apiv2': '/'
+            }
+        },
+        '/taiwanlottery': {
+            target: 'https://api.taiwanlottery.com/',
+            changeOrigin: true,
+            pathRewrite: {
+              '^/taiwanlottery': '/'
+            }
+        },
+        '/api': {
+            // target: 'https://ttlinblog.com/api/',
+            target: 'http://localhost:3000/',
+            changeOrigin: true,
+            pathRewrite: {
+              '^/api': '/api'
+            }
+        },
     }
   },
   pluginOptions: {

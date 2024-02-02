@@ -164,10 +164,10 @@
                                         v-for="(item,index) in scope.row.areaSum"
                                             :key="index" 
                                             class="w-auto m-[1px] flex flex-wrap justify-around items-center">
-                                            <div v-for="(thing,thingIndex) in item.title" :key="thing" class="w-auto flex flex-wrap justify-center items-center">
+                                            <!-- <div v-for="(thing,thingIndex) in item.title" :key="thing" class="w-auto flex flex-wrap justify-center items-center">
                                                 <div class="w-[22px] h-[22px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-white ball-color-3">{{ thing }}</div>
                                                 <div class="font-black">{{(thingIndex !== item.title.length - 1) ? "+" : "="}}</div>
-                                            </div>
+                                            </div> -->
                                         <div 
                                             class="w-[22px] h-[22px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-white ball-color-4"
                                         >{{ item.number }}</div>
@@ -252,10 +252,10 @@
                                         v-for="(item,index) in scope.row.areaSum"
                                             :key="index" 
                                             class="w-auto m-[1px] flex flex-wrap justify-around items-center">
-                                            <div v-for="(thing,thingIndex) in item.title" :key="thing" class="w-auto flex flex-wrap justify-center items-center">
+                                            <!-- <div v-for="(thing,thingIndex) in item.title" :key="thing" class="w-auto flex flex-wrap justify-center items-center">
                                                 <div class="w-[22px] h-[22px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-white ball-color-3">{{ thing }}</div>
                                                 <div class="font-black">{{(thingIndex !== item.title.length - 1) ? "+" : "="}}</div>
-                                            </div>
+                                            </div> -->
                                         <div 
                                             class="w-[22px] h-[22px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-white ball-color-4"
                                         >{{ item.number }}</div>
