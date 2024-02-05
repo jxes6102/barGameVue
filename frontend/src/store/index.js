@@ -1,6 +1,5 @@
 import { createStore } from 'vuex'
-import axios from 'axios'
-// import {getTime} from '@/api/api'
+import {getTime,getLotteryList,getLotteryLatest} from '@/api/api'
 /*eslint-disable*/
 export default createStore({
   state: {
@@ -63,13 +62,15 @@ export default createStore({
       // ],
 
       //07:05~23:55
-      
+
       let pageMax = 50
-      let url = '/taiwanlottery/TLCAPIWeB/Lottery/BingoResult'
-      url += '?openDate='+payload.date
-      url += '&pageNum='+payload.page
-      url += '&pageSize=' + pageMax
-      await axios.get(url)
+      let apiPayload = {
+        openDate:payload.date,
+        pageNum:payload.page,
+        pageSize:pageMax
+      }
+
+      await getLotteryList(apiPayload)
       .then((response) => {
         // handle success
         let data = response.data.content.bingoQueryResult
@@ -112,7 +113,6 @@ export default createStore({
         // always executed
       });
 
-
       // getHistory().then((response) => {
       //   // handle success
       //   let data = response.data
@@ -146,8 +146,8 @@ export default createStore({
       //   // console.log('always executed')
       // });
     },
-    async getOriginTime(content,payload) {
-      await axios.get('https://ttlinblog.com/api/getTime').then((response) => {
+    async getOriginTime(content) {
+      await getTime().then((response) => {
         let date = new Date(response.data.time * 1000)
         let hour = date.getHours()
         if((hour>=0) && (hour<7)) {
@@ -213,11 +213,9 @@ export default createStore({
     //     // console.log('always executed')
     //   });
     // },
-    async getLatest(content,payload) {
+    async getLatest(content) {
       // console.log('payload',payload)
-      let url = '/taiwanlottery/TLCAPIWeB/Lottery/LatestBingoResult'
-
-      await axios.get(url)
+      await getLotteryLatest()
       .then((response) => {
         // handle success
         // console.log('response',response.data.content.lotteryBingoLatestPost)
