@@ -445,7 +445,6 @@ export default {
         return store.state.dataTotal
     })
     const bingoLatest = computed(() => {
-        console.log('store.state.bingoLatest',store.state.bingoLatest)
         return store.state.bingoLatest
     })
     // 監聽api改變
