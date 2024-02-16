@@ -41,11 +41,20 @@
                         <div class="w-auto h-auto font-extrabold text-xs md:text-sm text-red-500">{{ statistics}}</div>
                     </div>
                     <div class="w-[250px] md:w-[380px] h-auto flex flex-wrap justify-center md:justify-center items-center gap-[2px]">
-                        <div 
-                            v-for="(item,index) in bingoLatest.openShowOrder" :key="index"
-                            :class="(item===bingoLatest.prizeNum.bullEye) ? 'ball-color-2' : 'ball-color-1'"
-                            class="w-[22px] h-[22px] md:w-[35px] md:h-[35px] rounded-[50%] flex justify-center items-center text-xs md:text-base font-bold text-white"
-                        >{{ item }}</div>
+                        <template v-if="mode==1 || mode==3">
+                            <div 
+                                v-for="(item,index) in bingoLatest.bigShowOrder" :key="index"
+                                :class="(item===bingoLatest.prizeNum.bullEye) ? 'ball-color-2' : 'ball-color-1'"
+                                class="w-[22px] h-[22px] md:w-[35px] md:h-[35px] rounded-[50%] flex justify-center items-center text-xs md:text-base font-bold text-white"
+                            >{{ item }}</div>
+                        </template>
+                        <template v-else>
+                            <div 
+                                v-for="(item,index) in bingoLatest.openShowOrder" :key="index"
+                                :class="(item===bingoLatest.prizeNum.bullEye) ? 'ball-color-2' : 'ball-color-1'"
+                                class="w-[22px] h-[22px] md:w-[35px] md:h-[35px] rounded-[50%] flex justify-center items-center text-xs md:text-base font-bold text-white"
+                            >{{ item }}</div>
+                        </template>
                     </div>
                     <Block :closeStatus="closeStatus" :drawStatus="drawStatus" :type="'all'"></Block>
                 </div>
@@ -436,6 +445,7 @@ export default {
         return store.state.dataTotal
     })
     const bingoLatest = computed(() => {
+        console.log('store.state.bingoLatest',store.state.bingoLatest)
         return store.state.bingoLatest
     })
     // 監聽api改變
