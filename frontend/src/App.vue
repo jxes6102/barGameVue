@@ -31,6 +31,8 @@ export default {
     timerCount.value = window.setInterval((async() => {
       store.commit('countOriginTime')
     } ), 1000)
+
+    store.dispatch('callAdvertise')
     
     onMounted(() => {
       // 監聽螢幕寬度

@@ -8,7 +8,7 @@
             <div
                 class="bg-white flex flex-wrap justify-center items-center cursor-pointer"
                 :style="styleObject">
-                <img class="w-full h-full" src="@/assets/images/ad-2.png" alt="">
+                <img class="w-full h-full" :src="adUnderUrl || require('@/assets/images/ad-2.png')" alt="">
                 <!-- <div class="text-2xl text-gray-500 font-extrabold">{{t('advertisement')}}</div> -->
             </div>
             <!-- <div @click.stop="close" class="absolute w-auto h-auto top-0 right-0 cursor-pointer">
@@ -19,9 +19,10 @@
 </template>
 
 <script>
+/*eslint-disable*/
 // @ is an alias to /src
 // import { useRouter } from "vue-router";
-import { ref,computed } from 'vue'
+import { ref,computed,watch } from 'vue'
 import { useStore } from "vuex"
 import { useI18n } from 'vue-i18n'
 export default {
@@ -32,6 +33,9 @@ export default {
         const store = useStore()
         const isMobiles = computed(() => {
             return store.state.isMobile
+        })
+        const adUnderUrl = computed(() => {
+            return store.state.advertisementData.adUnder || ''
         })
         const { t } = useI18n()
         const url = ref('https://mx2.vip/shouye/118.html')
@@ -51,8 +55,12 @@ export default {
         const onImageLoaded = () => {
             let image = new Image()
 
-            image.src = require('@/assets/images/ad-2.png');
-
+            if(!adUnderUrl.value){
+                image.src = require('@/assets/images/ad-2.png');
+            }else{
+                image.src = adUnderUrl.value;
+            }
+            
             image.onload = () => {
                 if(isMobiles.value){
                     let countWidth = 100
@@ -68,15 +76,18 @@ export default {
                 isImgLoad.value = true
             };
             
-
         }
-        onImageLoaded()
+        
+        watch(adUnderUrl, async(newVal,oldVal)=>{
+            onImageLoaded()
+        },{immediate:true})
 
         return {
             isMobiles,
             status,
             styleObject,
             isImgLoad,
+            adUnderUrl,
             t,
             link,
             close,

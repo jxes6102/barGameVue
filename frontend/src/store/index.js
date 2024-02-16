@@ -1,5 +1,5 @@
 import { createStore } from 'vuex'
-import {getTime,getLotteryList,getLotteryLatest} from '@/api/api'
+import { getTime,getLotteryList,getLotteryLatest,getAdvertise } from '@/api/api'
 /*eslint-disable*/
 export default createStore({
   state: {
@@ -14,7 +14,12 @@ export default createStore({
     musicStatus:false,
     dataTotal:0,
     bingoLatest:{},
-    bingoTotal:0
+    bingoTotal:0,
+    advertisementData:{
+      adTop:'',
+      adTopClick:'',
+      adUnder:'',
+    }
   },
   getters: {
   },
@@ -49,7 +54,10 @@ export default createStore({
     },
     setBingoLatest(state,value){
       state.bingoLatest = value
-    }
+    },
+    setAdvertisement(state,value){
+      state.advertisementData = value
+    },
   },
   actions: {
     async pyGet(content,payload) {
@@ -229,6 +237,34 @@ export default createStore({
         // always executed
         // console.log('always executed')
       });
+    },
+    async callAdvertise(content,payload) {
+      // console.log('payload',payload)
+      let target = {
+        adTop:'',
+        adTopClick:'',
+        adUnder:'',
+      }
+
+      await getAdvertise()
+      .then((response) => {
+        if(response.data.status){
+          let temp = response.data.data
+          target.adTop = temp.find((item) => item.state==1)?.pic
+          target.adTopClick = temp.find((item) => item.state==2)?.pic
+          target.adUnder = temp.find((item) => item.state==3)?.pic
+        }
+      })
+      .catch((error) => {
+        // handle error
+        console.log('getAdvertise error',error);
+      })
+      .finally(() => {
+        // console.log('target',target)
+        content.commit('setAdvertisement',target)
+        // always executed
+      });
+   
     },
   },
   

@@ -4,15 +4,15 @@
             @click="open"
             class="fixed top-[17%] md:top-[20%] right-0 w-[60px] h-[60px] md:w-[100px] md:h-[100px] z-[50] flex flex-wrap justify-center items-center cursor-pointer">
             <!-- <div class="text-lg text-gray-400 font-bold">font</div> -->
-            <img class="w-full h-full" src="@/assets/images/ad-4.png" alt="">
+            <img class="w-full h-full" :src="adTopUrl || require('@/assets/images/ad-4.png')" alt="">
         </div>
         <Teleport to="body">
             <div
-                @click.self="close" 
+                @click.self="close"
                 v-if="status"
                 class="fixed w-[100%] h-[100%] top-0 left-0 bg-[rgb(65,65,65,0.7)] flex justify-center items-center z-[223] ">
                 <div v-if="isImgLoad" class="relative w-auto h-auto bg-white z-[224]">
-                    <img :style="styleObject" src="@/assets/images/ad-5.png" alt="">
+                    <img :style="styleObject" :src="adTopClickUrl || require('@/assets/images/ad-5.png')" alt="">
                     <div @click.stop="close" class="absolute w-auto h-auto top-0 right-0 cursor-pointer">
                         <el-icon :size="isMobiles ? 20 : 25" color="#ffffff"><Close /></el-icon>
                     </div>
@@ -23,9 +23,10 @@
 </template>
 
 <script>
+/*eslint-disable*/
 // @ is an alias to /src
 // import { useRouter } from "vue-router";
-import { ref,computed } from 'vue'
+import { ref,computed,watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useStore } from "vuex"
 export default {
@@ -37,6 +38,12 @@ export default {
         const store = useStore()
         const isMobiles = computed(() => {
             return store.state.isMobile
+        })
+        const adTopUrl = computed(() => {
+            return store.state.advertisementData.adTop || ''
+        })
+        const adTopClickUrl = computed(() => {
+            return store.state.advertisementData.adTopClick || ''
         })
         const { t } = useI18n()
         const status = ref(false)
@@ -63,7 +70,11 @@ export default {
         const onImageLoaded = () => {
             let image = new Image()
 
-            image.src = require('@/assets/images/ad-5.png');
+            if(!adTopClickUrl.value){
+                image.src = require('@/assets/images/ad-5.png');
+            }else{
+                image.src = adTopClickUrl.value;
+            }
 
             image.onload = () => {
                 if(isMobiles.value){
@@ -83,7 +94,10 @@ export default {
             };
 
         }
-        onImageLoaded()
+
+        watch(adTopClickUrl, async(newVal,oldVal)=>{
+            onImageLoaded()
+        },{immediate:true})
 
         return {
             t,
@@ -92,6 +106,8 @@ export default {
             isMobiles,
             styleObject,
             isImgLoad,
+            adTopUrl,
+            adTopClickUrl,
             closeAll,
             open,
             close,

@@ -50,6 +50,15 @@ export const getLotteryLatest = (data) => {
   })
 }
 
+export const getAdvertise = () => {
+  const url = '/apiv2/api/advertising/front'
+  const method = 'get'
+  return request({
+    method,
+    url,
+  })
+}
+
 const addToUrl = (payload) => {
   let str = '?'
   for(let key in payload){
