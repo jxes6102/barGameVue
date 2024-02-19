@@ -250,9 +250,9 @@ export default createStore({
       .then((response) => {
         if(response.data.status){
           let temp = response.data.data
-          target.adTop = temp.find((item) => item.state==1)?.pic
-          target.adTopClick = temp.find((item) => item.state==2)?.pic
-          target.adUnder = temp.find((item) => item.state==3)?.pic
+          target.adTop = temp.find((item) => item.state==1)
+          target.adTopClick = temp.find((item) => item.state==2)
+          target.adUnder = temp.find((item) => item.state==3)
         }
       })
       .catch((error) => {

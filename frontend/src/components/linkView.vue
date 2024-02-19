@@ -40,10 +40,10 @@ export default {
             return store.state.isMobile
         })
         const adTopUrl = computed(() => {
-            return store.state.advertisementData.adTop || ''
+            return store.state.advertisementData.adTop?.pic || ''
         })
         const adTopClickUrl = computed(() => {
-            return store.state.advertisementData.adTopClick || ''
+            return store.state.advertisementData.adTopClick?.pic || ''
         })
         const { t } = useI18n()
         const status = ref(false)

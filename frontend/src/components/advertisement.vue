@@ -35,12 +35,14 @@ export default {
             return store.state.isMobile
         })
         const adUnderUrl = computed(() => {
-            return store.state.advertisementData.adUnder || ''
+            return store.state.advertisementData.adUnder?.pic || ''
+        })
+        const adUnderUrlLink = computed(() => {
+            return store.state.advertisementData.adUnder?.url || ''
         })
         const { t } = useI18n()
-        const url = ref('https://mx2.vip/shouye/118.html')
         const link = () => {
-            window.open(url.value)
+            window.open(adUnderUrlLink.value)
         }
         const status = ref(true)
         const close = () => {
