@@ -42,21 +42,27 @@
                     </div>
                     <div class="w-[250px] md:w-[380px] h-auto flex flex-wrap justify-center md:justify-center items-center gap-[2px]">
                         <template v-if="mode==1 || mode==3">
-                            <div 
+                            <div
                                 v-for="(item,index) in bingoLatest.bigShowOrder" :key="index"
-                                :class="(item===bingoLatest.prizeNum.bullEye) ? 'ball-color-2' : 'ball-color-1'"
+                                :class="[
+                                    (item===bingoLatest.prizeNum.bullEye) ? 'ball-color-2' : 'ball-color-1',
+                                    ((!drawStatus) || closeStatus) ? 'rotate-move' : ''
+                                ]"
                                 class="w-[22px] h-[22px] md:w-[35px] md:h-[35px] rounded-[50%] flex justify-center items-center text-xs md:text-base font-bold text-white"
-                            >{{ item }}</div>
+                            >{{ ((!drawStatus) || closeStatus) ? '?' : item }}</div>
                         </template>
                         <template v-else>
                             <div 
                                 v-for="(item,index) in bingoLatest.openShowOrder" :key="index"
-                                :class="(item===bingoLatest.prizeNum.bullEye) ? 'ball-color-2' : 'ball-color-1'"
+                                :class="[
+                                    (item===bingoLatest.prizeNum.bullEye) ? 'ball-color-2' : 'ball-color-1',
+                                    ((!drawStatus) || closeStatus) ? 'rotate-move' : ''
+                                ]"
                                 class="w-[22px] h-[22px] md:w-[35px] md:h-[35px] rounded-[50%] flex justify-center items-center text-xs md:text-base font-bold text-white"
-                            >{{ item }}</div>
+                            >{{ ((!drawStatus) || closeStatus) ? '?' : item }}</div>
                         </template>
                     </div>
-                    <Block :closeStatus="closeStatus" :drawStatus="drawStatus" :type="'all'"></Block>
+                    <!-- <Block :closeStatus="closeStatus" :drawStatus="drawStatus" :type="'all'"></Block> -->
                 </div>
                 <div class="relative w-[100%] md:w-[50%] h-auto flex flex-wrap justify-center items-center gap-y-2">
                     <div class="relative w-[100%] h-auto flex flex-wrap justify-center items-center gap-x-2">
@@ -179,7 +185,7 @@
                                             </div> -->
                                         <div 
                                             class="w-[22px] h-[22px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-white ball-color-4"
-                                        >{{ item.number }}</div>
+                                        >{{ item.displayNum }}</div>
                                     </div>
                                 </template>
                                 <template v-else-if="mode == 4">
@@ -267,7 +273,7 @@
                                             </div> -->
                                         <div 
                                             class="w-[22px] h-[22px] md:w-[30px] md:h-[30px] rounded-[50%] flex justify-center items-center font-bold text-white ball-color-4"
-                                        >{{ item.number }}</div>
+                                        >{{ item.displayNum }}</div>
                                     </div>
                                 </template>
                                 <template v-else-if="mode == 4">
@@ -359,7 +365,7 @@ export default {
     /**
      * 
      */
-    console.log('load test 15')
+    console.log('load test 16')
     const { t } = useI18n()
     const store = useStore()
     const musicStatus = computed(() => {
@@ -577,10 +583,11 @@ export default {
         let target = []
         
         for(let i = 4;(i+2)<temp.length;i+=3){
-            let sum = temp.slice(i-1,i+2).reduce((accumulator, currentValue) => accumulator + currentValue,0)
+            let sum = temp.slice(i-1,i+2).reduce((accumulator, currentValue) => accumulator + currentValue,0).toString()
             target.push({
                 title:[i,i+1,i+2],
-                number:sum
+                number:sum,
+                displayNum:sum.substring(sum.length-1, sum.length)
             })
         }
 
@@ -644,5 +651,18 @@ export default {
 <style scoped>
 .dayPick:deep .el-input__wrapper{
     background-color:#fdecbd
+}
+
+@keyframes move {
+    0%   {transform: rotate(0deg);}
+    100% {transform: rotate(360deg);}
+}
+
+/* The element to apply the animation to */
+.rotate-move {
+    animation-name: move;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
 }
 </style>
