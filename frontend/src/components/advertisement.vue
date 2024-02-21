@@ -1,19 +1,22 @@
 <template>
-    <div v-if="status" class="w-[100vw] h-auto">
+    <div class="w-[100vw] h-auto">
         <div class="w-full h-[5vh] md:h-[20vh]"></div>
         <div
             v-if="isImgLoad"
             @click="link"
-            class="fixed left-1/2 -translate-x-1/2 bottom-0 w-[auto] h-[auto] flex flex-wrap justify-center items-center z-[222]">
+            :class="status ? 'bottom-0' : 'bottom-[-15vh] md:bottom-[-20vh]'"
+            class="fixed left-1/2 -translate-x-1/2 w-[auto] h-[auto] flex flex-wrap justify-center items-center z-[222] transition-all duration-500">
             <div
-                class="bg-white flex flex-wrap justify-center items-center cursor-pointer"
+                class="bg-white flex flex-wrap justify-center items-center cursor-pointer z-[222]"
                 :style="styleObject">
                 <img class="w-full h-full" :src="adUnderUrl || require('@/assets/images/ad-2.png')" alt="">
                 <!-- <div class="text-2xl text-gray-500 font-extrabold">{{t('advertisement')}}</div> -->
             </div>
-            <!-- <div @click.stop="close" class="absolute w-auto h-auto top-0 right-0 cursor-pointer">
-                <el-icon :size="isMobiles ? 30 : 40" color="#F0FFFF"><Close /></el-icon>
-            </div> -->
+            <div @click.stop="changeDisplay" class="absolute w-auto h-auto top-[-20px] md:top-[-40px] right-0 bg-gray-100 cursor-pointer z-[221]">
+                <el-icon :size="isMobiles ? 20 : 40" color="#00308F">
+                    <component :is="status ? 'ArrowDownBold' : 'ArrowUpBold'"></component>
+                </el-icon>
+            </div>
         </div>
     </div>
 </template>
@@ -45,8 +48,8 @@ export default {
             window.open(adUnderUrlLink.value)
         }
         const status = ref(true)
-        const close = () => {
-            status.value = false
+        const changeDisplay = () => {
+            status.value = !status.value
         }
         
         const isImgLoad = ref(false)
@@ -92,7 +95,7 @@ export default {
             adUnderUrl,
             t,
             link,
-            close,
+            changeDisplay,
         }
 
     }
