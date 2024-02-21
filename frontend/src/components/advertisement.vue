@@ -12,8 +12,8 @@
                 <img class="w-full h-full" :src="adUnderUrl || require('@/assets/images/ad-2.png')" alt="">
                 <!-- <div class="text-2xl text-gray-500 font-extrabold">{{t('advertisement')}}</div> -->
             </div>
-            <div @click.stop="changeDisplay" class="absolute w-auto h-auto top-[-20px] md:top-[-40px] right-0 bg-gray-100 cursor-pointer z-[221]">
-                <el-icon :size="isMobiles ? 20 : 40" color="#00308F">
+            <div @click.stop="changeDisplay" class="absolute w-auto h-auto top-[-30px] md:top-[-40px] right-0 bg-gray-100 cursor-pointer z-[221]">
+                <el-icon :size="isMobiles ? 30 : 40" color="#00308F">
                     <component :is="status ? 'ArrowDownBold' : 'ArrowUpBold'"></component>
                 </el-icon>
             </div>
