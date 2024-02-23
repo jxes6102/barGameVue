@@ -45,21 +45,43 @@
                             <div
                                 v-for="(item,index) in bingoLatest.bigShowOrder" :key="index"
                                 :class="[
-                                    (item===bingoLatest.prizeNum.bullEye) ? 'ball-color-2' : 'ball-color-1',
-                                    ((!drawStatus) || closeStatus) ? 'rotate-move' : ''
+                                    (item==bingoLatest.prizeNum.bullEye) ? 'ball-color-2' : 'ball-color-1',
                                 ]"
-                                class="w-[22px] h-[22px] md:w-[35px] md:h-[35px] rounded-[50%] flex justify-center items-center text-xs md:text-base font-bold text-white"
-                            >{{ ((!drawStatus) || closeStatus) ? '?' : item }}</div>
+                                class="w-[22px] h-[22px] md:w-[35px] md:h-[35px] rounded-[50%] flex justify-center items-center text-xs md:text-base font-bold text-white overflow-hidden">
+                                <div v-if="((!drawStatus) || closeStatus)" class="rotate-move w-full h-full ">
+                                    <div v-for="(num) in 100" :key="num+100">
+                                        <div class="flex justify-center text-[12px] md:text-[18px]">{{num}}</div>
+                                    </div>
+                                </div>
+                                <div v-else class="rotate-slowly flex flex-col justify-start items-center gap-[4px]">
+                                    <div class="flex justify-center text-[12px] md:text-[18px]">{{parseInt(item)-2}}</div>
+                                    <div class="flex justify-center text-[12px] md:text-[18px]">{{parseInt(item)-1}}</div>
+                                    <div class="flex justify-center text-[12px] md:text-[18px]">{{item}}</div>
+                                    <div class="flex justify-center text-[12px] md:text-[18px]">{{parseInt(item)+1}}</div>
+                                    <div class="flex justify-center text-[12px] md:text-[18px]">{{parseInt(item)+2}}</div>
+                                </div>
+                            </div>
                         </template>
                         <template v-else>
                             <div 
                                 v-for="(item,index) in bingoLatest.openShowOrder" :key="index"
                                 :class="[
                                     (item===bingoLatest.prizeNum.bullEye) ? 'ball-color-2' : 'ball-color-1',
-                                    ((!drawStatus) || closeStatus) ? 'rotate-move' : ''
                                 ]"
-                                class="w-[22px] h-[22px] md:w-[35px] md:h-[35px] rounded-[50%] flex justify-center items-center text-xs md:text-base font-bold text-white"
-                            >{{ ((!drawStatus) || closeStatus) ? '?' : item }}</div>
+                                class="w-[22px] h-[22px] md:w-[35px] md:h-[35px] rounded-[50%] flex justify-center items-center text-xs md:text-base font-bold text-white overflow-hidden">
+                                <div v-if="((!drawStatus) || closeStatus)" class="rotate-move w-full h-full ">
+                                    <div v-for="(num) in 100" :key="num+200">
+                                        <div class="flex justify-center text-[12px] md:text-[18px]">{{num}}</div>
+                                    </div>
+                                </div>
+                                <div v-else class="rotate-slowly flex flex-col justify-start items-center gap-[4px]">
+                                    <div class="flex justify-center text-[12px] md:text-[18px]">{{parseInt(item)-2}}</div>
+                                    <div class="flex justify-center text-[12px] md:text-[18px]">{{parseInt(item)-1}}</div>
+                                    <div class="flex justify-center text-[12px] md:text-[18px]">{{item}}</div>
+                                    <div class="flex justify-center text-[12px] md:text-[18px]">{{parseInt(item)+1}}</div>
+                                    <div class="flex justify-center text-[12px] md:text-[18px]">{{parseInt(item)+2}}</div>
+                                </div>
+                            </div>
                         </template>
                     </div>
                     <!-- <Block :closeStatus="closeStatus" :drawStatus="drawStatus" :type="'all'"></Block> -->
@@ -616,6 +638,14 @@ export default {
         return target
     }
 
+    // // 測試
+    // setTimeout(()=>{
+    //     drawStatus.value = false
+    //     setTimeout(()=>{
+    //         drawStatus.value = true
+    //     },4000)
+    // },4000)
+
     return {
         displayTitle,
         displayTime,
@@ -654,15 +684,35 @@ export default {
 }
 
 @keyframes move {
-    0%   {transform: rotate(0deg);}
-    100% {transform: rotate(360deg);}
+    0% {
+        transform: translateY(0%);
+    }
+    50% {
+        transform: translateY(-6600%);
+    }
+    100% {
+        transform: translateY(0%);
+    }
 }
-
-/* The element to apply the animation to */
 .rotate-move {
     animation-name: move;
-    animation-duration: 3s;
+    animation-duration: 20s;
     animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes move-slowly {
+    0% {
+        transform: translateY(50px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+.rotate-slowly {
+    animation-name: move-slowly;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
     animation-timing-function: ease-in-out;
 }
 </style>
