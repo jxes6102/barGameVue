@@ -48,12 +48,13 @@
                                     (item==bingoLatest.prizeNum.bullEye) ? 'ball-color-2' : 'ball-color-1',
                                 ]"
                                 class="w-[22px] h-[22px] md:w-[35px] md:h-[35px] rounded-[50%] flex justify-center items-center text-xs md:text-base font-bold text-white overflow-hidden">
-                                <div v-if="((!drawStatus) || closeStatus)" class="rotate-move w-full h-full ">
+                                <div v-if="graduallyStatus || !animationStatusArr[index]" class="rotate-move w-full h-full ">
                                     <div v-for="(num) in 100" :key="num+100">
                                         <div class="flex justify-center text-[12px] md:text-[18px]">{{num}}</div>
                                     </div>
                                 </div>
-                                <div v-else class="rotate-slowly flex flex-col justify-start items-center gap-[4px]">
+                                <div v-else
+                                    class="rotate-slowly flex flex-col justify-start items-center gap-[4px]">
                                     <div class="flex justify-center text-[12px] md:text-[18px]">{{parseInt(item)-2}}</div>
                                     <div class="flex justify-center text-[12px] md:text-[18px]">{{parseInt(item)-1}}</div>
                                     <div class="flex justify-center text-[12px] md:text-[18px]">{{item}}</div>
@@ -69,12 +70,13 @@
                                     (item===bingoLatest.prizeNum.bullEye) ? 'ball-color-2' : 'ball-color-1',
                                 ]"
                                 class="w-[22px] h-[22px] md:w-[35px] md:h-[35px] rounded-[50%] flex justify-center items-center text-xs md:text-base font-bold text-white overflow-hidden">
-                                <div v-if="((!drawStatus) || closeStatus)" class="rotate-move w-full h-full ">
+                                <div v-if="graduallyStatus || !animationStatusArr[index] " class="rotate-move w-full h-full ">
                                     <div v-for="(num) in 100" :key="num+200">
                                         <div class="flex justify-center text-[12px] md:text-[18px]">{{num}}</div>
                                     </div>
                                 </div>
-                                <div v-else class="rotate-slowly flex flex-col justify-start items-center gap-[4px]">
+                                <div v-else
+                                    class="rotate-slowly flex flex-col justify-start items-center gap-[4px]">
                                     <div class="flex justify-center text-[12px] md:text-[18px]">{{parseInt(item)-2}}</div>
                                     <div class="flex justify-center text-[12px] md:text-[18px]">{{parseInt(item)-1}}</div>
                                     <div class="flex justify-center text-[12px] md:text-[18px]">{{item}}</div>
@@ -385,11 +387,37 @@ export default {
   },
   setup() {
     /**
-     * 
+     * mode 1大小 2開獎 3大小加總 4位置加總
+     * musicStatus 音樂狀態
+     * isMobiles 是否使用手機
+     * closeStatus 開獎是否關閉
+     * graduallyStatus 動畫狀態
+     * openbgm 音樂DOM
+     * apiLoading 讀取狀態
+     * timer1 計時器
+     * dayData 日期
+     * page 頁數
+     * todayData 當頁紀錄
+     * animationStatusArr 動畫狀態
+     * drawStatus 開獎狀態
+     * newData 最新紀錄
+     * areaSumResult 區域總和
+     * areaSortSumResult 區域排序總和
+     * tableData 顯示資料
+     * displayTitle 標題
+     * statistics 開獎總數紀錄
+     * isToday 是否選擇今天
+     * nowSeconds 當前秒數
+     * timePercentage 時間比例
+     * displayTime 時間標題
+     * tableTotal 資料筆數
+     * bingoLatest 最新紀錄
      */
     console.log('load test 16')
     const { t } = useI18n()
     const store = useStore()
+    const router = useRouter()
+    const mode = ref(1)
     const musicStatus = computed(() => {
         return store.state.musicStatus
     })
@@ -399,17 +427,22 @@ export default {
     const closeStatus = computed(() => {
         return store.state.closeStatus
     })
-    const gameList = ref([
-        {name:t('game1'),key:'bar'},
-        // {name:t('game2'),key:'capsule'},
-        // {name:t('game3'),key:'chest'},
-    ])
+    const graduallyStatus = computed(() => {
+        return ((!drawStatus.value) || closeStatus.value)
+    })
+    // const gameList = ref([
+    //     {name:t('game1'),key:'bar'},
+    //     // {name:t('game2'),key:'capsule'},
+    //     // {name:t('game3'),key:'chest'},
+    // ])
     const openbgm = ref(null)
     const apiLoading = ref(false)
     const timer1 = ref(null)
     const dayData = ref(null)
     const page = ref(1)
     const todayData = ref(null)
+    const animationStatusArr = ref([])
+    const drawStatus = ref(true)
     // let audio = new Audio(require("../assets/music/openbgm.mp3"))
     const newData = computed(() => {
         if(!todayData.value) return {}
@@ -468,12 +501,25 @@ export default {
         let target = store.state.originTime
         return Math.floor(target/60)+"分 : "+target%60 + "秒"
     })
-    const drawStatus = ref(true)
     const tableTotal = computed(() => {
         return store.state.dataTotal
     })
     const bingoLatest = computed(() => {
         return store.state.bingoLatest
+    })
+    //監聽動畫狀態
+    watch(graduallyStatus, async(newVal,oldVal)=>{
+        if(!newVal && oldVal){
+            for(let i = 0;i<20;i++){
+                animationStatusArr.value[i] = false
+            }
+
+            for(let i = 0;i<20;i++){
+                await delay(300)
+                animationStatusArr.value[i] = true
+            }
+            
+        }
     })
     // 監聽api改變
     watch(newData, async(newVal,oldVal)=>{
@@ -500,6 +546,7 @@ export default {
         page.value = 1
         await pyCatchNum()
     })
+    //最新獎項資料
     const getLatest = async() => {
         await store.dispatch('getLatest')
     }
@@ -509,8 +556,7 @@ export default {
             return false
         }
         apiLoading.value = true
-        // console.log('dayData.value',dayData.value)
-        // console.log('newVal',newVal.getFullYear(),newVal.getMonth()+1,newVal.getDate())
+
         let dateStr = dayData.value.getFullYear() + '-' 
         + (((dayData.value.getMonth()+1) < 10) ? '0' + (dayData.value.getMonth()+1) : (dayData.value.getMonth()+1))
         + '-' + dayData.value.getDate()
@@ -522,7 +568,7 @@ export default {
         })
         
         todayData.value = store.state.todayrecord
-        // console.log('todayData.value',todayData.value)
+
         apiLoading.value = false
     }
 
@@ -543,63 +589,64 @@ export default {
     onBeforeUnmount(() => {
         clearInterval(timer1.value)
     })
+    //延遲
+    const delay = (time) => {   
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve();
+            }, time);
+        });
+    }
 
     //初始動作
-    const init = () => {
+    const init = async() => {
         let date = new Date()
         date.setDate(date.getDate())
         dayData.value = date
         
         pyCatchNum()
         getLatest()
+
+        for(let i = 0;i<20;i++){
+            animationStatusArr.value[i] = true
+        }
+
     }
     init()
-
+    //切換頁數
     const currentChange = (value) => {
-        // console.log('value',value)
         page.value = value
         pyCatchNum()
     }
-
     //設定選擇日期範圍
     const disabledDate = (time) => {
         return (time.getTime() > Date.now()) || (time.getTime() < (Date.now() - 2592000000))
     }
 
-    const router = useRouter();
-    const ctrlGame = (name) => {
-        // openStatus.value = name
-        if(name === 'chest'){
-            router.push({ name: "boxView" });
-        }else if(name === 'bar'){
-            router.push({ name: "bar" });
-        }else if(name === 'capsule'){
-            router.push({ name: "capsule" });
-        }
-        
-    }
-    /*
-    *1大小 2開獎 3大小加總 4位置加總
-    */
-    const mode = ref(1)
+    // const ctrlGame = (name) => {
+    //     // openStatus.value = name
+    //     if(name === 'chest'){
+    //         router.push({ name: "boxView" });
+    //     }else if(name === 'bar'){
+    //         router.push({ name: "bar" });
+    //     }else if(name === 'capsule'){
+    //         router.push({ name: "capsule" });
+    //     }
+    // }
+    //切換模式
     const doSort = () => {
         mode.value = 1
     }
-
     const disableSort = () => {
         mode.value = 2
     }
-
     const sumSort = () => {
         mode.value = 3
-        // console.log('sumSort')
     }
-
     const seatSort = () => {
         mode.value = 4
-        // console.log('seatSort')
     }
-
+    //計算總和
     const dealSum = (arr) => {
         let temp = arr.map((item)=>parseInt(item))
         let target = []
@@ -615,7 +662,7 @@ export default {
 
         return target
     }
-
+    //計算位置
     const dealSeat = (arr) => {
         let temp = arr.map((item)=>parseInt(item))
         let target = []
@@ -638,22 +685,20 @@ export default {
         return target
     }
 
-    // // 測試
+    // // // 測試
     // setTimeout(()=>{
     //     drawStatus.value = false
     //     setTimeout(()=>{
     //         drawStatus.value = true
-    //     },4000)
-    // },4000)
+    //     },5000)
+    // },5000)
 
     return {
         displayTitle,
         displayTime,
         isMobiles,
-        apiLoading,
         dayData,
         tableData,
-        gameList,
         drawStatus,
         tableTotal,
         statistics,
@@ -665,11 +710,12 @@ export default {
         bingoLatest,
         mode,
         areaSortSumResult,
+        graduallyStatus,
+        animationStatusArr,
         seatSort,
         sumSort,
         disableSort,
         doSort,
-        ctrlGame,
         t,
         currentChange,
         disabledDate,
